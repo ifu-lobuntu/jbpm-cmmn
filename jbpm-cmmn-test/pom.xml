@@ -22,7 +22,27 @@
 		</dependency>
 		<dependency>
 			<groupId>${project.parent.groupId}</groupId>
-			<artifactId>jbpm-cmmn-flow</artifactId>
+			<artifactId>jbpm-cmmn-task-core</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${project.parent.groupId}</groupId>
+			<artifactId>jbpm-cmmn-task-jpa</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${project.parent.groupId}</groupId>
+			<artifactId>jbpm-cmmn-casefile-jcr</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${project.parent.groupId}</groupId>
+			<artifactId>jbpm-cmmn-casefile-ocm</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${project.parent.groupId}</groupId>
+			<artifactId>jbpm-cmmn-casefile-jpa</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
 		<dependency>

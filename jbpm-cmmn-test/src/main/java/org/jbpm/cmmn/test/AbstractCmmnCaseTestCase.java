@@ -27,6 +27,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.transaction.UserTransaction;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.jackrabbit.commons.cnd.CndImporter;
 import org.apache.jackrabbit.core.TransientRepository;
 import org.apache.jackrabbit.ocm.mapper.impl.annotation.AnnotationMapperImpl;
@@ -126,9 +127,7 @@ import org.pavanecce.cmmn.jbpm.ocm.OcmSubscriptionManager;
 import org.pavanecce.common.jpa.JpaObjectPersistence;
 import org.pavanecce.common.ocm.ObjectContentManagerFactory;
 import org.pavanecce.common.ocm.OcmObjectPersistence;
-import org.pavanecce.common.util.FileUtil;
 import org.pavanecce.common.util.ObjectPersistence;
-import org.pavanecce.common.util.Stopwatch;
 
 import bitronix.tm.jndi.BitronixContext;
 //import test.ConstructionCase;
@@ -687,7 +686,7 @@ public abstract class AbstractCmmnCaseTestCase extends JbpmJUnitBaseTestCase {
 				stopwatch.start();
 				TransientRepository jcrRepo = new TransientRepository();
 				stopwatch.lap("new TransientRepository()");
-				FileUtil.deleteRoot(new File("./repository"));
+				FileUtils.deleteDirectory(new File("./repository"));
 				stopwatch.lap("deleteJcrRepository", 10, TimeUnit.SECONDS);
 				jcrSession = jcrRepo.login(new SimpleCredentials("admin", "admin".toCharArray()));
 				stopwatch.lap("login", 10, TimeUnit.SECONDS);

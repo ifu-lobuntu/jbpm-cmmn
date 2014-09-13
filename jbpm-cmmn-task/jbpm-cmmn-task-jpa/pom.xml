@@ -16,6 +16,18 @@
 		<version>${project.version}</version>
 		<type>bundle</type>
 	</dependency>
+	<dependency>
+		<groupId>org.jbpm</groupId>
+		<artifactId>jbpm-cmmn-task-core</artifactId>
+		<version>${project.version}</version>
+		<type>bundle</type>
+	</dependency>
+	<dependency>
+		<groupId>org.jbpm</groupId>
+		<artifactId>jbpm-human-task-jpa</artifactId>
+		<version>${project.version}</version>
+		<type>bundle</type>
+	</dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -26,7 +38,7 @@
 				<configuration>
 					<manifestLocation>META-INF</manifestLocation>
 					<instructions>
-						<Export-Package>org.jbpm.cmmn.task.jpa</Export-Package>
+						<Export-Package>org.jbpm.cmmn.task.jpa.model</Export-Package>
 						<Bundle-SymbolicName>org.jbpm.cmmn.task.jpa</Bundle-SymbolicName>
 						<Bundle-Name>${project.name}</Bundle-Name>
 					</instructions>

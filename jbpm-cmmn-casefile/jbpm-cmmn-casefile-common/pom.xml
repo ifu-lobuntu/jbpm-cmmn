@@ -10,6 +10,10 @@
 	<name>jBPM CMMN JCR Casefile Common</name>
 	<packaging>bundle</packaging>
 	<dependencies>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>

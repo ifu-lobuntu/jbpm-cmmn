@@ -1,4 +1,4 @@
-package org.jbpm.cmmn.common;
+package org.jbpm.cmmn.casefile.common;
 
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.AnnotatedElement;
