@@ -27,7 +27,7 @@ import org.kie.internal.task.api.model.InternalContent;
 public abstract class AbstractTaskCommand<T> extends TaskCommand<T> {
 
 	private static final long serialVersionUID = -6267126920414609188L;
-	private TaskPersistenceContext pm;
+	protected TaskPersistenceContext pm;
 	private TaskContext ts;
 
 	public AbstractTaskCommand() {

@@ -13,17 +13,14 @@
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>jbpm-cmmn-casefile-common</artifactId>
-			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>jbpm-cmmn-flow</artifactId>
-			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
-			<version>4.2.12.Final</version>
 		</dependency>
 	</dependencies>
 	<build>

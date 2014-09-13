@@ -13,8 +13,6 @@
 	<dependency>
 		<groupId>org.kie</groupId>
 		<artifactId>kie-api</artifactId>
-		<version>${project.version}</version>
-		<type>bundle</type>
 	</dependency>
 	</dependencies>
 	<build>

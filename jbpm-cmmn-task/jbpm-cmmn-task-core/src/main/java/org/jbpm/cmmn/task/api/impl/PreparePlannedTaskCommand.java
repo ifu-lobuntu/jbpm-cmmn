@@ -2,12 +2,12 @@ package org.jbpm.cmmn.task.api.impl;
 
 import org.drools.core.process.instance.WorkItem;
 import org.jbpm.cmmn.common.CaseInstance;
-import org.jbpm.cmmn.task.model.PlannedTask;
+import org.jbpm.cmmn.task.model.PlannableTask;
 import org.kie.api.runtime.manager.RuntimeEngine;
 import org.kie.api.runtime.manager.RuntimeManager;
 import org.kie.internal.runtime.manager.context.ProcessInstanceIdContext;
 
-public class PreparePlannedTaskCommand extends AbstractPlanningCommand<PlannedTask> {
+public class PreparePlannedTaskCommand extends AbstractPlanningCommand<PlannableTask> {
 	private final String discretionaryItemId;
 	private final long parentTaskId;
 	private RuntimeManager runtimeManager;
@@ -22,11 +22,11 @@ public class PreparePlannedTaskCommand extends AbstractPlanningCommand<PlannedTa
 	}
 
 	@Override
-	public PlannedTask execute() {
+	public PlannableTask execute() {
 		long processInstanceId = getTaskById(parentTaskId).getTaskData().getProcessInstanceId();
 		RuntimeEngine runtime = runtimeManager.getRuntimeEngine(ProcessInstanceIdContext.get(processInstanceId));
 		CaseInstance ci = (CaseInstance) runtime.getKieSession().getProcessInstance(processInstanceId);
 		WorkItem wi = (WorkItem) ci.createPlannedItem(getWorkItemId(parentTaskId), discretionaryItemId);
-		return find(PlannedTaskImpl.class, getTaskByWorkItemId(wi.getId()).getId());
+		return (PlannableTask) getTaskByWorkItemId(wi.getId());
 	}
 }

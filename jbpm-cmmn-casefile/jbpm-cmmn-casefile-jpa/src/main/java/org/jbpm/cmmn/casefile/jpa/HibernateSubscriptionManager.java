@@ -47,9 +47,9 @@ public class HibernateSubscriptionManager extends AbstractDurableSubscriptionMan
 
 	private static final long serialVersionUID = -9103789384930931973L;
 
-	public JpaCasePersistence getObjectPersistence(CaseInstance process) {
+	public JpaCaseFilePersistence getObjectPersistence(CaseInstance process) {
 		Environment env = process.getKnowledgeRuntime().getEnvironment();
-		return (JpaCasePersistence) env.get(JpaCasePersistence.ENV_NAME);
+		return (JpaCaseFilePersistence) env.get(JpaCaseFilePersistence.ENV_NAME);
 	}
 
 	@Override
@@ -224,7 +224,7 @@ public class HibernateSubscriptionManager extends AbstractDurableSubscriptionMan
 
 	@Override
 	protected Collection<JpaCaseSubscriptionInfo> getAllSubscriptionsAgainst(CaseInstance caseInstance, SubscriptionPersistenceContext p) {
-		EntityManager em = ((JpaObjectPersistence) p).getEntityManager();
+		EntityManager em = ((JpaCaseFilePersistence) p).getEntityManager();
 		CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
 		CriteriaQuery<JpaCaseSubscriptionInfo> q = criteriaBuilder.createQuery(JpaCaseSubscriptionInfo.class);
 		Root<JpaCaseFileItemSubscriptionInfo> from = q.from(JpaCaseFileItemSubscriptionInfo.class);

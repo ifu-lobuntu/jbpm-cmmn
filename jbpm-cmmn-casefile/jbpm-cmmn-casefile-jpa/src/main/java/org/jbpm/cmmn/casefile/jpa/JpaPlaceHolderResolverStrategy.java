@@ -40,7 +40,7 @@ public class JpaPlaceHolderResolverStrategy implements ObjectMarshallingStrategy
 	public Object read(ObjectInputStream is) throws IOException, ClassNotFoundException {
 		String canonicalName = is.readUTF();
 		Object id = is.readObject();
-		JpaObjectPersistence jop = (JpaObjectPersistence) env.get(JpaObjectPersistence.ENV_NAME);
+		JpaCaseFilePersistence jop = (JpaCaseFilePersistence) env.get(JpaCaseFilePersistence.ENV_NAME);
 		return jop.find(Class.forName(canonicalName), id);
 	}
 

@@ -47,7 +47,7 @@ import org.kie.api.runtime.manager.RuntimeManager;
 
 public class OcmSubscriptionManager extends AbstractDurableSubscriptionManager<OcmCaseSubscriptionInfo, OcmCaseFileItemSubscriptionInfo> implements
 		SubscriptionManager<OcmCaseSubscriptionInfo, OcmCaseFileItemSubscriptionInfo>, SynchronousEventListener {
-	private OcmCasePersistence persistence;
+	private OcmCaseFilePersistence persistence;
 	private ObjectContentManagerFactory factory;
 	private ThreadLocal<Set<Node>> updatedNodes = new ThreadLocal<Set<Node>>();
 	private RuntimeManager runtimeManager;
@@ -438,9 +438,9 @@ public class OcmSubscriptionManager extends AbstractDurableSubscriptionManager<O
 		}
 	}
 
-	private OcmCasePersistence getPersistence() {
+	private OcmCaseFilePersistence getPersistence() {
 		if (persistence == null) {
-			persistence = new OcmCasePersistence(factory, runtimeManager);
+			persistence = new OcmCaseFilePersistence(factory, runtimeManager);
 			persistence.start();
 		}
 		return persistence;
@@ -453,7 +453,7 @@ public class OcmSubscriptionManager extends AbstractDurableSubscriptionManager<O
 
 	@Override
 	protected Collection<OcmCaseSubscriptionInfo> getAllSubscriptionsAgainst(CaseInstance caseInstance, SubscriptionPersistenceContext<OcmCaseSubscriptionInfo, OcmCaseFileItemSubscriptionInfo> em) {
-		OcmObjectPersistence oop = (OcmObjectPersistence) em;
+		OcmCaseFilePersistence oop = (OcmCaseFilePersistence) em;
 		Filter f = oop.getObjectContentManager().getQueryManager().createFilter(OcmCaseFileItemSubscriptionInfo.class);
 		f.addEqualTo("processInstanceId", caseInstance.getId());
 		Query q = oop.getObjectContentManager().getQueryManager().createQuery(f);

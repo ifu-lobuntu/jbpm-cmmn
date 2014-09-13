@@ -10,6 +10,7 @@ public interface WorkItemParameters {
 	public static final String RECIPIENT_ID = "RecipientId";
 	public static final String TRANSITION = "Transition";
 	public static final String TASK = "Task";
+	public static final String TASK_PLAN_ITEM_NAME = "TaskPlanItemName";
 	public static final String TASK_TRANSITION = "TaskStatus";
 	public static final String WORK_ITEM_ID = "WorkItemId";
 	public static final String WORK_ITEM_UPDATED = "workItemUpdated";

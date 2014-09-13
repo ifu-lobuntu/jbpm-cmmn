@@ -36,6 +36,13 @@ import org.drools.core.audit.event.LogEvent;
 import org.drools.core.audit.event.RuleFlowNodeLogEvent;
 import org.drools.core.marshalling.impl.ClassObjectMarshallingStrategyAcceptor;
 import org.drools.core.marshalling.impl.SerializablePlaceholderResolverStrategy;
+import org.jbpm.cmmn.casefile.common.CaseFilePersistence;
+import org.jbpm.cmmn.casefile.jpa.HibernateSubscriptionManager;
+import org.jbpm.cmmn.casefile.jpa.JpaCaseFilePersistence;
+import org.jbpm.cmmn.casefile.jpa.JpaCollectionPlaceHolderResolverStrategy;
+import org.jbpm.cmmn.casefile.jpa.JpaPlaceHolderResolverStrategy;
+import org.jbpm.cmmn.flow.builder.PlanItemBuilder;
+import org.jbpm.cmmn.flow.builder.SentryBuilder;
 import org.jbpm.cmmn.flow.core.CaseFileItemDefinitionType;
 import org.jbpm.cmmn.flow.core.event.CaseFileItemStartTrigger;
 import org.jbpm.cmmn.flow.core.event.PlanItemStartTrigger;
@@ -54,10 +61,15 @@ import org.jbpm.cmmn.flow.core.planitem.StagePlanItem;
 import org.jbpm.cmmn.flow.core.planitem.TimerEventPlanItem;
 import org.jbpm.cmmn.flow.core.planitem.UserEventPlanItem;
 import org.jbpm.cmmn.flow.core.planning.DiscretionaryItemImpl;
+import org.jbpm.cmmn.flow.xml.CMMNBuilder;
+import org.jbpm.cmmn.flow.xml.DefaultTypeMap;
+import org.jbpm.cmmn.flow.xml.DefinitionsHandler;
+import org.jbpm.cmmn.flow.xml.JcrTypeMap;
 import org.jbpm.cmmn.instance.CaseInstance;
-import org.jbpm.cmmn.instance.OnPartInstance;
 import org.jbpm.cmmn.instance.PlanElementState;
 import org.jbpm.cmmn.instance.PlanItemInstance;
+import org.jbpm.cmmn.instance.factory.DelegatingNodeInstanceFactory;
+import org.jbpm.cmmn.instance.impl.CaseInstanceFactory;
 import org.jbpm.cmmn.instance.impl.DefaultJoinInstance;
 import org.jbpm.cmmn.instance.impl.DefaultSplitInstance;
 import org.jbpm.cmmn.instance.impl.OnPartInstanceImpl;
@@ -66,10 +78,14 @@ import org.jbpm.cmmn.instance.impl.SentryInstance;
 import org.jbpm.cmmn.instance.impl.StageInstance;
 import org.jbpm.cmmn.instance.subscription.SubscriptionManager;
 import org.jbpm.cmmn.instance.subscription.impl.AbstractDurableSubscriptionManager;
-import org.jbpm.cmmn.xml.CMMNBuilder;
-import org.jbpm.cmmn.xml.DefaultTypeMap;
-import org.jbpm.cmmn.xml.DefinitionsHandler;
-import org.jbpm.cmmn.xml.JcrTypeMap;
+import org.jbpm.cmmn.marshalling.CaseInstanceMarshaller;
+import org.jbpm.cmmn.ocm.ObjectContentManagerFactory;
+import org.jbpm.cmmn.ocm.OcmCaseFilePersistence;
+import org.jbpm.cmmn.ocm.OcmCollectionPlaceHolderResolveStrategy;
+import org.jbpm.cmmn.ocm.OcmPlaceHolderResolveStrategy;
+import org.jbpm.cmmn.ocm.OcmSubscriptionManager;
+import org.jbpm.cmmn.task.listeners.CaseTaskLifecycleListener;
+import org.jbpm.cmmn.task.registration.CaseRegisterableItemsFactory;
 import org.jbpm.marshalling.impl.ProcessInstanceResolverStrategy;
 import org.jbpm.marshalling.impl.ProcessMarshallerRegistry;
 import org.jbpm.process.audit.JPAAuditLogService;
@@ -109,25 +125,6 @@ import org.kie.internal.io.ResourceFactory;
 import org.kie.internal.task.api.ContentMarshallerContext;
 import org.kie.internal.task.api.EventService;
 import org.kie.internal.task.api.InternalTaskService;
-import org.jbpm.cmmn.instance.impl.CaseInstanceFactory;
-import org.pavanecce.cmmn.jbpm.infra.CaseInstanceMarshaller;
-import org.pavanecce.cmmn.jbpm.infra.CaseRegisterableItemsFactory;
-import org.pavanecce.cmmn.jbpm.infra.CaseTaskLifecycleListener;
-import org.pavanecce.cmmn.jbpm.infra.DelegatingNodeFactory;
-import org.pavanecce.cmmn.jbpm.infra.PlanItemBuilder;
-import org.pavanecce.cmmn.jbpm.infra.SentryBuilder;
-import org.pavanecce.cmmn.jbpm.jpa.HibernateSubscriptionManager;
-import org.pavanecce.cmmn.jbpm.jpa.JpaCasePersistence;
-import org.pavanecce.cmmn.jbpm.jpa.JpaCollectionPlaceHolderResolverStrategy;
-import org.pavanecce.cmmn.jbpm.jpa.JpaPlaceHolderResolverStrategy;
-import org.pavanecce.cmmn.jbpm.ocm.OcmCasePersistence;
-import org.pavanecce.cmmn.jbpm.ocm.OcmCollectionPlaceHolderResolveStrategy;
-import org.pavanecce.cmmn.jbpm.ocm.OcmPlaceHolderResolveStrategy;
-import org.pavanecce.cmmn.jbpm.ocm.OcmSubscriptionManager;
-import org.pavanecce.common.jpa.JpaObjectPersistence;
-import org.pavanecce.common.ocm.ObjectContentManagerFactory;
-import org.pavanecce.common.ocm.OcmObjectPersistence;
-import org.pavanecce.common.util.ObjectPersistence;
 
 import bitronix.tm.jndi.BitronixContext;
 //import test.ConstructionCase;
@@ -144,7 +141,7 @@ public abstract class AbstractCmmnCaseTestCase extends JbpmJUnitBaseTestCase {
 		System.setProperty(InitialContext.INITIAL_CONTEXT_FACTORY, bitronix.tm.jndi.BitronixInitialContextFactory.class.getName());
 		System.setProperty(InitialContext.URL_PKG_PREFIXES, "bitronix.tm.jndi");
 	}
-	protected ObjectPersistence persistence;
+	protected CaseFilePersistence persistence;
 	protected boolean isJpa = false;
 	private static ObjectContentManagerFactory objectContentManagerFactory;
 	private RuntimeEngine runtimeEngine;
@@ -397,13 +394,13 @@ public abstract class AbstractCmmnCaseTestCase extends JbpmJUnitBaseTestCase {
 		}
 	}
 
-	public ObjectPersistence getPersistence() {
+	public CaseFilePersistence getPersistence() {
 		try {
 			if (persistence == null) {
 				if (isJpa) {
-					persistence = new JpaCasePersistence(emf, runtimeManager);
+					persistence = new JpaCaseFilePersistence(emf, runtimeManager);
 				} else {
-					OcmObjectPersistence ocmObjectPersistence = new OcmCasePersistence(getOcmFactory(), runtimeManager);
+					OcmCaseFilePersistence ocmObjectPersistence = new OcmCaseFilePersistence(getOcmFactory(), runtimeManager);
 					persistence = ocmObjectPersistence;
 				}
 			}
@@ -523,14 +520,14 @@ public abstract class AbstractCmmnCaseTestCase extends JbpmJUnitBaseTestCase {
 		nodeInstanceFactoryRegistry.register(CaseFileItemStartTrigger.class, new ReuseNodeFactory(OnPartInstanceImpl.class));
 		nodeInstanceFactoryRegistry.register(PlanItemStartTrigger.class, new ReuseNodeFactory(OnPartInstanceImpl.class));
 		nodeInstanceFactoryRegistry.register(PlanItemOnPart.class, new ReuseNodeFactory(OnPartInstanceImpl.class));
-		nodeInstanceFactoryRegistry.register(StagePlanItem.class, new DelegatingNodeFactory());
+		nodeInstanceFactoryRegistry.register(StagePlanItem.class, new DelegatingNodeInstanceFactory());
 		nodeInstanceFactoryRegistry.register(DefaultSplit.class, new CreateNewNodeFactory(DefaultSplitInstance.class));
-		nodeInstanceFactoryRegistry.register(HumanTaskPlanItem.class, new DelegatingNodeFactory());
-		nodeInstanceFactoryRegistry.register(CaseTaskPlanItem.class, new DelegatingNodeFactory());
-		nodeInstanceFactoryRegistry.register(DiscretionaryItemImpl.class, new DelegatingNodeFactory());
-		nodeInstanceFactoryRegistry.register(UserEventPlanItem.class, new DelegatingNodeFactory());
-		nodeInstanceFactoryRegistry.register(TimerEventPlanItem.class, new DelegatingNodeFactory());
-		nodeInstanceFactoryRegistry.register(MilestonePlanItem.class, new DelegatingNodeFactory());
+		nodeInstanceFactoryRegistry.register(HumanTaskPlanItem.class, new DelegatingNodeInstanceFactory());
+		nodeInstanceFactoryRegistry.register(CaseTaskPlanItem.class, new DelegatingNodeInstanceFactory());
+		nodeInstanceFactoryRegistry.register(DiscretionaryItemImpl.class, new DelegatingNodeInstanceFactory());
+		nodeInstanceFactoryRegistry.register(UserEventPlanItem.class, new DelegatingNodeInstanceFactory());
+		nodeInstanceFactoryRegistry.register(TimerEventPlanItem.class, new DelegatingNodeInstanceFactory());
+		nodeInstanceFactoryRegistry.register(MilestonePlanItem.class, new DelegatingNodeInstanceFactory());
 		TaskService ts = runtimeEngine.getTaskService();
 		if (ts instanceof InternalTaskService) {
 			InternalTaskService its = (InternalTaskService) ts;
@@ -597,7 +594,7 @@ public abstract class AbstractCmmnCaseTestCase extends JbpmJUnitBaseTestCase {
 			env.set(SubscriptionManager.ENV_NAME, subscriptionManager);
 		}
 		if (isJpa) {
-			env.set(JpaObjectPersistence.ENV_NAME, getPersistence());
+			env.set(JpaCaseFilePersistence.ENV_NAME, getPersistence());
 		} else {
 			env.set(ObjectContentManagerFactory.OBJECT_CONTENT_MANAGER_FACTORY, getOcmFactory());
 		}

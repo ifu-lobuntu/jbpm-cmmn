@@ -10,7 +10,7 @@ import org.drools.persistence.PersistenceContextManager;
 import org.drools.persistence.info.WorkItemInfo;
 import org.jbpm.cmmn.common.CaseInstance;
 import org.jbpm.cmmn.common.PlanningTableContainerInstance;
-import org.jbpm.cmmn.task.model.PlannedTask;
+import org.jbpm.cmmn.task.model.PlannableTask;
 import org.kie.api.runtime.Environment;
 import org.kie.api.runtime.EnvironmentName;
 import org.kie.api.runtime.manager.RuntimeEngine;
@@ -23,12 +23,12 @@ import org.kie.internal.task.api.model.InternalTaskData;
 
 public class SubmitPlanCommand extends AbstractPlanningCommand<Void> {
 	private static final long serialVersionUID = 7907971723514784829L;
-	private final Collection<PlannedTask> plannedTasks;
+	private final Collection<PlannableTask> plannedTasks;
 	private final long parentTaskId;
 	private RuntimeManager runtimeManager;
 	private boolean resume;
 
-	public SubmitPlanCommand(RuntimeManager runtimeManager, Collection<PlannedTask> plannedTasks, long parentTaskId, boolean resume) {
+	public SubmitPlanCommand(RuntimeManager runtimeManager, Collection<PlannableTask> plannedTasks, long parentTaskId, boolean resume) {
 		super();
 		this.plannedTasks = plannedTasks;
 		this.parentTaskId = parentTaskId;
@@ -42,7 +42,7 @@ public class SubmitPlanCommand extends AbstractPlanningCommand<Void> {
 		long workItemId = parentTask.getTaskData().getWorkItemId();
 		RuntimeEngine runtime = runtimeManager.getRuntimeEngine(ProcessInstanceIdContext.get(parentTask.getTaskData().getProcessInstanceId()));
 		CaseInstance ci = (CaseInstance) runtime.getKieSession().getProcessInstance(parentTask.getTaskData().getProcessInstanceId());
-		for (PlannedTask plannedTask : plannedTasks) {
+		for (PlannableTask plannedTask : plannedTasks) {
 			merge(plannedTask);
 			addContent(plannedTask.getId(), plannedTask.getParameterOverrides());
 			Task currentTask = getTaskById(plannedTask.getId());

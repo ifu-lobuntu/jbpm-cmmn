@@ -15,5 +15,6 @@
 		<module>jbpm-cmmn-casefile-jcr</module>
 		<module>jbpm-cmmn-casefile-ocm</module>
 	</modules>
+	
 </project>
 

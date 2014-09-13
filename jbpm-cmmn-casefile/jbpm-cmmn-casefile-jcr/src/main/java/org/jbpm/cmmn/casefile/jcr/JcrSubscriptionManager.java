@@ -29,6 +29,7 @@ import javax.jcr.query.Query;
 import javax.jcr.query.QueryManager;
 
 import org.apache.jackrabbit.core.observation.SynchronousEventListener;
+import org.jbpm.cmmn.casefile.common.CaseFilePersistence;
 import org.jbpm.cmmn.flow.core.CaseFileItemTransition;
 import org.jbpm.cmmn.instance.CaseInstance;
 import org.jbpm.cmmn.instance.subscription.CaseFileItemSubscriptionInfo;
@@ -42,7 +43,7 @@ import org.kie.api.runtime.manager.RuntimeManager;
 
 public class JcrSubscriptionManager extends AbstractDurableSubscriptionManager<JcrCaseSubscriptionInfo, JcrCaseFileItemSubscriptionInfo> implements
 		SubscriptionManager<JcrCaseSubscriptionInfo, JcrCaseFileItemSubscriptionInfo>, SynchronousEventListener {
-	private JcrCasePersistence persistence;
+	private JcrCaseFilePersistence persistence;
 	private JcrSessionFactory factory;
 	private ThreadLocal<Set<Node>> updatedNodes = new ThreadLocal<Set<Node>>();
 	private RuntimeManager runtimeManager;
@@ -400,23 +401,23 @@ public class JcrSubscriptionManager extends AbstractDurableSubscriptionManager<J
 		}
 	}
 
-	private JcrCasePersistence getPersistence() {
+	private JcrCaseFilePersistence getPersistence() {
 		if (persistence == null) {
-			persistence = new JcrCasePersistence(factory, runtimeManager);
+			persistence = new JcrCaseFilePersistence(factory, runtimeManager);
 			persistence.start();
 		}
 		return persistence;
 	}
 
 	@Override
-	public JcrCasePersistence getObjectPersistence(CaseInstance p) {
+	public JcrCaseFilePersistence getObjectPersistence(CaseInstance p) {
 		return getPersistence();
 	}
 
 	@Override
 	protected Collection<JcrCaseSubscriptionInfo> getAllSubscriptionsAgainst(CaseInstance caseInstance, SubscriptionPersistenceContext<JcrCaseSubscriptionInfo, JcrCaseFileItemSubscriptionInfo> em) {
 		try {
-			JcrObjectPersistence oop = (JcrObjectPersistence) em;
+			JcrCaseFilePersistence oop = (JcrCaseFilePersistence) em;
 			QueryManager qm = oop.getCurrentSession().getWorkspace().getQueryManager();
 			@SuppressWarnings("deprecation")
 			Query q = qm.createQuery("//element(*, i:caseFileItemSubscription)[@JcrCaseSubscriptionInfo=" + caseInstance.getId() + "]", Query.XPATH);

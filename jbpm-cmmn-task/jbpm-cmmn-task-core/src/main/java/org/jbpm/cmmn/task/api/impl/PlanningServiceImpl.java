@@ -4,8 +4,8 @@ import java.util.Collection;
 
 import org.jbpm.cmmn.common.ApplicableDiscretionaryItem;
 import org.jbpm.cmmn.task.api.PlanningService;
-import org.jbpm.cmmn.task.model.PlannedTask;
-import org.jbpm.cmmn.task.model.PlannedTaskSummary;
+import org.jbpm.cmmn.task.model.PlannableTask;
+import org.jbpm.cmmn.task.model.PlannableTaskSummary;
 import org.jbpm.cmmn.task.model.PlanningTableInstance;
 import org.kie.api.runtime.manager.RuntimeManager;
 import org.kie.internal.task.api.InternalTaskService;
@@ -27,15 +27,15 @@ public class PlanningServiceImpl implements PlanningService {
 		this.taskService = taskService;
 	}
 
-
 	@Override
-	public void submitPlan(final long parentTaskId, final Collection<PlannedTask> plannedTasks, boolean resume) {
+	public void submitPlan(final long parentTaskId, final Collection<PlannableTask> plannedTasks, boolean resume) {
 		taskService.execute(new SubmitPlanCommand(runtimeManager, plannedTasks, parentTaskId, resume));
 	}
+
 	@Override
 	public PlanningTableInstance startPlanning(final long parentTaskId, String user, boolean suspend) {
-		PlanningTableInstance result = new PlanningTableInstance(getPlannedItemsForParentTask(parentTaskId, true), getApplicableDiscretionaryItems(
-				parentTaskId, user, suspend));
+		PlanningTableInstance result = new PlanningTableInstance(getPlannedItemsForParentTask(parentTaskId, true),
+				getApplicableDiscretionaryItems(parentTaskId, user, suspend));
 		return result;
 	}
 
@@ -44,16 +44,14 @@ public class PlanningServiceImpl implements PlanningService {
 
 	}
 
-	private Collection<PlannedTaskSummary> getPlannedItemsForParentTask(final long parentTaskId, final boolean createMissing) {
-		return taskService.execute(new GetPlannedItemsForParentTaskCommand(parentTaskId, createMissing));
+	private Collection<PlannableTaskSummary> getPlannedItemsForParentTask(final long parentTaskId, final boolean createMissing) {
+		return taskService.execute(new GetPlannedItemsForParentTaskCommand(parentTaskId));
 	}
-
 
 	@Override
-	public PlannedTask preparePlannedTask(final long parentTaskId, final String discretionaryItemId) {
+	public PlannableTask preparePlannableTask(final long parentTaskId, final String discretionaryItemId) {
 		return taskService.execute(new PreparePlannedTaskCommand(runtimeManager, discretionaryItemId, parentTaskId));
 	}
-
 
 	@Override
 	public void makeDiscretionaryItemAvailable(final long parentTaskId, final String discretionaryItemId) {
@@ -65,15 +63,7 @@ public class PlanningServiceImpl implements PlanningService {
 	}
 
 	@Override
-	public PlannedTask getPlannedTaskById(final long id) {
-		return taskService.execute(new AbstractPlanningCommand<PlannedTask>() {
-
-			private static final long serialVersionUID = -6636279175990254543L;
-
-			@Override
-			public PlannedTask execute() {
-				return find(PlannedTaskImpl.class, id);
-			}
-		});
+	public PlannableTask getPlannableTaskById(final long id) {
+		return (PlannableTask) taskService.getTaskById(id);
 	}
 }

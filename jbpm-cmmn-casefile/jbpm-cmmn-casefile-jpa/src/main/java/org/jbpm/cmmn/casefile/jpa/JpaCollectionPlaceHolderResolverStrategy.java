@@ -126,7 +126,7 @@ public class JpaCollectionPlaceHolderResolverStrategy implements ObjectMarshalli
 		for (int i = 0; i < size; i++) {
 			ids.add(is.readObject());
 		}
-		JpaObjectPersistence jop = (JpaObjectPersistence) env.get(JpaObjectPersistence.ENV_NAME);
+		JpaCaseFilePersistence jop = (JpaCaseFilePersistence) env.get(JpaCaseFilePersistence.ENV_NAME);
 		Query q = jop.getEntityManager().createQuery("select o from " + superClass.getName() + " o where o." + idName + " in (:ids)");
 		q.setParameter("ids", ids);
 		return q.getResultList();
@@ -137,7 +137,7 @@ public class JpaCollectionPlaceHolderResolverStrategy implements ObjectMarshalli
 		@SuppressWarnings("unused")
 		String idName = is.readUTF();
 		List<Object> result = new ArrayList<Object>();
-		JpaObjectPersistence jop = (JpaObjectPersistence) env.get(JpaObjectPersistence.ENV_NAME);
+		JpaCaseFilePersistence jop = (JpaCaseFilePersistence) env.get(JpaCaseFilePersistence.ENV_NAME);
 		for (int i = 0; i < size; i++) {
 			result.add(jop.find(superClass, is.readObject()));
 		}
