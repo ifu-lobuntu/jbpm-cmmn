@@ -41,7 +41,8 @@ public class HumanTaskPlanItem extends AbstractPlanItem<HumanTask> implements Mu
 			for (Entry<String, Object> entry : sourceWork.getParameters().entrySet()) {
 				work.setParameter(entry.getKey(), entry.getValue());
 			}
-			work.setParameter("NodeName", getName());
+			work.setParameter(WorkItemParameters.TASK_NODE_NAME, getName());
+			work.setParameter(WorkItemParameters.TASK_PLAN_ITEM_NAME, getName());
 			work.setParameter(WorkItemParameters.BUSINESSADMINISTRATOR_ID, getPlannerRoles(this));
 		}
 		return work;

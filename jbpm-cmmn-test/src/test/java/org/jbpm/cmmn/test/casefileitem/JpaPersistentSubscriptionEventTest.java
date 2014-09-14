@@ -17,7 +17,7 @@ public class JpaPersistentSubscriptionEventTest extends CaseFileItemEventTest {
 
 	@Test
 	public void testModel() throws Exception {
-		JpaCaseFilePersistence p = new JpaCaseFilePersistence(getEmf(),getRuntimeManager());
+		JpaCaseFilePersistence p = new JpaCaseFilePersistence(getEmf(),createRuntimeManager());
 		p.start();
 		ConstructionCase constructionCase = new ConstructionCase("/cases/case1");
 		constructionCase.setName("MyConstructionCase");

@@ -18,6 +18,14 @@
 			<groupId>org.apache</groupId>
 			<artifactId>jackrabbit-ocm</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.lucene</groupId>
+			<artifactId>lucene-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>cglib</groupId>
+			<artifactId>cglib</artifactId>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>

@@ -116,7 +116,8 @@ public class StagePlanItem extends AbstractPlanItem<Stage> implements MultiInsta
 		}
 		work.setParameter(WorkItemParameters.BUSINESSADMINISTRATOR_ID, getPlannerRoles(this));
 		work.setParameter(WorkItemParameters.GROUP_ID, getPlannerRoles(this));
-		work.setParameter("NodeName", getName());
+		work.setParameter(WorkItemParameters.TASK_NODE_NAME, getName());
+		work.setParameter(WorkItemParameters.TASK_PLAN_ITEM_NAME, getName());
 		return work;
 	}
 

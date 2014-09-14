@@ -7,7 +7,7 @@
 	<named-query name="PlannableTasksAssignedAsBusinessAdministrator">
 		<query>
 			select distinct
-			new org.jbpm.cmmn.summary.jpa.query.PlannableTaskSummaryImpl(
+			new org.jbpm.cmmn.task.jpa.query.PlannableTaskSummaryImpl(
 			t.id,
 			t.name,
 			t.description,
@@ -38,7 +38,7 @@
 	<named-query name="PlannableTasksAssignedAsExcludedOwner">
 		<query>
 			select distinct
-			new org.jbpm.cmmn.summary.jpa.query.PlannableTaskSummaryImpl(
+			new org.jbpm.cmmn.task.jpa.query.PlannableTaskSummaryImpl(
 			t.id,
 			t.name,
 			t.description,
@@ -69,7 +69,7 @@
 	<named-query name="PlannableTasksAssignedAsPotentialOwner">
 		<query>
 			select distinct
-			new org.jbpm.cmmn.summary.jpa.query.PlannableTaskSummaryImpl(
+			new org.jbpm.cmmn.task.jpa.query.PlannableTaskSummaryImpl(
 			t.id,
 			t.name,
 			t.description,
@@ -100,7 +100,7 @@
 	<named-query name="PlannableTasksAssignedAsPotentialOwnerByStatus">
 		<query>
 			select distinct
-			new org.jbpm.cmmn.summary.jpa.query.PlannableTaskSummaryImpl(
+			new org.jbpm.cmmn.task.jpa.query.PlannableTaskSummaryImpl(
 			t.id,
 			t.name,
 			t.description,
@@ -132,7 +132,7 @@
 	<named-query name="PlannableTasksAssignedAsPotentialOwnerByStatusByGroup">
 		<query>
 			select distinct
-			new org.jbpm.cmmn.summary.jpa.query.PlannableTaskSummaryImpl(
+			new org.jbpm.cmmn.task.jpa.query.PlannableTaskSummaryImpl(
 			t.id,
 			t.name,
 			t.description,
@@ -164,7 +164,7 @@
 	<named-query name="PlannableTasksAssignedAsPotentialOwnerWithGroups">
 		<query>
 			select distinct
-			new org.jbpm.cmmn.summary.jpa.query.PlannableTaskSummaryImpl(
+			new org.jbpm.cmmn.task.jpa.query.PlannableTaskSummaryImpl(
 			t.id,
 			t.name,
 			t.description,
@@ -197,7 +197,7 @@
 	<named-query name="PlannableTasksAssignedAsPotentialOwnerByStatusWithGroups">
 		<query>
 			select distinct
-			new org.jbpm.cmmn.summary.jpa.query.PlannableTaskSummaryImpl(
+			new org.jbpm.cmmn.task.jpa.query.PlannableTaskSummaryImpl(
 			t.id,
 			t.name,
 			t.description,
@@ -229,7 +229,7 @@
 	<named-query name="PlannableTasksAssignedAsPotentialOwnerByGroup">
 		<query>
 			select distinct
-			new org.jbpm.cmmn.summary.jpa.query.PlannableTaskSummaryImpl(
+			new org.jbpm.cmmn.task.jpa.query.PlannableTaskSummaryImpl(
 			t.id,
 			t.name,
 			t.description,
@@ -295,7 +295,7 @@
 		name="PlannableTasksAssignedAsPotentialOwnerStatusByExpirationDate">
 		<query>
 			select distinct
-			new org.jbpm.cmmn.summary.jpa.query.PlannableTaskSummaryImpl(
+			new org.jbpm.cmmn.task.jpa.query.PlannableTaskSummaryImpl(
 			t.id,
 			t.name,
 			t.description,
@@ -330,7 +330,7 @@
 		name="PlannableTasksAssignedAsPotentialOwnerStatusByExpirationDateOptional">
 		<query>
 			select distinct
-			new org.jbpm.cmmn.summary.jpa.query.PlannableTaskSummaryImpl(
+			new org.jbpm.cmmn.task.jpa.query.PlannableTaskSummaryImpl(
 			t.id,
 			t.name,
 			t.description,
@@ -443,7 +443,7 @@
 	<named-query name="PlannableSubTasksAssignedAsPotentialOwner">
 		<query>
 			select distinct
-			new org.jbpm.cmmn.summary.jpa.query.PlannableTaskSummaryImpl(
+			new org.jbpm.cmmn.task.jpa.query.PlannableTaskSummaryImpl(
 			t.id,
 			t.name,
 			t.description,
@@ -457,7 +457,9 @@
 			t.taskData.processId,
 			t.taskData.processInstanceId,
 			t.taskData.parentId,
-			t.taskData.deploymentId )
+			t.taskData.deploymentId,
+			t.discretionaryItemId,
+			t.planItemName )
 			from
 			PlannableTaskImpl t,
 			OrganizationalEntityImpl potentialOwners
@@ -476,7 +478,7 @@
 	<named-query name="PlannableGetSubTasksByParentTaskId">
 		<query>
 			select distinct
-			new org.jbpm.cmmn.summary.jpa.query.PlannableTaskSummaryImpl(
+			new org.jbpm.cmmn.task.jpa.query.PlannableTaskSummaryImpl(
 			t.id,
 			t.name,
 			t.description,
@@ -490,7 +492,9 @@
 			t.taskData.processId,
 			t.taskData.processInstanceId,
 			t.taskData.parentId,
-			t.taskData.deploymentId )
+			t.taskData.deploymentId,
+			t.discretionaryItemId,
+			t.planItemName )
 			from
 			PlannableTaskImpl t,
 			OrganizationalEntityImpl potentialOwners
@@ -507,7 +511,7 @@
 	<named-query name="PlannableTasksAssignedAsRecipient">
 		<query>
 			select distinct
-			new org.jbpm.cmmn.summary.jpa.query.PlannableTaskSummaryImpl(
+			new org.jbpm.cmmn.task.jpa.query.PlannableTaskSummaryImpl(
 			t.id,
 			t.name,
 			t.description,
@@ -537,7 +541,7 @@
 	<named-query name="PlannableTasksAssignedAsTaskInitiator">
 		<query>
 			select distinct
-			new org.jbpm.cmmn.summary.jpa.query.PlannableTaskSummaryImpl(
+			new org.jbpm.cmmn.task.jpa.query.PlannableTaskSummaryImpl(
 			t.id,
 			t.name,
 			t.description,
@@ -568,7 +572,7 @@
 	<named-query name="PlannableTasksAssignedAsTaskStakeholder">
 		<query>
 			select distinct
-			new org.jbpm.cmmn.summary.jpa.query.PlannableTaskSummaryImpl(
+			new org.jbpm.cmmn.task.jpa.query.PlannableTaskSummaryImpl(
 			t.id,
 			t.name,
 			t.description,
@@ -599,7 +603,7 @@
 	<named-query name="PlannableTasksOwned">
 		<query>
 			select distinct
-			new org.jbpm.cmmn.summary.jpa.query.PlannableTaskSummaryImpl(
+			new org.jbpm.cmmn.task.jpa.query.PlannableTaskSummaryImpl(
 			t.id,
 			t.name,
 			t.description,
@@ -630,7 +634,7 @@
 	<named-query name="PlannableTasksOwnedWithParticularStatusByExpirationDate">
 		<query>
 			select
-			new org.jbpm.cmmn.summary.jpa.query.PlannableTaskSummaryImpl(
+			new org.jbpm.cmmn.task.jpa.query.PlannableTaskSummaryImpl(
 			t.id,
 			t.name,
 			t.description,
@@ -663,7 +667,7 @@
 		name="PlannableTasksOwnedWithParticularStatusByExpirationDateBeforeSpecifiedDate">
 		<query>
 			select
-			new org.jbpm.cmmn.summary.jpa.query.PlannableTaskSummaryImpl(
+			new org.jbpm.cmmn.task.jpa.query.PlannableTaskSummaryImpl(
 			t.id,
 			t.name,
 			t.description,
@@ -697,7 +701,7 @@
 		name="PlannableTasksOwnedWithParticularStatusByExpirationDateOptional">
 		<query>
 			select
-			new org.jbpm.cmmn.summary.jpa.query.PlannableTaskSummaryImpl(
+			new org.jbpm.cmmn.task.jpa.query.PlannableTaskSummaryImpl(
 			t.id,
 			t.name,
 			t.description,
@@ -734,7 +738,7 @@
 	<named-query name="PlannableTasksByStatus">
 		<query>
 			select distinct
-			new org.jbpm.cmmn.summary.jpa.query.PlannableTaskSummaryImpl(
+			new org.jbpm.cmmn.task.jpa.query.PlannableTaskSummaryImpl(
 			t.id,
 			t.name,
 			t.description,
@@ -762,7 +766,7 @@
 	<named-query name="PlannableTasksByStatusSince">
 		<query>
 			select
-			new org.jbpm.cmmn.summary.jpa.query.PlannableTaskSummaryImpl(
+			new org.jbpm.cmmn.task.jpa.query.PlannableTaskSummaryImpl(
 			t.id,
 			t.name,
 			t.description,
@@ -796,7 +800,7 @@
 	<named-query name="PlannableArchivedTasks">
 		<query>
 			select distinct
-			new org.jbpm.cmmn.summary.jpa.query.PlannableTaskSummaryImpl(
+			new org.jbpm.cmmn.task.jpa.query.PlannableTaskSummaryImpl(
 			t.id,
 			t.name,
 			t.description,
@@ -824,7 +828,7 @@
 	<named-query name="PlannableTasksOwnedWithParticularStatus">
 		<query>
 			select distinct
-			new org.jbpm.cmmn.summary.jpa.query.PlannableTaskSummaryImpl(
+			new org.jbpm.cmmn.task.jpa.query.PlannableTaskSummaryImpl(
 			t.id,
 			t.name,
 			t.description,
@@ -857,7 +861,7 @@
 	<named-query name="PlannableTasksummariesByIds">
 		<query>
 			select
-			new org.jbpm.cmmn.summary.jpa.query.PlannableTaskSummaryImpl(
+			new org.jbpm.cmmn.task.jpa.query.PlannableTaskSummaryImpl(
 			t.id,
 			t.name,
 			t.description,
@@ -1003,7 +1007,7 @@
 	<named-query name="PlannableTasksByStatusByProcessId">
 		<query>
 			select distinct
-			new org.jbpm.cmmn.summary.jpa.query.PlannableTaskSummaryImpl(
+			new org.jbpm.cmmn.task.jpa.query.PlannableTaskSummaryImpl(
 			t.id,
 			t.name,
 			t.description,
@@ -1033,7 +1037,7 @@
 	<named-query name="PlannableTasksByStatusByProcessIdByTaskName">
 		<query>
 			select distinct
-			new org.jbpm.cmmn.summary.jpa.query.PlannableTaskSummaryImpl(
+			new org.jbpm.cmmn.task.jpa.query.PlannableTaskSummaryImpl(
 			t.id,
 			t.name,
 			t.description,
@@ -1074,27 +1078,11 @@
 	</named-query>
 
 
-
-	<named-query name="AttachmentsByTaskId">
-		<query>
-			select
-			a
-			from
-			PlannableTaskImpl t
-			join t.taskData.attachments as a
-			where
-			t.id = :taskId
-		</query>
-		<!-- hint name="org.hibernate.timeout" value="200"/ -->
-	</named-query>
-
-
-
 	<named-query
 		name="PlannableQuickTasksAssignedAsPotentialOwnerWithGroupsByStatus">
 		<query>
 			select distinct
-			new org.jbpm.cmmn.summary.jpa.query.PlannableTaskSummaryImpl(
+			new org.jbpm.cmmn.task.jpa.query.PlannableTaskSummaryImpl(
 			t.id,
 			t.name,
 			t.description,
@@ -1131,7 +1119,7 @@
 		name="PlannableQuickTasksAssignedAsPotentialOwnerStatusByExpirationDateOptional">
 		<query>
 			select distinct
-			new org.jbpm.cmmn.summary.jpa.query.PlannableTaskSummaryImpl(
+			new org.jbpm.cmmn.task.jpa.query.PlannableTaskSummaryImpl(
 			t.id,
 			t.name,
 			t.description,
@@ -1166,7 +1154,7 @@
 		name="PlannableQuickTasksAssignedAsPotentialOwnerStatusByExpirationDate">
 		<query>
 			select distinct
-			new org.jbpm.cmmn.summary.jpa.query.PlannableTaskSummaryImpl(
+			new org.jbpm.cmmn.task.jpa.query.PlannableTaskSummaryImpl(
 			t.id,
 			t.name,
 			t.description,
@@ -1200,7 +1188,7 @@
 	<named-query name="NewPlannableTasksAssignedAsPotentialOwner">
 		<query>
 			select distinct
-			new org.jbpm.cmmn.summary.jpa.query.PlannableTaskSummaryImpl(
+			new org.jbpm.cmmn.task.jpa.query.PlannableTaskSummaryImpl(
 			t.id,
 			t.name,
 			t.description,
@@ -1233,7 +1221,7 @@
 		name="NewPlannableTasksAssignedAsPotentialOwnerByExpirationDateOptional">
 		<query>
 			select distinct
-			new org.jbpm.cmmn.summary.jpa.query.PlannableTaskSummaryImpl(
+			new org.jbpm.cmmn.task.jpa.query.PlannableTaskSummaryImpl(
 			t.id,
 			t.name,
 			t.description,
@@ -1267,7 +1255,7 @@
 		name="NewPlannableTasksAssignedAsPotentialOwnerByExpirationDate">
 		<query>
 			select distinct
-			new org.jbpm.cmmn.summary.jpa.query.PlannableTaskSummaryImpl(
+			new org.jbpm.cmmn.task.jpa.query.PlannableTaskSummaryImpl(
 			t.id,
 			t.name,
 			t.description,
@@ -1299,7 +1287,7 @@
 	<named-query name="NewPlannableTasksOwned">
 		<query>
 			select distinct
-			new org.jbpm.cmmn.summary.jpa.query.PlannableTaskSummaryImpl(
+			new org.jbpm.cmmn.task.jpa.query.PlannableTaskSummaryImpl(
 			t.id,
 			t.name,
 			t.description,

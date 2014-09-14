@@ -10,10 +10,10 @@ import org.jbpm.cmmn.common.WorkItemParameters;
 import org.jbpm.cmmn.task.additional.commands.AddPlannedTaskCommand;
 import org.jbpm.cmmn.task.additional.commands.CreateTaskCommand;
 import org.jbpm.cmmn.task.internal.model.InternalPlannableTask;
+import org.jbpm.cmmn.task.jpa.model.PlannableTaskImpl;
 import org.jbpm.services.task.impl.model.GroupImpl;
 import org.jbpm.services.task.impl.model.I18NTextImpl;
 import org.jbpm.services.task.impl.model.TaskDataImpl;
-import org.jbpm.services.task.impl.model.TaskImpl;
 import org.jbpm.services.task.impl.model.UserImpl;
 import org.jbpm.services.task.utils.OnErrorAction;
 import org.jbpm.services.task.wih.LocalHTWorkItemHandler;
@@ -40,15 +40,18 @@ public class CaseTaskWorkItemHandler extends LocalHTWorkItemHandler {
 
 	@Override
 	protected Task createTaskBasedOnWorkItemParams(KieSession session, WorkItem workItem) {
-		InternalTask task = null;
-		task = new TaskImpl();
+		InternalPlannableTask task = new PlannableTaskImpl();
 		String taskName = (String) workItem.getParameter(WorkItemParameters.TASK_NODE_NAME);
-
+		
 		if (taskName != null) {
 			List<I18NText> names = new ArrayList<I18NText>();
 			names.add(new I18NTextImpl("en-UK", taskName));
 			task.setNames(names);
 			task.setName(taskName);
+		}
+		String planItemName = (String) workItem.getParameter(WorkItemParameters.TASK_PLAN_ITEM_NAME);
+		if(planItemName!=null){
+			task.setPlanItemName(planItemName);
 		}
 		// this should be replaced by FormName filled by designer
 		// TaskName shouldn't be trimmed if we are planning to use that for the task lists

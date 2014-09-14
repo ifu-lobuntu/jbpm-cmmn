@@ -7,6 +7,7 @@
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>jbpm-cmmn-test</artifactId>
+	<name>jBPM CMMN Test</name>
 	<packaging>jar</packaging>
 	<dependencies>
 		<dependency>
@@ -21,6 +22,14 @@
 		<dependency>
 			<groupId>${project.parent.groupId}</groupId>
 			<artifactId>jbpm-cmmn-casefile-jpa</artifactId>
+		</dependency>		
+		<dependency>
+			<groupId>${project.parent.groupId}</groupId>
+			<artifactId>jbpm-cmmn-task-jpa</artifactId>
+		</dependency>		
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
 		</dependency>		
 		<dependency>
 			<groupId>${project.parent.groupId}</groupId>
@@ -64,10 +73,10 @@
 			<groupId>org.apache.felix</groupId>
 			<artifactId>org.apache.felix.framework</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.eclipse.tycho</groupId>
-			<artifactId>org.eclipse.osgi</artifactId>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.eclipse.tycho</groupId> -->
+<!-- 			<artifactId>org.eclipse.osgi</artifactId> -->
+<!-- 		</dependency> -->
 	</dependencies>
 	<build>
 		<plugins>
@@ -86,7 +95,7 @@
 							<artifactItems>
 								<artifactItem>
 									<groupId>${project.groupId}</groupId>
-									<artifactId>pavanecce-cmmn-jbpm</artifactId>
+									<artifactId>jbpm-cmmn-flow</artifactId>
 									<version>${project.parent.version}</version>
 								</artifactItem>
 							</artifactItems>

@@ -17,7 +17,7 @@ public class OcmPersistentSubscriptionEventTest extends CaseFileItemEventTest {
 
 	@Test
 	public void testModel() throws Exception {
-		OcmCaseFilePersistence p = new OcmCaseFilePersistence(getOcmFactory(),getRuntimeManager());
+		OcmCaseFilePersistence p = new OcmCaseFilePersistence(getOcmFactory(),createRuntimeManager());
 		ConstructionCase constructionCase = new ConstructionCase("/cases/case1");
 		constructionCase.setName("MyConstructionCase");
 		this.housePlan = new HousePlan(constructionCase);

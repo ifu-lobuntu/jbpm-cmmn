@@ -51,7 +51,8 @@ public class CaseTask extends AbstractPlanItemDefinition implements TaskDefiniti
 	@Override
 	public Work getWork() {
 		Work result = work;
-		work.setParameter("NodeName", getName());
+		work.setParameter(WorkItemParameters.TASK_NODE_NAME, getName());
+		work.setParameter(WorkItemParameters.TASK_PLAN_ITEM_NAME, getName());
 		result.setParameter(WorkItemParameters.GROUP_ID, "Administrators");
 		result.setParameter(WorkItemParameters.BUSINESSADMINISTRATOR_ID, "Administrator");
 		return result;

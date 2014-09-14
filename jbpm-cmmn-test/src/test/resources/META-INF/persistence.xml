@@ -13,6 +13,7 @@
     <mapping-file>META-INF/JBPMorm.xml</mapping-file>
     <mapping-file>META-INF/Taskorm.xml</mapping-file>
     <mapping-file>META-INF/TaskAuditorm.xml</mapping-file>
+    <mapping-file>META-INF/PlannableTaskorm.xml</mapping-file>
     
     <class>org.jbpm.persistence.processinstance.ProcessInstanceInfo</class>
     <class>org.drools.persistence.info.SessionInfo</class>
@@ -57,9 +58,9 @@
     <class>org.jbpm.services.task.audit.impl.model.AuditTaskImpl</class>
 
         <!-- CMMN Event managment -->
-        <class>org.pavanecce.cmmn.jbpm.jpa.JpaCaseFileItemSubscriptionInfo</class>
-        <class>org.pavanecce.cmmn.jbpm.jpa.JpaCaseSubscriptionInfo</class>
-        <class>org.pavanecce.cmmn.jbpm.planning.PlannedTaskImpl</class>
+        <class>org.jbpm.cmmn.casefile.jpa.JpaCaseFileItemSubscriptionInfo</class>
+        <class>org.jbpm.cmmn.casefile.jpa.JpaCaseSubscriptionInfo</class>
+        <class>org.jbpm.cmmn.task.jpa.model.PlannableTaskImpl</class>
         <!-- Customer entities -->
         <class>test.cmmn.HousePlan</class>
         <class>test.cmmn.RoomPlan</class>
@@ -81,10 +82,10 @@
             <!-- BZ 841786: AS7/EAP 6/Hib 4 uses new (sequence) generators which seem to cause problems -->      
             <property name="hibernate.id.new_generator_mappings" value="false" />            
             <property name="hibernate.transaction.jta.platform" value="org.hibernate.service.jta.platform.internal.BitronixJtaPlatform" />
-            <property name="hibernate.ejb.event.post-insert" value="org.pavanecce.cmmn.jbpm.jpa.HibernateSubscriptionManager" />
-            <property name="hibernate.ejb.event.flush-entity" value="org.pavanecce.cmmn.jbpm.jpa.HibernateSubscriptionManager" />
-            <property name="hibernate.ejb.event.flush" value="org.pavanecce.cmmn.jbpm.jpa.HibernateSubscriptionManager" />
-            <property name="hibernate.ejb.event.post-delete" value="org.pavanecce.cmmn.jbpm.jpa.HibernateSubscriptionManager"/>
+            <property name="hibernate.ejb.event.post-insert" value="org.jbpm.cmmn.casefile.jpa.HibernateSubscriptionManager" />
+            <property name="hibernate.ejb.event.flush-entity" value="org.jbpm.cmmn.casefile.jpa.HibernateSubscriptionManager" />
+            <property name="hibernate.ejb.event.flush" value="org.jbpm.cmmn.casefile.jpa.HibernateSubscriptionManager" />
+            <property name="hibernate.ejb.event.post-delete" value="org.jbpm.cmmn.casefile.jpa.HibernateSubscriptionManager"/>
         </properties>        
     </persistence-unit>
 </persistence>    

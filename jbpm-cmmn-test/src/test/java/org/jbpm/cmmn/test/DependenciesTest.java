@@ -41,6 +41,7 @@ public class DependenciesTest {
 						"javax.security.auth.spi",
 						"javax.imageio.spi",
 						"javax.security.auth",
+						"org.apache.commons.io",
 						"org.w3c.dom",
 						"org.xml.sax",
 						"org.xml.sax.helpers",

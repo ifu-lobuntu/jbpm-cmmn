@@ -40,7 +40,8 @@ public class CaseTaskPlanItem extends AbstractPlanItem<CaseTask> implements Mult
 			for (Entry<String, Object> entry : sourceWork.getParameters().entrySet()) {
 				work.setParameter(entry.getKey(), entry.getValue());
 			}
-			work.setParameter("NodeName", getName());
+			work.setParameter(WorkItemParameters.TASK_NODE_NAME, getName());
+			work.setParameter(WorkItemParameters.TASK_PLAN_ITEM_NAME, getName());
 			work.setParameter(WorkItemParameters.GROUP_ID, getPlannerRoles(this));
 			work.setParameter(WorkItemParameters.BUSINESSADMINISTRATOR_ID, getPlannerRoles(this));
 		}

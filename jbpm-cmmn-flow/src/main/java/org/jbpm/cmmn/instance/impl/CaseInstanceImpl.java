@@ -146,7 +146,7 @@ public class CaseInstanceImpl extends RuleFlowProcessInstance implements CaseIns
 		workItem.setName("Human Task");
 		workItem.setProcessInstanceId(getId());
 		workItem.setParameters(new HashMap<String, Object>());
-		workItem.setParameter("NodeName", getCase().getName());
+		workItem.setParameter(WorkItemParameters.TASK_NODE_NAME, getCase().getName());
 		String initiator = getInitiator();
 		String caseOwner = getCaseOwner();
 		if (initiator != null) {

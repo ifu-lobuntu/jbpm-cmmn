@@ -10,7 +10,6 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.Transient;
 
 import org.jbpm.cmmn.task.internal.model.InternalPlannableTask;
@@ -21,8 +20,6 @@ import org.jbpm.services.task.impl.model.TaskImpl;
 public class PlannableTaskImpl extends TaskImpl implements InternalPlannableTask {
 
 	private static final long serialVersionUID = 11123315412L;
-	@Id()
-	Long id;
 	@Column(name = "discretionary_item_id")
 	private String discretionaryItemId;
 	@Basic

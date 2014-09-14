@@ -56,10 +56,10 @@ public abstract class AbstractOnPart extends EventNode implements Serializable, 
 		ContextContainer contextContainer = (ContextContainer) getNodeContainer();
 		VariableScope vs = (VariableScope) contextContainer.getDefaultContext(VariableScope.VARIABLE_SCOPE);
 		Variable var = vs.findVariable(getVariableName());
-//		if (var == null) {
-//			vs.getVariables().add(var = new Variable());
-//			var.setName(getVariableName());
-//		}
+		if (var == null) {
+			vs.getVariables().add(var = new Variable());
+			var.setName(getVariableName());
+		}
 		return var;
 	}
 
