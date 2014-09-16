@@ -7,24 +7,24 @@ import org.jbpm.cmmn.common.ApplicableDiscretionaryItem;
 
 public class PlanningTableInstance implements Serializable {
 	private static final long serialVersionUID = 7379712745917913470L;
-	private Collection<PlannableTaskSummary> plannedTasks;
+	private Collection<PlannableTask> plannedTasks;
 	private Collection<ApplicableDiscretionaryItem> applicableDiscretionaryItems;
 
 	public PlanningTableInstance() {
 		super();
 	}
 
-	public PlanningTableInstance(Collection<PlannableTaskSummary> plannedTasks, Collection<ApplicableDiscretionaryItem> applicableDiscretionaryItems) {
+	public PlanningTableInstance(Collection<PlannableTask> plannedTasks, Collection<ApplicableDiscretionaryItem> applicableDiscretionaryItems) {
 		super();
 		this.plannedTasks = plannedTasks;
 		this.applicableDiscretionaryItems = applicableDiscretionaryItems;
 	}
 
-	public Collection<PlannableTaskSummary> getPlannableTasks() {
+	public Collection<PlannableTask> getPlannableTasks() {
 		return plannedTasks;
 	}
 
-	public void setPlannableTasks(Collection<PlannableTaskSummary> plannedTasks) {
+	public void setPlannableTasks(Collection<PlannableTask> plannedTasks) {
 		this.plannedTasks = plannedTasks;
 	}
 

@@ -43,9 +43,15 @@ public class SubmitPlanCommand extends AbstractPlanningCommand<Void> {
 		RuntimeEngine runtime = runtimeManager.getRuntimeEngine(ProcessInstanceIdContext.get(parentTask.getTaskData().getProcessInstanceId()));
 		CaseInstance ci = (CaseInstance) runtime.getKieSession().getProcessInstance(parentTask.getTaskData().getProcessInstanceId());
 		for (PlannableTask plannedTask : plannedTasks) {
-			merge(plannedTask);
+			Task oldTask = getTaskById(plannedTask.getId());
+			try {
+				merge(plannedTask);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			addContent(plannedTask.getId(), plannedTask.getParameterOverrides());
-			Task currentTask = getTaskById(plannedTask.getId());
+			Task currentTask = oldTask;
 			InternalTaskData td = (InternalTaskData) currentTask.getTaskData();
 			td.setActualOwner(plannedTask.getTaskData().getActualOwner());
 			if (!currentTask.getPeopleAssignments().getPotentialOwners().contains(td.getActualOwner())) {

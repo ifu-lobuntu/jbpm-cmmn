@@ -44,7 +44,7 @@ public class PlanningServiceImpl implements PlanningService {
 
 	}
 
-	private Collection<PlannableTaskSummary> getPlannedItemsForParentTask(final long parentTaskId, final boolean createMissing) {
+	private Collection<PlannableTask> getPlannedItemsForParentTask(final long parentTaskId, final boolean createMissing) {
 		return taskService.execute(new GetPlannedItemsForParentTaskCommand(parentTaskId));
 	}
 

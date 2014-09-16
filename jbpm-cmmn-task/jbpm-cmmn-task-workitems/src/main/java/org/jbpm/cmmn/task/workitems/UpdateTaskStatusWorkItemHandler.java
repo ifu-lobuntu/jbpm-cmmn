@@ -5,6 +5,10 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 import org.drools.core.process.instance.WorkItemHandler;
+import org.drools.persistence.PersistenceContext;
+import org.drools.persistence.PersistenceContextManager;
+import org.drools.persistence.jpa.JpaPersistenceContext;
+import org.drools.persistence.jpa.JpaPersistenceContextManager;
 import org.jbpm.cmmn.common.WorkItemParameters;
 import org.jbpm.cmmn.flow.core.PlanItemTransition;
 import org.jbpm.cmmn.instance.PlanElementState;
@@ -21,6 +25,7 @@ import org.jbpm.services.task.commands.SuspendTaskCommand;
 import org.jbpm.services.task.commands.TaskCommand;
 import org.jbpm.services.task.impl.model.GroupImpl;
 import org.jbpm.services.task.wih.util.PeopleAssignmentHelper;
+import org.kie.api.runtime.EnvironmentName;
 import org.kie.api.runtime.manager.RuntimeEngine;
 import org.kie.api.runtime.manager.RuntimeManager;
 import org.kie.api.runtime.process.WorkItem;
@@ -44,9 +49,15 @@ public class UpdateTaskStatusWorkItemHandler implements WorkItemHandler {
 
 	@Override
 	public void executeWorkItem(final WorkItem workItem, WorkItemManager manager) {
+		RuntimeEngine runtime = getRuntimeManager().getRuntimeEngine(ProcessInstanceIdContext.get(workItem.getProcessInstanceId()));
+		PersistenceContextManager pcm = (PersistenceContextManager) runtime.getKieSession().getEnvironment().get( EnvironmentName.PERSISTENCE_CONTEXT_MANAGER );
+		if(pcm instanceof JpaPersistenceContextManager){
+			JpaPersistenceContextManager jpcm=(JpaPersistenceContextManager) pcm;
+			jpcm.getCommandScopedEntityManager().flush();//To force process persistence
+		}
+
 		final Long workItemId = (Long) workItem.getParameter(WorkItemParameters.WORK_ITEM_ID);
 		final PlanItemTransition transition = (PlanItemTransition) workItem.getParameter(WorkItemParameters.TASK_TRANSITION);
-		RuntimeEngine runtime = getRuntimeManager().getRuntimeEngine(ProcessInstanceIdContext.get(workItem.getProcessInstanceId()));
 		InternalTaskService its = (InternalTaskService) runtime.getTaskService();
 		Task task = its.getTaskByWorkItemId(workItemId);
 		long taskId = task.getId();

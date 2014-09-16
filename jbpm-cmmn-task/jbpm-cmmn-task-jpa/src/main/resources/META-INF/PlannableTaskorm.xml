@@ -475,7 +475,7 @@
 		<!-- hint name="org.hibernate.timeout" value="200"/ -->
 	</named-query>
 
-	<named-query name="PlannableGetSubTasksByParentTaskId">
+	<named-query name="PlannableGetSubTaskSummaryByParentTaskId">
 		<query>
 			select distinct
 			new org.jbpm.cmmn.task.jpa.query.PlannableTaskSummaryImpl(
@@ -498,6 +498,20 @@
 			from
 			PlannableTaskImpl t,
 			OrganizationalEntityImpl potentialOwners
+			where
+			t.archived = 0 and
+			t.taskData.parentId = :parentId and
+			t.taskData.status in ('Created', 'Ready', 'Reserved', 'InProgress', 'Suspended')
+			order by t.id DESC
+		</query>
+		<!-- hint name="org.hibernate.timeout" value="200"/ -->
+	</named-query>
+	<named-query name="PlannableGetSubTasksByParentTaskId">
+		<query>
+			select distinct
+			t
+			from
+			PlannableTaskImpl t
 			where
 			t.archived = 0 and
 			t.taskData.parentId = :parentId and

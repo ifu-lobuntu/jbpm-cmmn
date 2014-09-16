@@ -6,11 +6,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.drools.persistence.PersistenceContextManager;
+import org.drools.persistence.jpa.JpaPersistenceContextManager;
 import org.jbpm.services.task.commands.TaskCommand;
 import org.jbpm.services.task.commands.TaskContext;
 import org.jbpm.services.task.events.TaskEventImpl;
 import org.jbpm.services.task.events.TaskEventSupport;
 import org.jbpm.services.task.utils.ContentMarshallerHelper;
+import org.kie.api.runtime.EnvironmentName;
 import org.kie.api.task.TaskLifeCycleEventListener;
 import org.kie.api.task.model.Content;
 import org.kie.api.task.model.Task;

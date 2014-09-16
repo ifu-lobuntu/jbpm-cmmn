@@ -21,7 +21,6 @@ import org.jbpm.cmmn.instance.ControllableItemInstance;
 import org.jbpm.cmmn.instance.PlanElementLifecycleWithTask;
 import org.jbpm.cmmn.instance.PlanElementState;
 import org.jbpm.cmmn.instance.impl.util.ExpressionUtil;
-import org.jbpm.cmmn.instance.subscription.impl.AbstractDurableSubscriptionManager;
 import org.jbpm.cmmn.instance.subscription.impl.EventQueues;
 import org.jbpm.process.core.context.exception.ExceptionScope;
 import org.jbpm.process.core.context.variable.VariableScope;
@@ -30,6 +29,7 @@ import org.jbpm.process.instance.ProcessInstance;
 import org.jbpm.process.instance.context.exception.ExceptionScopeInstance;
 import org.jbpm.workflow.instance.WorkflowRuntimeException;
 import org.jbpm.workflow.instance.node.CompositeContextNodeInstance;
+import org.kie.api.runtime.EnvironmentName;
 import org.kie.api.runtime.process.NodeInstance;
 
 public abstract class ControllableItemInstanceImpl<T extends PlanItemDefinition, X extends TaskItemWithDefinition<T>> extends CompositeContextNodeInstance
@@ -141,7 +141,7 @@ public abstract class ControllableItemInstanceImpl<T extends PlanItemDefinition,
 		wi.getParameters().putAll(buildParametersFor(transition));
 		//TODO this is not reliable
 		EventQueues.queueWorkItem(wi);
-		// executeWorkItem(wi);
+//		executeWorkItem(wi);
 	}
 
 	protected Map<String, Object> buildParametersFor(PlanItemTransition transition) {
