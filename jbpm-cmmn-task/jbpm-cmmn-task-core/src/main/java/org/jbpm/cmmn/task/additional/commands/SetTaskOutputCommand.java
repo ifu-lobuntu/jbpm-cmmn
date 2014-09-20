@@ -20,7 +20,7 @@ public class SetTaskOutputCommand extends AbstractTaskCommand<Long> {
 	public Long execute() {
 		Task task = getTaskById(taskId);
 		InternalTaskData itd = (InternalTaskData) task.getTaskData();
-		itd.setOutputContentId(ensureContentPresent(task, itd.getOutputContentId(), outputAsMap, "Output"));
+		itd.setOutputContentId(ensureContentIdPresent(task, itd.getOutputContentId(), outputAsMap, "Output"));
 		return (Long) task.getId();
 	}
 }

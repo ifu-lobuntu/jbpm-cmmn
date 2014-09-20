@@ -23,8 +23,8 @@ public class CreateTaskCommand extends AbstractTaskCommand<Long> {
 	public Long execute() {
 		fireBeforeTaskAddedEvent(task);
 		((InternalTaskData) task.getTaskData()).setStatus(Status.Created);
-		((InternalTaskData) task.getTaskData()).setDocumentContentId(ensureContentPresent(task, -1, inputParameters, "Content"));
-		((InternalTaskData) task.getTaskData()).setOutputContentId(ensureContentPresent(task, -1, new HashMap<String, Object>(), "Outpupt"));
+		((InternalTaskData) task.getTaskData()).setDocumentContentId(ensureContentIdPresent(task, -1, inputParameters, "Content"));
+		((InternalTaskData) task.getTaskData()).setOutputContentId(ensureContentIdPresent(task, -1, new HashMap<String, Object>(), "Output"));
 		persist(task);
 		fireAfterTaskAddedEvent(task);
 		return (Long) task.getId();

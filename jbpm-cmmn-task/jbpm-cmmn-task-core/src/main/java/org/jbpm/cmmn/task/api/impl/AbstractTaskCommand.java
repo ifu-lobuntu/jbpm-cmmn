@@ -6,16 +6,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.drools.persistence.PersistenceContextManager;
-import org.drools.persistence.jpa.JpaPersistenceContextManager;
 import org.jbpm.services.task.commands.TaskCommand;
 import org.jbpm.services.task.commands.TaskContext;
 import org.jbpm.services.task.events.TaskEventImpl;
 import org.jbpm.services.task.events.TaskEventSupport;
 import org.jbpm.services.task.utils.ContentMarshallerHelper;
-import org.kie.api.runtime.EnvironmentName;
 import org.kie.api.task.TaskLifeCycleEventListener;
-import org.kie.api.task.model.Content;
 import org.kie.api.task.model.Task;
 import org.kie.internal.command.Context;
 import org.kie.internal.task.api.ContentMarshallerContext;
@@ -30,8 +26,10 @@ import org.kie.internal.task.api.model.InternalContent;
 public abstract class AbstractTaskCommand<T> extends TaskCommand<T> {
 
 	private static final long serialVersionUID = -6267126920414609188L;
-	protected TaskPersistenceContext pm;
-	private TaskContext ts;
+
+	protected TaskPersistenceContext taskPersistenceContext;
+
+	protected TaskContext taskContext;
 
 	public AbstractTaskCommand() {
 		super();
@@ -47,44 +45,44 @@ public abstract class AbstractTaskCommand<T> extends TaskCommand<T> {
 	}
 
 	protected void addContent(Long id, Map<String, Object> params) {
-		ts.getTaskContentService().addContent(id, params);
+		taskContext.getTaskContentService().addContent(id, params);
 	}
 
 	protected void persist(Object o) {
-		this.pm.persist(o);
+		this.taskPersistenceContext.persist(o);
 	}
 
 	protected void merge(Object o) {
-		this.pm.merge(o);
+		this.taskPersistenceContext.merge(o);
 	}
 
 	protected <X> X find(Class<X> c, Object id) {
-		return pm.find(c, id);
+		return taskPersistenceContext.find(c, id);
 	}
 
 	protected Task getTaskById(long taskId) {
-		return ts.getTaskQueryService().getTaskInstanceById(taskId);
+		return taskContext.getTaskQueryService().getTaskInstanceById(taskId);
 	}
 
 	protected Task getTaskByWorkItemId(long id) {
-		return ts.getTaskQueryService().getTaskByWorkItemId(id);
+		return taskContext.getTaskQueryService().getTaskByWorkItemId(id);
 	}
 
 	protected TaskIdentityService getTaskIdentityService() {
-		return ts.getTaskIdentityService();
+		return taskContext.getTaskIdentityService();
 	}
 
 	protected TaskQueryService getTaskQueryService() {
-		return ts.getTaskQueryService();
+		return taskContext.getTaskQueryService();
 	}
 
 	protected TaskInstanceService getTaskInstanceService() {
-		return ts.getTaskInstanceService();
+		return taskContext.getTaskInstanceService();
 	}
 
-	private void init(TaskContext taskContext) {
-		this.pm = taskContext.getPersistenceContext();
-		this.ts = taskContext;
+	protected void init(TaskContext taskContext) {
+		this.taskPersistenceContext = taskContext.getPersistenceContext();
+		this.taskContext = taskContext;
 	}
 
 	public final String toString() {
@@ -99,21 +97,26 @@ public abstract class AbstractTaskCommand<T> extends TaskCommand<T> {
 		return contentObject;
 	}
 
-	protected long ensureContentPresent(Task task, long existingId, Map<String, Object> newContentAsMap, String contentNameInMap) {
+	protected long ensureContentIdPresent(Task task, long existingId, Map<String, Object> newContentAsMap, String contentNameInMap) {
+		InternalContent resultingContent = ensureContentPresent(task, existingId, newContentAsMap, contentNameInMap);
+		return resultingContent.getId();
+	}
+
+	protected InternalContent ensureContentPresent(Task task, long existingId, Map<String, Object> newContentAsMap, String contentNameInMap) {
 		InternalContent existingContent = null;
-		ContentMarshallerContext mc = ts.getTaskContentService().getMarshallerContext(task);
-		if (existingId < 0 || (existingContent =  (InternalContent) pm.findContent(existingId)) == null) {
+		ContentMarshallerContext mc = taskContext.getTaskContentService().getMarshallerContext(task);
+		if (existingId < 0 || (existingContent = (InternalContent) taskPersistenceContext.findContent(existingId)) == null) {
 			Object correctContentObject = getCorrectContentObject(newContentAsMap, contentNameInMap);
 			ContentData contentData = ContentMarshallerHelper.marshal(correctContentObject, mc.getEnvironment());
 			InternalContent newlyCreatedContent = (InternalContent) TaskModelProvider.getFactory().newContent();
 			newlyCreatedContent.setContent(contentData.getContent());
 			persist(newlyCreatedContent);
-			return newlyCreatedContent.getId();
+			return newlyCreatedContent;
 		} else {
 			Object contentObjectToUpdateTaskWith = mergeContentObjectIfPossible(newContentAsMap, contentNameInMap, existingContent, mc);
 			ContentData contentData = ContentMarshallerHelper.marshal(contentObjectToUpdateTaskWith, mc.getEnvironment());
 			existingContent.setContent(contentData.getContent());
-			return existingContent.getId();
+			return existingContent;
 		}
 	}
 
@@ -153,7 +156,7 @@ public abstract class AbstractTaskCommand<T> extends TaskCommand<T> {
 		try {
 			Field esField = TaskContext.class.getDeclaredField("taskEventSupport");
 			esField.setAccessible(true);
-			es = (TaskEventSupport) esField.get(ts);
+			es = (TaskEventSupport) esField.get(taskContext);
 		} catch (RuntimeException e) {
 			throw e;
 		} catch (Exception e) {
@@ -188,25 +191,25 @@ public abstract class AbstractTaskCommand<T> extends TaskCommand<T> {
 
 	protected void fireBeforeTaskCompletedEvent(Task t) {
 		for (TaskLifeCycleEventListener l : getTaskEventSupport().getEventListeners()) {
-			l.beforeTaskCompletedEvent(new TaskEventImpl(t, ts));
+			l.beforeTaskCompletedEvent(new TaskEventImpl(t, taskContext));
 		}
 	}
 
 	protected void fireAfterTaskCompletedEvent(Task t) {
 		for (TaskLifeCycleEventListener l : getTaskEventSupport().getEventListeners()) {
-			l.afterTaskCompletedEvent(new TaskEventImpl(t, ts));
+			l.afterTaskCompletedEvent(new TaskEventImpl(t, taskContext));
 		}
 	}
 
 	protected void fireBeforeTaskAddedEvent(Task t) {
 		for (TaskLifeCycleEventListener l : getTaskEventSupport().getEventListeners()) {
-			l.beforeTaskAddedEvent(new TaskEventImpl(t, this.ts));
+			l.beforeTaskAddedEvent(new TaskEventImpl(t, this.taskContext));
 		}
 	}
 
 	protected void fireAfterTaskAddedEvent(Task t) {
 		for (TaskLifeCycleEventListener l : getTaskEventSupport().getEventListeners()) {
-			l.afterTaskAddedEvent(new TaskEventImpl(t, ts));
+			l.afterTaskAddedEvent(new TaskEventImpl(t, taskContext));
 		}
 	}
 

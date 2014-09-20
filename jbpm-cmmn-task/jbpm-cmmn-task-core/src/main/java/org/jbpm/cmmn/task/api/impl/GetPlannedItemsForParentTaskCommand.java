@@ -19,8 +19,8 @@ public class GetPlannedItemsForParentTaskCommand extends AbstractPlanningCommand
 
 	@Override
 	public Collection<PlannableTask> execute() {
-		List<PlannableTask> result = (List<PlannableTask>) pm.queryWithParametersInTransaction("PlannableGetSubTasksByParentTaskId",
-				pm.addParametersToMap("parentId", parentTaskId), ClassUtil.<List<PlannableTask>> castClass(List.class));
+		List<PlannableTask> result = (List<PlannableTask>) taskPersistenceContext.queryWithParametersInTransaction("PlannableGetSubTasksByParentTaskId",
+				taskPersistenceContext.addParametersToMap("parentId", parentTaskId), ClassUtil.<List<PlannableTask>> castClass(List.class));
 		for (PlannableTask p : result) {
 			PeopleAssignments pa = p.getPeopleAssignments();
 			pa.getBusinessAdministrators().size();
