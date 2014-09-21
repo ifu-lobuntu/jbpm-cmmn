@@ -102,7 +102,7 @@ public abstract class AbstractTaskCommand<T> extends TaskCommand<T> {
 		return resultingContent.getId();
 	}
 
-	protected InternalContent ensureContentPresent(Task task, long existingId, Map<String, Object> newContentAsMap, String contentNameInMap) {
+	private InternalContent ensureContentPresent(Task task, long existingId, Map<String, Object> newContentAsMap, String contentNameInMap) {
 		InternalContent existingContent = null;
 		ContentMarshallerContext mc = taskContext.getTaskContentService().getMarshallerContext(task);
 		if (existingId < 0 || (existingContent = (InternalContent) taskPersistenceContext.findContent(existingId)) == null) {
