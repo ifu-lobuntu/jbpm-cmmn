@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated cmmn10 -->
+      <package
+            uri="http://www.omg.org/spec/CMMN/20131201/MODEL"
+            class="org.omg.cmmn10.Cmmn10Package"
+            genModel="model/cmmn10.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <!-- @generated cmmn10 -->
+      <parser
+            type="cmmn10"
+            class="org.omg.cmmn10.util.Cmmn10ResourceFactoryImpl"/>
+   </extension>
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated cmmn1 -->
+      <package
+            uri="http://www.omg.org/spec/CMMN/20131201/MODEL"
+            class="org.omg.cmmn1.Cmmn1Package"
+            genModel="model/cmmn10.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <!-- @generated cmmn1 -->
+      <parser
+            type="cmmn1"
+            class="org.omg.cmmn1.util.Cmmn1ResourceFactoryImpl"/>
+   </extension>
+</plugin>

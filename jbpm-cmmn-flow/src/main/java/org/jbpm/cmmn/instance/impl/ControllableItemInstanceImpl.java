@@ -1,5 +1,6 @@
 package org.jbpm.cmmn.instance.impl;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -63,6 +64,14 @@ public abstract class ControllableItemInstanceImpl<T extends PlanItemDefinition,
 		if (isActivatedManually()) {
 			return null;
 		} else {
+			if(getIdealRoles()!=null){
+				Collection<String> roleAssignments = getCaseInstance().getRoleAssignments(getIdealRoles());
+				if(roleAssignments!=null && roleAssignments.size()==1){
+					return roleAssignments.iterator().next();
+				}else{
+					return null;
+				}
+			}
 			return getCaseInstance().getCaseOwner();
 		}
 	}
@@ -134,6 +143,10 @@ public abstract class ControllableItemInstanceImpl<T extends PlanItemDefinition,
 		wi.setName(WorkItemParameters.UPDATE_TASK_STATUS);
 		wi.setParameter(WorkItemParameters.TASK_TRANSITION, transition);
 		wi.setParameter(WorkItemParameters.WORK_ITEM_ID, getWorkItemId());
+		if(getItem().getName().equals("TheAutoActivatedTaskPlanItem")){
+			System.out.println();
+		}
+
 		wi.setParameter(WorkItemParameters.ACTOR_ID, getIdealOwner());
 		wi.setParameter(WorkItemParameters.USERS_IN_ROLE, getCaseInstance().getRoleAssignments(getIdealRoles()));
 		wi.setParameter(WorkItemParameters.GROUP_ID, getIdealRoles());
@@ -156,6 +169,9 @@ public abstract class ControllableItemInstanceImpl<T extends PlanItemDefinition,
 
 	@Override
 	public void internalTrigger(NodeInstance from, String type) {
+		if(getItem().getName().equals("TheAutoActivatedTaskPlanItem")){
+			System.out.println();
+		}
 		super.internalTrigger(from, type);
 		workItem = createWorkItem(getItem().getWork());
 		if (isBlocking()) {
@@ -256,6 +272,9 @@ public abstract class ControllableItemInstanceImpl<T extends PlanItemDefinition,
 		if (type.equals(WorkItemParameters.WORK_ITEM_UPDATED) && isMyWorkItem((WorkItem) event)) {
 			this.workItem = (WorkItem) event;
 			PlanItemTransition transition = (PlanItemTransition) workItem.getResult(WorkItemParameters.TRANSITION);
+			if(transition==PlanItemTransition.START){
+				System.out.println();
+			}
 			transition.invokeOn(this);
 		} else {
 			super.signalEvent(type, event);

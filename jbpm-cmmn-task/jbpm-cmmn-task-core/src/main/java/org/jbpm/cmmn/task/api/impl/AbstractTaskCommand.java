@@ -151,7 +151,7 @@ public abstract class AbstractTaskCommand<T> extends TaskCommand<T> {
 		return result;
 	}
 
-	private TaskEventSupport getTaskEventSupport() {
+	protected TaskEventSupport getTaskEventSupport() {
 		TaskEventSupport es = null;
 		try {
 			Field esField = TaskContext.class.getDeclaredField("taskEventSupport");

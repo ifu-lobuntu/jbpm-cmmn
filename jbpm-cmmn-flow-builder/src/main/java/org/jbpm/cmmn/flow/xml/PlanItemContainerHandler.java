@@ -69,6 +69,10 @@ public abstract class PlanItemContainerHandler extends BaseAbstractHandler {
 				linkSentryOnPart(container, variableScope, (SentryImpl) node);
 			}
 		}
+		if(defaultSplit.getOutgoingConnections().size()==1){
+			//HACK to get around empty containers - maybe should rather validate up front
+			new ConnectionImpl(defaultSplit, DEFAULT, defaultJoin, DEFAULT);
+		}
 	}
 
 	protected void linkDiscretionaryItemCriteria(PlanItemContainer process, DiscretionaryItemImpl<?> node) {

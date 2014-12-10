@@ -20,6 +20,9 @@ public enum PlanItemTransition {
 
 	public void invokeOn(Object target) {
 		try {
+			if(this==START){
+				System.out.println();
+			}
 			target.getClass().getMethod(underscoredToCamelCase(name().toLowerCase())).invoke(target);
 		} catch (IllegalAccessException e) {
 			throw new RuntimeException(e);

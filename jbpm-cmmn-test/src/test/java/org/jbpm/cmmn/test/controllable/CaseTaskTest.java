@@ -52,7 +52,7 @@ public class CaseTaskTest extends AbstractControllableLifecycleTest {
 		// *****WHEN
 		triggerStartOfTask(); // Creates a second wallPlan
 		List<TaskSummary> list = getTaskService().getTasksAssignedAsPotentialOwner("ConstructionProjectManager", "en-UK");
-		assertEquals(2, list.size());
+		assertTaskTypeCreated(list, "TheEventGeneratingTaskPlanItem", 1);
 		long subTaskId = -1;
 		for (TaskSummary taskSummary : list) {
 			if (taskSummary.getName().equals("TheEventGeneratingTaskPlanItem")) {

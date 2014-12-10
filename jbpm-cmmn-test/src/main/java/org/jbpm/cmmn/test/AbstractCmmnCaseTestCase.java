@@ -95,6 +95,8 @@ import org.jbpm.process.instance.ProcessInstanceFactoryRegistry;
 import org.jbpm.process.instance.event.DefaultSignalManagerFactory;
 import org.jbpm.process.instance.impl.DefaultProcessInstanceManagerFactory;
 import org.jbpm.ruleflow.core.RuleFlowProcess;
+import org.jbpm.runtime.manager.impl.DefaultRegisterableItemsFactory;
+import org.jbpm.runtime.manager.impl.SimpleRegisterableItemsFactory;
 import org.jbpm.runtime.manager.impl.factory.LocalTaskServiceFactory;
 import org.jbpm.services.task.identity.JBossUserGroupCallbackImpl;
 import org.jbpm.services.task.impl.model.GroupImpl;
@@ -102,6 +104,7 @@ import org.jbpm.services.task.impl.model.UserImpl;
 import org.jbpm.services.task.lifecycle.listeners.TaskLifeCycleEventListener;
 import org.jbpm.services.task.wih.ExternalTaskEventListener;
 import org.jbpm.test.JbpmJUnitBaseTestCase;
+import org.jbpm.test.JbpmJUnitBaseTestCase.Strategy;
 import org.jbpm.workflow.instance.NodeInstanceContainer;
 import org.jbpm.workflow.instance.impl.NodeInstanceFactoryRegistry;
 import org.jbpm.workflow.instance.impl.factory.CreateNewNodeFactory;
@@ -109,6 +112,8 @@ import org.jbpm.workflow.instance.impl.factory.ReuseNodeFactory;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
+import org.kie.api.event.process.ProcessEventListener;
+import org.kie.api.event.rule.AgendaEventListener;
 import org.kie.api.io.ResourceType;
 import org.kie.api.marshalling.ObjectMarshallingStrategy;
 import org.kie.api.runtime.Environment;
@@ -119,6 +124,7 @@ import org.kie.api.runtime.manager.RuntimeEnvironmentBuilder;
 import org.kie.api.runtime.manager.RuntimeManager;
 import org.kie.api.runtime.manager.audit.NodeInstanceLog;
 import org.kie.api.runtime.process.NodeInstance;
+import org.kie.api.runtime.process.WorkItemHandler;
 import org.kie.api.task.TaskService;
 import org.kie.api.task.model.TaskSummary;
 import org.kie.internal.io.ResourceFactory;
@@ -462,31 +468,132 @@ public abstract class AbstractCmmnCaseTestCase extends JbpmJUnitBaseTestCase {
 		return createRuntimeManager(strategy, resources, identifier);
 	}
 
-	protected RuntimeManager createRuntimeManager(Strategy strategy, Map<String, ResourceType> resources, String identifier) {
-		if (manager != null) {
-			throw new IllegalStateException("There is already one RuntimeManager active");
-		}
 
-		RuntimeEnvironmentBuilder builder = null;
-		if (!setupDataSource) {
-			builder = RuntimeEnvironmentBuilder.Factory.get().newEmptyBuilder().registerableItemsFactory(new CaseRegisterableItemsFactory())
-					.addConfiguration("drools.processSignalManagerFactory", DefaultSignalManagerFactory.class.getName())
-					.addConfiguration("drools.processInstanceManagerFactory", DefaultProcessInstanceManagerFactory.class.getName());
-		} else if (sessionPersistence) {
-			builder = RuntimeEnvironmentBuilder.Factory.get().newDefaultBuilder().registerableItemsFactory(new CaseRegisterableItemsFactory())
-					.entityManagerFactory(emf);
-		} else {
-			builder = RuntimeEnvironmentBuilder.Factory.get().newDefaultInMemoryBuilder();
-		}
+    protected RuntimeManager createRuntimeManager(Strategy strategy, Map<String, ResourceType> resources, String identifier) {
+        if (manager != null) {
+            throw new IllegalStateException("There is already one RuntimeManager active");
+        }
+        
+        RuntimeEnvironmentBuilder builder = null;
+        if (!setupDataSource){
+            builder = RuntimeEnvironmentBuilder.Factory.get()
+        			.newEmptyBuilder()
+            .addConfiguration("drools.processSignalManagerFactory", DefaultSignalManagerFactory.class.getName())
+            .addConfiguration("drools.processInstanceManagerFactory", DefaultProcessInstanceManagerFactory.class.getName())
+            .registerableItemsFactory(new SimpleRegisterableItemsFactory() {
+
+				@Override
+				public Map<String, WorkItemHandler> getWorkItemHandlers(RuntimeEngine runtime) {
+					Map<String, WorkItemHandler> handlers = new HashMap<String, WorkItemHandler>();
+					handlers.putAll(super.getWorkItemHandlers(runtime));
+					handlers.putAll(customHandlers);
+					return handlers;
+				}
+	
+				@Override
+				public List<ProcessEventListener> getProcessEventListeners(RuntimeEngine runtime) {
+					List<ProcessEventListener> listeners = super.getProcessEventListeners(runtime);
+					listeners.addAll(customProcessListeners);
+					return listeners;
+				}
+	
+				@Override
+				public List<AgendaEventListener> getAgendaEventListeners( RuntimeEngine runtime) {
+					List<AgendaEventListener> listeners = super.getAgendaEventListeners(runtime);
+					listeners.addAll(customAgendaListeners);
+					return listeners;
+				}
+	
+				@Override
+				public List<org.kie.api.task.TaskLifeCycleEventListener> getTaskListeners() {
+					List<org.kie.api.task.TaskLifeCycleEventListener> listeners = super.getTaskListeners();
+					listeners.addAll(customTaskListeners);
+					return listeners;
+				}
+	        	
+	        });
+            
+        } else if (sessionPersistence) {
+            builder = RuntimeEnvironmentBuilder.Factory.get()
+        			.newDefaultBuilder()
+            .entityManagerFactory(emf)
+            .registerableItemsFactory(new CaseRegisterableItemsFactory() {
+
+				@Override
+				public Map<String, WorkItemHandler> getWorkItemHandlers(RuntimeEngine runtime) {
+					Map<String, WorkItemHandler> handlers = new HashMap<String, WorkItemHandler>();
+					handlers.putAll(super.getWorkItemHandlers(runtime));
+					handlers.putAll(customHandlers);
+					return handlers;
+				}
+	
+				@Override
+				public List<ProcessEventListener> getProcessEventListeners(RuntimeEngine runtime) {
+					List<ProcessEventListener> listeners = super.getProcessEventListeners(runtime);
+					listeners.addAll(customProcessListeners);
+					return listeners;
+				}
+	
+				@Override
+				public List<AgendaEventListener> getAgendaEventListeners( RuntimeEngine runtime) {
+					List<AgendaEventListener> listeners = super.getAgendaEventListeners(runtime);
+					listeners.addAll(customAgendaListeners);
+					return listeners;
+				}
+	
+				@Override
+				public List<org.kie.api.task.TaskLifeCycleEventListener> getTaskListeners() {
+					List<org.kie.api.task.TaskLifeCycleEventListener> listeners = super.getTaskListeners();
+					listeners.addAll(customTaskListeners);
+					return listeners;
+				}
+	        	
+	        });
+        } else {
+            builder = RuntimeEnvironmentBuilder.Factory.get()
+        			.newDefaultInMemoryBuilder()
+        			.registerableItemsFactory(new CaseRegisterableItemsFactory() {
+
+				@Override
+				public Map<String, WorkItemHandler> getWorkItemHandlers(RuntimeEngine runtime) {
+					Map<String, WorkItemHandler> handlers = new HashMap<String, WorkItemHandler>();
+					handlers.putAll(super.getWorkItemHandlers(runtime));
+					handlers.putAll(customHandlers);
+					return handlers;
+				}
+	
+				@Override
+				public List<ProcessEventListener> getProcessEventListeners(RuntimeEngine runtime) {
+					List<ProcessEventListener> listeners = super.getProcessEventListeners(runtime);
+					listeners.addAll(customProcessListeners);
+					return listeners;
+				}
+	
+				@Override
+				public List<AgendaEventListener> getAgendaEventListeners( RuntimeEngine runtime) {
+					List<AgendaEventListener> listeners = super.getAgendaEventListeners(runtime);
+					listeners.addAll(customAgendaListeners);
+					return listeners;
+				}
+	
+				@Override
+				public List<org.kie.api.task.TaskLifeCycleEventListener> getTaskListeners() {
+					List<org.kie.api.task.TaskLifeCycleEventListener> listeners = super.getTaskListeners();
+					listeners.addAll(customTaskListeners);
+					return listeners;
+				}
+	        	
+	        });       
+        }
 		builder.addConfiguration(ClockTypeOption.PROPERTY_NAME, ClockType.PSEUDO_CLOCK.getId());
-		builder.userGroupCallback(new JBossUserGroupCallbackImpl("classpath:/usergroups.properties"));
-
-		for (Map.Entry<String, ResourceType> entry : resources.entrySet()) {
-			builder.addAsset(ResourceFactory.newClassPathResource(entry.getKey()), entry.getValue());
-		}
-
-		return createRuntimeManager(strategy, resources, builder.get(), identifier);
-	}
+        builder.userGroupCallback(new JBossUserGroupCallbackImpl("classpath:/usergroups.properties"));
+        
+        for (Map.Entry<String, ResourceType> entry : resources.entrySet()) {            
+            builder.addAsset(ResourceFactory.newClassPathResource(entry.getKey()), entry.getValue());
+        }
+        
+        return createRuntimeManager(strategy, resources, builder.get(), identifier);
+    }
 
 	@Override
 	protected RuntimeManager createRuntimeManager(String... processFile) {
@@ -507,7 +614,7 @@ public abstract class AbstractCmmnCaseTestCase extends JbpmJUnitBaseTestCase {
 		RuntimeManager rm = super.createRuntimeManager(processFile);
 		this.runtimeManager = rm;
 		RuntimeEngine runtimeEngine = getRuntimeEngine();
-		fixPersistenceStrategy(runtimeEngine);
+//		fixPersistenceStrategy(runtimeEngine);
 		Environment env = runtimeEngine.getKieSession().getEnvironment();
 		prepareEnvironment(env);
 		NodeInstanceFactoryRegistry nodeInstanceFactoryRegistry = NodeInstanceFactoryRegistry.getInstance(env);
@@ -554,7 +661,7 @@ public abstract class AbstractCmmnCaseTestCase extends JbpmJUnitBaseTestCase {
 	// temporary fix for bug in STandaloneJTa...STrategy
 	private void fixPersistenceStrategy(RuntimeEngine runtimeEngine) {
 		try {
-			JPAAuditLogService jas = (JPAAuditLogService) runtimeEngine.getAuditLogService();
+			JPAAuditLogService jas = (JPAAuditLogService) runtimeEngine.getAuditService();
 			Field field = JPAAuditLogService.class.getDeclaredField("persistenceStrategy");
 			field.setAccessible(true);
 			final PersistenceStrategy ps = (PersistenceStrategy) field.get(jas);
@@ -710,8 +817,8 @@ public abstract class AbstractCmmnCaseTestCase extends JbpmJUnitBaseTestCase {
 	}
 
 	protected void clearHistory() {
-		if (sessionPersistence && getRuntimeManager() != null && getRuntimeEngine() != null && getRuntimeEngine().getAuditLogService() != null) {
-			getRuntimeEngine().getAuditLogService().clear();
+		if (sessionPersistence && getRuntimeManager() != null && getRuntimeEngine() != null && getRuntimeEngine().getAuditService() != null) {
+			getRuntimeEngine().getAuditService().clear();
 		}
 	}
 

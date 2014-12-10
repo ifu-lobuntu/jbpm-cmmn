@@ -30,6 +30,7 @@ public class GetApplicableDiscretionaryItemsCommand extends AbstractTaskCommand<
 		RuntimeEngine runtime = runtimeManager.getRuntimeEngine(ProcessInstanceIdContext.get(td.getProcessInstanceId()));
 		CaseInstance ci = (CaseInstance) runtime.getKieSession().getProcessInstance(td.getProcessInstanceId());
 		if (suspend) {
+			taskContext.set("local:groups", taskContext.getUserGroupCallback().getGroupsForUser(getUserId(), null, null));
 			getTaskInstanceService().suspend(parentTaskId, userId);
 		}
 		Collection<String> roles = ci.getCaseRoleNames();

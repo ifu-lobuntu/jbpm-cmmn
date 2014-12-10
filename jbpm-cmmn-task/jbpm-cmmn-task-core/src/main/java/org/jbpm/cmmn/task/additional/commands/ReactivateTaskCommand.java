@@ -37,7 +37,6 @@ public class ReactivateTaskCommand extends AbstractTaskCommand<Void> {
 		}
 		td.setStatus(Status.InProgress);
 		fireAfterTaskReactivatedEvent(task);
-
 		return null;
 	}
 }

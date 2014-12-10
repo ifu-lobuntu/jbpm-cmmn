@@ -66,8 +66,8 @@ public class StageInstance extends ControllableItemInstanceImpl<Stage, TaskItemW
 	@Override
 	protected String getIdealRoles() {
 		String bas = getBusinessAdministrators();
-		if (bas.equals("Administrators") && getCaseInstance().getCaseOwner() != null) {
-			return getCaseInstance().getCaseOwner();
+		if (bas.equals("Administrators")) {
+			return null;
 		}
 		return bas;
 	}
