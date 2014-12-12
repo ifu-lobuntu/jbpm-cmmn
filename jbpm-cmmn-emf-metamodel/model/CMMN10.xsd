@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema elementFormDefault="qualified" 
+<xsd:schema elementFormDefault="qualified"
             attributeFormDefault="unqualified"
-            xmlns="http://www.omg.org/spec/CMMN/20131201/MODEL" 
-            xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+            xmlns:cmmndi="http://www.omg.org/spec/CMMN/20131201/DI"
+            xmlns="http://www.omg.org/spec/CMMN/20131201/MODEL"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
             targetNamespace="http://www.omg.org/spec/CMMN/20131201/MODEL">
-
+  <xsd:import namespace="http://www.omg.org/spec/CMMN/20131201/DI" schemaLocation="CMMNDI.xsd"/>
   <xsd:include schemaLocation="CMMN10CaseModel.xsd">
     <xsd:annotation>
       <xsd:documentation>
@@ -24,11 +25,11 @@
       </xsd:documentation>
     </xsd:annotation>
   </xsd:element>
-  
+
   <xsd:complexType name="tDefinitions">
     <xsd:annotation>
       <xsd:documentation>
-        tDefinitions defines the type of element "definitions". 
+        tDefinitions defines the type of element "definitions".
       </xsd:documentation>
     </xsd:annotation>
     <xsd:sequence>
@@ -36,11 +37,12 @@
       <xsd:element ref="caseFileItemDefinition" minOccurs="0" maxOccurs="unbounded"/>
       <xsd:element ref="case" minOccurs="0" maxOccurs="unbounded"/>
       <xsd:element ref="process" minOccurs="0" maxOccurs="unbounded"/>
+	  <xsd:element ref="cmmndi:CMMNDiagram" minOccurs="0" maxOccurs="unbounded"/>
     </xsd:sequence>
     <xsd:attribute name="id" type="xsd:ID"/>
     <xsd:attribute name="name" type="xsd:string"/>
     <xsd:attribute name="targetNamespace" type="xsd:anyURI" use="required"/>
-    <xsd:attribute name="expressionLanguage" type="xsd:anyURI" 
+    <xsd:attribute name="expressionLanguage" type="xsd:anyURI"
                    use="optional" default="http://www.w3.org/1999/XPath"/>
     <xsd:attribute name="exporter" type="xsd:string"/>
     <xsd:attribute name="exporterVersion" type="xsd:string"/>

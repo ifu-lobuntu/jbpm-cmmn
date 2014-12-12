@@ -1,0 +1,685 @@
+<?xml version="1.0" encoding="ASCII"?>
+<xsd2ecore:XSD2EcoreMappingRoot xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsd2ecore="http://www.eclipse.org/emf/2002/XSD2Ecore" inputs="CMMN10.xsd#/ CMMN10CaseModel.xsd#/ DC.xsd#/ CMMNDI.xsd#/ DI.xsd#/"
+    outputs="CMMN10.ecore#/ DC.ecore#/ CMMNDI.ecore#/ DI.ecore#/" topToBottom="true">
+  <nested inputs="bundleentry://413.fwk1637451972/cache/www.w3.org/2001/XMLSchema.xsd#//string;XSDSimpleTypeDefinition=9"
+      outputs="http://www.eclipse.org/emf/2003/XMLType#//String"/>
+  <nested inputs="bundleentry://413.fwk1637451972/cache/www.w3.org/2001/XMLSchema.xsd#//ID;XSDSimpleTypeDefinition=37"
+      outputs="http://www.eclipse.org/emf/2003/XMLType#//ID"/>
+  <nested inputs="CMMN10CaseModel.xsd#//tCmmnElement;XSDComplexTypeDefinition" outputs="CMMN10.ecore#//TCmmnElement">
+    <nested inputs="CMMN10CaseModel.xsd#//tCmmnElement;XSDComplexTypeDefinition/XSDAttributeUse=1"
+        outputs="CMMN10.ecore#//TCmmnElement/description"/>
+    <nested inputs="CMMN10CaseModel.xsd#//tCmmnElement;XSDComplexTypeDefinition/XSDAttributeUse"
+        outputs="CMMN10.ecore#//TCmmnElement/id"/>
+    <nested inputs="CMMN10CaseModel.xsd#//tCmmnElement;XSDComplexTypeDefinition/XSDWildcard"
+        outputs="CMMN10.ecore#//TCmmnElement/anyAttribute"/>
+  </nested>
+  <nested inputs="CMMN10CaseModel.xsd#//tCmmnElementWithMixedContent;XSDComplexTypeDefinition=1"
+      outputs="CMMN10.ecore#//TCmmnElementWithMixedContent">
+    <nested inputs="CMMN10CaseModel.xsd#//tCmmnElementWithMixedContent;XSDComplexTypeDefinition=1/XSDAttributeUse=1"
+        outputs="CMMN10.ecore#//TCmmnElementWithMixedContent/description"/>
+    <nested inputs="CMMN10CaseModel.xsd#//tCmmnElementWithMixedContent;XSDComplexTypeDefinition=1/XSDAttributeUse"
+        outputs="CMMN10.ecore#//TCmmnElementWithMixedContent/id"/>
+    <nested inputs="CMMN10CaseModel.xsd#//tCmmnElementWithMixedContent;XSDComplexTypeDefinition=1/XSDWildcard"
+        outputs="CMMN10.ecore#//TCmmnElementWithMixedContent/anyAttribute"/>
+  </nested>
+  <nested inputs="bundleentry://413.fwk1637451972/cache/www.w3.org/2001/XMLSchema.xsd#//anyURI;XSDSimpleTypeDefinition=25"
+      outputs="http://www.eclipse.org/emf/2003/XMLType#//AnyURI"/>
+  <nested inputs="CMMN10CaseModel.xsd#//tExpression;XSDComplexTypeDefinition=13" outputs="CMMN10.ecore#//TExpression">
+    <nested inputs="CMMN10CaseModel.xsd#//tExpression;XSDComplexTypeDefinition=13/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="CMMN10.ecore#//TExpression/body"/>
+    <nested inputs="CMMN10CaseModel.xsd#//tExpression;XSDComplexTypeDefinition=13/XSDAttributeUse"
+        outputs="CMMN10.ecore#//TExpression/language"/>
+  </nested>
+  <nested inputs="bundleentry://413.fwk1637451972/cache/www.w3.org/2001/XMLSchema.xsd#//IDREF;XSDSimpleTypeDefinition=38"
+      outputs="http://www.eclipse.org/emf/2003/XMLType#//IDREF"/>
+  <nested inputs="CMMN10CaseModel.xsd#//tApplicabilityRule;XSDComplexTypeDefinition=42"
+      outputs="CMMN10.ecore#//TApplicabilityRule">
+    <nested inputs="CMMN10CaseModel.xsd#//tApplicabilityRule;XSDComplexTypeDefinition=42/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="CMMN10.ecore#//TApplicabilityRule/condition"/>
+    <nested inputs="CMMN10CaseModel.xsd#//tApplicabilityRule;XSDComplexTypeDefinition=42/XSDAttributeUse"
+        outputs="CMMN10.ecore#//TApplicabilityRule/contextRef"/>
+  </nested>
+  <nested inputs="CMMN10CaseModel.xsd#//applicabilityRule;XSDElementDeclaration=39"
+      outputs="CMMN10.ecore#//DocumentRoot/applicabilityRule"/>
+  <nested inputs="bundleentry://413.fwk1637451972/cache/www.w3.org/2001/XMLSchema.xsd#//double;XSDSimpleTypeDefinition=12"
+      outputs="http://www.eclipse.org/emf/2003/XMLType#//Double"/>
+  <nested inputs="DC.xsd#//Bounds;XSDComplexTypeDefinition=2" outputs="DC.ecore#//Bounds">
+    <nested inputs="DC.xsd#//Bounds;XSDComplexTypeDefinition=2/XSDAttributeUse=3"
+        outputs="DC.ecore#//Bounds/height"/>
+    <nested inputs="DC.xsd#//Bounds;XSDComplexTypeDefinition=2/XSDAttributeUse=2"
+        outputs="DC.ecore#//Bounds/width"/>
+    <nested inputs="DC.xsd#//Bounds;XSDComplexTypeDefinition=2/XSDAttributeUse" outputs="DC.ecore#//Bounds/x"/>
+    <nested inputs="DC.xsd#//Bounds;XSDComplexTypeDefinition=2/XSDAttributeUse=1"
+        outputs="DC.ecore#//Bounds/y"/>
+  </nested>
+  <nested inputs="DC.xsd#//Bounds;XSDElementDeclaration=2" outputs="DC.ecore#//DocumentRoot/bounds"/>
+  <nested inputs="CMMN10CaseModel.xsd#//tChildren;XSDComplexTypeDefinition=10" outputs="CMMN10.ecore#//TChildren">
+    <nested inputs="CMMN10CaseModel.xsd#//tChildren;XSDComplexTypeDefinition=10/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="CMMN10.ecore#//TChildren/caseFileItem"/>
+  </nested>
+  <nested inputs="bundleentry://413.fwk1637451972/cache/www.w3.org/2001/XMLSchema.xsd#//QName;XSDSimpleTypeDefinition=26"
+      outputs="http://www.eclipse.org/emf/2003/XMLType#//QName"/>
+  <nested inputs="CMMN10CaseModel.xsd#//MultiplicityEnum;XSDSimpleTypeDefinition"
+      outputs="CMMN10.ecore#//MultiplicityEnum">
+    <nested inputs="CMMN10CaseModel.xsd#//MultiplicityEnum;XSDSimpleTypeDefinition/XSDEnumerationFacet"
+        outputs="CMMN10.ecore#//MultiplicityEnum/ZeroOrOne"/>
+    <nested inputs="CMMN10CaseModel.xsd#//MultiplicityEnum;XSDSimpleTypeDefinition/XSDEnumerationFacet=1"
+        outputs="CMMN10.ecore#//MultiplicityEnum/ZeroOrMore"/>
+    <nested inputs="CMMN10CaseModel.xsd#//MultiplicityEnum;XSDSimpleTypeDefinition/XSDEnumerationFacet=2"
+        outputs="CMMN10.ecore#//MultiplicityEnum/ExactlyOne"/>
+    <nested inputs="CMMN10CaseModel.xsd#//MultiplicityEnum;XSDSimpleTypeDefinition/XSDEnumerationFacet=3"
+        outputs="CMMN10.ecore#//MultiplicityEnum/OneOrMore"/>
+    <nested inputs="CMMN10CaseModel.xsd#//MultiplicityEnum;XSDSimpleTypeDefinition/XSDEnumerationFacet=4"
+        outputs="CMMN10.ecore#//MultiplicityEnum/Unspecified"/>
+    <nested inputs="CMMN10CaseModel.xsd#//MultiplicityEnum;XSDSimpleTypeDefinition/XSDEnumerationFacet=5"
+        outputs="CMMN10.ecore#//MultiplicityEnum/Unknown"/>
+  </nested>
+  <nested inputs="bundleentry://413.fwk1637451972/cache/www.w3.org/2001/XMLSchema.xsd#//IDREFS;XSDSimpleTypeDefinition=31"
+      outputs="http://www.eclipse.org/emf/2003/XMLType#//IDREFS"/>
+  <nested inputs="CMMN10CaseModel.xsd#//tCaseFileItem;XSDComplexTypeDefinition=9"
+      outputs="CMMN10.ecore#//TCaseFileItem">
+    <nested inputs="CMMN10CaseModel.xsd#//tCaseFileItem;XSDComplexTypeDefinition=9/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="CMMN10.ecore#//TCaseFileItem/children"/>
+    <nested inputs="CMMN10CaseModel.xsd#//tCaseFileItem;XSDComplexTypeDefinition=9/XSDAttributeUse=2"
+        outputs="CMMN10.ecore#//TCaseFileItem/definitionRef"/>
+    <nested inputs="CMMN10CaseModel.xsd#//tCaseFileItem;XSDComplexTypeDefinition=9/XSDAttributeUse=1"
+        outputs="CMMN10.ecore#//TCaseFileItem/multiplicity"/>
+    <nested inputs="CMMN10CaseModel.xsd#//tCaseFileItem;XSDComplexTypeDefinition=9/XSDAttributeUse"
+        outputs="CMMN10.ecore#//TCaseFileItem/name"/>
+    <nested inputs="CMMN10CaseModel.xsd#//tCaseFileItem;XSDComplexTypeDefinition=9/XSDAttributeUse=3"
+        outputs="CMMN10.ecore#//TCaseFileItem/sourceRef"/>
+    <nested inputs="CMMN10CaseModel.xsd#//tCaseFileItem;XSDComplexTypeDefinition=9/XSDAttributeUse=4"
+        outputs="CMMN10.ecore#//TCaseFileItem/targetRefs"/>
+  </nested>
+  <nested inputs="CMMN10CaseModel.xsd#//tCaseFile;XSDComplexTypeDefinition=8" outputs="CMMN10.ecore#//TCaseFile">
+    <nested inputs="CMMN10CaseModel.xsd#//tCaseFile;XSDComplexTypeDefinition=8/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="CMMN10.ecore#//TCaseFile/caseFileItem"/>
+  </nested>
+  <nested inputs="CMMN10CaseModel.xsd#//tRepetitionRule;XSDComplexTypeDefinition=5"
+      outputs="CMMN10.ecore#//TRepetitionRule">
+    <nested inputs="CMMN10CaseModel.xsd#//tRepetitionRule;XSDComplexTypeDefinition=5/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="CMMN10.ecore#//TRepetitionRule/condition"/>
+    <nested inputs="CMMN10CaseModel.xsd#//tRepetitionRule;XSDComplexTypeDefinition=5/XSDAttributeUse=1"
+        outputs="CMMN10.ecore#//TRepetitionRule/contextRef"/>
+    <nested inputs="CMMN10CaseModel.xsd#//tRepetitionRule;XSDComplexTypeDefinition=5/XSDAttributeUse"
+        outputs="CMMN10.ecore#//TRepetitionRule/name"/>
+  </nested>
+  <nested inputs="CMMN10CaseModel.xsd#//tRequiredRule;XSDComplexTypeDefinition=6"
+      outputs="CMMN10.ecore#//TRequiredRule">
+    <nested inputs="CMMN10CaseModel.xsd#//tRequiredRule;XSDComplexTypeDefinition=6/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="CMMN10.ecore#//TRequiredRule/condition"/>
+    <nested inputs="CMMN10CaseModel.xsd#//tRequiredRule;XSDComplexTypeDefinition=6/XSDAttributeUse=1"
+        outputs="CMMN10.ecore#//TRequiredRule/contextRef"/>
+    <nested inputs="CMMN10CaseModel.xsd#//tRequiredRule;XSDComplexTypeDefinition=6/XSDAttributeUse"
+        outputs="CMMN10.ecore#//TRequiredRule/name"/>
+  </nested>
+  <nested inputs="CMMN10CaseModel.xsd#//tManualActivationRule;XSDComplexTypeDefinition=7"
+      outputs="CMMN10.ecore#//TManualActivationRule">
+    <nested inputs="CMMN10CaseModel.xsd#//tManualActivationRule;XSDComplexTypeDefinition=7/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="CMMN10.ecore#//TManualActivationRule/condition"/>
+    <nested inputs="CMMN10CaseModel.xsd#//tManualActivationRule;XSDComplexTypeDefinition=7/XSDAttributeUse=1"
+        outputs="CMMN10.ecore#//TManualActivationRule/contextRef"/>
+    <nested inputs="CMMN10CaseModel.xsd#//tManualActivationRule;XSDComplexTypeDefinition=7/XSDAttributeUse"
+        outputs="CMMN10.ecore#//TManualActivationRule/name"/>
+  </nested>
+  <nested inputs="CMMN10CaseModel.xsd#//tPlanItemControl;XSDComplexTypeDefinition=4"
+      outputs="CMMN10.ecore#//TPlanItemControl">
+    <nested inputs="CMMN10CaseModel.xsd#//tPlanItemControl;XSDComplexTypeDefinition=4/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="CMMN10.ecore#//TPlanItemControl/repetitionRule"/>
+    <nested inputs="CMMN10CaseModel.xsd#//tPlanItemControl;XSDComplexTypeDefinition=4/XSDParticle/XSDModelGroup/XSDParticle=1"
+        outputs="CMMN10.ecore#//TPlanItemControl/requiredRule"/>
+    <nested inputs="CMMN10CaseModel.xsd#//tPlanItemControl;XSDComplexTypeDefinition=4/XSDParticle/XSDModelGroup/XSDParticle=2"
+        outputs="CMMN10.ecore#//TPlanItemControl/manualActivationRule"/>
+  </nested>
+  <nested inputs="CMMN10CaseModel.xsd#//tPlanItemDefinition;XSDComplexTypeDefinition=14"
+      outputs="CMMN10.ecore#//TPlanItemDefinition">
+    <nested inputs="CMMN10CaseModel.xsd#//tPlanItemDefinition;XSDComplexTypeDefinition=14/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="CMMN10.ecore#//TPlanItemDefinition/defaultControl"/>
+    <nested inputs="CMMN10CaseModel.xsd#//tPlanItemDefinition;XSDComplexTypeDefinition=14/XSDAttributeUse"
+        outputs="CMMN10.ecore#//TPlanItemDefinition/name"/>
+  </nested>
+  <nested inputs="CMMN10CaseModel.xsd#//tPlanItem;XSDComplexTypeDefinition=38" outputs="CMMN10.ecore#//TPlanItem">
+    <nested inputs="CMMN10CaseModel.xsd#//tPlanItem;XSDComplexTypeDefinition=38/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="CMMN10.ecore#//TPlanItem/itemControl"/>
+    <nested inputs="CMMN10CaseModel.xsd#//tPlanItem;XSDComplexTypeDefinition=38/XSDAttributeUse=1"
+        outputs="CMMN10.ecore#//TPlanItem/definitionRef"/>
+    <nested inputs="CMMN10CaseModel.xsd#//tPlanItem;XSDComplexTypeDefinition=38/XSDAttributeUse=2"
+        outputs="CMMN10.ecore#//TPlanItem/entryCriteriaRefs"/>
+    <nested inputs="CMMN10CaseModel.xsd#//tPlanItem;XSDComplexTypeDefinition=38/XSDAttributeUse=3"
+        outputs="CMMN10.ecore#//TPlanItem/exitCriteriaRefs"/>
+    <nested inputs="CMMN10CaseModel.xsd#//tPlanItem;XSDComplexTypeDefinition=38/XSDAttributeUse"
+        outputs="CMMN10.ecore#//TPlanItem/name"/>
+  </nested>
+  <nested inputs="CMMN10CaseModel.xsd#//tOnPart;XSDComplexTypeDefinition=32" outputs="CMMN10.ecore#//TOnPart"/>
+  <nested inputs="CMMN10CaseModel.xsd#//tIfPart;XSDComplexTypeDefinition=35" outputs="CMMN10.ecore#//TIfPart">
+    <nested inputs="CMMN10CaseModel.xsd#//tIfPart;XSDComplexTypeDefinition=35/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="CMMN10.ecore#//TIfPart/condition"/>
+    <nested inputs="CMMN10CaseModel.xsd#//tIfPart;XSDComplexTypeDefinition=35/XSDAttributeUse"
+        outputs="CMMN10.ecore#//TIfPart/contextRef"/>
+  </nested>
+  <nested inputs="CMMN10CaseModel.xsd#//tSentry;XSDComplexTypeDefinition=31" outputs="CMMN10.ecore#//TSentry">
+    <nested inputs="CMMN10CaseModel.xsd#//tSentry;XSDComplexTypeDefinition=31/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="CMMN10.ecore#//TSentry/onPartGroup"/>
+    <nested inputs="CMMN10CaseModel.xsd#//tSentry;XSDComplexTypeDefinition=31/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="CMMN10.ecore#//TSentry/onPart"/>
+    <nested inputs="CMMN10CaseModel.xsd#//tSentry;XSDComplexTypeDefinition=31/XSDParticle/XSDModelGroup/XSDParticle=1"
+        outputs="CMMN10.ecore#//TSentry/ifPart"/>
+    <nested inputs="CMMN10CaseModel.xsd#//tSentry;XSDComplexTypeDefinition=31/XSDAttributeUse"
+        outputs="CMMN10.ecore#//TSentry/name"/>
+  </nested>
+  <nested inputs="CMMN10CaseModel.xsd#//tPlanFragment;XSDComplexTypeDefinition=36"
+      outputs="CMMN10.ecore#//TPlanFragment">
+    <nested inputs="CMMN10CaseModel.xsd#//tPlanFragment;XSDComplexTypeDefinition=36/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="CMMN10.ecore#//TPlanFragment/planItem"/>
+    <nested inputs="CMMN10CaseModel.xsd#//tPlanFragment;XSDComplexTypeDefinition=36/XSDParticle/XSDModelGroup/XSDParticle=1"
+        outputs="CMMN10.ecore#//TPlanFragment/sentry"/>
+  </nested>
+  <nested inputs="CMMN10CaseModel.xsd#//tTableItem;XSDComplexTypeDefinition=39" outputs="CMMN10.ecore#//TTableItem">
+    <nested inputs="CMMN10CaseModel.xsd#//tTableItem;XSDComplexTypeDefinition=39/XSDAttributeUse"
+        outputs="CMMN10.ecore#//TTableItem/applicabilityRuleRefs"/>
+    <nested inputs="CMMN10CaseModel.xsd#//tTableItem;XSDComplexTypeDefinition=39/XSDAttributeUse=1"
+        outputs="CMMN10.ecore#//TTableItem/authorizedRoleRefs"/>
+  </nested>
+  <nested inputs="CMMN10CaseModel.xsd#//tPlanningTable;XSDComplexTypeDefinition=40"
+      outputs="CMMN10.ecore#//TPlanningTable">
+    <nested inputs="CMMN10CaseModel.xsd#//tPlanningTable;XSDComplexTypeDefinition=40/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="CMMN10.ecore#//TPlanningTable/tableItemGroup"/>
+    <nested inputs="CMMN10CaseModel.xsd#//tPlanningTable;XSDComplexTypeDefinition=40/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="CMMN10.ecore#//TPlanningTable/tableItem"/>
+    <nested inputs="CMMN10CaseModel.xsd#//tPlanningTable;XSDComplexTypeDefinition=40/XSDParticle/XSDModelGroup/XSDParticle=1"
+        outputs="CMMN10.ecore#//TPlanningTable/applicabilityRule"/>
+  </nested>
+  <nested inputs="bundleentry://413.fwk1637451972/cache/www.w3.org/2001/XMLSchema.xsd#//boolean;XSDSimpleTypeDefinition=10"
+      outputs="http://www.eclipse.org/emf/2003/XMLType#//Boolean"/>
+  <nested inputs="CMMN10CaseModel.xsd#//tStage;XSDComplexTypeDefinition=37" outputs="CMMN10.ecore#//TStage">
+    <nested inputs="CMMN10CaseModel.xsd#//tStage;XSDComplexTypeDefinition=37/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="CMMN10.ecore#//TStage/planningTable"/>
+    <nested inputs="CMMN10CaseModel.xsd#//tStage;XSDComplexTypeDefinition=37/XSDParticle/XSDModelGroup/XSDParticle=1"
+        outputs="CMMN10.ecore#//TStage/planItemDefinitionGroup"/>
+    <nested inputs="CMMN10CaseModel.xsd#//tStage;XSDComplexTypeDefinition=37/XSDParticle/XSDModelGroup/XSDParticle=1"
+        outputs="CMMN10.ecore#//TStage/planItemDefinition"/>
+    <nested inputs="CMMN10CaseModel.xsd#//tStage;XSDComplexTypeDefinition=37/XSDAttributeUse"
+        outputs="CMMN10.ecore#//TStage/autoComplete"/>
+    <nested inputs="CMMN10CaseModel.xsd#//tStage;XSDComplexTypeDefinition=37/XSDAttributeUse=1"
+        outputs="CMMN10.ecore#//TStage/exitCriteriaRefs"/>
+  </nested>
+  <nested inputs="CMMN10CaseModel.xsd#//tRole;XSDComplexTypeDefinition=3" outputs="CMMN10.ecore#//TRole">
+    <nested inputs="CMMN10CaseModel.xsd#//tRole;XSDComplexTypeDefinition=3/XSDAttributeUse"
+        outputs="CMMN10.ecore#//TRole/name"/>
+  </nested>
+  <nested inputs="CMMN10CaseModel.xsd#//tParameter;XSDComplexTypeDefinition=18" outputs="CMMN10.ecore#//TParameter">
+    <nested inputs="CMMN10CaseModel.xsd#//tParameter;XSDComplexTypeDefinition=18/XSDAttributeUse"
+        outputs="CMMN10.ecore#//TParameter/name"/>
+  </nested>
+  <nested inputs="CMMN10CaseModel.xsd#//tCaseParameter;XSDComplexTypeDefinition=19"
+      outputs="CMMN10.ecore#//TCaseParameter">
+    <nested inputs="CMMN10CaseModel.xsd#//tCaseParameter;XSDComplexTypeDefinition=19/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="CMMN10.ecore#//TCaseParameter/bindingRefinement"/>
+    <nested inputs="CMMN10CaseModel.xsd#//tCaseParameter;XSDComplexTypeDefinition=19/XSDAttributeUse"
+        outputs="CMMN10.ecore#//TCaseParameter/bindingRef"/>
+  </nested>
+  <nested inputs="CMMN10CaseModel.xsd#//tCase;XSDComplexTypeDefinition=2" outputs="CMMN10.ecore#//TCase">
+    <nested inputs="CMMN10CaseModel.xsd#//tCase;XSDComplexTypeDefinition=2/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="CMMN10.ecore#//TCase/caseFileModel"/>
+    <nested inputs="CMMN10CaseModel.xsd#//tCase;XSDComplexTypeDefinition=2/XSDParticle/XSDModelGroup/XSDParticle=1"
+        outputs="CMMN10.ecore#//TCase/casePlanModel"/>
+    <nested inputs="CMMN10CaseModel.xsd#//tCase;XSDComplexTypeDefinition=2/XSDParticle/XSDModelGroup/XSDParticle=2"
+        outputs="CMMN10.ecore#//TCase/caseRoles"/>
+    <nested inputs="CMMN10CaseModel.xsd#//tCase;XSDComplexTypeDefinition=2/XSDParticle/XSDModelGroup/XSDParticle=3"
+        outputs="CMMN10.ecore#//TCase/input"/>
+    <nested inputs="CMMN10CaseModel.xsd#//tCase;XSDComplexTypeDefinition=2/XSDParticle/XSDModelGroup/XSDParticle=4"
+        outputs="CMMN10.ecore#//TCase/output"/>
+    <nested inputs="CMMN10CaseModel.xsd#//tCase;XSDComplexTypeDefinition=2/XSDAttributeUse"
+        outputs="CMMN10.ecore#//TCase/name"/>
+  </nested>
+  <nested inputs="CMMN10CaseModel.xsd#//case;XSDElementDeclaration" outputs="CMMN10.ecore#//DocumentRoot/case"/>
+  <nested inputs="CMMN10CaseModel.xsd#//caseFile;XSDElementDeclaration=6" outputs="CMMN10.ecore#//DocumentRoot/caseFile"/>
+  <nested inputs="CMMN10CaseModel.xsd#//caseFileItem;XSDElementDeclaration=7" outputs="CMMN10.ecore#//DocumentRoot/caseFileItem"/>
+  <nested inputs="CMMN10CaseModel.xsd#//tProperty;XSDComplexTypeDefinition=12" outputs="CMMN10.ecore#//TProperty">
+    <nested inputs="CMMN10CaseModel.xsd#//tProperty;XSDComplexTypeDefinition=12/XSDAttributeUse"
+        outputs="CMMN10.ecore#//TProperty/name"/>
+    <nested inputs="CMMN10CaseModel.xsd#//tProperty;XSDComplexTypeDefinition=12/XSDAttributeUse=1"
+        outputs="CMMN10.ecore#//TProperty/type"/>
+  </nested>
+  <nested inputs="CMMN10CaseModel.xsd#//DefinitionTypeEnum;XSDSimpleTypeDefinition=1/XSDSimpleTypeDefinition"
+      outputs="CMMN10.ecore#//DefinitionTypeEnumMember1">
+    <nested inputs="CMMN10CaseModel.xsd#//DefinitionTypeEnum;XSDSimpleTypeDefinition=1/XSDSimpleTypeDefinition/XSDEnumerationFacet"
+        outputs="CMMN10.ecore#//DefinitionTypeEnumMember1/httpWwwOmgOrgSpecCMMNDefinitionTypeCMISFolder"/>
+    <nested inputs="CMMN10CaseModel.xsd#//DefinitionTypeEnum;XSDSimpleTypeDefinition=1/XSDSimpleTypeDefinition/XSDEnumerationFacet=1"
+        outputs="CMMN10.ecore#//DefinitionTypeEnumMember1/httpWwwOmgOrgSpecCMMNDefinitionTypeCMISDocument"/>
+    <nested inputs="CMMN10CaseModel.xsd#//DefinitionTypeEnum;XSDSimpleTypeDefinition=1/XSDSimpleTypeDefinition/XSDEnumerationFacet=2"
+        outputs="CMMN10.ecore#//DefinitionTypeEnumMember1/httpWwwOmgOrgSpecCMMNDefinitionTypeCMISRelationship"/>
+    <nested inputs="CMMN10CaseModel.xsd#//DefinitionTypeEnum;XSDSimpleTypeDefinition=1/XSDSimpleTypeDefinition/XSDEnumerationFacet=3"
+        outputs="CMMN10.ecore#//DefinitionTypeEnumMember1/httpWwwOmgOrgSpecCMMNDefinitionTypeXSDElement"/>
+    <nested inputs="CMMN10CaseModel.xsd#//DefinitionTypeEnum;XSDSimpleTypeDefinition=1/XSDSimpleTypeDefinition/XSDEnumerationFacet=4"
+        outputs="CMMN10.ecore#//DefinitionTypeEnumMember1/httpWwwOmgOrgSpecCMMNDefinitionTypeXSDComplexType"/>
+    <nested inputs="CMMN10CaseModel.xsd#//DefinitionTypeEnum;XSDSimpleTypeDefinition=1/XSDSimpleTypeDefinition/XSDEnumerationFacet=5"
+        outputs="CMMN10.ecore#//DefinitionTypeEnumMember1/httpWwwOmgOrgSpecCMMNDefinitionTypeXSDSimpleType"/>
+    <nested inputs="CMMN10CaseModel.xsd#//DefinitionTypeEnum;XSDSimpleTypeDefinition=1/XSDSimpleTypeDefinition/XSDEnumerationFacet=6"
+        outputs="CMMN10.ecore#//DefinitionTypeEnumMember1/httpWwwOmgOrgSpecCMMNDefinitionTypeWSDLMessage"/>
+    <nested inputs="CMMN10CaseModel.xsd#//DefinitionTypeEnum;XSDSimpleTypeDefinition=1/XSDSimpleTypeDefinition/XSDEnumerationFacet=7"
+        outputs="CMMN10.ecore#//DefinitionTypeEnumMember1/httpWwwOmgOrgSpecCMMNDefinitionTypeUMLClass"/>
+    <nested inputs="CMMN10CaseModel.xsd#//DefinitionTypeEnum;XSDSimpleTypeDefinition=1/XSDSimpleTypeDefinition/XSDEnumerationFacet=8"
+        outputs="CMMN10.ecore#//DefinitionTypeEnumMember1/httpWwwOmgOrgSpecCMMNDefinitionTypeUnknown"/>
+    <nested inputs="CMMN10CaseModel.xsd#//DefinitionTypeEnum;XSDSimpleTypeDefinition=1/XSDSimpleTypeDefinition/XSDEnumerationFacet=9"
+        outputs="CMMN10.ecore#//DefinitionTypeEnumMember1/httpWwwOmgOrgSpecCMMNDefinitionTypeUnspecified"/>
+  </nested>
+  <nested inputs="CMMN10CaseModel.xsd#//DefinitionTypeEnum;XSDSimpleTypeDefinition=1"
+      outputs="CMMN10.ecore#//DefinitionTypeEnum"/>
+  <nested inputs="CMMN10CaseModel.xsd#//tCaseFileItemDefinition;XSDComplexTypeDefinition=11"
+      outputs="CMMN10.ecore#//TCaseFileItemDefinition">
+    <nested inputs="CMMN10CaseModel.xsd#//tCaseFileItemDefinition;XSDComplexTypeDefinition=11/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="CMMN10.ecore#//TCaseFileItemDefinition/property"/>
+    <nested inputs="CMMN10CaseModel.xsd#//tCaseFileItemDefinition;XSDComplexTypeDefinition=11/XSDAttributeUse=1"
+        outputs="CMMN10.ecore#//TCaseFileItemDefinition/definitionType"/>
+    <nested inputs="CMMN10CaseModel.xsd#//tCaseFileItemDefinition;XSDComplexTypeDefinition=11/XSDAttributeUse=3"
+        outputs="CMMN10.ecore#//TCaseFileItemDefinition/importRef"/>
+    <nested inputs="CMMN10CaseModel.xsd#//tCaseFileItemDefinition;XSDComplexTypeDefinition=11/XSDAttributeUse"
+        outputs="CMMN10.ecore#//TCaseFileItemDefinition/name"/>
+    <nested inputs="CMMN10CaseModel.xsd#//tCaseFileItemDefinition;XSDComplexTypeDefinition=11/XSDAttributeUse=2"
+        outputs="CMMN10.ecore#//TCaseFileItemDefinition/structureRef"/>
+  </nested>
+  <nested inputs="CMMN10CaseModel.xsd#//caseFileItemDefinition;XSDElementDeclaration=8"
+      outputs="CMMN10.ecore#//DocumentRoot/caseFileItemDefinition"/>
+  <nested inputs="CMMN10CaseModel.xsd#//CaseFileItemTransition;XSDSimpleTypeDefinition=3"
+      outputs="CMMN10.ecore#//CaseFileItemTransition">
+    <nested inputs="CMMN10CaseModel.xsd#//CaseFileItemTransition;XSDSimpleTypeDefinition=3/XSDEnumerationFacet"
+        outputs="CMMN10.ecore#//CaseFileItemTransition/addChild"/>
+    <nested inputs="CMMN10CaseModel.xsd#//CaseFileItemTransition;XSDSimpleTypeDefinition=3/XSDEnumerationFacet=1"
+        outputs="CMMN10.ecore#//CaseFileItemTransition/addReference"/>
+    <nested inputs="CMMN10CaseModel.xsd#//CaseFileItemTransition;XSDSimpleTypeDefinition=3/XSDEnumerationFacet=2"
+        outputs="CMMN10.ecore#//CaseFileItemTransition/create"/>
+    <nested inputs="CMMN10CaseModel.xsd#//CaseFileItemTransition;XSDSimpleTypeDefinition=3/XSDEnumerationFacet=3"
+        outputs="CMMN10.ecore#//CaseFileItemTransition/delete"/>
+    <nested inputs="CMMN10CaseModel.xsd#//CaseFileItemTransition;XSDSimpleTypeDefinition=3/XSDEnumerationFacet=4"
+        outputs="CMMN10.ecore#//CaseFileItemTransition/removeChild"/>
+    <nested inputs="CMMN10CaseModel.xsd#//CaseFileItemTransition;XSDSimpleTypeDefinition=3/XSDEnumerationFacet=5"
+        outputs="CMMN10.ecore#//CaseFileItemTransition/removeReference"/>
+    <nested inputs="CMMN10CaseModel.xsd#//CaseFileItemTransition;XSDSimpleTypeDefinition=3/XSDEnumerationFacet=6"
+        outputs="CMMN10.ecore#//CaseFileItemTransition/replace"/>
+    <nested inputs="CMMN10CaseModel.xsd#//CaseFileItemTransition;XSDSimpleTypeDefinition=3/XSDEnumerationFacet=7"
+        outputs="CMMN10.ecore#//CaseFileItemTransition/update"/>
+  </nested>
+  <nested inputs="CMMN10CaseModel.xsd#//tCaseFileItemOnPart;XSDComplexTypeDefinition=33"
+      outputs="CMMN10.ecore#//TCaseFileItemOnPart">
+    <nested inputs="CMMN10CaseModel.xsd#//tCaseFileItemOnPart;XSDComplexTypeDefinition=33/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="CMMN10.ecore#//TCaseFileItemOnPart/standardEvent"/>
+    <nested inputs="CMMN10CaseModel.xsd#//tCaseFileItemOnPart;XSDComplexTypeDefinition=33/XSDAttributeUse"
+        outputs="CMMN10.ecore#//TCaseFileItemOnPart/sourceRef"/>
+  </nested>
+  <nested inputs="CMMN10CaseModel.xsd#//caseFileItemOnPart;XSDElementDeclaration=30"
+      outputs="CMMN10.ecore#//DocumentRoot/caseFileItemOnPart"/>
+  <nested inputs="CMMN10CaseModel.xsd#//onPart;XSDElementDeclaration=29" outputs="CMMN10.ecore#//DocumentRoot/onPart"/>
+  <nested inputs="CMMN10CaseModel.xsd#//tStartTrigger;XSDComplexTypeDefinition=28"
+      outputs="CMMN10.ecore#//TStartTrigger"/>
+  <nested inputs="CMMN10CaseModel.xsd#//tCaseFileItemStartTrigger;XSDComplexTypeDefinition=29"
+      outputs="CMMN10.ecore#//TCaseFileItemStartTrigger">
+    <nested inputs="CMMN10CaseModel.xsd#//tCaseFileItemStartTrigger;XSDComplexTypeDefinition=29/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="CMMN10.ecore#//TCaseFileItemStartTrigger/standardEvent"/>
+    <nested inputs="CMMN10CaseModel.xsd#//tCaseFileItemStartTrigger;XSDComplexTypeDefinition=29/XSDAttributeUse"
+        outputs="CMMN10.ecore#//TCaseFileItemStartTrigger/sourceRef"/>
+  </nested>
+  <nested inputs="CMMN10CaseModel.xsd#//caseFileItemStartTrigger;XSDElementDeclaration=26"
+      outputs="CMMN10.ecore#//DocumentRoot/caseFileItemStartTrigger"/>
+  <nested inputs="CMMN10CaseModel.xsd#//timerStart;XSDElementDeclaration=25" outputs="CMMN10.ecore#//DocumentRoot/timerStart"/>
+  <nested inputs="CMMN10CaseModel.xsd#//caseParameter;XSDElementDeclaration=16" outputs="CMMN10.ecore#//DocumentRoot/caseParameter"/>
+  <nested inputs="CMMN10CaseModel.xsd#//parameter;XSDElementDeclaration=15" outputs="CMMN10.ecore#//DocumentRoot/parameter"/>
+  <nested inputs="CMMN10CaseModel.xsd#//tTask;XSDComplexTypeDefinition=15" outputs="CMMN10.ecore#//TTask">
+    <nested inputs="CMMN10CaseModel.xsd#//tTask;XSDComplexTypeDefinition=15/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="CMMN10.ecore#//TTask/inputs"/>
+    <nested inputs="CMMN10CaseModel.xsd#//tTask;XSDComplexTypeDefinition=15/XSDParticle/XSDModelGroup/XSDParticle=1"
+        outputs="CMMN10.ecore#//TTask/outputs"/>
+    <nested inputs="CMMN10CaseModel.xsd#//tTask;XSDComplexTypeDefinition=15/XSDAttributeUse"
+        outputs="CMMN10.ecore#//TTask/isBlocking"/>
+  </nested>
+  <nested inputs="CMMN10CaseModel.xsd#//tParameterMapping;XSDComplexTypeDefinition=25"
+      outputs="CMMN10.ecore#//TParameterMapping">
+    <nested inputs="CMMN10CaseModel.xsd#//tParameterMapping;XSDComplexTypeDefinition=25/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="CMMN10.ecore#//TParameterMapping/transformation"/>
+    <nested inputs="CMMN10CaseModel.xsd#//tParameterMapping;XSDComplexTypeDefinition=25/XSDAttributeUse"
+        outputs="CMMN10.ecore#//TParameterMapping/sourceRef"/>
+    <nested inputs="CMMN10CaseModel.xsd#//tParameterMapping;XSDComplexTypeDefinition=25/XSDAttributeUse=1"
+        outputs="CMMN10.ecore#//TParameterMapping/targetRef"/>
+  </nested>
+  <nested inputs="CMMN10CaseModel.xsd#//tCaseTask;XSDComplexTypeDefinition=24" outputs="CMMN10.ecore#//TCaseTask">
+    <nested inputs="CMMN10CaseModel.xsd#//tCaseTask;XSDComplexTypeDefinition=24/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="CMMN10.ecore#//TCaseTask/parameterMapping"/>
+    <nested inputs="CMMN10CaseModel.xsd#//tCaseTask;XSDComplexTypeDefinition=24/XSDAttributeUse"
+        outputs="CMMN10.ecore#//TCaseTask/caseRef"/>
+  </nested>
+  <nested inputs="CMMN10CaseModel.xsd#//caseTask;XSDElementDeclaration=21" outputs="CMMN10.ecore#//DocumentRoot/caseTask"/>
+  <nested inputs="CMMN10CaseModel.xsd#//task;XSDElementDeclaration=12" outputs="CMMN10.ecore#//DocumentRoot/task"/>
+  <nested inputs="CMMN10CaseModel.xsd#//planItemDefinition;XSDElementDeclaration=11"
+      outputs="CMMN10.ecore#//DocumentRoot/planItemDefinition"/>
+  <nested inputs="DI.xsd#//Diagram;XSDComplexTypeDefinition=1" outputs="DI.ecore#//Diagram">
+    <nested inputs="DI.xsd#//Diagram;XSDComplexTypeDefinition=1/XSDAttributeUse=1"
+        outputs="DI.ecore#//Diagram/documentation"/>
+    <nested inputs="DI.xsd#//Diagram;XSDComplexTypeDefinition=1/XSDAttributeUse=3"
+        outputs="DI.ecore#//Diagram/id"/>
+    <nested inputs="DI.xsd#//Diagram;XSDComplexTypeDefinition=1/XSDAttributeUse" outputs="DI.ecore#//Diagram/name"/>
+    <nested inputs="DI.xsd#//Diagram;XSDComplexTypeDefinition=1/XSDAttributeUse=2"
+        outputs="DI.ecore#//Diagram/resolution"/>
+  </nested>
+  <nested inputs="DI.xsd#//DiagramElement;XSDComplexTypeDefinition/XSDParticle/XSDModelGroup/XSDParticle/extension;XSDElementDeclaration/XSDComplexTypeDefinition"
+      outputs="DI.ecore#//ExtensionType">
+    <nested inputs="DI.xsd#//DiagramElement;XSDComplexTypeDefinition/XSDParticle/XSDModelGroup/XSDParticle/extension;XSDElementDeclaration/XSDComplexTypeDefinition/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="DI.ecore#//ExtensionType/any"/>
+  </nested>
+  <nested inputs="DI.xsd#//DiagramElement;XSDComplexTypeDefinition" outputs="DI.ecore#//DiagramElement">
+    <nested inputs="DI.xsd#//DiagramElement;XSDComplexTypeDefinition/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="DI.ecore#//DiagramElement/extension"/>
+    <nested inputs="DI.xsd#//DiagramElement;XSDComplexTypeDefinition/XSDAttributeUse"
+        outputs="DI.ecore#//DiagramElement/id"/>
+    <nested inputs="DI.xsd#//DiagramElement;XSDComplexTypeDefinition/XSDWildcard"
+        outputs="DI.ecore#//DiagramElement/anyAttribute"/>
+  </nested>
+  <nested inputs="DI.xsd#//Node;XSDComplexTypeDefinition=2" outputs="DI.ecore#//Node"/>
+  <nested inputs="DI.xsd#//Plane;XSDComplexTypeDefinition=8" outputs="DI.ecore#//Plane">
+    <nested inputs="DI.xsd#//Plane;XSDComplexTypeDefinition=8/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="DI.ecore#//Plane/diagramElementGroup"/>
+    <nested inputs="DI.xsd#//Plane;XSDComplexTypeDefinition=8/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="DI.ecore#//Plane/diagramElement"/>
+  </nested>
+  <nested inputs="CMMNDI.xsd#//CMMNPlane;XSDComplexTypeDefinition=1" outputs="CMMNDI.ecore#//CMMNPlane">
+    <nested inputs="CMMNDI.xsd#//CMMNPlane;XSDComplexTypeDefinition=1/XSDAttributeUse"
+        outputs="CMMNDI.ecore#//CMMNPlane/cMMNElement"/>
+  </nested>
+  <nested inputs="DI.xsd#//Style;XSDComplexTypeDefinition=9" outputs="DI.ecore#//Style">
+    <nested inputs="DI.xsd#//Style;XSDComplexTypeDefinition=9/XSDAttributeUse" outputs="DI.ecore#//Style/id"/>
+  </nested>
+  <nested inputs="DC.xsd#//Font;XSDComplexTypeDefinition" outputs="DC.ecore#//Font">
+    <nested inputs="DC.xsd#//Font;XSDComplexTypeDefinition/XSDAttributeUse=2" outputs="DC.ecore#//Font/isBold"/>
+    <nested inputs="DC.xsd#//Font;XSDComplexTypeDefinition/XSDAttributeUse=3" outputs="DC.ecore#//Font/isItalic"/>
+    <nested inputs="DC.xsd#//Font;XSDComplexTypeDefinition/XSDAttributeUse=5" outputs="DC.ecore#//Font/isStrikeThrough"/>
+    <nested inputs="DC.xsd#//Font;XSDComplexTypeDefinition/XSDAttributeUse=4" outputs="DC.ecore#//Font/isUnderline"/>
+    <nested inputs="DC.xsd#//Font;XSDComplexTypeDefinition/XSDAttributeUse" outputs="DC.ecore#//Font/name"/>
+    <nested inputs="DC.xsd#//Font;XSDComplexTypeDefinition/XSDAttributeUse=1" outputs="DC.ecore#//Font/size"/>
+  </nested>
+  <nested inputs="CMMNDI.xsd#//CMMNLabelStyle;XSDComplexTypeDefinition=5" outputs="CMMNDI.ecore#//CMMNLabelStyle">
+    <nested inputs="CMMNDI.xsd#//CMMNLabelStyle;XSDComplexTypeDefinition=5/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="CMMNDI.ecore#//CMMNLabelStyle/font"/>
+  </nested>
+  <nested inputs="CMMNDI.xsd#//CMMNDiagram;XSDComplexTypeDefinition" outputs="CMMNDI.ecore#//CMMNDiagram">
+    <nested inputs="CMMNDI.xsd#//CMMNDiagram;XSDComplexTypeDefinition/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="CMMNDI.ecore#//CMMNDiagram/cMMNPlane"/>
+    <nested inputs="CMMNDI.xsd#//CMMNDiagram;XSDComplexTypeDefinition/XSDParticle/XSDModelGroup/XSDParticle=1"
+        outputs="CMMNDI.ecore#//CMMNDiagram/cMMNLabelStyle"/>
+  </nested>
+  <nested inputs="CMMNDI.xsd#//CMMNDiagram;XSDElementDeclaration" outputs="CMMNDI.ecore#//DocumentRoot/cMMNDiagram"/>
+  <nested inputs="DC.xsd#//Point;XSDComplexTypeDefinition=1" outputs="DC.ecore#//Point">
+    <nested inputs="DC.xsd#//Point;XSDComplexTypeDefinition=1/XSDAttributeUse" outputs="DC.ecore#//Point/x"/>
+    <nested inputs="DC.xsd#//Point;XSDComplexTypeDefinition=1/XSDAttributeUse=1" outputs="DC.ecore#//Point/y"/>
+  </nested>
+  <nested inputs="DI.xsd#//Edge;XSDComplexTypeDefinition=3" outputs="DI.ecore#//Edge">
+    <nested inputs="DI.xsd#//Edge;XSDComplexTypeDefinition=3/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="DI.ecore#//Edge/waypoint"/>
+  </nested>
+  <nested inputs="DI.xsd#//LabeledEdge;XSDComplexTypeDefinition=4" outputs="DI.ecore#//LabeledEdge"/>
+  <nested inputs="DI.xsd#//Label;XSDComplexTypeDefinition=7" outputs="DI.ecore#//Label">
+    <nested inputs="DI.xsd#//Label;XSDComplexTypeDefinition=7/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="DI.ecore#//Label/bounds"/>
+  </nested>
+  <nested inputs="CMMNDI.xsd#//CMMNLabel;XSDComplexTypeDefinition=4" outputs="CMMNDI.ecore#//CMMNLabel">
+    <nested inputs="CMMNDI.xsd#//CMMNLabel;XSDComplexTypeDefinition=4/XSDAttributeUse"
+        outputs="CMMNDI.ecore#//CMMNLabel/labelStyle"/>
+  </nested>
+  <nested inputs="CMMNDI.xsd#//MessageVisibleKind;XSDSimpleTypeDefinition=1" outputs="CMMNDI.ecore#//MessageVisibleKind">
+    <nested inputs="CMMNDI.xsd#//MessageVisibleKind;XSDSimpleTypeDefinition=1/XSDEnumerationFacet"
+        outputs="CMMNDI.ecore#//MessageVisibleKind/initiating"/>
+    <nested inputs="CMMNDI.xsd#//MessageVisibleKind;XSDSimpleTypeDefinition=1/XSDEnumerationFacet=1"
+        outputs="CMMNDI.ecore#//MessageVisibleKind/nonInitiating"/>
+  </nested>
+  <nested inputs="CMMNDI.xsd#//CMMNEdge;XSDComplexTypeDefinition=2" outputs="CMMNDI.ecore#//CMMNEdge">
+    <nested inputs="CMMNDI.xsd#//CMMNEdge;XSDComplexTypeDefinition=2/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="CMMNDI.ecore#//CMMNEdge/cMMNLabel"/>
+    <nested inputs="CMMNDI.xsd#//CMMNEdge;XSDComplexTypeDefinition=2/XSDAttributeUse"
+        outputs="CMMNDI.ecore#//CMMNEdge/cMMNElement"/>
+    <nested inputs="CMMNDI.xsd#//CMMNEdge;XSDComplexTypeDefinition=2/XSDAttributeUse=3"
+        outputs="CMMNDI.ecore#//CMMNEdge/messageVisibleKind"/>
+    <nested inputs="CMMNDI.xsd#//CMMNEdge;XSDComplexTypeDefinition=2/XSDAttributeUse=1"
+        outputs="CMMNDI.ecore#//CMMNEdge/sourceElement"/>
+    <nested inputs="CMMNDI.xsd#//CMMNEdge;XSDComplexTypeDefinition=2/XSDAttributeUse=2"
+        outputs="CMMNDI.ecore#//CMMNEdge/targetElement"/>
+  </nested>
+  <nested inputs="CMMNDI.xsd#//CMMNEdge;XSDElementDeclaration=5" outputs="CMMNDI.ecore#//DocumentRoot/cMMNEdge"/>
+  <nested inputs="DI.xsd#//DiagramElement;XSDElementDeclaration" outputs="DI.ecore#//DocumentRoot/diagramElement"/>
+  <nested inputs="CMMNDI.xsd#//CMMNLabel;XSDElementDeclaration=4" outputs="CMMNDI.ecore#//DocumentRoot/cMMNLabel"/>
+  <nested inputs="CMMNDI.xsd#//CMMNLabelStyle;XSDElementDeclaration=2" outputs="CMMNDI.ecore#//DocumentRoot/cMMNLabelStyle"/>
+  <nested inputs="CMMNDI.xsd#//CMMNPlane;XSDElementDeclaration=1" outputs="CMMNDI.ecore#//DocumentRoot/cMMNPlane"/>
+  <nested inputs="DI.xsd#//Shape;XSDComplexTypeDefinition=5" outputs="DI.ecore#//Shape">
+    <nested inputs="DI.xsd#//Shape;XSDComplexTypeDefinition=5/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="DI.ecore#//Shape/bounds"/>
+  </nested>
+  <nested inputs="DI.xsd#//LabeledShape;XSDComplexTypeDefinition=6" outputs="DI.ecore#//LabeledShape"/>
+  <nested inputs="CMMNDI.xsd#//ParticipantBandKind;XSDSimpleTypeDefinition" outputs="CMMNDI.ecore#//ParticipantBandKind">
+    <nested inputs="CMMNDI.xsd#//ParticipantBandKind;XSDSimpleTypeDefinition/XSDEnumerationFacet"
+        outputs="CMMNDI.ecore#//ParticipantBandKind/topInitiating"/>
+    <nested inputs="CMMNDI.xsd#//ParticipantBandKind;XSDSimpleTypeDefinition/XSDEnumerationFacet=1"
+        outputs="CMMNDI.ecore#//ParticipantBandKind/middleInitiating"/>
+    <nested inputs="CMMNDI.xsd#//ParticipantBandKind;XSDSimpleTypeDefinition/XSDEnumerationFacet=2"
+        outputs="CMMNDI.ecore#//ParticipantBandKind/bottomInitiating"/>
+    <nested inputs="CMMNDI.xsd#//ParticipantBandKind;XSDSimpleTypeDefinition/XSDEnumerationFacet=3"
+        outputs="CMMNDI.ecore#//ParticipantBandKind/topNonInitiating"/>
+    <nested inputs="CMMNDI.xsd#//ParticipantBandKind;XSDSimpleTypeDefinition/XSDEnumerationFacet=4"
+        outputs="CMMNDI.ecore#//ParticipantBandKind/middleNonInitiating"/>
+    <nested inputs="CMMNDI.xsd#//ParticipantBandKind;XSDSimpleTypeDefinition/XSDEnumerationFacet=5"
+        outputs="CMMNDI.ecore#//ParticipantBandKind/bottomNonInitiating"/>
+  </nested>
+  <nested inputs="CMMNDI.xsd#//CMMNShape;XSDComplexTypeDefinition=3" outputs="CMMNDI.ecore#//CMMNShape">
+    <nested inputs="CMMNDI.xsd#//CMMNShape;XSDComplexTypeDefinition=3/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="CMMNDI.ecore#//CMMNShape/cMMNLabel"/>
+    <nested inputs="CMMNDI.xsd#//CMMNShape;XSDComplexTypeDefinition=3/XSDAttributeUse=6"
+        outputs="CMMNDI.ecore#//CMMNShape/choreographyActivityShape"/>
+    <nested inputs="CMMNDI.xsd#//CMMNShape;XSDComplexTypeDefinition=3/XSDAttributeUse"
+        outputs="CMMNDI.ecore#//CMMNShape/cMMNElement"/>
+    <nested inputs="CMMNDI.xsd#//CMMNShape;XSDComplexTypeDefinition=3/XSDAttributeUse=2"
+        outputs="CMMNDI.ecore#//CMMNShape/isExpanded"/>
+    <nested inputs="CMMNDI.xsd#//CMMNShape;XSDComplexTypeDefinition=3/XSDAttributeUse=1"
+        outputs="CMMNDI.ecore#//CMMNShape/isHorizontal"/>
+    <nested inputs="CMMNDI.xsd#//CMMNShape;XSDComplexTypeDefinition=3/XSDAttributeUse=3"
+        outputs="CMMNDI.ecore#//CMMNShape/isMarkerVisible"/>
+    <nested inputs="CMMNDI.xsd#//CMMNShape;XSDComplexTypeDefinition=3/XSDAttributeUse=4"
+        outputs="CMMNDI.ecore#//CMMNShape/isMessageVisible"/>
+    <nested inputs="CMMNDI.xsd#//CMMNShape;XSDComplexTypeDefinition=3/XSDAttributeUse=5"
+        outputs="CMMNDI.ecore#//CMMNShape/participantBandKind"/>
+  </nested>
+  <nested inputs="CMMNDI.xsd#//CMMNShape;XSDElementDeclaration=3" outputs="CMMNDI.ecore#//DocumentRoot/cMMNShape"/>
+  <nested inputs="CMMN10.xsd#//tImport;XSDComplexTypeDefinition=1" outputs="CMMN10.ecore#//TImport">
+    <nested inputs="CMMN10.xsd#//tImport;XSDComplexTypeDefinition=1/XSDAttributeUse=2"
+        outputs="CMMN10.ecore#//TImport/importType"/>
+    <nested inputs="CMMN10.xsd#//tImport;XSDComplexTypeDefinition=1/XSDAttributeUse"
+        outputs="CMMN10.ecore#//TImport/location"/>
+    <nested inputs="CMMN10.xsd#//tImport;XSDComplexTypeDefinition=1/XSDAttributeUse=1"
+        outputs="CMMN10.ecore#//TImport/namespace"/>
+  </nested>
+  <nested inputs="CMMN10CaseModel.xsd#//tProcessParameter;XSDComplexTypeDefinition=20"
+      outputs="CMMN10.ecore#//TProcessParameter"/>
+  <nested inputs="CMMN10CaseModel.xsd#//tProcess;XSDComplexTypeDefinition=23" outputs="CMMN10.ecore#//TProcess">
+    <nested inputs="CMMN10CaseModel.xsd#//tProcess;XSDComplexTypeDefinition=23/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="CMMN10.ecore#//TProcess/input"/>
+    <nested inputs="CMMN10CaseModel.xsd#//tProcess;XSDComplexTypeDefinition=23/XSDParticle/XSDModelGroup/XSDParticle=1"
+        outputs="CMMN10.ecore#//TProcess/output"/>
+    <nested inputs="CMMN10CaseModel.xsd#//tProcess;XSDComplexTypeDefinition=23/XSDAttributeUse=1"
+        outputs="CMMN10.ecore#//TProcess/implementationType"/>
+    <nested inputs="CMMN10CaseModel.xsd#//tProcess;XSDComplexTypeDefinition=23/XSDAttributeUse"
+        outputs="CMMN10.ecore#//TProcess/name"/>
+  </nested>
+  <nested inputs="bundleentry://413.fwk1637451972/cache/www.w3.org/2001/XMLSchema.xsd#//dateTime;XSDSimpleTypeDefinition=15"
+      outputs="http://www.eclipse.org/emf/2003/XMLType#//DateTime"/>
+  <nested inputs="CMMN10.xsd#//tDefinitions;XSDComplexTypeDefinition" outputs="CMMN10.ecore#//TDefinitions">
+    <nested inputs="CMMN10.xsd#//tDefinitions;XSDComplexTypeDefinition/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="CMMN10.ecore#//TDefinitions/import"/>
+    <nested inputs="CMMN10.xsd#//tDefinitions;XSDComplexTypeDefinition/XSDParticle/XSDModelGroup/XSDParticle=1"
+        outputs="CMMN10.ecore#//TDefinitions/caseFileItemDefinition"/>
+    <nested inputs="CMMN10.xsd#//tDefinitions;XSDComplexTypeDefinition/XSDParticle/XSDModelGroup/XSDParticle=2"
+        outputs="CMMN10.ecore#//TDefinitions/case"/>
+    <nested inputs="CMMN10.xsd#//tDefinitions;XSDComplexTypeDefinition/XSDParticle/XSDModelGroup/XSDParticle=3"
+        outputs="CMMN10.ecore#//TDefinitions/process"/>
+    <nested inputs="CMMN10.xsd#//tDefinitions;XSDComplexTypeDefinition/XSDParticle/XSDModelGroup/XSDParticle=4"
+        outputs="CMMN10.ecore#//TDefinitions/cMMNDiagram"/>
+    <nested inputs="CMMN10.xsd#//tDefinitions;XSDComplexTypeDefinition/XSDAttributeUse=6"
+        outputs="CMMN10.ecore#//TDefinitions/author"/>
+    <nested inputs="CMMN10.xsd#//tDefinitions;XSDComplexTypeDefinition/XSDAttributeUse=7"
+        outputs="CMMN10.ecore#//TDefinitions/creationDate"/>
+    <nested inputs="CMMN10.xsd#//tDefinitions;XSDComplexTypeDefinition/XSDAttributeUse=4"
+        outputs="CMMN10.ecore#//TDefinitions/exporter"/>
+    <nested inputs="CMMN10.xsd#//tDefinitions;XSDComplexTypeDefinition/XSDAttributeUse=5"
+        outputs="CMMN10.ecore#//TDefinitions/exporterVersion"/>
+    <nested inputs="CMMN10.xsd#//tDefinitions;XSDComplexTypeDefinition/XSDAttributeUse=3"
+        outputs="CMMN10.ecore#//TDefinitions/expressionLanguage"/>
+    <nested inputs="CMMN10.xsd#//tDefinitions;XSDComplexTypeDefinition/XSDAttributeUse"
+        outputs="CMMN10.ecore#//TDefinitions/id"/>
+    <nested inputs="CMMN10.xsd#//tDefinitions;XSDComplexTypeDefinition/XSDAttributeUse=1"
+        outputs="CMMN10.ecore#//TDefinitions/name"/>
+    <nested inputs="CMMN10.xsd#//tDefinitions;XSDComplexTypeDefinition/XSDAttributeUse=2"
+        outputs="CMMN10.ecore#//TDefinitions/targetNamespace"/>
+    <nested inputs="CMMN10.xsd#//tDefinitions;XSDComplexTypeDefinition/XSDWildcard"
+        outputs="CMMN10.ecore#//TDefinitions/anyAttribute"/>
+  </nested>
+  <nested inputs="CMMN10.xsd#//definitions;XSDElementDeclaration" outputs="CMMN10.ecore#//DocumentRoot/definitions"/>
+  <nested inputs="DI.xsd#//Diagram;XSDElementDeclaration=1" outputs="DI.ecore#//DocumentRoot/diagram"/>
+  <nested inputs="CMMN10CaseModel.xsd#//tDiscretionaryItem;XSDComplexTypeDefinition=41"
+      outputs="CMMN10.ecore#//TDiscretionaryItem">
+    <nested inputs="CMMN10CaseModel.xsd#//tDiscretionaryItem;XSDComplexTypeDefinition=41/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="CMMN10.ecore#//TDiscretionaryItem/itemControl"/>
+    <nested inputs="CMMN10CaseModel.xsd#//tDiscretionaryItem;XSDComplexTypeDefinition=41/XSDAttributeUse"
+        outputs="CMMN10.ecore#//TDiscretionaryItem/definitionRef"/>
+  </nested>
+  <nested inputs="CMMN10CaseModel.xsd#//discretionaryItem;XSDElementDeclaration=38"
+      outputs="CMMN10.ecore#//DocumentRoot/discretionaryItem"/>
+  <nested inputs="CMMN10CaseModel.xsd#//tableItem;XSDElementDeclaration=36" outputs="CMMN10.ecore#//DocumentRoot/tableItem"/>
+  <nested inputs="DI.xsd#//Edge;XSDElementDeclaration=4" outputs="DI.ecore#//DocumentRoot/edge"/>
+  <nested inputs="CMMN10CaseModel.xsd#//tEvent;XSDComplexTypeDefinition=16" outputs="CMMN10.ecore#//TEvent"/>
+  <nested inputs="CMMN10CaseModel.xsd#//event;XSDElementDeclaration=13" outputs="CMMN10.ecore#//DocumentRoot/event"/>
+  <nested inputs="CMMN10CaseModel.xsd#//expression;XSDElementDeclaration=10" outputs="CMMN10.ecore#//DocumentRoot/expression"/>
+  <nested inputs="DC.xsd#//Font;XSDElementDeclaration" outputs="DC.ecore#//DocumentRoot/font"/>
+  <nested inputs="CMMN10CaseModel.xsd#//tHumanTask;XSDComplexTypeDefinition=21" outputs="CMMN10.ecore#//THumanTask">
+    <nested inputs="CMMN10CaseModel.xsd#//tHumanTask;XSDComplexTypeDefinition=21/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="CMMN10.ecore#//THumanTask/planningTable"/>
+    <nested inputs="CMMN10CaseModel.xsd#//tHumanTask;XSDComplexTypeDefinition=21/XSDAttributeUse"
+        outputs="CMMN10.ecore#//THumanTask/performerRef"/>
+  </nested>
+  <nested inputs="CMMN10CaseModel.xsd#//humanTask;XSDElementDeclaration=18" outputs="CMMN10.ecore#//DocumentRoot/humanTask"/>
+  <nested inputs="CMMN10CaseModel.xsd#//ifPart;XSDElementDeclaration=32" outputs="CMMN10.ecore#//DocumentRoot/ifPart"/>
+  <nested inputs="CMMN10.xsd#//import;XSDElementDeclaration=1" outputs="CMMN10.ecore#//DocumentRoot/import"/>
+  <nested inputs="DI.xsd#//Label;XSDElementDeclaration=8" outputs="DI.ecore#//DocumentRoot/label"/>
+  <nested inputs="DI.xsd#//LabeledEdge;XSDElementDeclaration=7" outputs="DI.ecore#//DocumentRoot/labeledEdge"/>
+  <nested inputs="DI.xsd#//LabeledShape;XSDElementDeclaration=9" outputs="DI.ecore#//DocumentRoot/labeledShape"/>
+  <nested inputs="CMMN10CaseModel.xsd#//manualActivationRule;XSDElementDeclaration=5"
+      outputs="CMMN10.ecore#//DocumentRoot/manualActivationRule"/>
+  <nested inputs="CMMN10CaseModel.xsd#//tMilestone;XSDComplexTypeDefinition=17" outputs="CMMN10.ecore#//TMilestone"/>
+  <nested inputs="CMMN10CaseModel.xsd#//milestone;XSDElementDeclaration=14" outputs="CMMN10.ecore#//DocumentRoot/milestone"/>
+  <nested inputs="DI.xsd#//Node;XSDElementDeclaration=3" outputs="DI.ecore#//DocumentRoot/node"/>
+  <nested inputs="CMMN10CaseModel.xsd#//parameterMapping;XSDElementDeclaration=22"
+      outputs="CMMN10.ecore#//DocumentRoot/parameterMapping"/>
+  <nested inputs="DI.xsd#//Plane;XSDElementDeclaration=6" outputs="DI.ecore#//DocumentRoot/plane"/>
+  <nested inputs="CMMN10CaseModel.xsd#//planFragment;XSDElementDeclaration=33" outputs="CMMN10.ecore#//DocumentRoot/planFragment"/>
+  <nested inputs="CMMN10CaseModel.xsd#//planItem;XSDElementDeclaration=35" outputs="CMMN10.ecore#//DocumentRoot/planItem"/>
+  <nested inputs="CMMN10CaseModel.xsd#//planItemControl;XSDElementDeclaration=2" outputs="CMMN10.ecore#//DocumentRoot/planItemControl"/>
+  <nested inputs="CMMN10CaseModel.xsd#//PlanItemTransition;XSDSimpleTypeDefinition=4"
+      outputs="CMMN10.ecore#//PlanItemTransition">
+    <nested inputs="CMMN10CaseModel.xsd#//PlanItemTransition;XSDSimpleTypeDefinition=4/XSDEnumerationFacet"
+        outputs="CMMN10.ecore#//PlanItemTransition/close"/>
+    <nested inputs="CMMN10CaseModel.xsd#//PlanItemTransition;XSDSimpleTypeDefinition=4/XSDEnumerationFacet=1"
+        outputs="CMMN10.ecore#//PlanItemTransition/complete"/>
+    <nested inputs="CMMN10CaseModel.xsd#//PlanItemTransition;XSDSimpleTypeDefinition=4/XSDEnumerationFacet=2"
+        outputs="CMMN10.ecore#//PlanItemTransition/create"/>
+    <nested inputs="CMMN10CaseModel.xsd#//PlanItemTransition;XSDSimpleTypeDefinition=4/XSDEnumerationFacet=3"
+        outputs="CMMN10.ecore#//PlanItemTransition/disable"/>
+    <nested inputs="CMMN10CaseModel.xsd#//PlanItemTransition;XSDSimpleTypeDefinition=4/XSDEnumerationFacet=4"
+        outputs="CMMN10.ecore#//PlanItemTransition/enable"/>
+    <nested inputs="CMMN10CaseModel.xsd#//PlanItemTransition;XSDSimpleTypeDefinition=4/XSDEnumerationFacet=5"
+        outputs="CMMN10.ecore#//PlanItemTransition/exit"/>
+    <nested inputs="CMMN10CaseModel.xsd#//PlanItemTransition;XSDSimpleTypeDefinition=4/XSDEnumerationFacet=6"
+        outputs="CMMN10.ecore#//PlanItemTransition/fault"/>
+    <nested inputs="CMMN10CaseModel.xsd#//PlanItemTransition;XSDSimpleTypeDefinition=4/XSDEnumerationFacet=7"
+        outputs="CMMN10.ecore#//PlanItemTransition/manualStart"/>
+    <nested inputs="CMMN10CaseModel.xsd#//PlanItemTransition;XSDSimpleTypeDefinition=4/XSDEnumerationFacet=8"
+        outputs="CMMN10.ecore#//PlanItemTransition/occur"/>
+    <nested inputs="CMMN10CaseModel.xsd#//PlanItemTransition;XSDSimpleTypeDefinition=4/XSDEnumerationFacet=9"
+        outputs="CMMN10.ecore#//PlanItemTransition/parentResume"/>
+    <nested inputs="CMMN10CaseModel.xsd#//PlanItemTransition;XSDSimpleTypeDefinition=4/XSDEnumerationFacet=10"
+        outputs="CMMN10.ecore#//PlanItemTransition/parentSuspend"/>
+    <nested inputs="CMMN10CaseModel.xsd#//PlanItemTransition;XSDSimpleTypeDefinition=4/XSDEnumerationFacet=11"
+        outputs="CMMN10.ecore#//PlanItemTransition/reactivate"/>
+    <nested inputs="CMMN10CaseModel.xsd#//PlanItemTransition;XSDSimpleTypeDefinition=4/XSDEnumerationFacet=12"
+        outputs="CMMN10.ecore#//PlanItemTransition/reenable"/>
+    <nested inputs="CMMN10CaseModel.xsd#//PlanItemTransition;XSDSimpleTypeDefinition=4/XSDEnumerationFacet=13"
+        outputs="CMMN10.ecore#//PlanItemTransition/resume"/>
+    <nested inputs="CMMN10CaseModel.xsd#//PlanItemTransition;XSDSimpleTypeDefinition=4/XSDEnumerationFacet=14"
+        outputs="CMMN10.ecore#//PlanItemTransition/start"/>
+    <nested inputs="CMMN10CaseModel.xsd#//PlanItemTransition;XSDSimpleTypeDefinition=4/XSDEnumerationFacet=15"
+        outputs="CMMN10.ecore#//PlanItemTransition/suspend"/>
+    <nested inputs="CMMN10CaseModel.xsd#//PlanItemTransition;XSDSimpleTypeDefinition=4/XSDEnumerationFacet=16"
+        outputs="CMMN10.ecore#//PlanItemTransition/terminate"/>
+  </nested>
+  <nested inputs="CMMN10CaseModel.xsd#//tPlanItemOnPart;XSDComplexTypeDefinition=34"
+      outputs="CMMN10.ecore#//TPlanItemOnPart">
+    <nested inputs="CMMN10CaseModel.xsd#//tPlanItemOnPart;XSDComplexTypeDefinition=34/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="CMMN10.ecore#//TPlanItemOnPart/standardEvent"/>
+    <nested inputs="CMMN10CaseModel.xsd#//tPlanItemOnPart;XSDComplexTypeDefinition=34/XSDAttributeUse=1"
+        outputs="CMMN10.ecore#//TPlanItemOnPart/sentryRef"/>
+    <nested inputs="CMMN10CaseModel.xsd#//tPlanItemOnPart;XSDComplexTypeDefinition=34/XSDAttributeUse"
+        outputs="CMMN10.ecore#//TPlanItemOnPart/sourceRef"/>
+  </nested>
+  <nested inputs="CMMN10CaseModel.xsd#//planItemOnPart;XSDElementDeclaration=31" outputs="CMMN10.ecore#//DocumentRoot/planItemOnPart"/>
+  <nested inputs="CMMN10CaseModel.xsd#//tPlanItemStartTrigger;XSDComplexTypeDefinition=30"
+      outputs="CMMN10.ecore#//TPlanItemStartTrigger">
+    <nested inputs="CMMN10CaseModel.xsd#//tPlanItemStartTrigger;XSDComplexTypeDefinition=30/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="CMMN10.ecore#//TPlanItemStartTrigger/standardEvent"/>
+    <nested inputs="CMMN10CaseModel.xsd#//tPlanItemStartTrigger;XSDComplexTypeDefinition=30/XSDAttributeUse"
+        outputs="CMMN10.ecore#//TPlanItemStartTrigger/sourceRef"/>
+  </nested>
+  <nested inputs="CMMN10CaseModel.xsd#//planItemStartTrigger;XSDElementDeclaration=27"
+      outputs="CMMN10.ecore#//DocumentRoot/planItemStartTrigger"/>
+  <nested inputs="CMMN10CaseModel.xsd#//planningTable;XSDElementDeclaration=37" outputs="CMMN10.ecore#//DocumentRoot/planningTable"/>
+  <nested inputs="DC.xsd#//Point;XSDElementDeclaration=1" outputs="DC.ecore#//DocumentRoot/point"/>
+  <nested inputs="CMMN10CaseModel.xsd#//process;XSDElementDeclaration=20" outputs="CMMN10.ecore#//DocumentRoot/process"/>
+  <nested inputs="CMMN10CaseModel.xsd#//processParameter;XSDElementDeclaration=17"
+      outputs="CMMN10.ecore#//DocumentRoot/processParameter"/>
+  <nested inputs="CMMN10CaseModel.xsd#//tProcessTask;XSDComplexTypeDefinition=22"
+      outputs="CMMN10.ecore#//TProcessTask">
+    <nested inputs="CMMN10CaseModel.xsd#//tProcessTask;XSDComplexTypeDefinition=22/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="CMMN10.ecore#//TProcessTask/parameterMapping"/>
+    <nested inputs="CMMN10CaseModel.xsd#//tProcessTask;XSDComplexTypeDefinition=22/XSDAttributeUse"
+        outputs="CMMN10.ecore#//TProcessTask/processRef"/>
+  </nested>
+  <nested inputs="CMMN10CaseModel.xsd#//processTask;XSDElementDeclaration=19" outputs="CMMN10.ecore#//DocumentRoot/processTask"/>
+  <nested inputs="CMMN10CaseModel.xsd#//property;XSDElementDeclaration=9" outputs="CMMN10.ecore#//DocumentRoot/property"/>
+  <nested inputs="CMMN10CaseModel.xsd#//repetitionRule;XSDElementDeclaration=3" outputs="CMMN10.ecore#//DocumentRoot/repetitionRule"/>
+  <nested inputs="CMMN10CaseModel.xsd#//requiredRule;XSDElementDeclaration=4" outputs="CMMN10.ecore#//DocumentRoot/requiredRule"/>
+  <nested inputs="CMMN10CaseModel.xsd#//role;XSDElementDeclaration=1" outputs="CMMN10.ecore#//DocumentRoot/role"/>
+  <nested inputs="CMMN10CaseModel.xsd#//sentry;XSDElementDeclaration=28" outputs="CMMN10.ecore#//DocumentRoot/sentry"/>
+  <nested inputs="DI.xsd#//Shape;XSDElementDeclaration=5" outputs="DI.ecore#//DocumentRoot/shape"/>
+  <nested inputs="CMMN10CaseModel.xsd#//stage;XSDElementDeclaration=34" outputs="CMMN10.ecore#//DocumentRoot/stage"/>
+  <nested inputs="DI.xsd#//Style;XSDElementDeclaration=2" outputs="DI.ecore#//DocumentRoot/style"/>
+  <nested inputs="CMMN10CaseModel.xsd#//tTimerEvent;XSDComplexTypeDefinition=27" outputs="CMMN10.ecore#//TTimerEvent">
+    <nested inputs="CMMN10CaseModel.xsd#//tTimerEvent;XSDComplexTypeDefinition=27/XSDParticle/XSDModelGroup/XSDParticle"
+        outputs="CMMN10.ecore#//TTimerEvent/timerExpression"/>
+    <nested inputs="CMMN10CaseModel.xsd#//tTimerEvent;XSDComplexTypeDefinition=27/XSDParticle/XSDModelGroup/XSDParticle=1"
+        outputs="CMMN10.ecore#//TTimerEvent/timerStartGroup"/>
+    <nested inputs="CMMN10CaseModel.xsd#//tTimerEvent;XSDComplexTypeDefinition=27/XSDParticle/XSDModelGroup/XSDParticle=1"
+        outputs="CMMN10.ecore#//TTimerEvent/timerStart"/>
+  </nested>
+  <nested inputs="CMMN10CaseModel.xsd#//timerEvent;XSDElementDeclaration=24" outputs="CMMN10.ecore#//DocumentRoot/timerEvent"/>
+  <nested inputs="CMMN10CaseModel.xsd#//tUserEvent;XSDComplexTypeDefinition=26" outputs="CMMN10.ecore#//TUserEvent"/>
+  <nested inputs="CMMN10CaseModel.xsd#//userEvent;XSDElementDeclaration=23" outputs="CMMN10.ecore#//DocumentRoot/userEvent"/>
+  <nested inputs="CMMN10CaseModel.xsd#//ProcessTypeEnum;XSDSimpleTypeDefinition=2/XSDSimpleTypeDefinition"
+      outputs="CMMN10.ecore#//ProcessTypeEnumMember1">
+    <nested inputs="CMMN10CaseModel.xsd#//ProcessTypeEnum;XSDSimpleTypeDefinition=2/XSDSimpleTypeDefinition/XSDEnumerationFacet"
+        outputs="CMMN10.ecore#//ProcessTypeEnumMember1/httpWwwOmgOrgSpecCMMNProcessTypeBPMN20"/>
+    <nested inputs="CMMN10CaseModel.xsd#//ProcessTypeEnum;XSDSimpleTypeDefinition=2/XSDSimpleTypeDefinition/XSDEnumerationFacet=1"
+        outputs="CMMN10.ecore#//ProcessTypeEnumMember1/httpWwwOmgOrgSpecCMMNProcessTypeXPDL2"/>
+    <nested inputs="CMMN10CaseModel.xsd#//ProcessTypeEnum;XSDSimpleTypeDefinition=2/XSDSimpleTypeDefinition/XSDEnumerationFacet=2"
+        outputs="CMMN10.ecore#//ProcessTypeEnumMember1/httpWwwOmgOrgSpecCMMNProcessTypeWSBPEL20"/>
+    <nested inputs="CMMN10CaseModel.xsd#//ProcessTypeEnum;XSDSimpleTypeDefinition=2/XSDSimpleTypeDefinition/XSDEnumerationFacet=3"
+        outputs="CMMN10.ecore#//ProcessTypeEnumMember1/httpWwwOmgOrgSpecCMMNProcessTypeWSBPEL1"/>
+    <nested inputs="CMMN10CaseModel.xsd#//ProcessTypeEnum;XSDSimpleTypeDefinition=2/XSDSimpleTypeDefinition/XSDEnumerationFacet=4"
+        outputs="CMMN10.ecore#//ProcessTypeEnumMember1/httpWwwOmgOrgSpecCMMNProcessTypeUnknown"/>
+    <nested inputs="CMMN10CaseModel.xsd#//ProcessTypeEnum;XSDSimpleTypeDefinition=2/XSDSimpleTypeDefinition/XSDEnumerationFacet=5"
+        outputs="CMMN10.ecore#//ProcessTypeEnumMember1/httpWwwOmgOrgSpecCMMNProcessTypeUnspecified"/>
+  </nested>
+  <nested inputs="CMMN10CaseModel.xsd#//ProcessTypeEnum;XSDSimpleTypeDefinition=2"
+      outputs="CMMN10.ecore#//ProcessTypeEnum"/>
+</xsd2ecore:XSD2EcoreMappingRoot>

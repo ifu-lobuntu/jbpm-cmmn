@@ -777,7 +777,6 @@
         <xsd:sequence> 
           <xsd:element name="standardEvent" type="CaseFileItemTransition" minOccurs="0" maxOccurs="1"/>
         </xsd:sequence>
-        <xsd:attribute name="relationRef" type="xsd:IDREF"/>
         <xsd:attribute name="sourceRef" type="xsd:IDREF">
           <xsd:annotation>
             <xsd:documentation>

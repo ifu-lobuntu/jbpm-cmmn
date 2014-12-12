@@ -34,4 +34,64 @@
             type="cmmn1"
             class="org.omg.cmmn1.util.Cmmn1ResourceFactoryImpl"/>
    </extension>
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated CMMN10 -->
+      <package
+            uri="http://www.omg.org/spec/CMMN/20131201/MODEL"
+            class="org.eclipse.cmmn1.Cmmn1Package"
+            genModel="model/CMMN10.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <!-- @generated CMMN10 -->
+      <parser
+            type="cmmn1"
+            class="org.eclipse.cmmn1.util.Cmmn1ResourceFactoryImpl"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated CMMN10 -->
+      <package
+            uri="http://www.omg.org/spec/CMMN/20131201/DI"
+            class="org.eclipse.cmmndi.CmmnDiPackage"
+            genModel="model/CMMN10.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <!-- @generated CMMN10 -->
+      <parser
+            type="cmmndi"
+            class="org.eclipse.cmmndi.util.CmmnDiResourceFactoryImpl"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated CMMN10 -->
+      <package
+            uri="http://www.omg.org/spec/DD/20100524/DI-XMI"
+            class="org.eclipse.dd.cmmn.di.DiPackage"
+            genModel="model/CMMN10.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <!-- @generated CMMN10 -->
+      <parser
+            type="di"
+            class="org.eclipse.dd.cmmn.di.util.DiResourceFactoryImpl"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated CMMN10 -->
+      <package
+            uri="http://www.omg.org/spec/DD/20100524/DC-XMI"
+            class="org.eclipse.dd.cmmn.dc.DcPackage"
+            genModel="model/CMMN10.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <!-- @generated CMMN10 -->
+      <parser
+            type="dc"
+            class="org.eclipse.dd.cmmn.dc.util.DcResourceFactoryImpl"/>
+   </extension>
+
 </plugin>

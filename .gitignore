@@ -4,3 +4,4 @@ target
 .settings
 MANIFEST.MF
 *.md.html
+/bin/
