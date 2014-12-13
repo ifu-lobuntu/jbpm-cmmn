@@ -2,6 +2,8 @@
  */
 package org.eclipse.cmmn1;
 
+import org.eclipse.emf.common.util.EList;
+
 
 /**
  * <!-- begin-user-doc -->
@@ -172,7 +174,8 @@ public interface TCaseFileItem extends TCmmnElement {
     void setName(String value);
 
     /**
-     * Returns the value of the '<em><b>Source Ref</b></em>' reference.
+     * Returns the value of the '<em><b>Source Ref</b></em>' reference list.
+     * The list contents are of type {@link org.eclipse.cmmn1.TCaseFileItem}.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
@@ -181,26 +184,16 @@ public interface TCaseFileItem extends TCmmnElement {
      *               "caseFileItem" has a parent.
      *             
      * <!-- end-model-doc -->
-     * @return the value of the '<em>Source Ref</em>' reference.
-     * @see #setSourceRef(TCaseFileItem)
+     * @return the value of the '<em>Source Ref</em>' reference list.
      * @see org.eclipse.cmmn1.Cmmn1Package#getTCaseFileItem_SourceRef()
      * @model extendedMetaData="kind='attribute' name='sourceRef'"
      * @generated
      */
-    TCaseFileItem getSourceRef();
+    EList<TCaseFileItem> getSourceRef();
 
     /**
-     * Sets the value of the '{@link org.eclipse.cmmn1.TCaseFileItem#getSourceRef <em>Source Ref</em>}' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Source Ref</em>' reference.
-     * @see #getSourceRef()
-     * @generated
-     */
-    void setSourceRef(TCaseFileItem value);
-
-    /**
-     * Returns the value of the '<em><b>Target Refs</b></em>' reference.
+     * Returns the value of the '<em><b>Target Refs</b></em>' reference list.
+     * The list contents are of type {@link org.eclipse.cmmn1.TCaseFileItem}.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
@@ -209,22 +202,11 @@ public interface TCaseFileItem extends TCmmnElement {
      *               targetRefs MUST refer to "caseFileItem" elements; the targets of this caseFileItem.
      *             
      * <!-- end-model-doc -->
-     * @return the value of the '<em>Target Refs</em>' reference.
-     * @see #setTargetRefs(TCaseFileItem)
+     * @return the value of the '<em>Target Refs</em>' reference list.
      * @see org.eclipse.cmmn1.Cmmn1Package#getTCaseFileItem_TargetRefs()
      * @model extendedMetaData="kind='attribute' name='targetRefs'"
      * @generated
      */
-    TCaseFileItem getTargetRefs();
-
-    /**
-     * Sets the value of the '{@link org.eclipse.cmmn1.TCaseFileItem#getTargetRefs <em>Target Refs</em>}' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Target Refs</em>' reference.
-     * @see #getTargetRefs()
-     * @generated
-     */
-    void setTargetRefs(TCaseFileItem value);
+    EList<TCaseFileItem> getTargetRefs();
 
 } // TCaseFileItem

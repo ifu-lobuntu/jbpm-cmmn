@@ -2,6 +2,7 @@
  */
 package org.eclipse.cmmn1.impl;
 
+import java.util.Collection;
 import org.eclipse.cmmn1.Cmmn1Package;
 import org.eclipse.cmmn1.TPlanItem;
 import org.eclipse.cmmn1.TPlanItemControl;
@@ -9,9 +10,11 @@ import org.eclipse.cmmn1.TPlanItemDefinition;
 import org.eclipse.cmmn1.TSentry;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -52,24 +55,24 @@ public class TPlanItemImpl extends TCmmnElementImpl implements TPlanItem {
     protected TPlanItemDefinition definitionRef;
 
     /**
-     * The cached value of the '{@link #getEntryCriteriaRefs() <em>Entry Criteria Refs</em>}' reference.
+     * The cached value of the '{@link #getEntryCriteriaRefs() <em>Entry Criteria Refs</em>}' reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see #getEntryCriteriaRefs()
      * @generated
      * @ordered
      */
-    protected TSentry entryCriteriaRefs;
+    protected EList<TSentry> entryCriteriaRefs;
 
     /**
-     * The cached value of the '{@link #getExitCriteriaRefs() <em>Exit Criteria Refs</em>}' reference.
+     * The cached value of the '{@link #getExitCriteriaRefs() <em>Exit Criteria Refs</em>}' reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see #getExitCriteriaRefs()
      * @generated
      * @ordered
      */
-    protected TSentry exitCriteriaRefs;
+    protected EList<TSentry> exitCriteriaRefs;
 
     /**
      * The default value of the '{@link #getName() <em>Name</em>}' attribute.
@@ -196,14 +199,9 @@ public class TPlanItemImpl extends TCmmnElementImpl implements TPlanItem {
      * <!-- end-user-doc -->
      * @generated
      */
-    public TSentry getEntryCriteriaRefs() {
-        if (entryCriteriaRefs != null && entryCriteriaRefs.eIsProxy()) {
-            InternalEObject oldEntryCriteriaRefs = (InternalEObject)entryCriteriaRefs;
-            entryCriteriaRefs = (TSentry)eResolveProxy(oldEntryCriteriaRefs);
-            if (entryCriteriaRefs != oldEntryCriteriaRefs) {
-                if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, Cmmn1Package.TPLAN_ITEM__ENTRY_CRITERIA_REFS, oldEntryCriteriaRefs, entryCriteriaRefs));
-            }
+    public EList<TSentry> getEntryCriteriaRefs() {
+        if (entryCriteriaRefs == null) {
+            entryCriteriaRefs = new EObjectResolvingEList<TSentry>(TSentry.class, this, Cmmn1Package.TPLAN_ITEM__ENTRY_CRITERIA_REFS);
         }
         return entryCriteriaRefs;
     }
@@ -213,58 +211,11 @@ public class TPlanItemImpl extends TCmmnElementImpl implements TPlanItem {
      * <!-- end-user-doc -->
      * @generated
      */
-    public TSentry basicGetEntryCriteriaRefs() {
-        return entryCriteriaRefs;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setEntryCriteriaRefs(TSentry newEntryCriteriaRefs) {
-        TSentry oldEntryCriteriaRefs = entryCriteriaRefs;
-        entryCriteriaRefs = newEntryCriteriaRefs;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, Cmmn1Package.TPLAN_ITEM__ENTRY_CRITERIA_REFS, oldEntryCriteriaRefs, entryCriteriaRefs));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public TSentry getExitCriteriaRefs() {
-        if (exitCriteriaRefs != null && exitCriteriaRefs.eIsProxy()) {
-            InternalEObject oldExitCriteriaRefs = (InternalEObject)exitCriteriaRefs;
-            exitCriteriaRefs = (TSentry)eResolveProxy(oldExitCriteriaRefs);
-            if (exitCriteriaRefs != oldExitCriteriaRefs) {
-                if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, Cmmn1Package.TPLAN_ITEM__EXIT_CRITERIA_REFS, oldExitCriteriaRefs, exitCriteriaRefs));
-            }
+    public EList<TSentry> getExitCriteriaRefs() {
+        if (exitCriteriaRefs == null) {
+            exitCriteriaRefs = new EObjectResolvingEList<TSentry>(TSentry.class, this, Cmmn1Package.TPLAN_ITEM__EXIT_CRITERIA_REFS);
         }
         return exitCriteriaRefs;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public TSentry basicGetExitCriteriaRefs() {
-        return exitCriteriaRefs;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setExitCriteriaRefs(TSentry newExitCriteriaRefs) {
-        TSentry oldExitCriteriaRefs = exitCriteriaRefs;
-        exitCriteriaRefs = newExitCriteriaRefs;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, Cmmn1Package.TPLAN_ITEM__EXIT_CRITERIA_REFS, oldExitCriteriaRefs, exitCriteriaRefs));
     }
 
     /**
@@ -316,11 +267,9 @@ public class TPlanItemImpl extends TCmmnElementImpl implements TPlanItem {
                 if (resolve) return getDefinitionRef();
                 return basicGetDefinitionRef();
             case Cmmn1Package.TPLAN_ITEM__ENTRY_CRITERIA_REFS:
-                if (resolve) return getEntryCriteriaRefs();
-                return basicGetEntryCriteriaRefs();
+                return getEntryCriteriaRefs();
             case Cmmn1Package.TPLAN_ITEM__EXIT_CRITERIA_REFS:
-                if (resolve) return getExitCriteriaRefs();
-                return basicGetExitCriteriaRefs();
+                return getExitCriteriaRefs();
             case Cmmn1Package.TPLAN_ITEM__NAME:
                 return getName();
         }
@@ -343,10 +292,12 @@ public class TPlanItemImpl extends TCmmnElementImpl implements TPlanItem {
                 setDefinitionRef((TPlanItemDefinition)newValue);
                 return;
             case Cmmn1Package.TPLAN_ITEM__ENTRY_CRITERIA_REFS:
-                setEntryCriteriaRefs((TSentry)newValue);
+                getEntryCriteriaRefs().clear();
+                getEntryCriteriaRefs().addAll((Collection<? extends TSentry>)newValue);
                 return;
             case Cmmn1Package.TPLAN_ITEM__EXIT_CRITERIA_REFS:
-                setExitCriteriaRefs((TSentry)newValue);
+                getExitCriteriaRefs().clear();
+                getExitCriteriaRefs().addAll((Collection<? extends TSentry>)newValue);
                 return;
             case Cmmn1Package.TPLAN_ITEM__NAME:
                 setName((String)newValue);
@@ -370,10 +321,10 @@ public class TPlanItemImpl extends TCmmnElementImpl implements TPlanItem {
                 setDefinitionRef((TPlanItemDefinition)null);
                 return;
             case Cmmn1Package.TPLAN_ITEM__ENTRY_CRITERIA_REFS:
-                setEntryCriteriaRefs((TSentry)null);
+                getEntryCriteriaRefs().clear();
                 return;
             case Cmmn1Package.TPLAN_ITEM__EXIT_CRITERIA_REFS:
-                setExitCriteriaRefs((TSentry)null);
+                getExitCriteriaRefs().clear();
                 return;
             case Cmmn1Package.TPLAN_ITEM__NAME:
                 setName(NAME_EDEFAULT);
@@ -395,9 +346,9 @@ public class TPlanItemImpl extends TCmmnElementImpl implements TPlanItem {
             case Cmmn1Package.TPLAN_ITEM__DEFINITION_REF:
                 return definitionRef != null;
             case Cmmn1Package.TPLAN_ITEM__ENTRY_CRITERIA_REFS:
-                return entryCriteriaRefs != null;
+                return entryCriteriaRefs != null && !entryCriteriaRefs.isEmpty();
             case Cmmn1Package.TPLAN_ITEM__EXIT_CRITERIA_REFS:
-                return exitCriteriaRefs != null;
+                return exitCriteriaRefs != null && !exitCriteriaRefs.isEmpty();
             case Cmmn1Package.TPLAN_ITEM__NAME:
                 return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
         }

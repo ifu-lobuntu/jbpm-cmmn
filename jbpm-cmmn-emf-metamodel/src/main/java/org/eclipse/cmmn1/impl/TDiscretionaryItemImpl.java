@@ -4,8 +4,8 @@ package org.eclipse.cmmn1.impl;
 
 import org.eclipse.cmmn1.Cmmn1Package;
 import org.eclipse.cmmn1.TDiscretionaryItem;
-import org.eclipse.cmmn1.TPlanItem;
 import org.eclipse.cmmn1.TPlanItemControl;
+import org.eclipse.cmmn1.TPlanItemDefinition;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
@@ -45,7 +45,7 @@ public class TDiscretionaryItemImpl extends TTableItemImpl implements TDiscretio
      * @generated
      * @ordered
      */
-    protected TPlanItem definitionRef;
+    protected TPlanItemDefinition definitionRef;
 
     /**
      * <!-- begin-user-doc -->
@@ -114,10 +114,10 @@ public class TDiscretionaryItemImpl extends TTableItemImpl implements TDiscretio
      * <!-- end-user-doc -->
      * @generated
      */
-    public TPlanItem getDefinitionRef() {
+    public TPlanItemDefinition getDefinitionRef() {
         if (definitionRef != null && definitionRef.eIsProxy()) {
             InternalEObject oldDefinitionRef = (InternalEObject)definitionRef;
-            definitionRef = (TPlanItem)eResolveProxy(oldDefinitionRef);
+            definitionRef = (TPlanItemDefinition)eResolveProxy(oldDefinitionRef);
             if (definitionRef != oldDefinitionRef) {
                 if (eNotificationRequired())
                     eNotify(new ENotificationImpl(this, Notification.RESOLVE, Cmmn1Package.TDISCRETIONARY_ITEM__DEFINITION_REF, oldDefinitionRef, definitionRef));
@@ -131,7 +131,7 @@ public class TDiscretionaryItemImpl extends TTableItemImpl implements TDiscretio
      * <!-- end-user-doc -->
      * @generated
      */
-    public TPlanItem basicGetDefinitionRef() {
+    public TPlanItemDefinition basicGetDefinitionRef() {
         return definitionRef;
     }
 
@@ -140,8 +140,8 @@ public class TDiscretionaryItemImpl extends TTableItemImpl implements TDiscretio
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setDefinitionRef(TPlanItem newDefinitionRef) {
-        TPlanItem oldDefinitionRef = definitionRef;
+    public void setDefinitionRef(TPlanItemDefinition newDefinitionRef) {
+        TPlanItemDefinition oldDefinitionRef = definitionRef;
         definitionRef = newDefinitionRef;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, Cmmn1Package.TDISCRETIONARY_ITEM__DEFINITION_REF, oldDefinitionRef, definitionRef));
@@ -190,7 +190,7 @@ public class TDiscretionaryItemImpl extends TTableItemImpl implements TDiscretio
                 setItemControl((TPlanItemControl)newValue);
                 return;
             case Cmmn1Package.TDISCRETIONARY_ITEM__DEFINITION_REF:
-                setDefinitionRef((TPlanItem)newValue);
+                setDefinitionRef((TPlanItemDefinition)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -208,7 +208,7 @@ public class TDiscretionaryItemImpl extends TTableItemImpl implements TDiscretio
                 setItemControl((TPlanItemControl)null);
                 return;
             case Cmmn1Package.TDISCRETIONARY_ITEM__DEFINITION_REF:
-                setDefinitionRef((TPlanItem)null);
+                setDefinitionRef((TPlanItemDefinition)null);
                 return;
         }
         super.eUnset(featureID);

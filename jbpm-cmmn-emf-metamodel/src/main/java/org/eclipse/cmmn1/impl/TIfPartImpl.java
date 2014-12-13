@@ -2,20 +2,15 @@
  */
 package org.eclipse.cmmn1.impl;
 
-import java.util.Collection;
-
 import org.eclipse.cmmn1.Cmmn1Package;
 import org.eclipse.cmmn1.TCaseFileItem;
 import org.eclipse.cmmn1.TExpression;
 import org.eclipse.cmmn1.TIfPart;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -33,14 +28,14 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class TIfPartImpl extends TCmmnElementImpl implements TIfPart {
     /**
-     * The cached value of the '{@link #getCondition() <em>Condition</em>}' containment reference list.
+     * The cached value of the '{@link #getCondition() <em>Condition</em>}' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see #getCondition()
      * @generated
      * @ordered
      */
-    protected EList<TExpression> condition;
+    protected TExpression condition;
 
     /**
      * The cached value of the '{@link #getContextRef() <em>Context Ref</em>}' reference.
@@ -76,11 +71,42 @@ public class TIfPartImpl extends TCmmnElementImpl implements TIfPart {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EList<TExpression> getCondition() {
-        if (condition == null) {
-            condition = new EObjectContainmentEList<TExpression>(TExpression.class, this, Cmmn1Package.TIF_PART__CONDITION);
-        }
+    public TExpression getCondition() {
         return condition;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public NotificationChain basicSetCondition(TExpression newCondition, NotificationChain msgs) {
+        TExpression oldCondition = condition;
+        condition = newCondition;
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, Cmmn1Package.TIF_PART__CONDITION, oldCondition, newCondition);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
+        }
+        return msgs;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setCondition(TExpression newCondition) {
+        if (newCondition != condition) {
+            NotificationChain msgs = null;
+            if (condition != null)
+                msgs = ((InternalEObject)condition).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - Cmmn1Package.TIF_PART__CONDITION, null, msgs);
+            if (newCondition != null)
+                msgs = ((InternalEObject)newCondition).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - Cmmn1Package.TIF_PART__CONDITION, null, msgs);
+            msgs = basicSetCondition(newCondition, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, Cmmn1Package.TIF_PART__CONDITION, newCondition, newCondition));
     }
 
     /**
@@ -130,7 +156,7 @@ public class TIfPartImpl extends TCmmnElementImpl implements TIfPart {
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
             case Cmmn1Package.TIF_PART__CONDITION:
-                return ((InternalEList<?>)getCondition()).basicRemove(otherEnd, msgs);
+                return basicSetCondition(null, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -162,8 +188,7 @@ public class TIfPartImpl extends TCmmnElementImpl implements TIfPart {
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
             case Cmmn1Package.TIF_PART__CONDITION:
-                getCondition().clear();
-                getCondition().addAll((Collection<? extends TExpression>)newValue);
+                setCondition((TExpression)newValue);
                 return;
             case Cmmn1Package.TIF_PART__CONTEXT_REF:
                 setContextRef((TCaseFileItem)newValue);
@@ -181,7 +206,7 @@ public class TIfPartImpl extends TCmmnElementImpl implements TIfPart {
     public void eUnset(int featureID) {
         switch (featureID) {
             case Cmmn1Package.TIF_PART__CONDITION:
-                getCondition().clear();
+                setCondition((TExpression)null);
                 return;
             case Cmmn1Package.TIF_PART__CONTEXT_REF:
                 setContextRef((TCaseFileItem)null);
@@ -199,7 +224,7 @@ public class TIfPartImpl extends TCmmnElementImpl implements TIfPart {
     public boolean eIsSet(int featureID) {
         switch (featureID) {
             case Cmmn1Package.TIF_PART__CONDITION:
-                return condition != null && !condition.isEmpty();
+                return condition != null;
             case Cmmn1Package.TIF_PART__CONTEXT_REF:
                 return contextRef != null;
         }

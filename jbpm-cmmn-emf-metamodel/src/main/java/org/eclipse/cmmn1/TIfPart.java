@@ -2,7 +2,6 @@
  */
 package org.eclipse.cmmn1;
 
-import org.eclipse.emf.common.util.EList;
 
 /**
  * <!-- begin-user-doc -->
@@ -23,21 +22,31 @@ import org.eclipse.emf.common.util.EList;
  */
 public interface TIfPart extends TCmmnElement {
     /**
-     * Returns the value of the '<em><b>Condition</b></em>' containment reference list.
-     * The list contents are of type {@link org.eclipse.cmmn1.TExpression}.
+     * Returns the value of the '<em><b>Condition</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Condition</em>' containment reference list isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Condition</em>' containment reference list.
+     * @return the value of the '<em>Condition</em>' containment reference.
+     * @see #setCondition(TExpression)
      * @see org.eclipse.cmmn1.Cmmn1Package#getTIfPart_Condition()
      * @model containment="true"
      *        extendedMetaData="kind='element' name='condition' namespace='##targetNamespace'"
      * @generated
      */
-    EList<TExpression> getCondition();
+    TExpression getCondition();
+
+    /**
+     * Sets the value of the '{@link org.eclipse.cmmn1.TIfPart#getCondition <em>Condition</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Condition</em>' containment reference.
+     * @see #getCondition()
+     * @generated
+     */
+    void setCondition(TExpression value);
 
     /**
      * Returns the value of the '<em><b>Context Ref</b></em>' reference.

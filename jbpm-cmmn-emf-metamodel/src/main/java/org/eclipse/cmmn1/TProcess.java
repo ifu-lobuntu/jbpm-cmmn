@@ -10,9 +10,9 @@ import org.eclipse.emf.common.util.EList;
  * <!-- end-user-doc -->
  *
  * <!-- begin-model-doc -->
- *
+ * 
  *         tProcess defines the type of element "process"
- *
+ *       
  * <!-- end-model-doc -->
  *
  * <p>

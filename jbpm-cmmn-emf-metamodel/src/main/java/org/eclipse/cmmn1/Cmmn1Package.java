@@ -866,7 +866,7 @@ public interface Cmmn1Package extends EPackage {
     int TCASE_FILE_ITEM__NAME = TCMMN_ELEMENT_FEATURE_COUNT + 3;
 
     /**
-     * The feature id for the '<em><b>Source Ref</b></em>' reference.
+     * The feature id for the '<em><b>Source Ref</b></em>' reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -875,7 +875,7 @@ public interface Cmmn1Package extends EPackage {
     int TCASE_FILE_ITEM__SOURCE_REF = TCMMN_ELEMENT_FEATURE_COUNT + 4;
 
     /**
-     * The feature id for the '<em><b>Target Refs</b></em>' reference.
+     * The feature id for the '<em><b>Target Refs</b></em>' reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -2451,7 +2451,7 @@ public interface Cmmn1Package extends EPackage {
     int TIF_PART__ANY_ATTRIBUTE = TCMMN_ELEMENT__ANY_ATTRIBUTE;
 
     /**
-     * The feature id for the '<em><b>Condition</b></em>' containment reference list.
+     * The feature id for the '<em><b>Condition</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -2925,7 +2925,7 @@ public interface Cmmn1Package extends EPackage {
     int TPLAN_ITEM__DEFINITION_REF = TCMMN_ELEMENT_FEATURE_COUNT + 1;
 
     /**
-     * The feature id for the '<em><b>Entry Criteria Refs</b></em>' reference.
+     * The feature id for the '<em><b>Entry Criteria Refs</b></em>' reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -2934,7 +2934,7 @@ public interface Cmmn1Package extends EPackage {
     int TPLAN_ITEM__ENTRY_CRITERIA_REFS = TCMMN_ELEMENT_FEATURE_COUNT + 2;
 
     /**
-     * The feature id for the '<em><b>Exit Criteria Refs</b></em>' reference.
+     * The feature id for the '<em><b>Exit Criteria Refs</b></em>' reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -5090,10 +5090,10 @@ public interface Cmmn1Package extends EPackage {
     EAttribute getTCaseFileItem_Name();
 
     /**
-     * Returns the meta object for the reference '{@link org.eclipse.cmmn1.TCaseFileItem#getSourceRef <em>Source Ref</em>}'.
+     * Returns the meta object for the reference list '{@link org.eclipse.cmmn1.TCaseFileItem#getSourceRef <em>Source Ref</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Source Ref</em>'.
+     * @return the meta object for the reference list '<em>Source Ref</em>'.
      * @see org.eclipse.cmmn1.TCaseFileItem#getSourceRef()
      * @see #getTCaseFileItem()
      * @generated
@@ -5101,10 +5101,10 @@ public interface Cmmn1Package extends EPackage {
     EReference getTCaseFileItem_SourceRef();
 
     /**
-     * Returns the meta object for the reference '{@link org.eclipse.cmmn1.TCaseFileItem#getTargetRefs <em>Target Refs</em>}'.
+     * Returns the meta object for the reference list '{@link org.eclipse.cmmn1.TCaseFileItem#getTargetRefs <em>Target Refs</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Target Refs</em>'.
+     * @return the meta object for the reference list '<em>Target Refs</em>'.
      * @see org.eclipse.cmmn1.TCaseFileItem#getTargetRefs()
      * @see #getTCaseFileItem()
      * @generated
@@ -5703,10 +5703,10 @@ public interface Cmmn1Package extends EPackage {
     EClass getTIfPart();
 
     /**
-     * Returns the meta object for the containment reference list '{@link org.eclipse.cmmn1.TIfPart#getCondition <em>Condition</em>}'.
+     * Returns the meta object for the containment reference '{@link org.eclipse.cmmn1.TIfPart#getCondition <em>Condition</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>Condition</em>'.
+     * @return the meta object for the containment reference '<em>Condition</em>'.
      * @see org.eclipse.cmmn1.TIfPart#getCondition()
      * @see #getTIfPart()
      * @generated
@@ -5959,10 +5959,10 @@ public interface Cmmn1Package extends EPackage {
     EReference getTPlanItem_DefinitionRef();
 
     /**
-     * Returns the meta object for the reference '{@link org.eclipse.cmmn1.TPlanItem#getEntryCriteriaRefs <em>Entry Criteria Refs</em>}'.
+     * Returns the meta object for the reference list '{@link org.eclipse.cmmn1.TPlanItem#getEntryCriteriaRefs <em>Entry Criteria Refs</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Entry Criteria Refs</em>'.
+     * @return the meta object for the reference list '<em>Entry Criteria Refs</em>'.
      * @see org.eclipse.cmmn1.TPlanItem#getEntryCriteriaRefs()
      * @see #getTPlanItem()
      * @generated
@@ -5970,10 +5970,10 @@ public interface Cmmn1Package extends EPackage {
     EReference getTPlanItem_EntryCriteriaRefs();
 
     /**
-     * Returns the meta object for the reference '{@link org.eclipse.cmmn1.TPlanItem#getExitCriteriaRefs <em>Exit Criteria Refs</em>}'.
+     * Returns the meta object for the reference list '{@link org.eclipse.cmmn1.TPlanItem#getExitCriteriaRefs <em>Exit Criteria Refs</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Exit Criteria Refs</em>'.
+     * @return the meta object for the reference list '<em>Exit Criteria Refs</em>'.
      * @see org.eclipse.cmmn1.TPlanItem#getExitCriteriaRefs()
      * @see #getTPlanItem()
      * @generated
@@ -7348,7 +7348,7 @@ public interface Cmmn1Package extends EPackage {
         EAttribute TCASE_FILE_ITEM__NAME = eINSTANCE.getTCaseFileItem_Name();
 
         /**
-         * The meta object literal for the '<em><b>Source Ref</b></em>' reference feature.
+         * The meta object literal for the '<em><b>Source Ref</b></em>' reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
@@ -7356,7 +7356,7 @@ public interface Cmmn1Package extends EPackage {
         EReference TCASE_FILE_ITEM__SOURCE_REF = eINSTANCE.getTCaseFileItem_SourceRef();
 
         /**
-         * The meta object literal for the '<em><b>Target Refs</b></em>' reference feature.
+         * The meta object literal for the '<em><b>Target Refs</b></em>' reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
@@ -7832,7 +7832,7 @@ public interface Cmmn1Package extends EPackage {
         EClass TIF_PART = eINSTANCE.getTIfPart();
 
         /**
-         * The meta object literal for the '<em><b>Condition</b></em>' containment reference list feature.
+         * The meta object literal for the '<em><b>Condition</b></em>' containment reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
@@ -8040,7 +8040,7 @@ public interface Cmmn1Package extends EPackage {
         EReference TPLAN_ITEM__DEFINITION_REF = eINSTANCE.getTPlanItem_DefinitionRef();
 
         /**
-         * The meta object literal for the '<em><b>Entry Criteria Refs</b></em>' reference feature.
+         * The meta object literal for the '<em><b>Entry Criteria Refs</b></em>' reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
@@ -8048,7 +8048,7 @@ public interface Cmmn1Package extends EPackage {
         EReference TPLAN_ITEM__ENTRY_CRITERIA_REFS = eINSTANCE.getTPlanItem_EntryCriteriaRefs();
 
         /**
-         * The meta object literal for the '<em><b>Exit Criteria Refs</b></em>' reference feature.
+         * The meta object literal for the '<em><b>Exit Criteria Refs</b></em>' reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated

@@ -2,6 +2,7 @@
  */
 package org.eclipse.cmmn1.impl;
 
+import java.util.Collection;
 import org.eclipse.cmmn1.Cmmn1Package;
 import org.eclipse.cmmn1.MultiplicityEnum;
 import org.eclipse.cmmn1.TCaseFileItem;
@@ -9,9 +10,11 @@ import org.eclipse.cmmn1.TCaseFileItemDefinition;
 import org.eclipse.cmmn1.TChildren;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -102,24 +105,24 @@ public class TCaseFileItemImpl extends TCmmnElementImpl implements TCaseFileItem
     protected String name = NAME_EDEFAULT;
 
     /**
-     * The cached value of the '{@link #getSourceRef() <em>Source Ref</em>}' reference.
+     * The cached value of the '{@link #getSourceRef() <em>Source Ref</em>}' reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see #getSourceRef()
      * @generated
      * @ordered
      */
-    protected TCaseFileItem sourceRef;
+    protected EList<TCaseFileItem> sourceRef;
 
     /**
-     * The cached value of the '{@link #getTargetRefs() <em>Target Refs</em>}' reference.
+     * The cached value of the '{@link #getTargetRefs() <em>Target Refs</em>}' reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see #getTargetRefs()
      * @generated
      * @ordered
      */
-    protected TCaseFileItem targetRefs;
+    protected EList<TCaseFileItem> targetRefs;
 
     /**
      * <!-- begin-user-doc -->
@@ -293,14 +296,9 @@ public class TCaseFileItemImpl extends TCmmnElementImpl implements TCaseFileItem
      * <!-- end-user-doc -->
      * @generated
      */
-    public TCaseFileItem getSourceRef() {
-        if (sourceRef != null && sourceRef.eIsProxy()) {
-            InternalEObject oldSourceRef = (InternalEObject)sourceRef;
-            sourceRef = (TCaseFileItem)eResolveProxy(oldSourceRef);
-            if (sourceRef != oldSourceRef) {
-                if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, Cmmn1Package.TCASE_FILE_ITEM__SOURCE_REF, oldSourceRef, sourceRef));
-            }
+    public EList<TCaseFileItem> getSourceRef() {
+        if (sourceRef == null) {
+            sourceRef = new EObjectResolvingEList<TCaseFileItem>(TCaseFileItem.class, this, Cmmn1Package.TCASE_FILE_ITEM__SOURCE_REF);
         }
         return sourceRef;
     }
@@ -310,58 +308,11 @@ public class TCaseFileItemImpl extends TCmmnElementImpl implements TCaseFileItem
      * <!-- end-user-doc -->
      * @generated
      */
-    public TCaseFileItem basicGetSourceRef() {
-        return sourceRef;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setSourceRef(TCaseFileItem newSourceRef) {
-        TCaseFileItem oldSourceRef = sourceRef;
-        sourceRef = newSourceRef;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, Cmmn1Package.TCASE_FILE_ITEM__SOURCE_REF, oldSourceRef, sourceRef));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public TCaseFileItem getTargetRefs() {
-        if (targetRefs != null && targetRefs.eIsProxy()) {
-            InternalEObject oldTargetRefs = (InternalEObject)targetRefs;
-            targetRefs = (TCaseFileItem)eResolveProxy(oldTargetRefs);
-            if (targetRefs != oldTargetRefs) {
-                if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, Cmmn1Package.TCASE_FILE_ITEM__TARGET_REFS, oldTargetRefs, targetRefs));
-            }
+    public EList<TCaseFileItem> getTargetRefs() {
+        if (targetRefs == null) {
+            targetRefs = new EObjectResolvingEList<TCaseFileItem>(TCaseFileItem.class, this, Cmmn1Package.TCASE_FILE_ITEM__TARGET_REFS);
         }
         return targetRefs;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public TCaseFileItem basicGetTargetRefs() {
-        return targetRefs;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setTargetRefs(TCaseFileItem newTargetRefs) {
-        TCaseFileItem oldTargetRefs = targetRefs;
-        targetRefs = newTargetRefs;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, Cmmn1Package.TCASE_FILE_ITEM__TARGET_REFS, oldTargetRefs, targetRefs));
     }
 
     /**
@@ -396,11 +347,9 @@ public class TCaseFileItemImpl extends TCmmnElementImpl implements TCaseFileItem
             case Cmmn1Package.TCASE_FILE_ITEM__NAME:
                 return getName();
             case Cmmn1Package.TCASE_FILE_ITEM__SOURCE_REF:
-                if (resolve) return getSourceRef();
-                return basicGetSourceRef();
+                return getSourceRef();
             case Cmmn1Package.TCASE_FILE_ITEM__TARGET_REFS:
-                if (resolve) return getTargetRefs();
-                return basicGetTargetRefs();
+                return getTargetRefs();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -427,10 +376,12 @@ public class TCaseFileItemImpl extends TCmmnElementImpl implements TCaseFileItem
                 setName((String)newValue);
                 return;
             case Cmmn1Package.TCASE_FILE_ITEM__SOURCE_REF:
-                setSourceRef((TCaseFileItem)newValue);
+                getSourceRef().clear();
+                getSourceRef().addAll((Collection<? extends TCaseFileItem>)newValue);
                 return;
             case Cmmn1Package.TCASE_FILE_ITEM__TARGET_REFS:
-                setTargetRefs((TCaseFileItem)newValue);
+                getTargetRefs().clear();
+                getTargetRefs().addAll((Collection<? extends TCaseFileItem>)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -457,10 +408,10 @@ public class TCaseFileItemImpl extends TCmmnElementImpl implements TCaseFileItem
                 setName(NAME_EDEFAULT);
                 return;
             case Cmmn1Package.TCASE_FILE_ITEM__SOURCE_REF:
-                setSourceRef((TCaseFileItem)null);
+                getSourceRef().clear();
                 return;
             case Cmmn1Package.TCASE_FILE_ITEM__TARGET_REFS:
-                setTargetRefs((TCaseFileItem)null);
+                getTargetRefs().clear();
                 return;
         }
         super.eUnset(featureID);
@@ -483,9 +434,9 @@ public class TCaseFileItemImpl extends TCmmnElementImpl implements TCaseFileItem
             case Cmmn1Package.TCASE_FILE_ITEM__NAME:
                 return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
             case Cmmn1Package.TCASE_FILE_ITEM__SOURCE_REF:
-                return sourceRef != null;
+                return sourceRef != null && !sourceRef.isEmpty();
             case Cmmn1Package.TCASE_FILE_ITEM__TARGET_REFS:
-                return targetRefs != null;
+                return targetRefs != null && !targetRefs.isEmpty();
         }
         return super.eIsSet(featureID);
     }

@@ -2,6 +2,8 @@
  */
 package org.eclipse.cmmn1;
 
+import org.eclipse.emf.common.util.EList;
+
 
 /**
  * <!-- begin-user-doc -->
@@ -79,7 +81,8 @@ public interface TPlanItem extends TCmmnElement {
     void setDefinitionRef(TPlanItemDefinition value);
 
     /**
-     * Returns the value of the '<em><b>Entry Criteria Refs</b></em>' reference.
+     * Returns the value of the '<em><b>Entry Criteria Refs</b></em>' reference list.
+     * The list contents are of type {@link org.eclipse.cmmn1.TSentry}.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
@@ -87,26 +90,16 @@ public interface TPlanItem extends TCmmnElement {
      *               entryCriteriaRefs refers "sentry" elements.
      *             
      * <!-- end-model-doc -->
-     * @return the value of the '<em>Entry Criteria Refs</em>' reference.
-     * @see #setEntryCriteriaRefs(TSentry)
+     * @return the value of the '<em>Entry Criteria Refs</em>' reference list.
      * @see org.eclipse.cmmn1.Cmmn1Package#getTPlanItem_EntryCriteriaRefs()
      * @model extendedMetaData="kind='attribute' name='entryCriteriaRefs'"
      * @generated
      */
-    TSentry getEntryCriteriaRefs();
+    EList<TSentry> getEntryCriteriaRefs();
 
     /**
-     * Sets the value of the '{@link org.eclipse.cmmn1.TPlanItem#getEntryCriteriaRefs <em>Entry Criteria Refs</em>}' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Entry Criteria Refs</em>' reference.
-     * @see #getEntryCriteriaRefs()
-     * @generated
-     */
-    void setEntryCriteriaRefs(TSentry value);
-
-    /**
-     * Returns the value of the '<em><b>Exit Criteria Refs</b></em>' reference.
+     * Returns the value of the '<em><b>Exit Criteria Refs</b></em>' reference list.
+     * The list contents are of type {@link org.eclipse.cmmn1.TSentry}.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
@@ -114,23 +107,12 @@ public interface TPlanItem extends TCmmnElement {
      *               exitCriteriaRefs refers "sentry" elements.
      *             
      * <!-- end-model-doc -->
-     * @return the value of the '<em>Exit Criteria Refs</em>' reference.
-     * @see #setExitCriteriaRefs(TSentry)
+     * @return the value of the '<em>Exit Criteria Refs</em>' reference list.
      * @see org.eclipse.cmmn1.Cmmn1Package#getTPlanItem_ExitCriteriaRefs()
      * @model extendedMetaData="kind='attribute' name='exitCriteriaRefs'"
      * @generated
      */
-    TSentry getExitCriteriaRefs();
-
-    /**
-     * Sets the value of the '{@link org.eclipse.cmmn1.TPlanItem#getExitCriteriaRefs <em>Exit Criteria Refs</em>}' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Exit Criteria Refs</em>' reference.
-     * @see #getExitCriteriaRefs()
-     * @generated
-     */
-    void setExitCriteriaRefs(TSentry value);
+    EList<TSentry> getExitCriteriaRefs();
 
     /**
      * Returns the value of the '<em><b>Name</b></em>' attribute.

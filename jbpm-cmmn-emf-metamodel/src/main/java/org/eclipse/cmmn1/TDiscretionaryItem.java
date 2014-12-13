@@ -58,12 +58,12 @@ public interface TDiscretionaryItem extends TTableItem {
      *             
      * <!-- end-model-doc -->
      * @return the value of the '<em>Definition Ref</em>' reference.
-     * @see #setDefinitionRef(TPlanItem)
+     * @see #setDefinitionRef(TPlanItemDefinition)
      * @see org.eclipse.cmmn1.Cmmn1Package#getTDiscretionaryItem_DefinitionRef()
      * @model extendedMetaData="kind='attribute' name='definitionRef'"
      * @generated
      */
-    TPlanItem getDefinitionRef();
+    TPlanItemDefinition getDefinitionRef();
 
     /**
      * Sets the value of the '{@link org.eclipse.cmmn1.TDiscretionaryItem#getDefinitionRef <em>Definition Ref</em>}' reference.
@@ -73,6 +73,6 @@ public interface TDiscretionaryItem extends TTableItem {
      * @see #getDefinitionRef()
      * @generated
      */
-    void setDefinitionRef(TPlanItem value);
+    void setDefinitionRef(TPlanItemDefinition value);
 
 } // TDiscretionaryItem

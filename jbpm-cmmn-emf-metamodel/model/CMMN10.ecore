@@ -742,7 +742,8 @@
         <details key="name" value="name"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="sourceRef" eType="#//TCaseFileItem">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="sourceRef" upperBound="-1"
+        eType="#//TCaseFileItem">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;              sourceRef MUST refer to a &quot;caseFileItem&quot; element in the case where this&#xA;              &quot;caseFileItem&quot; has a parent.&#xA;            "/>
       </eAnnotations>
@@ -751,7 +752,8 @@
         <details key="name" value="sourceRef"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="targetRefs" eType="#//TCaseFileItem">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="targetRefs" upperBound="-1"
+        eType="#//TCaseFileItem">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;              If this &quot;caseFileItem&quot; maintains references to &quot;caseFileItem&quot; childs, then &#xA;              targetRefs MUST refer to &quot;caseFileItem&quot; elements; the targets of this caseFileItem.&#xA;            "/>
       </eAnnotations>
@@ -1125,7 +1127,7 @@
         <details key="namespace" value="##targetNamespace"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="definitionRef" eType="#//TPlanItem">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="definitionRef" eType="#//TPlanItemDefinition">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;              definitionRef refers a &quot;planItemDefinition&quot; element&#xA;            "/>
       </eAnnotations>
@@ -1193,8 +1195,8 @@
       <details key="name" value="tIfPart"/>
       <details key="kind" value="elementOnly"/>
     </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="condition" upperBound="-1"
-        eType="#//TExpression" containment="true" resolveProxies="false">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="condition" eType="#//TExpression"
+        containment="true" resolveProxies="false">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="condition"/>
@@ -1375,7 +1377,8 @@
         <details key="name" value="definitionRef"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="entryCriteriaRefs" eType="#//TSentry">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="entryCriteriaRefs" upperBound="-1"
+        eType="#//TSentry">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;              entryCriteriaRefs refers &quot;sentry&quot; elements.&#xA;            "/>
       </eAnnotations>
@@ -1384,7 +1387,8 @@
         <details key="name" value="entryCriteriaRefs"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="exitCriteriaRefs" eType="#//TSentry">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="exitCriteriaRefs" upperBound="-1"
+        eType="#//TSentry">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;              exitCriteriaRefs refers &quot;sentry&quot; elements.&#xA;            "/>
       </eAnnotations>
@@ -1821,8 +1825,8 @@
       <details key="name" value="tTableItem"/>
       <details key="kind" value="empty"/>
     </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="applicabilityRuleRefs"  upperBound="-1"
-        eType="#//TApplicabilityRule">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="applicabilityRuleRefs"
+        upperBound="-1" eType="#//TApplicabilityRule">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;              applicabilityRuleRefs refers one or more &quot;applicabilityRule&quot; elements.&#xA;            "/>
       </eAnnotations>
