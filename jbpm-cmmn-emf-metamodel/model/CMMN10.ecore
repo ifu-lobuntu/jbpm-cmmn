@@ -105,7 +105,7 @@
         eType="#//TCaseFile" volatile="true" transient="true" derived="true" containment="true"
         resolveProxies="false">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="&#xA;        caseFile is the root element for the CMMN Case File Model &#xA;        and is a container for CaseFileItems.&#xA;      "/>
+        <details key="documentation" value="&#xA;        caseFile is the root element for the CMMN Case File Model&#xA;        and is a container for CaseFileItems.&#xA;      "/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
@@ -117,7 +117,7 @@
         eType="#//TCaseFileItem" volatile="true" transient="true" derived="true" containment="true"
         resolveProxies="false">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="&#xA;        caseFileItem is the root element for CMMN data. &#xA;      "/>
+        <details key="documentation" value="&#xA;        caseFileItem is the root element for CMMN data.&#xA;      "/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
@@ -316,7 +316,7 @@
         eType="#//TManualActivationRule" volatile="true" transient="true" derived="true"
         containment="true" resolveProxies="false">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="&#xA;        manualActivationRule is the root element for specifying an &#xA;        manual activation rule for a PlanItemDefinition element.&#xA;      "/>
+        <details key="documentation" value="&#xA;        manualActivationRule is the root element for specifying an&#xA;        manual activation rule for a PlanItemDefinition element.&#xA;      "/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
@@ -455,7 +455,7 @@
         eType="#//TRepetitionRule" volatile="true" transient="true" derived="true"
         containment="true" resolveProxies="false">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="&#xA;        repetitionRule is the root element for specifying a &#xA;        repetition rule for a PlanItemDefinition element.&#xA;      "/>
+        <details key="documentation" value="&#xA;        repetitionRule is the root element for specifying a&#xA;        repetition rule for a PlanItemDefinition element.&#xA;      "/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
@@ -467,7 +467,7 @@
         eType="#//TRequiredRule" volatile="true" transient="true" derived="true" containment="true"
         resolveProxies="false">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="&#xA;        requiredRule is the root element for specifying a &#xA;        required rule for a PlanItemDefinition element.&#xA;      "/>
+        <details key="documentation" value="&#xA;        requiredRule is the root element for specifying a&#xA;        required rule for a PlanItemDefinition element.&#xA;      "/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
@@ -478,7 +478,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="role" upperBound="-2" eType="#//TRole"
         volatile="true" transient="true" derived="true" containment="true" resolveProxies="false">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="&#xA;        role is the root element for Case Roles. &#xA;      "/>
+        <details key="documentation" value="&#xA;        role is the root element for Case Roles.&#xA;      "/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
@@ -619,7 +619,7 @@
         <details key="namespace" value="##targetNamespace"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="contextRef" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//IDREF">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="contextRef" eType="#//TCaseFileItem">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;              contexRef refers a &quot;caseFileItem&quot; element&#xA;            "/>
       </eAnnotations>
@@ -695,7 +695,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="caseFileItem" upperBound="-1"
         eType="#//TCaseFileItem" containment="true" resolveProxies="false">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="&#xA;        caseFileItem is the root element for CMMN data. &#xA;      "/>
+        <details key="documentation" value="&#xA;        caseFileItem is the root element for CMMN data.&#xA;      "/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
@@ -755,7 +755,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="targetRefs" upperBound="-1"
         eType="#//TCaseFileItem">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="&#xA;              If this &quot;caseFileItem&quot; maintains references to &quot;caseFileItem&quot; childs, then &#xA;              targetRefs MUST refer to &quot;caseFileItem&quot; elements; the targets of this caseFileItem.&#xA;            "/>
+        <details key="documentation" value="&#xA;              If this &quot;caseFileItem&quot; maintains references to &quot;caseFileItem&quot; childs, then&#xA;              targetRefs MUST refer to &quot;caseFileItem&quot; elements; the targets of this caseFileItem.&#xA;            "/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="attribute"/>
@@ -899,7 +899,7 @@
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="caseRef" eType="#//TCase">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="&#xA;              caseRef refers a &quot;case&quot; element which is re-usable and can &#xA;              be imported via some other file.&#xA;            "/>
+        <details key="documentation" value="&#xA;              caseRef refers a &quot;case&quot; element which is re-usable and can&#xA;              be imported via some other file.&#xA;            "/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="attribute"/>
@@ -918,7 +918,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="caseFileItem" upperBound="-1"
         eType="#//TCaseFileItem" containment="true" resolveProxies="false">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="&#xA;        caseFileItem is the root element for CMMN data. &#xA;      "/>
+        <details key="documentation" value="&#xA;        caseFileItem is the root element for CMMN data.&#xA;      "/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
@@ -1136,6 +1136,26 @@
         <details key="name" value="definitionRef"/>
       </eAnnotations>
     </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="entryCriteriaRefs" upperBound="-1"
+        eType="#//TSentry">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="&#xA;              entryCriteriaRefs refers &quot;sentry&quot; elements.&#xA;            "/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="attribute"/>
+        <details key="name" value="entryCriteriaRefs"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="exitCriteriaRefs" upperBound="-1"
+        eType="#//TSentry">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="&#xA;              exitCriteriaRefs refers &quot;sentry&quot; elements.&#xA;            "/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="attribute"/>
+        <details key="name" value="exitCriteriaRefs"/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TEvent" eSuperTypes="#//TPlanItemDefinition">
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
@@ -1195,8 +1215,8 @@
       <details key="name" value="tIfPart"/>
       <details key="kind" value="elementOnly"/>
     </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="condition" eType="#//TExpression"
-        containment="true" resolveProxies="false">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="condition" upperBound="-1"
+        eType="#//TExpression" containment="true" resolveProxies="false">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="condition"/>
@@ -1257,7 +1277,7 @@
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="contextRef" eType="#//TCaseFileItem">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="&#xA;              contextRef MUST refer a CaseFileItem if specified. &#xA;            "/>
+        <details key="documentation" value="&#xA;              contextRef MUST refer a CaseFileItem if specified.&#xA;            "/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="attribute"/>
@@ -1308,7 +1328,7 @@
         <details key="namespace" value="##targetNamespace"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="sourceRef" eType="#//TCaseParameter">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="sourceRef" eType="#//TParameter">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;              sourceRef refers a &quot;parameter&quot; element&#xA;            "/>
       </eAnnotations>
@@ -1317,7 +1337,7 @@
         <details key="name" value="sourceRef"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="targetRef" eType="#//TCaseParameter">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="targetRef" eType="#//TParameter">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;              targetRef refers a &quot;parameter&quot; element&#xA;            "/>
       </eAnnotations>
@@ -1415,7 +1435,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="repetitionRule" eType="#//TRepetitionRule"
         containment="true" resolveProxies="false">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="&#xA;        repetitionRule is the root element for specifying a &#xA;        repetition rule for a PlanItemDefinition element.&#xA;      "/>
+        <details key="documentation" value="&#xA;        repetitionRule is the root element for specifying a&#xA;        repetition rule for a PlanItemDefinition element.&#xA;      "/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
@@ -1426,7 +1446,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="requiredRule" eType="#//TRequiredRule"
         containment="true" resolveProxies="false">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="&#xA;        requiredRule is the root element for specifying a &#xA;        required rule for a PlanItemDefinition element.&#xA;      "/>
+        <details key="documentation" value="&#xA;        requiredRule is the root element for specifying a&#xA;        required rule for a PlanItemDefinition element.&#xA;      "/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
@@ -1437,7 +1457,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="manualActivationRule" eType="#//TManualActivationRule"
         containment="true" resolveProxies="false">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="&#xA;        manualActivationRule is the root element for specifying an &#xA;        manual activation rule for a PlanItemDefinition element.&#xA;      "/>
+        <details key="documentation" value="&#xA;        manualActivationRule is the root element for specifying an&#xA;        manual activation rule for a PlanItemDefinition element.&#xA;      "/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
@@ -1661,7 +1681,7 @@
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="contextRef" eType="#//TCaseFileItem">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="&#xA;              contextRef MUST refer a CaseFileItem if specified. &#xA;            "/>
+        <details key="documentation" value="&#xA;              contextRef MUST refer a CaseFileItem if specified.&#xA;            "/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="attribute"/>
@@ -1693,7 +1713,7 @@
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="contextRef" eType="#//TCaseFileItem">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="&#xA;              contextRef MUST refer a CaseFileItem if specified. &#xA;            "/>
+        <details key="documentation" value="&#xA;              contextRef MUST refer a CaseFileItem if specified.&#xA;            "/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="attribute"/>
@@ -1804,7 +1824,8 @@
         <details key="name" value="autoComplete"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="exitCriteriaRefs" eType="#//TSentry">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="exitCriteriaRefs" upperBound="-1"
+        eType="#//TSentry">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;              exitCriteriaRefs refers zero or more &quot;sentry&quot; elements.&#xA;            "/>
       </eAnnotations>
@@ -1835,7 +1856,8 @@
         <details key="name" value="applicabilityRuleRefs"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="authorizedRoleRefs" eType="#//TRole">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="authorizedRoleRefs" upperBound="-1"
+        eType="#//TRole">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;              authorizedRoleRefs refers zero or more &quot;role&quot; elements.&#xA;            "/>
       </eAnnotations>
@@ -1892,7 +1914,7 @@
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="timerStartGroup" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFeatureMapEntry">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="&#xA;                timerStart can be used to trigger the timer after a PlanItem or CaseFileItem &#xA;                lifecycle state transition has occurred.&#xA;              "/>
+        <details key="documentation" value="&#xA;                timerStart can be used to trigger the timer after a PlanItem or CaseFileItem&#xA;                lifecycle state transition has occurred.&#xA;              "/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="group"/>
@@ -1903,7 +1925,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="timerStart" eType="#//TStartTrigger"
         volatile="true" transient="true" derived="true" containment="true" resolveProxies="false">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="&#xA;                timerStart can be used to trigger the timer after a PlanItem or CaseFileItem &#xA;                lifecycle state transition has occurred.&#xA;              "/>
+        <details key="documentation" value="&#xA;                timerStart can be used to trigger the timer after a PlanItem or CaseFileItem&#xA;                lifecycle state transition has occurred.&#xA;              "/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>

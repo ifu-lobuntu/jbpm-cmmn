@@ -13,16 +13,12 @@ import org.eclipse.cmmndi.CMMNShape;
 import org.eclipse.cmmndi.CmmnDiFactory;
 import org.eclipse.cmmndi.CmmnDiPackage;
 import org.eclipse.cmmndi.DocumentRoot;
-import org.eclipse.cmmndi.MessageVisibleKind;
-import org.eclipse.cmmndi.ParticipantBandKind;
 import org.eclipse.dd.cmmn.dc.DcPackage;
 import org.eclipse.dd.cmmn.dc.impl.DcPackageImpl;
 import org.eclipse.dd.cmmn.di.DiPackage;
 import org.eclipse.dd.cmmn.di.impl.DiPackageImpl;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EDataType;
-import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
@@ -85,34 +81,6 @@ public class CmmnDiPackageImpl extends EPackageImpl implements CmmnDiPackage {
     private EClass documentRootEClass = null;
 
     /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    private EEnum messageVisibleKindEEnum = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    private EEnum participantBandKindEEnum = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    private EDataType messageVisibleKindObjectEDataType = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    private EDataType participantBandKindObjectEDataType = null;
-
-    /**
      * Creates an instance of the model <b>Package</b>, registered with
      * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
      * package URI value.
@@ -163,20 +131,20 @@ public class CmmnDiPackageImpl extends EPackageImpl implements CmmnDiPackage {
 
         // Obtain or create and register interdependencies
         Cmmn1PackageImpl theCmmn1Package = (Cmmn1PackageImpl)(EPackage.Registry.INSTANCE.getEPackage(Cmmn1Package.eNS_URI) instanceof Cmmn1PackageImpl ? EPackage.Registry.INSTANCE.getEPackage(Cmmn1Package.eNS_URI) : Cmmn1Package.eINSTANCE);
-        DiPackageImpl theDiPackage = (DiPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(DiPackage.eNS_URI) instanceof DiPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(DiPackage.eNS_URI) : DiPackage.eINSTANCE);
         DcPackageImpl theDcPackage = (DcPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(DcPackage.eNS_URI) instanceof DcPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(DcPackage.eNS_URI) : DcPackage.eINSTANCE);
+        DiPackageImpl theDiPackage = (DiPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(DiPackage.eNS_URI) instanceof DiPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(DiPackage.eNS_URI) : DiPackage.eINSTANCE);
 
         // Create package meta-data objects
         theCmmnDiPackage.createPackageContents();
         theCmmn1Package.createPackageContents();
-        theDiPackage.createPackageContents();
         theDcPackage.createPackageContents();
+        theDiPackage.createPackageContents();
 
         // Initialize created meta-data
         theCmmnDiPackage.initializePackageContents();
         theCmmn1Package.initializePackageContents();
-        theDiPackage.initializePackageContents();
         theDcPackage.initializePackageContents();
+        theDiPackage.initializePackageContents();
 
         // Mark meta-data to indicate it can't be changed
         theCmmnDiPackage.freeze();
@@ -201,7 +169,7 @@ public class CmmnDiPackageImpl extends EPackageImpl implements CmmnDiPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getCMMNDiagram_Plane() {
+    public EReference getCMMNDiagram_CMMNPlane() {
         return (EReference)cmmnDiagramEClass.getEStructuralFeatures().get(0);
     }
 
@@ -210,7 +178,7 @@ public class CmmnDiPackageImpl extends EPackageImpl implements CmmnDiPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getCMMNDiagram_LabelStyle() {
+    public EReference getCMMNDiagram_CMMNLabelStyle() {
         return (EReference)cmmnDiagramEClass.getEStructuralFeatures().get(1);
     }
 
@@ -228,7 +196,7 @@ public class CmmnDiPackageImpl extends EPackageImpl implements CmmnDiPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getCMMNEdge_Label() {
+    public EReference getCMMNEdge_CMMNLabel() {
         return (EReference)cmmnEdgeEClass.getEStructuralFeatures().get(0);
     }
 
@@ -246,17 +214,8 @@ public class CmmnDiPackageImpl extends EPackageImpl implements CmmnDiPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getCMMNEdge_MessageVisibleKind() {
-        return (EAttribute)cmmnEdgeEClass.getEStructuralFeatures().get(2);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public EReference getCMMNEdge_SourceElement() {
-        return (EReference)cmmnEdgeEClass.getEStructuralFeatures().get(3);
+        return (EReference)cmmnEdgeEClass.getEStructuralFeatures().get(2);
     }
 
     /**
@@ -265,7 +224,7 @@ public class CmmnDiPackageImpl extends EPackageImpl implements CmmnDiPackage {
      * @generated
      */
     public EReference getCMMNEdge_TargetElement() {
-        return (EReference)cmmnEdgeEClass.getEStructuralFeatures().get(4);
+        return (EReference)cmmnEdgeEClass.getEStructuralFeatures().get(3);
     }
 
     /**
@@ -345,17 +304,8 @@ public class CmmnDiPackageImpl extends EPackageImpl implements CmmnDiPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getCMMNShape_ChoreographyActivityShape() {
-        return (EAttribute)cmmnShapeEClass.getEStructuralFeatures().get(1);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public EReference getCMMNShape_CmmnElement() {
-        return (EReference)cmmnShapeEClass.getEStructuralFeatures().get(2);
+        return (EReference)cmmnShapeEClass.getEStructuralFeatures().get(1);
     }
 
     /**
@@ -364,7 +314,7 @@ public class CmmnDiPackageImpl extends EPackageImpl implements CmmnDiPackage {
      * @generated
      */
     public EAttribute getCMMNShape_IsExpanded() {
-        return (EAttribute)cmmnShapeEClass.getEStructuralFeatures().get(3);
+        return (EAttribute)cmmnShapeEClass.getEStructuralFeatures().get(2);
     }
 
     /**
@@ -373,7 +323,7 @@ public class CmmnDiPackageImpl extends EPackageImpl implements CmmnDiPackage {
      * @generated
      */
     public EAttribute getCMMNShape_IsHorizontal() {
-        return (EAttribute)cmmnShapeEClass.getEStructuralFeatures().get(4);
+        return (EAttribute)cmmnShapeEClass.getEStructuralFeatures().get(3);
     }
 
     /**
@@ -382,25 +332,7 @@ public class CmmnDiPackageImpl extends EPackageImpl implements CmmnDiPackage {
      * @generated
      */
     public EAttribute getCMMNShape_IsMarkerVisible() {
-        return (EAttribute)cmmnShapeEClass.getEStructuralFeatures().get(5);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getCMMNShape_IsMessageVisible() {
-        return (EAttribute)cmmnShapeEClass.getEStructuralFeatures().get(6);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getCMMNShape_ParticipantBandKind() {
-        return (EAttribute)cmmnShapeEClass.getEStructuralFeatures().get(7);
+        return (EAttribute)cmmnShapeEClass.getEStructuralFeatures().get(4);
     }
 
     /**
@@ -498,42 +430,6 @@ public class CmmnDiPackageImpl extends EPackageImpl implements CmmnDiPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EEnum getMessageVisibleKind() {
-        return messageVisibleKindEEnum;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EEnum getParticipantBandKind() {
-        return participantBandKindEEnum;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EDataType getMessageVisibleKindObject() {
-        return messageVisibleKindObjectEDataType;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EDataType getParticipantBandKindObject() {
-        return participantBandKindObjectEDataType;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public CmmnDiFactory getCmmnDiFactory() {
         return (CmmnDiFactory)getEFactoryInstance();
     }
@@ -558,13 +454,12 @@ public class CmmnDiPackageImpl extends EPackageImpl implements CmmnDiPackage {
 
         // Create classes and their features
         cmmnDiagramEClass = createEClass(CMMN_DIAGRAM);
-        createEReference(cmmnDiagramEClass, CMMN_DIAGRAM__PLANE);
-        createEReference(cmmnDiagramEClass, CMMN_DIAGRAM__LABEL_STYLE);
+        createEReference(cmmnDiagramEClass, CMMN_DIAGRAM__CMMN_PLANE);
+        createEReference(cmmnDiagramEClass, CMMN_DIAGRAM__CMMN_LABEL_STYLE);
 
         cmmnEdgeEClass = createEClass(CMMN_EDGE);
-        createEReference(cmmnEdgeEClass, CMMN_EDGE__LABEL);
+        createEReference(cmmnEdgeEClass, CMMN_EDGE__CMMN_LABEL);
         createEReference(cmmnEdgeEClass, CMMN_EDGE__CMMN_ELEMENT);
-        createEAttribute(cmmnEdgeEClass, CMMN_EDGE__MESSAGE_VISIBLE_KIND);
         createEReference(cmmnEdgeEClass, CMMN_EDGE__SOURCE_ELEMENT);
         createEReference(cmmnEdgeEClass, CMMN_EDGE__TARGET_ELEMENT);
 
@@ -579,13 +474,10 @@ public class CmmnDiPackageImpl extends EPackageImpl implements CmmnDiPackage {
 
         cmmnShapeEClass = createEClass(CMMN_SHAPE);
         createEReference(cmmnShapeEClass, CMMN_SHAPE__CMMN_LABEL);
-        createEAttribute(cmmnShapeEClass, CMMN_SHAPE__CHOREOGRAPHY_ACTIVITY_SHAPE);
         createEReference(cmmnShapeEClass, CMMN_SHAPE__CMMN_ELEMENT);
         createEAttribute(cmmnShapeEClass, CMMN_SHAPE__IS_EXPANDED);
         createEAttribute(cmmnShapeEClass, CMMN_SHAPE__IS_HORIZONTAL);
         createEAttribute(cmmnShapeEClass, CMMN_SHAPE__IS_MARKER_VISIBLE);
-        createEAttribute(cmmnShapeEClass, CMMN_SHAPE__IS_MESSAGE_VISIBLE);
-        createEAttribute(cmmnShapeEClass, CMMN_SHAPE__PARTICIPANT_BAND_KIND);
 
         documentRootEClass = createEClass(DOCUMENT_ROOT);
         createEAttribute(documentRootEClass, DOCUMENT_ROOT__MIXED);
@@ -597,14 +489,6 @@ public class CmmnDiPackageImpl extends EPackageImpl implements CmmnDiPackage {
         createEReference(documentRootEClass, DOCUMENT_ROOT__CMMN_LABEL_STYLE);
         createEReference(documentRootEClass, DOCUMENT_ROOT__CMMN_PLANE);
         createEReference(documentRootEClass, DOCUMENT_ROOT__CMMN_SHAPE);
-
-        // Create enums
-        messageVisibleKindEEnum = createEEnum(MESSAGE_VISIBLE_KIND);
-        participantBandKindEEnum = createEEnum(PARTICIPANT_BAND_KIND);
-
-        // Create data types
-        messageVisibleKindObjectEDataType = createEDataType(MESSAGE_VISIBLE_KIND_OBJECT);
-        participantBandKindObjectEDataType = createEDataType(PARTICIPANT_BAND_KIND_OBJECT);
     }
 
     /**
@@ -650,13 +534,12 @@ public class CmmnDiPackageImpl extends EPackageImpl implements CmmnDiPackage {
 
         // Initialize classes, features, and operations; add parameters
         initEClass(cmmnDiagramEClass, CMMNDiagram.class, "CMMNDiagram", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getCMMNDiagram_Plane(), this.getCMMNPlane(), null, "plane", null, 1, 1, CMMNDiagram.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getCMMNDiagram_LabelStyle(), this.getCMMNLabelStyle(), null, "labelStyle", null, 0, -1, CMMNDiagram.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getCMMNDiagram_CMMNPlane(), this.getCMMNPlane(), null, "cMMNPlane", null, 1, 1, CMMNDiagram.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getCMMNDiagram_CMMNLabelStyle(), this.getCMMNLabelStyle(), null, "cMMNLabelStyle", null, 0, -1, CMMNDiagram.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(cmmnEdgeEClass, CMMNEdge.class, "CMMNEdge", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getCMMNEdge_Label(), this.getCMMNLabel(), null, "label", null, 0, 1, CMMNEdge.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getCMMNEdge_CMMNLabel(), this.getCMMNLabel(), null, "cMMNLabel", null, 0, 1, CMMNEdge.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getCMMNEdge_CmmnElement(), theCmmn1Package.getTCmmnElement(), null, "cmmnElement", null, 0, 1, CMMNEdge.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getCMMNEdge_MessageVisibleKind(), this.getMessageVisibleKind(), "messageVisibleKind", null, 0, 1, CMMNEdge.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getCMMNEdge_SourceElement(), theDiPackage.getDiagramElement(), null, "sourceElement", null, 0, 1, CMMNEdge.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getCMMNEdge_TargetElement(), theDiPackage.getDiagramElement(), null, "targetElement", null, 0, 1, CMMNEdge.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -667,17 +550,14 @@ public class CmmnDiPackageImpl extends EPackageImpl implements CmmnDiPackage {
         initEReference(getCMMNLabelStyle_Font(), theDcPackage.getFont(), null, "font", null, 1, 1, CMMNLabelStyle.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(cmmnPlaneEClass, CMMNPlane.class, "CMMNPlane", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getCMMNPlane_CmmnElement(), theCmmn1Package.getTCmmnElement(), null, "cmmnElement", null, 0, 1, CMMNPlane.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getCMMNPlane_CmmnElement(), theCmmn1Package.getTDefinitions(), null, "cmmnElement", null, 0, 1, CMMNPlane.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(cmmnShapeEClass, CMMNShape.class, "CMMNShape", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getCMMNShape_CMMNLabel(), this.getCMMNLabel(), null, "cMMNLabel", null, 0, 1, CMMNShape.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getCMMNShape_ChoreographyActivityShape(), theXMLTypePackage.getQName(), "choreographyActivityShape", null, 0, 1, CMMNShape.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getCMMNShape_CmmnElement(), theCmmn1Package.getTCmmnElement(), null, "cmmnElement", null, 0, 1, CMMNShape.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getCMMNShape_IsExpanded(), theXMLTypePackage.getBoolean(), "isExpanded", null, 0, 1, CMMNShape.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getCMMNShape_IsHorizontal(), theXMLTypePackage.getBoolean(), "isHorizontal", null, 0, 1, CMMNShape.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getCMMNShape_IsMarkerVisible(), theXMLTypePackage.getBoolean(), "isMarkerVisible", null, 0, 1, CMMNShape.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getCMMNShape_IsMessageVisible(), theXMLTypePackage.getBoolean(), "isMessageVisible", null, 0, 1, CMMNShape.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getCMMNShape_ParticipantBandKind(), this.getParticipantBandKind(), "participantBandKind", null, 0, 1, CMMNShape.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(documentRootEClass, DocumentRoot.class, "DocumentRoot", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getDocumentRoot_Mixed(), ecorePackage.getEFeatureMapEntry(), "mixed", null, 0, -1, null, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -689,23 +569,6 @@ public class CmmnDiPackageImpl extends EPackageImpl implements CmmnDiPackage {
         initEReference(getDocumentRoot_CMMNLabelStyle(), this.getCMMNLabelStyle(), null, "cMMNLabelStyle", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
         initEReference(getDocumentRoot_CMMNPlane(), this.getCMMNPlane(), null, "cMMNPlane", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
         initEReference(getDocumentRoot_CMMNShape(), this.getCMMNShape(), null, "cMMNShape", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-
-        // Initialize enums and add enum literals
-        initEEnum(messageVisibleKindEEnum, MessageVisibleKind.class, "MessageVisibleKind");
-        addEEnumLiteral(messageVisibleKindEEnum, MessageVisibleKind.INITIATING);
-        addEEnumLiteral(messageVisibleKindEEnum, MessageVisibleKind.NON_INITIATING);
-
-        initEEnum(participantBandKindEEnum, ParticipantBandKind.class, "ParticipantBandKind");
-        addEEnumLiteral(participantBandKindEEnum, ParticipantBandKind.TOP_INITIATING);
-        addEEnumLiteral(participantBandKindEEnum, ParticipantBandKind.MIDDLE_INITIATING);
-        addEEnumLiteral(participantBandKindEEnum, ParticipantBandKind.BOTTOM_INITIATING);
-        addEEnumLiteral(participantBandKindEEnum, ParticipantBandKind.TOP_NON_INITIATING);
-        addEEnumLiteral(participantBandKindEEnum, ParticipantBandKind.MIDDLE_NON_INITIATING);
-        addEEnumLiteral(participantBandKindEEnum, ParticipantBandKind.BOTTOM_NON_INITIATING);
-
-        // Initialize data types
-        initEDataType(messageVisibleKindObjectEDataType, MessageVisibleKind.class, "MessageVisibleKindObject", IS_SERIALIZABLE, IS_GENERATED_INSTANCE_CLASS);
-        initEDataType(participantBandKindObjectEDataType, ParticipantBandKind.class, "ParticipantBandKindObject", IS_SERIALIZABLE, IS_GENERATED_INSTANCE_CLASS);
 
         // Create resource
         createResource(eNS_URI);
@@ -731,7 +594,7 @@ public class CmmnDiPackageImpl extends EPackageImpl implements CmmnDiPackage {
              "kind", "elementOnly"
            });	
         addAnnotation
-          (getCMMNDiagram_Plane(), 
+          (getCMMNDiagram_CMMNPlane(), 
            source, 
            new String[] {
              "kind", "element",
@@ -739,7 +602,7 @@ public class CmmnDiPackageImpl extends EPackageImpl implements CmmnDiPackage {
              "namespace", "##targetNamespace"
            });	
         addAnnotation
-          (getCMMNDiagram_LabelStyle(), 
+          (getCMMNDiagram_CMMNLabelStyle(), 
            source, 
            new String[] {
              "kind", "element",
@@ -754,7 +617,7 @@ public class CmmnDiPackageImpl extends EPackageImpl implements CmmnDiPackage {
              "kind", "elementOnly"
            });	
         addAnnotation
-          (getCMMNEdge_Label(), 
+          (getCMMNEdge_CMMNLabel(), 
            source, 
            new String[] {
              "kind", "element",
@@ -767,13 +630,6 @@ public class CmmnDiPackageImpl extends EPackageImpl implements CmmnDiPackage {
            new String[] {
              "kind", "attribute",
              "name", "CMMNElement"
-           });	
-        addAnnotation
-          (getCMMNEdge_MessageVisibleKind(), 
-           source, 
-           new String[] {
-             "kind", "attribute",
-             "name", "messageVisibleKind"
            });	
         addAnnotation
           (getCMMNEdge_SourceElement(), 
@@ -848,13 +704,6 @@ public class CmmnDiPackageImpl extends EPackageImpl implements CmmnDiPackage {
              "namespace", "##targetNamespace"
            });	
         addAnnotation
-          (getCMMNShape_ChoreographyActivityShape(), 
-           source, 
-           new String[] {
-             "kind", "attribute",
-             "name", "choreographyActivityShape"
-           });	
-        addAnnotation
           (getCMMNShape_CmmnElement(), 
            source, 
            new String[] {
@@ -881,20 +730,6 @@ public class CmmnDiPackageImpl extends EPackageImpl implements CmmnDiPackage {
            new String[] {
              "kind", "attribute",
              "name", "isMarkerVisible"
-           });	
-        addAnnotation
-          (getCMMNShape_IsMessageVisible(), 
-           source, 
-           new String[] {
-             "kind", "attribute",
-             "name", "isMessageVisible"
-           });	
-        addAnnotation
-          (getCMMNShape_ParticipantBandKind(), 
-           source, 
-           new String[] {
-             "kind", "attribute",
-             "name", "participantBandKind"
            });	
         addAnnotation
           (documentRootEClass, 
@@ -973,32 +808,6 @@ public class CmmnDiPackageImpl extends EPackageImpl implements CmmnDiPackage {
              "name", "CMMNShape",
              "namespace", "##targetNamespace",
              "affiliation", "http://www.omg.org/spec/DD/20100524/DI#DiagramElement"
-           });	
-        addAnnotation
-          (messageVisibleKindEEnum, 
-           source, 
-           new String[] {
-             "name", "MessageVisibleKind"
-           });	
-        addAnnotation
-          (messageVisibleKindObjectEDataType, 
-           source, 
-           new String[] {
-             "name", "MessageVisibleKind:Object",
-             "baseType", "MessageVisibleKind"
-           });	
-        addAnnotation
-          (participantBandKindEEnum, 
-           source, 
-           new String[] {
-             "name", "ParticipantBandKind"
-           });	
-        addAnnotation
-          (participantBandKindObjectEDataType, 
-           source, 
-           new String[] {
-             "name", "ParticipantBandKind:Object",
-             "baseType", "ParticipantBandKind"
            });
     }
 

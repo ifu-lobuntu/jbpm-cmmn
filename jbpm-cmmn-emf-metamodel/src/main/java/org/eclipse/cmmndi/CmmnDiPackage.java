@@ -5,8 +5,6 @@ package org.eclipse.cmmndi;
 import org.eclipse.dd.cmmn.di.DiPackage;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EDataType;
-import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -124,22 +122,22 @@ public interface CmmnDiPackage extends EPackage {
     int CMMN_DIAGRAM__RESOLUTION = DiPackage.DIAGRAM__RESOLUTION;
 
     /**
-     * The feature id for the '<em><b>Plane</b></em>' containment reference.
+     * The feature id for the '<em><b>CMMN Plane</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int CMMN_DIAGRAM__PLANE = DiPackage.DIAGRAM_FEATURE_COUNT + 0;
+    int CMMN_DIAGRAM__CMMN_PLANE = DiPackage.DIAGRAM_FEATURE_COUNT + 0;
 
     /**
-     * The feature id for the '<em><b>Label Style</b></em>' containment reference list.
+     * The feature id for the '<em><b>CMMN Label Style</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int CMMN_DIAGRAM__LABEL_STYLE = DiPackage.DIAGRAM_FEATURE_COUNT + 1;
+    int CMMN_DIAGRAM__CMMN_LABEL_STYLE = DiPackage.DIAGRAM_FEATURE_COUNT + 1;
 
     /**
      * The number of structural features of the '<em>CMMN Diagram</em>' class.
@@ -251,6 +249,15 @@ public interface CmmnDiPackage extends EPackage {
     int CMMN_EDGE__ID = DiPackage.LABELED_EDGE__ID;
 
     /**
+     * The feature id for the '<em><b>Any Attribute</b></em>' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CMMN_EDGE__ANY_ATTRIBUTE = DiPackage.LABELED_EDGE__ANY_ATTRIBUTE;
+
+    /**
      * The feature id for the '<em><b>Source</b></em>' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -287,13 +294,13 @@ public interface CmmnDiPackage extends EPackage {
     int CMMN_EDGE__OWNED_LABEL = DiPackage.LABELED_EDGE__OWNED_LABEL;
 
     /**
-     * The feature id for the '<em><b>Label</b></em>' containment reference.
+     * The feature id for the '<em><b>CMMN Label</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int CMMN_EDGE__LABEL = DiPackage.LABELED_EDGE_FEATURE_COUNT + 0;
+    int CMMN_EDGE__CMMN_LABEL = DiPackage.LABELED_EDGE_FEATURE_COUNT + 0;
 
     /**
      * The feature id for the '<em><b>Cmmn Element</b></em>' reference.
@@ -305,22 +312,13 @@ public interface CmmnDiPackage extends EPackage {
     int CMMN_EDGE__CMMN_ELEMENT = DiPackage.LABELED_EDGE_FEATURE_COUNT + 1;
 
     /**
-     * The feature id for the '<em><b>Message Visible Kind</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int CMMN_EDGE__MESSAGE_VISIBLE_KIND = DiPackage.LABELED_EDGE_FEATURE_COUNT + 2;
-
-    /**
      * The feature id for the '<em><b>Source Element</b></em>' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int CMMN_EDGE__SOURCE_ELEMENT = DiPackage.LABELED_EDGE_FEATURE_COUNT + 3;
+    int CMMN_EDGE__SOURCE_ELEMENT = DiPackage.LABELED_EDGE_FEATURE_COUNT + 2;
 
     /**
      * The feature id for the '<em><b>Target Element</b></em>' reference.
@@ -329,7 +327,7 @@ public interface CmmnDiPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int CMMN_EDGE__TARGET_ELEMENT = DiPackage.LABELED_EDGE_FEATURE_COUNT + 4;
+    int CMMN_EDGE__TARGET_ELEMENT = DiPackage.LABELED_EDGE_FEATURE_COUNT + 3;
 
     /**
      * The number of structural features of the '<em>CMMN Edge</em>' class.
@@ -338,7 +336,7 @@ public interface CmmnDiPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int CMMN_EDGE_FEATURE_COUNT = DiPackage.LABELED_EDGE_FEATURE_COUNT + 5;
+    int CMMN_EDGE_FEATURE_COUNT = DiPackage.LABELED_EDGE_FEATURE_COUNT + 4;
 
     /**
      * The number of operations of the '<em>CMMN Edge</em>' class.
@@ -439,6 +437,15 @@ public interface CmmnDiPackage extends EPackage {
      * @ordered
      */
     int CMMN_LABEL__ID = DiPackage.LABEL__ID;
+
+    /**
+     * The feature id for the '<em><b>Any Attribute</b></em>' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CMMN_LABEL__ANY_ATTRIBUTE = DiPackage.LABEL__ANY_ATTRIBUTE;
 
     /**
      * The feature id for the '<em><b>Bounds</b></em>' containment reference.
@@ -641,6 +648,15 @@ public interface CmmnDiPackage extends EPackage {
     int CMMN_PLANE__ID = DiPackage.PLANE__ID;
 
     /**
+     * The feature id for the '<em><b>Any Attribute</b></em>' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CMMN_PLANE__ANY_ATTRIBUTE = DiPackage.PLANE__ANY_ATTRIBUTE;
+
+    /**
      * The feature id for the '<em><b>Plane Element</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -804,6 +820,15 @@ public interface CmmnDiPackage extends EPackage {
     int CMMN_SHAPE__ID = DiPackage.LABELED_SHAPE__ID;
 
     /**
+     * The feature id for the '<em><b>Any Attribute</b></em>' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CMMN_SHAPE__ANY_ATTRIBUTE = DiPackage.LABELED_SHAPE__ANY_ATTRIBUTE;
+
+    /**
      * The feature id for the '<em><b>Bounds</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -831,22 +856,13 @@ public interface CmmnDiPackage extends EPackage {
     int CMMN_SHAPE__CMMN_LABEL = DiPackage.LABELED_SHAPE_FEATURE_COUNT + 0;
 
     /**
-     * The feature id for the '<em><b>Choreography Activity Shape</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int CMMN_SHAPE__CHOREOGRAPHY_ACTIVITY_SHAPE = DiPackage.LABELED_SHAPE_FEATURE_COUNT + 1;
-
-    /**
      * The feature id for the '<em><b>Cmmn Element</b></em>' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int CMMN_SHAPE__CMMN_ELEMENT = DiPackage.LABELED_SHAPE_FEATURE_COUNT + 2;
+    int CMMN_SHAPE__CMMN_ELEMENT = DiPackage.LABELED_SHAPE_FEATURE_COUNT + 1;
 
     /**
      * The feature id for the '<em><b>Is Expanded</b></em>' attribute.
@@ -855,7 +871,7 @@ public interface CmmnDiPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int CMMN_SHAPE__IS_EXPANDED = DiPackage.LABELED_SHAPE_FEATURE_COUNT + 3;
+    int CMMN_SHAPE__IS_EXPANDED = DiPackage.LABELED_SHAPE_FEATURE_COUNT + 2;
 
     /**
      * The feature id for the '<em><b>Is Horizontal</b></em>' attribute.
@@ -864,7 +880,7 @@ public interface CmmnDiPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int CMMN_SHAPE__IS_HORIZONTAL = DiPackage.LABELED_SHAPE_FEATURE_COUNT + 4;
+    int CMMN_SHAPE__IS_HORIZONTAL = DiPackage.LABELED_SHAPE_FEATURE_COUNT + 3;
 
     /**
      * The feature id for the '<em><b>Is Marker Visible</b></em>' attribute.
@@ -873,25 +889,7 @@ public interface CmmnDiPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int CMMN_SHAPE__IS_MARKER_VISIBLE = DiPackage.LABELED_SHAPE_FEATURE_COUNT + 5;
-
-    /**
-     * The feature id for the '<em><b>Is Message Visible</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int CMMN_SHAPE__IS_MESSAGE_VISIBLE = DiPackage.LABELED_SHAPE_FEATURE_COUNT + 6;
-
-    /**
-     * The feature id for the '<em><b>Participant Band Kind</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int CMMN_SHAPE__PARTICIPANT_BAND_KIND = DiPackage.LABELED_SHAPE_FEATURE_COUNT + 7;
+    int CMMN_SHAPE__IS_MARKER_VISIBLE = DiPackage.LABELED_SHAPE_FEATURE_COUNT + 4;
 
     /**
      * The number of structural features of the '<em>CMMN Shape</em>' class.
@@ -900,7 +898,7 @@ public interface CmmnDiPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int CMMN_SHAPE_FEATURE_COUNT = DiPackage.LABELED_SHAPE_FEATURE_COUNT + 8;
+    int CMMN_SHAPE_FEATURE_COUNT = DiPackage.LABELED_SHAPE_FEATURE_COUNT + 5;
 
     /**
      * The number of operations of the '<em>CMMN Shape</em>' class.
@@ -1048,47 +1046,6 @@ public interface CmmnDiPackage extends EPackage {
     int DOCUMENT_ROOT_OPERATION_COUNT = 0;
 
     /**
-     * The meta object id for the '{@link org.eclipse.cmmndi.MessageVisibleKind <em>Message Visible Kind</em>}' enum.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.eclipse.cmmndi.MessageVisibleKind
-     * @see org.eclipse.cmmndi.impl.CmmnDiPackageImpl#getMessageVisibleKind()
-     * @generated
-     */
-    int MESSAGE_VISIBLE_KIND = 7;
-
-    /**
-     * The meta object id for the '{@link org.eclipse.cmmndi.ParticipantBandKind <em>Participant Band Kind</em>}' enum.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.eclipse.cmmndi.ParticipantBandKind
-     * @see org.eclipse.cmmndi.impl.CmmnDiPackageImpl#getParticipantBandKind()
-     * @generated
-     */
-    int PARTICIPANT_BAND_KIND = 8;
-
-    /**
-     * The meta object id for the '<em>Message Visible Kind Object</em>' data type.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.eclipse.cmmndi.MessageVisibleKind
-     * @see org.eclipse.cmmndi.impl.CmmnDiPackageImpl#getMessageVisibleKindObject()
-     * @generated
-     */
-    int MESSAGE_VISIBLE_KIND_OBJECT = 9;
-
-    /**
-     * The meta object id for the '<em>Participant Band Kind Object</em>' data type.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.eclipse.cmmndi.ParticipantBandKind
-     * @see org.eclipse.cmmndi.impl.CmmnDiPackageImpl#getParticipantBandKindObject()
-     * @generated
-     */
-    int PARTICIPANT_BAND_KIND_OBJECT = 10;
-
-
-    /**
      * Returns the meta object for class '{@link org.eclipse.cmmndi.CMMNDiagram <em>CMMN Diagram</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1099,26 +1056,26 @@ public interface CmmnDiPackage extends EPackage {
     EClass getCMMNDiagram();
 
     /**
-     * Returns the meta object for the containment reference '{@link org.eclipse.cmmndi.CMMNDiagram#getPlane <em>Plane</em>}'.
+     * Returns the meta object for the containment reference '{@link org.eclipse.cmmndi.CMMNDiagram#getCMMNPlane <em>CMMN Plane</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the containment reference '<em>Plane</em>'.
-     * @see org.eclipse.cmmndi.CMMNDiagram#getPlane()
+     * @return the meta object for the containment reference '<em>CMMN Plane</em>'.
+     * @see org.eclipse.cmmndi.CMMNDiagram#getCMMNPlane()
      * @see #getCMMNDiagram()
      * @generated
      */
-    EReference getCMMNDiagram_Plane();
+    EReference getCMMNDiagram_CMMNPlane();
 
     /**
-     * Returns the meta object for the containment reference list '{@link org.eclipse.cmmndi.CMMNDiagram#getLabelStyle <em>Label Style</em>}'.
+     * Returns the meta object for the containment reference list '{@link org.eclipse.cmmndi.CMMNDiagram#getCMMNLabelStyle <em>CMMN Label Style</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>Label Style</em>'.
-     * @see org.eclipse.cmmndi.CMMNDiagram#getLabelStyle()
+     * @return the meta object for the containment reference list '<em>CMMN Label Style</em>'.
+     * @see org.eclipse.cmmndi.CMMNDiagram#getCMMNLabelStyle()
      * @see #getCMMNDiagram()
      * @generated
      */
-    EReference getCMMNDiagram_LabelStyle();
+    EReference getCMMNDiagram_CMMNLabelStyle();
 
     /**
      * Returns the meta object for class '{@link org.eclipse.cmmndi.CMMNEdge <em>CMMN Edge</em>}'.
@@ -1131,15 +1088,15 @@ public interface CmmnDiPackage extends EPackage {
     EClass getCMMNEdge();
 
     /**
-     * Returns the meta object for the containment reference '{@link org.eclipse.cmmndi.CMMNEdge#getLabel <em>Label</em>}'.
+     * Returns the meta object for the containment reference '{@link org.eclipse.cmmndi.CMMNEdge#getCMMNLabel <em>CMMN Label</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the containment reference '<em>Label</em>'.
-     * @see org.eclipse.cmmndi.CMMNEdge#getLabel()
+     * @return the meta object for the containment reference '<em>CMMN Label</em>'.
+     * @see org.eclipse.cmmndi.CMMNEdge#getCMMNLabel()
      * @see #getCMMNEdge()
      * @generated
      */
-    EReference getCMMNEdge_Label();
+    EReference getCMMNEdge_CMMNLabel();
 
     /**
      * Returns the meta object for the reference '{@link org.eclipse.cmmndi.CMMNEdge#getCmmnElement <em>Cmmn Element</em>}'.
@@ -1151,17 +1108,6 @@ public interface CmmnDiPackage extends EPackage {
      * @generated
      */
     EReference getCMMNEdge_CmmnElement();
-
-    /**
-     * Returns the meta object for the attribute '{@link org.eclipse.cmmndi.CMMNEdge#getMessageVisibleKind <em>Message Visible Kind</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Message Visible Kind</em>'.
-     * @see org.eclipse.cmmndi.CMMNEdge#getMessageVisibleKind()
-     * @see #getCMMNEdge()
-     * @generated
-     */
-    EAttribute getCMMNEdge_MessageVisibleKind();
 
     /**
      * Returns the meta object for the reference '{@link org.eclipse.cmmndi.CMMNEdge#getSourceElement <em>Source Element</em>}'.
@@ -1270,17 +1216,6 @@ public interface CmmnDiPackage extends EPackage {
     EReference getCMMNShape_CMMNLabel();
 
     /**
-     * Returns the meta object for the attribute '{@link org.eclipse.cmmndi.CMMNShape#getChoreographyActivityShape <em>Choreography Activity Shape</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Choreography Activity Shape</em>'.
-     * @see org.eclipse.cmmndi.CMMNShape#getChoreographyActivityShape()
-     * @see #getCMMNShape()
-     * @generated
-     */
-    EAttribute getCMMNShape_ChoreographyActivityShape();
-
-    /**
      * Returns the meta object for the reference '{@link org.eclipse.cmmndi.CMMNShape#getCmmnElement <em>Cmmn Element</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1323,28 +1258,6 @@ public interface CmmnDiPackage extends EPackage {
      * @generated
      */
     EAttribute getCMMNShape_IsMarkerVisible();
-
-    /**
-     * Returns the meta object for the attribute '{@link org.eclipse.cmmndi.CMMNShape#isIsMessageVisible <em>Is Message Visible</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Is Message Visible</em>'.
-     * @see org.eclipse.cmmndi.CMMNShape#isIsMessageVisible()
-     * @see #getCMMNShape()
-     * @generated
-     */
-    EAttribute getCMMNShape_IsMessageVisible();
-
-    /**
-     * Returns the meta object for the attribute '{@link org.eclipse.cmmndi.CMMNShape#getParticipantBandKind <em>Participant Band Kind</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Participant Band Kind</em>'.
-     * @see org.eclipse.cmmndi.CMMNShape#getParticipantBandKind()
-     * @see #getCMMNShape()
-     * @generated
-     */
-    EAttribute getCMMNShape_ParticipantBandKind();
 
     /**
      * Returns the meta object for class '{@link org.eclipse.cmmndi.DocumentRoot <em>Document Root</em>}'.
@@ -1456,50 +1369,6 @@ public interface CmmnDiPackage extends EPackage {
     EReference getDocumentRoot_CMMNShape();
 
     /**
-     * Returns the meta object for enum '{@link org.eclipse.cmmndi.MessageVisibleKind <em>Message Visible Kind</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for enum '<em>Message Visible Kind</em>'.
-     * @see org.eclipse.cmmndi.MessageVisibleKind
-     * @generated
-     */
-    EEnum getMessageVisibleKind();
-
-    /**
-     * Returns the meta object for enum '{@link org.eclipse.cmmndi.ParticipantBandKind <em>Participant Band Kind</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for enum '<em>Participant Band Kind</em>'.
-     * @see org.eclipse.cmmndi.ParticipantBandKind
-     * @generated
-     */
-    EEnum getParticipantBandKind();
-
-    /**
-     * Returns the meta object for data type '{@link org.eclipse.cmmndi.MessageVisibleKind <em>Message Visible Kind Object</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for data type '<em>Message Visible Kind Object</em>'.
-     * @see org.eclipse.cmmndi.MessageVisibleKind
-     * @model instanceClass="org.eclipse.cmmndi.MessageVisibleKind"
-     *        extendedMetaData="name='MessageVisibleKind:Object' baseType='MessageVisibleKind'"
-     * @generated
-     */
-    EDataType getMessageVisibleKindObject();
-
-    /**
-     * Returns the meta object for data type '{@link org.eclipse.cmmndi.ParticipantBandKind <em>Participant Band Kind Object</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for data type '<em>Participant Band Kind Object</em>'.
-     * @see org.eclipse.cmmndi.ParticipantBandKind
-     * @model instanceClass="org.eclipse.cmmndi.ParticipantBandKind"
-     *        extendedMetaData="name='ParticipantBandKind:Object' baseType='ParticipantBandKind'"
-     * @generated
-     */
-    EDataType getParticipantBandKindObject();
-
-    /**
      * Returns the factory that creates the instances of the model.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1533,20 +1402,20 @@ public interface CmmnDiPackage extends EPackage {
         EClass CMMN_DIAGRAM = eINSTANCE.getCMMNDiagram();
 
         /**
-         * The meta object literal for the '<em><b>Plane</b></em>' containment reference feature.
+         * The meta object literal for the '<em><b>CMMN Plane</b></em>' containment reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference CMMN_DIAGRAM__PLANE = eINSTANCE.getCMMNDiagram_Plane();
+        EReference CMMN_DIAGRAM__CMMN_PLANE = eINSTANCE.getCMMNDiagram_CMMNPlane();
 
         /**
-         * The meta object literal for the '<em><b>Label Style</b></em>' containment reference list feature.
+         * The meta object literal for the '<em><b>CMMN Label Style</b></em>' containment reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference CMMN_DIAGRAM__LABEL_STYLE = eINSTANCE.getCMMNDiagram_LabelStyle();
+        EReference CMMN_DIAGRAM__CMMN_LABEL_STYLE = eINSTANCE.getCMMNDiagram_CMMNLabelStyle();
 
         /**
          * The meta object literal for the '{@link org.eclipse.cmmndi.impl.CMMNEdgeImpl <em>CMMN Edge</em>}' class.
@@ -1559,12 +1428,12 @@ public interface CmmnDiPackage extends EPackage {
         EClass CMMN_EDGE = eINSTANCE.getCMMNEdge();
 
         /**
-         * The meta object literal for the '<em><b>Label</b></em>' containment reference feature.
+         * The meta object literal for the '<em><b>CMMN Label</b></em>' containment reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference CMMN_EDGE__LABEL = eINSTANCE.getCMMNEdge_Label();
+        EReference CMMN_EDGE__CMMN_LABEL = eINSTANCE.getCMMNEdge_CMMNLabel();
 
         /**
          * The meta object literal for the '<em><b>Cmmn Element</b></em>' reference feature.
@@ -1573,14 +1442,6 @@ public interface CmmnDiPackage extends EPackage {
          * @generated
          */
         EReference CMMN_EDGE__CMMN_ELEMENT = eINSTANCE.getCMMNEdge_CmmnElement();
-
-        /**
-         * The meta object literal for the '<em><b>Message Visible Kind</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute CMMN_EDGE__MESSAGE_VISIBLE_KIND = eINSTANCE.getCMMNEdge_MessageVisibleKind();
 
         /**
          * The meta object literal for the '<em><b>Source Element</b></em>' reference feature.
@@ -1671,14 +1532,6 @@ public interface CmmnDiPackage extends EPackage {
         EReference CMMN_SHAPE__CMMN_LABEL = eINSTANCE.getCMMNShape_CMMNLabel();
 
         /**
-         * The meta object literal for the '<em><b>Choreography Activity Shape</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute CMMN_SHAPE__CHOREOGRAPHY_ACTIVITY_SHAPE = eINSTANCE.getCMMNShape_ChoreographyActivityShape();
-
-        /**
          * The meta object literal for the '<em><b>Cmmn Element</b></em>' reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -1709,22 +1562,6 @@ public interface CmmnDiPackage extends EPackage {
          * @generated
          */
         EAttribute CMMN_SHAPE__IS_MARKER_VISIBLE = eINSTANCE.getCMMNShape_IsMarkerVisible();
-
-        /**
-         * The meta object literal for the '<em><b>Is Message Visible</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute CMMN_SHAPE__IS_MESSAGE_VISIBLE = eINSTANCE.getCMMNShape_IsMessageVisible();
-
-        /**
-         * The meta object literal for the '<em><b>Participant Band Kind</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute CMMN_SHAPE__PARTICIPANT_BAND_KIND = eINSTANCE.getCMMNShape_ParticipantBandKind();
 
         /**
          * The meta object literal for the '{@link org.eclipse.cmmndi.impl.DocumentRootImpl <em>Document Root</em>}' class.
@@ -1807,46 +1644,6 @@ public interface CmmnDiPackage extends EPackage {
          * @generated
          */
         EReference DOCUMENT_ROOT__CMMN_SHAPE = eINSTANCE.getDocumentRoot_CMMNShape();
-
-        /**
-         * The meta object literal for the '{@link org.eclipse.cmmndi.MessageVisibleKind <em>Message Visible Kind</em>}' enum.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @see org.eclipse.cmmndi.MessageVisibleKind
-         * @see org.eclipse.cmmndi.impl.CmmnDiPackageImpl#getMessageVisibleKind()
-         * @generated
-         */
-        EEnum MESSAGE_VISIBLE_KIND = eINSTANCE.getMessageVisibleKind();
-
-        /**
-         * The meta object literal for the '{@link org.eclipse.cmmndi.ParticipantBandKind <em>Participant Band Kind</em>}' enum.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @see org.eclipse.cmmndi.ParticipantBandKind
-         * @see org.eclipse.cmmndi.impl.CmmnDiPackageImpl#getParticipantBandKind()
-         * @generated
-         */
-        EEnum PARTICIPANT_BAND_KIND = eINSTANCE.getParticipantBandKind();
-
-        /**
-         * The meta object literal for the '<em>Message Visible Kind Object</em>' data type.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @see org.eclipse.cmmndi.MessageVisibleKind
-         * @see org.eclipse.cmmndi.impl.CmmnDiPackageImpl#getMessageVisibleKindObject()
-         * @generated
-         */
-        EDataType MESSAGE_VISIBLE_KIND_OBJECT = eINSTANCE.getMessageVisibleKindObject();
-
-        /**
-         * The meta object literal for the '<em>Participant Band Kind Object</em>' data type.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @see org.eclipse.cmmndi.ParticipantBandKind
-         * @see org.eclipse.cmmndi.impl.CmmnDiPackageImpl#getParticipantBandKindObject()
-         * @generated
-         */
-        EDataType PARTICIPANT_BAND_KIND_OBJECT = eINSTANCE.getParticipantBandKindObject();
 
     }
 

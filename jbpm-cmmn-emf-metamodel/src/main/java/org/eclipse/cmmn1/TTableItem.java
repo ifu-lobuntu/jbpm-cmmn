@@ -41,7 +41,8 @@ public interface TTableItem extends TCmmnElement {
     EList<TApplicabilityRule> getApplicabilityRuleRefs();
 
     /**
-     * Returns the value of the '<em><b>Authorized Role Refs</b></em>' reference.
+     * Returns the value of the '<em><b>Authorized Role Refs</b></em>' reference list.
+     * The list contents are of type {@link org.eclipse.cmmn1.TRole}.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
@@ -49,22 +50,11 @@ public interface TTableItem extends TCmmnElement {
      *               authorizedRoleRefs refers zero or more "role" elements.
      *             
      * <!-- end-model-doc -->
-     * @return the value of the '<em>Authorized Role Refs</em>' reference.
-     * @see #setAuthorizedRoleRefs(TRole)
+     * @return the value of the '<em>Authorized Role Refs</em>' reference list.
      * @see org.eclipse.cmmn1.Cmmn1Package#getTTableItem_AuthorizedRoleRefs()
      * @model extendedMetaData="kind='attribute' name='authorizedRoleRefs'"
      * @generated
      */
-    TRole getAuthorizedRoleRefs();
-
-    /**
-     * Sets the value of the '{@link org.eclipse.cmmn1.TTableItem#getAuthorizedRoleRefs <em>Authorized Role Refs</em>}' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Authorized Role Refs</em>' reference.
-     * @see #getAuthorizedRoleRefs()
-     * @generated
-     */
-    void setAuthorizedRoleRefs(TRole value);
+    EList<TRole> getAuthorizedRoleRefs();
 
 } // TTableItem

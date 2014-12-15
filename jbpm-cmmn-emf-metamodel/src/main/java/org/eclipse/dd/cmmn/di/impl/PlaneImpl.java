@@ -5,7 +5,6 @@ package org.eclipse.dd.cmmn.di.impl;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.Map;
-
 import org.eclipse.dd.cmmn.di.DiPackage;
 import org.eclipse.dd.cmmn.di.DiagramElement;
 import org.eclipse.dd.cmmn.di.Plane;
@@ -45,7 +44,6 @@ public abstract class PlaneImpl extends NodeImpl implements Plane {
      * @ordered
      */
     protected EList<DiagramElement> planeElement;
-
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

@@ -11,10 +11,7 @@ import org.eclipse.cmmndi.CMMNShape;
 import org.eclipse.cmmndi.CmmnDiFactory;
 import org.eclipse.cmmndi.CmmnDiPackage;
 import org.eclipse.cmmndi.DocumentRoot;
-import org.eclipse.cmmndi.MessageVisibleKind;
-import org.eclipse.cmmndi.ParticipantBandKind;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
@@ -73,48 +70,6 @@ public class CmmnDiFactoryImpl extends EFactoryImpl implements CmmnDiFactory {
             case CmmnDiPackage.DOCUMENT_ROOT: return createDocumentRoot();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
-        }
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public Object createFromString(EDataType eDataType, String initialValue) {
-        switch (eDataType.getClassifierID()) {
-            case CmmnDiPackage.MESSAGE_VISIBLE_KIND:
-                return createMessageVisibleKindFromString(eDataType, initialValue);
-            case CmmnDiPackage.PARTICIPANT_BAND_KIND:
-                return createParticipantBandKindFromString(eDataType, initialValue);
-            case CmmnDiPackage.MESSAGE_VISIBLE_KIND_OBJECT:
-                return createMessageVisibleKindObjectFromString(eDataType, initialValue);
-            case CmmnDiPackage.PARTICIPANT_BAND_KIND_OBJECT:
-                return createParticipantBandKindObjectFromString(eDataType, initialValue);
-            default:
-                throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
-        }
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public String convertToString(EDataType eDataType, Object instanceValue) {
-        switch (eDataType.getClassifierID()) {
-            case CmmnDiPackage.MESSAGE_VISIBLE_KIND:
-                return convertMessageVisibleKindToString(eDataType, instanceValue);
-            case CmmnDiPackage.PARTICIPANT_BAND_KIND:
-                return convertParticipantBandKindToString(eDataType, instanceValue);
-            case CmmnDiPackage.MESSAGE_VISIBLE_KIND_OBJECT:
-                return convertMessageVisibleKindObjectToString(eDataType, instanceValue);
-            case CmmnDiPackage.PARTICIPANT_BAND_KIND_OBJECT:
-                return convertParticipantBandKindObjectToString(eDataType, instanceValue);
-            default:
-                throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
         }
     }
 
@@ -186,82 +141,6 @@ public class CmmnDiFactoryImpl extends EFactoryImpl implements CmmnDiFactory {
     public DocumentRoot createDocumentRoot() {
         DocumentRootImpl documentRoot = new DocumentRootImpl();
         return documentRoot;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public MessageVisibleKind createMessageVisibleKindFromString(EDataType eDataType, String initialValue) {
-        MessageVisibleKind result = MessageVisibleKind.get(initialValue);
-        if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
-        return result;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public String convertMessageVisibleKindToString(EDataType eDataType, Object instanceValue) {
-        return instanceValue == null ? null : instanceValue.toString();
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public ParticipantBandKind createParticipantBandKindFromString(EDataType eDataType, String initialValue) {
-        ParticipantBandKind result = ParticipantBandKind.get(initialValue);
-        if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
-        return result;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public String convertParticipantBandKindToString(EDataType eDataType, Object instanceValue) {
-        return instanceValue == null ? null : instanceValue.toString();
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public MessageVisibleKind createMessageVisibleKindObjectFromString(EDataType eDataType, String initialValue) {
-        return createMessageVisibleKindFromString(CmmnDiPackage.Literals.MESSAGE_VISIBLE_KIND, initialValue);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public String convertMessageVisibleKindObjectToString(EDataType eDataType, Object instanceValue) {
-        return convertMessageVisibleKindToString(CmmnDiPackage.Literals.MESSAGE_VISIBLE_KIND, instanceValue);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public ParticipantBandKind createParticipantBandKindObjectFromString(EDataType eDataType, String initialValue) {
-        return createParticipantBandKindFromString(CmmnDiPackage.Literals.PARTICIPANT_BAND_KIND, initialValue);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public String convertParticipantBandKindObjectToString(EDataType eDataType, Object instanceValue) {
-        return convertParticipantBandKindToString(CmmnDiPackage.Literals.PARTICIPANT_BAND_KIND, instanceValue);
     }
 
     /**

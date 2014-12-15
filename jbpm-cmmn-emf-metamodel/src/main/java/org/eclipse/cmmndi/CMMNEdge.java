@@ -14,9 +14,8 @@ import org.eclipse.dd.cmmn.di.LabeledEdge;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.cmmndi.CMMNEdge#getLabel <em>Label</em>}</li>
+ *   <li>{@link org.eclipse.cmmndi.CMMNEdge#getCMMNLabel <em>CMMN Label</em>}</li>
  *   <li>{@link org.eclipse.cmmndi.CMMNEdge#getCmmnElement <em>Cmmn Element</em>}</li>
- *   <li>{@link org.eclipse.cmmndi.CMMNEdge#getMessageVisibleKind <em>Message Visible Kind</em>}</li>
  *   <li>{@link org.eclipse.cmmndi.CMMNEdge#getSourceElement <em>Source Element</em>}</li>
  *   <li>{@link org.eclipse.cmmndi.CMMNEdge#getTargetElement <em>Target Element</em>}</li>
  * </ul>
@@ -28,31 +27,31 @@ import org.eclipse.dd.cmmn.di.LabeledEdge;
  */
 public interface CMMNEdge extends LabeledEdge {
     /**
-     * Returns the value of the '<em><b>Label</b></em>' containment reference.
+     * Returns the value of the '<em><b>CMMN Label</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Label</em>' containment reference isn't clear,
+     * If the meaning of the '<em>CMMN Label</em>' containment reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Label</em>' containment reference.
-     * @see #setLabel(CMMNLabel)
-     * @see org.eclipse.cmmndi.CmmnDiPackage#getCMMNEdge_Label()
+     * @return the value of the '<em>CMMN Label</em>' containment reference.
+     * @see #setCMMNLabel(CMMNLabel)
+     * @see org.eclipse.cmmndi.CmmnDiPackage#getCMMNEdge_CMMNLabel()
      * @model containment="true"
      *        extendedMetaData="kind='element' name='CMMNLabel' namespace='##targetNamespace'"
      * @generated
      */
-    CMMNLabel getLabel();
+    CMMNLabel getCMMNLabel();
 
     /**
-     * Sets the value of the '{@link org.eclipse.cmmndi.CMMNEdge#getLabel <em>Label</em>}' containment reference.
+     * Sets the value of the '{@link org.eclipse.cmmndi.CMMNEdge#getCMMNLabel <em>CMMN Label</em>}' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Label</em>' containment reference.
-     * @see #getLabel()
+     * @param value the new value of the '<em>CMMN Label</em>' containment reference.
+     * @see #getCMMNLabel()
      * @generated
      */
-    void setLabel(CMMNLabel value);
+    void setCMMNLabel(CMMNLabel value);
 
     /**
      * Returns the value of the '<em><b>Cmmn Element</b></em>' reference.
@@ -79,63 +78,6 @@ public interface CMMNEdge extends LabeledEdge {
      * @generated
      */
     void setCmmnElement(TCmmnElement value);
-
-    /**
-     * Returns the value of the '<em><b>Message Visible Kind</b></em>' attribute.
-     * The literals are from the enumeration {@link org.eclipse.cmmndi.MessageVisibleKind}.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Message Visible Kind</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Message Visible Kind</em>' attribute.
-     * @see org.eclipse.cmmndi.MessageVisibleKind
-     * @see #isSetMessageVisibleKind()
-     * @see #unsetMessageVisibleKind()
-     * @see #setMessageVisibleKind(MessageVisibleKind)
-     * @see org.eclipse.cmmndi.CmmnDiPackage#getCMMNEdge_MessageVisibleKind()
-     * @model unsettable="true"
-     *        extendedMetaData="kind='attribute' name='messageVisibleKind'"
-     * @generated
-     */
-    MessageVisibleKind getMessageVisibleKind();
-
-    /**
-     * Sets the value of the '{@link org.eclipse.cmmndi.CMMNEdge#getMessageVisibleKind <em>Message Visible Kind</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Message Visible Kind</em>' attribute.
-     * @see org.eclipse.cmmndi.MessageVisibleKind
-     * @see #isSetMessageVisibleKind()
-     * @see #unsetMessageVisibleKind()
-     * @see #getMessageVisibleKind()
-     * @generated
-     */
-    void setMessageVisibleKind(MessageVisibleKind value);
-
-    /**
-     * Unsets the value of the '{@link org.eclipse.cmmndi.CMMNEdge#getMessageVisibleKind <em>Message Visible Kind</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #isSetMessageVisibleKind()
-     * @see #getMessageVisibleKind()
-     * @see #setMessageVisibleKind(MessageVisibleKind)
-     * @generated
-     */
-    void unsetMessageVisibleKind();
-
-    /**
-     * Returns whether the value of the '{@link org.eclipse.cmmndi.CMMNEdge#getMessageVisibleKind <em>Message Visible Kind</em>}' attribute is set.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return whether the value of the '<em>Message Visible Kind</em>' attribute is set.
-     * @see #unsetMessageVisibleKind()
-     * @see #getMessageVisibleKind()
-     * @see #setMessageVisibleKind(MessageVisibleKind)
-     * @generated
-     */
-    boolean isSetMessageVisibleKind();
 
     /**
      * Returns the value of the '<em><b>Source Element</b></em>' reference.

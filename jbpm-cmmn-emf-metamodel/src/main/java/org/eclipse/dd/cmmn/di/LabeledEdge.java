@@ -4,6 +4,7 @@ package org.eclipse.dd.cmmn.di;
 
 import org.eclipse.emf.common.util.EList;
 
+
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Labeled Edge</b></em>'.
@@ -22,6 +23,7 @@ import org.eclipse.emf.common.util.EList;
  * @generated
  */
 public interface LabeledEdge extends Edge {
+
     /**
      * Returns the value of the '<em><b>Owned Label</b></em>' reference list.
      * The list contents are of type {@link org.eclipse.dd.cmmn.di.Label}.

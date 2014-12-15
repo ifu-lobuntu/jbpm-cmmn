@@ -58,7 +58,7 @@ public interface TTimerEvent extends TEvent {
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * 
-     *                 timerStart can be used to trigger the timer after a PlanItem or CaseFileItem 
+     *                 timerStart can be used to trigger the timer after a PlanItem or CaseFileItem
      *                 lifecycle state transition has occurred.
      *               
      * <!-- end-model-doc -->
@@ -76,7 +76,7 @@ public interface TTimerEvent extends TEvent {
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * 
-     *                 timerStart can be used to trigger the timer after a PlanItem or CaseFileItem 
+     *                 timerStart can be used to trigger the timer after a PlanItem or CaseFileItem
      *                 lifecycle state transition has occurred.
      *               
      * <!-- end-model-doc -->

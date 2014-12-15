@@ -3,8 +3,8 @@
 package org.eclipse.cmmn1.impl;
 
 import org.eclipse.cmmn1.Cmmn1Package;
-import org.eclipse.cmmn1.TCaseParameter;
 import org.eclipse.cmmn1.TExpression;
+import org.eclipse.cmmn1.TParameter;
 import org.eclipse.cmmn1.TParameterMapping;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -46,7 +46,7 @@ public class TParameterMappingImpl extends TCmmnElementImpl implements TParamete
      * @generated
      * @ordered
      */
-    protected TCaseParameter sourceRef;
+    protected TParameter sourceRef;
 
     /**
      * The cached value of the '{@link #getTargetRef() <em>Target Ref</em>}' reference.
@@ -56,7 +56,7 @@ public class TParameterMappingImpl extends TCmmnElementImpl implements TParamete
      * @generated
      * @ordered
      */
-    protected TCaseParameter targetRef;
+    protected TParameter targetRef;
 
     /**
      * <!-- begin-user-doc -->
@@ -125,10 +125,10 @@ public class TParameterMappingImpl extends TCmmnElementImpl implements TParamete
      * <!-- end-user-doc -->
      * @generated
      */
-    public TCaseParameter getSourceRef() {
+    public TParameter getSourceRef() {
         if (sourceRef != null && sourceRef.eIsProxy()) {
             InternalEObject oldSourceRef = (InternalEObject)sourceRef;
-            sourceRef = (TCaseParameter)eResolveProxy(oldSourceRef);
+            sourceRef = (TParameter)eResolveProxy(oldSourceRef);
             if (sourceRef != oldSourceRef) {
                 if (eNotificationRequired())
                     eNotify(new ENotificationImpl(this, Notification.RESOLVE, Cmmn1Package.TPARAMETER_MAPPING__SOURCE_REF, oldSourceRef, sourceRef));
@@ -142,7 +142,7 @@ public class TParameterMappingImpl extends TCmmnElementImpl implements TParamete
      * <!-- end-user-doc -->
      * @generated
      */
-    public TCaseParameter basicGetSourceRef() {
+    public TParameter basicGetSourceRef() {
         return sourceRef;
     }
 
@@ -151,8 +151,8 @@ public class TParameterMappingImpl extends TCmmnElementImpl implements TParamete
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setSourceRef(TCaseParameter newSourceRef) {
-        TCaseParameter oldSourceRef = sourceRef;
+    public void setSourceRef(TParameter newSourceRef) {
+        TParameter oldSourceRef = sourceRef;
         sourceRef = newSourceRef;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, Cmmn1Package.TPARAMETER_MAPPING__SOURCE_REF, oldSourceRef, sourceRef));
@@ -163,10 +163,10 @@ public class TParameterMappingImpl extends TCmmnElementImpl implements TParamete
      * <!-- end-user-doc -->
      * @generated
      */
-    public TCaseParameter getTargetRef() {
+    public TParameter getTargetRef() {
         if (targetRef != null && targetRef.eIsProxy()) {
             InternalEObject oldTargetRef = (InternalEObject)targetRef;
-            targetRef = (TCaseParameter)eResolveProxy(oldTargetRef);
+            targetRef = (TParameter)eResolveProxy(oldTargetRef);
             if (targetRef != oldTargetRef) {
                 if (eNotificationRequired())
                     eNotify(new ENotificationImpl(this, Notification.RESOLVE, Cmmn1Package.TPARAMETER_MAPPING__TARGET_REF, oldTargetRef, targetRef));
@@ -180,7 +180,7 @@ public class TParameterMappingImpl extends TCmmnElementImpl implements TParamete
      * <!-- end-user-doc -->
      * @generated
      */
-    public TCaseParameter basicGetTargetRef() {
+    public TParameter basicGetTargetRef() {
         return targetRef;
     }
 
@@ -189,8 +189,8 @@ public class TParameterMappingImpl extends TCmmnElementImpl implements TParamete
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setTargetRef(TCaseParameter newTargetRef) {
-        TCaseParameter oldTargetRef = targetRef;
+    public void setTargetRef(TParameter newTargetRef) {
+        TParameter oldTargetRef = targetRef;
         targetRef = newTargetRef;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, Cmmn1Package.TPARAMETER_MAPPING__TARGET_REF, oldTargetRef, targetRef));
@@ -242,10 +242,10 @@ public class TParameterMappingImpl extends TCmmnElementImpl implements TParamete
                 setTransformation((TExpression)newValue);
                 return;
             case Cmmn1Package.TPARAMETER_MAPPING__SOURCE_REF:
-                setSourceRef((TCaseParameter)newValue);
+                setSourceRef((TParameter)newValue);
                 return;
             case Cmmn1Package.TPARAMETER_MAPPING__TARGET_REF:
-                setTargetRef((TCaseParameter)newValue);
+                setTargetRef((TParameter)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -263,10 +263,10 @@ public class TParameterMappingImpl extends TCmmnElementImpl implements TParamete
                 setTransformation((TExpression)null);
                 return;
             case Cmmn1Package.TPARAMETER_MAPPING__SOURCE_REF:
-                setSourceRef((TCaseParameter)null);
+                setSourceRef((TParameter)null);
                 return;
             case Cmmn1Package.TPARAMETER_MAPPING__TARGET_REF:
-                setTargetRef((TCaseParameter)null);
+                setTargetRef((TParameter)null);
                 return;
         }
         super.eUnset(featureID);

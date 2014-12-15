@@ -2,11 +2,8 @@
 <genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
     xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/jbpm-cmmn-emf-metamodel/src/main/java" modelPluginID="jbpm-cmmn-emf-metamodel"
     modelName="CMMN10" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
-    importerID="org.eclipse.xsd.ecore.importer" complianceLevel="7.0" copyrightFields="false"
+    importerID="org.eclipse.xsd.ecore.importer" complianceLevel="6.0" copyrightFields="false"
     operationReflection="true" importOrganizing="true">
-  <genAnnotations source="http://www.eclipse.org/emf/2002/GenModel/importer/org.eclipse.xsd.ecore.importer">
-    <details key="createMap" value="true"/>
-  </genAnnotations>
   <foreignModel>CMMN10.xsd</foreignModel>
   <genPackages prefix="Cmmn1" basePackage="org.eclipse" resource="XML" disposableProviderFactory="true"
       ecorePackage="CMMN10.ecore#/">
@@ -123,7 +120,7 @@
     </genClasses>
     <genClasses ecoreClass="CMMN10.ecore#//TApplicabilityRule">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CMMN10.ecore#//TApplicabilityRule/condition"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CMMN10.ecore#//TApplicabilityRule/contextRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EReference CMMN10.ecore#//TApplicabilityRule/contextRef"/>
     </genClasses>
     <genClasses ecoreClass="CMMN10.ecore#//TCase">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CMMN10.ecore#//TCase/caseFileModel"/>
@@ -141,8 +138,8 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CMMN10.ecore#//TCaseFileItem/definitionRef"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CMMN10.ecore#//TCaseFileItem/multiplicity"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CMMN10.ecore#//TCaseFileItem/name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CMMN10.ecore#//TCaseFileItem/sourceRef"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CMMN10.ecore#//TCaseFileItem/targetRefs"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EReference CMMN10.ecore#//TCaseFileItem/sourceRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EReference CMMN10.ecore#//TCaseFileItem/targetRefs"/>
     </genClasses>
     <genClasses ecoreClass="CMMN10.ecore#//TCaseFileItemDefinition">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CMMN10.ecore#//TCaseFileItemDefinition/property"/>
@@ -153,15 +150,15 @@
     </genClasses>
     <genClasses ecoreClass="CMMN10.ecore#//TCaseFileItemOnPart">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CMMN10.ecore#//TCaseFileItemOnPart/standardEvent"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CMMN10.ecore#//TCaseFileItemOnPart/sourceRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EReference CMMN10.ecore#//TCaseFileItemOnPart/sourceRef"/>
     </genClasses>
     <genClasses ecoreClass="CMMN10.ecore#//TCaseFileItemStartTrigger">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CMMN10.ecore#//TCaseFileItemStartTrigger/standardEvent"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CMMN10.ecore#//TCaseFileItemStartTrigger/sourceRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EReference CMMN10.ecore#//TCaseFileItemStartTrigger/sourceRef"/>
     </genClasses>
     <genClasses ecoreClass="CMMN10.ecore#//TCaseParameter">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CMMN10.ecore#//TCaseParameter/bindingRefinement"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CMMN10.ecore#//TCaseParameter/bindingRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EReference CMMN10.ecore#//TCaseParameter/bindingRef"/>
     </genClasses>
     <genClasses ecoreClass="CMMN10.ecore#//TCaseTask">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CMMN10.ecore#//TCaseTask/parameterMapping"/>
@@ -199,7 +196,9 @@
     </genClasses>
     <genClasses ecoreClass="CMMN10.ecore#//TDiscretionaryItem">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CMMN10.ecore#//TDiscretionaryItem/itemControl"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CMMN10.ecore#//TDiscretionaryItem/definitionRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EReference CMMN10.ecore#//TDiscretionaryItem/definitionRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EReference CMMN10.ecore#//TDiscretionaryItem/entryCriteriaRefs"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EReference CMMN10.ecore#//TDiscretionaryItem/exitCriteriaRefs"/>
     </genClasses>
     <genClasses ecoreClass="CMMN10.ecore#//TEvent"/>
     <genClasses ecoreClass="CMMN10.ecore#//TExpression">
@@ -208,11 +207,11 @@
     </genClasses>
     <genClasses ecoreClass="CMMN10.ecore#//THumanTask">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CMMN10.ecore#//THumanTask/planningTable"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CMMN10.ecore#//THumanTask/performerRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EReference CMMN10.ecore#//THumanTask/performerRef"/>
     </genClasses>
     <genClasses ecoreClass="CMMN10.ecore#//TIfPart">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CMMN10.ecore#//TIfPart/condition"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CMMN10.ecore#//TIfPart/contextRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EReference CMMN10.ecore#//TIfPart/contextRef"/>
     </genClasses>
     <genClasses ecoreClass="CMMN10.ecore#//TImport">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CMMN10.ecore#//TImport/importType"/>
@@ -221,7 +220,7 @@
     </genClasses>
     <genClasses ecoreClass="CMMN10.ecore#//TManualActivationRule">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CMMN10.ecore#//TManualActivationRule/condition"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CMMN10.ecore#//TManualActivationRule/contextRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EReference CMMN10.ecore#//TManualActivationRule/contextRef"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CMMN10.ecore#//TManualActivationRule/name"/>
     </genClasses>
     <genClasses ecoreClass="CMMN10.ecore#//TMilestone"/>
@@ -231,8 +230,8 @@
     </genClasses>
     <genClasses ecoreClass="CMMN10.ecore#//TParameterMapping">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CMMN10.ecore#//TParameterMapping/transformation"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CMMN10.ecore#//TParameterMapping/sourceRef"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CMMN10.ecore#//TParameterMapping/targetRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EReference CMMN10.ecore#//TParameterMapping/sourceRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EReference CMMN10.ecore#//TParameterMapping/targetRef"/>
     </genClasses>
     <genClasses ecoreClass="CMMN10.ecore#//TPlanFragment">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CMMN10.ecore#//TPlanFragment/planItem"/>
@@ -240,9 +239,9 @@
     </genClasses>
     <genClasses ecoreClass="CMMN10.ecore#//TPlanItem">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CMMN10.ecore#//TPlanItem/itemControl"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CMMN10.ecore#//TPlanItem/definitionRef"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CMMN10.ecore#//TPlanItem/entryCriteriaRefs"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CMMN10.ecore#//TPlanItem/exitCriteriaRefs"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EReference CMMN10.ecore#//TPlanItem/definitionRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EReference CMMN10.ecore#//TPlanItem/entryCriteriaRefs"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EReference CMMN10.ecore#//TPlanItem/exitCriteriaRefs"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CMMN10.ecore#//TPlanItem/name"/>
     </genClasses>
     <genClasses ecoreClass="CMMN10.ecore#//TPlanItemControl">
@@ -256,12 +255,12 @@
     </genClasses>
     <genClasses ecoreClass="CMMN10.ecore#//TPlanItemOnPart">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CMMN10.ecore#//TPlanItemOnPart/standardEvent"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CMMN10.ecore#//TPlanItemOnPart/sentryRef"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CMMN10.ecore#//TPlanItemOnPart/sourceRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EReference CMMN10.ecore#//TPlanItemOnPart/sentryRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EReference CMMN10.ecore#//TPlanItemOnPart/sourceRef"/>
     </genClasses>
     <genClasses ecoreClass="CMMN10.ecore#//TPlanItemStartTrigger">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CMMN10.ecore#//TPlanItemStartTrigger/standardEvent"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CMMN10.ecore#//TPlanItemStartTrigger/sourceRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EReference CMMN10.ecore#//TPlanItemStartTrigger/sourceRef"/>
     </genClasses>
     <genClasses ecoreClass="CMMN10.ecore#//TPlanningTable">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute CMMN10.ecore#//TPlanningTable/tableItemGroup"/>
@@ -285,12 +284,12 @@
     </genClasses>
     <genClasses ecoreClass="CMMN10.ecore#//TRepetitionRule">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CMMN10.ecore#//TRepetitionRule/condition"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CMMN10.ecore#//TRepetitionRule/contextRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EReference CMMN10.ecore#//TRepetitionRule/contextRef"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CMMN10.ecore#//TRepetitionRule/name"/>
     </genClasses>
     <genClasses ecoreClass="CMMN10.ecore#//TRequiredRule">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CMMN10.ecore#//TRequiredRule/condition"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CMMN10.ecore#//TRequiredRule/contextRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EReference CMMN10.ecore#//TRequiredRule/contextRef"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CMMN10.ecore#//TRequiredRule/name"/>
     </genClasses>
     <genClasses ecoreClass="CMMN10.ecore#//TRole">
@@ -307,12 +306,12 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute CMMN10.ecore#//TStage/planItemDefinitionGroup"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference CMMN10.ecore#//TStage/planItemDefinition"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CMMN10.ecore#//TStage/autoComplete"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CMMN10.ecore#//TStage/exitCriteriaRefs"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EReference CMMN10.ecore#//TStage/exitCriteriaRefs"/>
     </genClasses>
     <genClasses image="false" ecoreClass="CMMN10.ecore#//TStartTrigger"/>
     <genClasses image="false" ecoreClass="CMMN10.ecore#//TTableItem">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CMMN10.ecore#//TTableItem/applicabilityRuleRefs"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CMMN10.ecore#//TTableItem/authorizedRoleRefs"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EReference CMMN10.ecore#//TTableItem/applicabilityRuleRefs"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EReference CMMN10.ecore#//TTableItem/authorizedRoleRefs"/>
     </genClasses>
     <genClasses ecoreClass="CMMN10.ecore#//TTask">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CMMN10.ecore#//TTask/inputs"/>
@@ -326,30 +325,44 @@
     </genClasses>
     <genClasses ecoreClass="CMMN10.ecore#//TUserEvent"/>
   </genPackages>
+  <genPackages prefix="Dc" basePackage="org.eclipse.dd.cmmn" resource="XML" disposableProviderFactory="true"
+      ecorePackage="DC.ecore#/">
+    <genClasses ecoreClass="DC.ecore#//Bounds">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DC.ecore#//Bounds/height"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DC.ecore#//Bounds/width"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DC.ecore#//Bounds/x"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DC.ecore#//Bounds/y"/>
+    </genClasses>
+    <genClasses ecoreClass="DC.ecore#//DocumentRoot">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EAttribute DC.ecore#//DocumentRoot/mixed"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference DC.ecore#//DocumentRoot/xMLNSPrefixMap"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference DC.ecore#//DocumentRoot/xSISchemaLocation"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference DC.ecore#//DocumentRoot/bounds"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference DC.ecore#//DocumentRoot/font"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference DC.ecore#//DocumentRoot/point"/>
+    </genClasses>
+    <genClasses ecoreClass="DC.ecore#//Font">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DC.ecore#//Font/isBold"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DC.ecore#//Font/isItalic"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DC.ecore#//Font/isStrikeThrough"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DC.ecore#//Font/isUnderline"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DC.ecore#//Font/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DC.ecore#//Font/size"/>
+    </genClasses>
+    <genClasses ecoreClass="DC.ecore#//Point">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DC.ecore#//Point/x"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DC.ecore#//Point/y"/>
+    </genClasses>
+  </genPackages>
   <genPackages prefix="CmmnDi" basePackage="org.eclipse" resource="XML" disposableProviderFactory="true"
       ecorePackage="CMMNDI.ecore#/">
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="CMMNDI.ecore#//MessageVisibleKind">
-      <genEnumLiterals ecoreEnumLiteral="CMMNDI.ecore#//MessageVisibleKind/initiating"/>
-      <genEnumLiterals ecoreEnumLiteral="CMMNDI.ecore#//MessageVisibleKind/nonInitiating"/>
-    </genEnums>
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="CMMNDI.ecore#//ParticipantBandKind">
-      <genEnumLiterals ecoreEnumLiteral="CMMNDI.ecore#//ParticipantBandKind/topInitiating"/>
-      <genEnumLiterals ecoreEnumLiteral="CMMNDI.ecore#//ParticipantBandKind/middleInitiating"/>
-      <genEnumLiterals ecoreEnumLiteral="CMMNDI.ecore#//ParticipantBandKind/bottomInitiating"/>
-      <genEnumLiterals ecoreEnumLiteral="CMMNDI.ecore#//ParticipantBandKind/topNonInitiating"/>
-      <genEnumLiterals ecoreEnumLiteral="CMMNDI.ecore#//ParticipantBandKind/middleNonInitiating"/>
-      <genEnumLiterals ecoreEnumLiteral="CMMNDI.ecore#//ParticipantBandKind/bottomNonInitiating"/>
-    </genEnums>
-    <genDataTypes ecoreDataType="CMMNDI.ecore#//MessageVisibleKindObject"/>
-    <genDataTypes ecoreDataType="CMMNDI.ecore#//ParticipantBandKindObject"/>
     <genClasses ecoreClass="CMMNDI.ecore#//CMMNDiagram">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CMMNDI.ecore#//CMMNDiagram/plane"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CMMNDI.ecore#//CMMNDiagram/labelStyle"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CMMNDI.ecore#//CMMNDiagram/cMMNPlane"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CMMNDI.ecore#//CMMNDiagram/cMMNLabelStyle"/>
     </genClasses>
     <genClasses ecoreClass="CMMNDI.ecore#//CMMNEdge">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CMMNDI.ecore#//CMMNEdge/label"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CMMNDI.ecore#//CMMNEdge/cMMNLabel"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CMMNDI.ecore#//CMMNEdge/cmmnElement"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CMMNDI.ecore#//CMMNEdge/messageVisibleKind"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EReference CMMNDI.ecore#//CMMNEdge/sourceElement"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EReference CMMNDI.ecore#//CMMNEdge/targetElement"/>
     </genClasses>
@@ -364,13 +377,10 @@
     </genClasses>
     <genClasses ecoreClass="CMMNDI.ecore#//CMMNShape">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CMMNDI.ecore#//CMMNShape/cMMNLabel"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CMMNDI.ecore#//CMMNShape/choreographyActivityShape"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CMMNDI.ecore#//CMMNShape/cmmnElement"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CMMNDI.ecore#//CMMNShape/isExpanded"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CMMNDI.ecore#//CMMNShape/isHorizontal"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CMMNDI.ecore#//CMMNShape/isMarkerVisible"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CMMNDI.ecore#//CMMNShape/isMessageVisible"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CMMNDI.ecore#//CMMNShape/participantBandKind"/>
     </genClasses>
     <genClasses ecoreClass="CMMNDI.ecore#//DocumentRoot">
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EAttribute CMMNDI.ecore#//DocumentRoot/mixed"/>
@@ -385,7 +395,40 @@
     </genClasses>
   </genPackages>
   <genPackages prefix="Di" basePackage="org.eclipse.dd.cmmn" resource="XML" disposableProviderFactory="true"
-      multipleEditorPages="false" generateModelWizard="false" ecorePackage="DI.ecore#/">
+      ecorePackage="DI.ecore#/">
+    <genClasses image="false" ecoreClass="DI.ecore#//Diagram">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DI.ecore#//Diagram/documentation"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DI.ecore#//Diagram/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DI.ecore#//Diagram/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DI.ecore#//Diagram/resolution"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="DI.ecore#//DiagramElement">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference DI.ecore#//DiagramElement/extension"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DI.ecore#//DiagramElement/id"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute DI.ecore#//DiagramElement/anyAttribute"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="DI.ecore#//Edge">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference DI.ecore#//Edge/waypoint"/>
+    </genClasses>
+    <genClasses ecoreClass="DI.ecore#//ExtensionType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute DI.ecore#//ExtensionType/any"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="DI.ecore#//Label">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference DI.ecore#//Label/bounds"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="DI.ecore#//LabeledEdge"/>
+    <genClasses image="false" ecoreClass="DI.ecore#//LabeledShape"/>
+    <genClasses image="false" ecoreClass="DI.ecore#//Node"/>
+    <genClasses image="false" ecoreClass="DI.ecore#//Plane">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute DI.ecore#//Plane/diagramElementGroup"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference DI.ecore#//Plane/diagramElement"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="DI.ecore#//Shape">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference DI.ecore#//Shape/bounds"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="DI.ecore#//Style">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DI.ecore#//Style/id"/>
+    </genClasses>
     <genClasses ecoreClass="DI.ecore#//DocumentRoot">
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EAttribute DI.ecore#//DocumentRoot/mixed"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference DI.ecore#//DocumentRoot/xMLNSPrefixMap"/>
@@ -400,83 +443,6 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference DI.ecore#//DocumentRoot/plane"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference DI.ecore#//DocumentRoot/shape"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference DI.ecore#//DocumentRoot/style"/>
-    </genClasses>
-    <genClasses ecoreClass="DI.ecore#//Diagram">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DI.ecore#//Diagram/documentation"/>
-      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference DI.ecore#//Diagram/ownedStyle"/>
-      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference DI.ecore#//Diagram/rootElement"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DI.ecore#//Diagram/id"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DI.ecore#//Diagram/name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DI.ecore#//Diagram/resolution"/>
-    </genClasses>
-    <genClasses image="false" ecoreClass="DI.ecore#//DiagramElement">
-      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference DI.ecore#//DiagramElement/owningDiagram"/>
-      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference DI.ecore#//DiagramElement/owningElement"/>
-      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference DI.ecore#//DiagramElement/ownedElement"/>
-      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference DI.ecore#//DiagramElement/modelElement"/>
-      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference DI.ecore#//DiagramElement/style"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DI.ecore#//DiagramElement/id"/>
-    </genClasses>
-    <genClasses ecoreClass="DI.ecore#//Edge">
-      <genFeatures createChild="false" ecoreFeature="ecore:EReference DI.ecore#//Edge/source"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EReference DI.ecore#//Edge/target"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference DI.ecore#//Edge/waypoint"/>
-    </genClasses>
-    <genClasses ecoreClass="DI.ecore#//Label">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference DI.ecore#//Label/bounds"/>
-    </genClasses>
-    <genClasses ecoreClass="DI.ecore#//LabeledEdge">
-      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference DI.ecore#//LabeledEdge/ownedLabel"/>
-    </genClasses>
-    <genClasses image="false" ecoreClass="DI.ecore#//LabeledShape">
-      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference DI.ecore#//LabeledShape/ownedLabel"/>
-    </genClasses>
-    <genClasses image="false" ecoreClass="DI.ecore#//Node"/>
-    <genClasses ecoreClass="DI.ecore#//Plane">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference DI.ecore#//Plane/planeElement"/>
-      <genOperations ecoreOperation="DI.ecore#//Plane/plane_element_type">
-        <genParameters ecoreParameter="DI.ecore#//Plane/plane_element_type/diagnostics"/>
-        <genParameters ecoreParameter="DI.ecore#//Plane/plane_element_type/context"/>
-      </genOperations>
-    </genClasses>
-    <genClasses ecoreClass="DI.ecore#//Shape">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference DI.ecore#//Shape/bounds"/>
-    </genClasses>
-    <genClasses image="false" ecoreClass="DI.ecore#//Style">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DI.ecore#//Style/id"/>
-    </genClasses>
-  </genPackages>
-  <genPackages prefix="Dc" basePackage="org.eclipse.dd.cmmn" resource="XML" multipleEditorPages="false"
-      generateModelWizard="false" ecorePackage="DC.ecore#/">
-    <genClasses ecoreClass="DC.ecore#//DocumentRoot">
-      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EAttribute DC.ecore#//DocumentRoot/mixed"/>
-      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference DC.ecore#//DocumentRoot/xMLNSPrefixMap"/>
-      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference DC.ecore#//DocumentRoot/xSISchemaLocation"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference DC.ecore#//DocumentRoot/bounds"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference DC.ecore#//DocumentRoot/font"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference DC.ecore#//DocumentRoot/point"/>
-    </genClasses>
-    <genClasses ecoreClass="DC.ecore#//Bounds">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DC.ecore#//Bounds/height"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DC.ecore#//Bounds/width"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DC.ecore#//Bounds/x"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DC.ecore#//Bounds/y"/>
-    </genClasses>
-    <genClasses ecoreClass="DC.ecore#//Font">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DC.ecore#//Font/isBold"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DC.ecore#//Font/isItalic"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DC.ecore#//Font/isStrikeThrough"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DC.ecore#//Font/isUnderline"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DC.ecore#//Font/name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DC.ecore#//Font/size"/>
-      <genOperations ecoreOperation="DC.ecore#//Font/non_negative_size">
-        <genParameters ecoreParameter="DC.ecore#//Font/non_negative_size/diagnostics"/>
-        <genParameters ecoreParameter="DC.ecore#//Font/non_negative_size/context"/>
-      </genOperations>
-    </genClasses>
-    <genClasses ecoreClass="DC.ecore#//Point">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DC.ecore#//Point/x"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DC.ecore#//Point/y"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

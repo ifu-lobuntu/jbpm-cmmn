@@ -2,8 +2,6 @@
  */
 package org.eclipse.cmmndi;
 
-import javax.xml.namespace.QName;
-
 import org.eclipse.cmmn1.TCmmnElement;
 import org.eclipse.dd.cmmn.di.LabeledShape;
 
@@ -16,13 +14,10 @@ import org.eclipse.dd.cmmn.di.LabeledShape;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.eclipse.cmmndi.CMMNShape#getCMMNLabel <em>CMMN Label</em>}</li>
- *   <li>{@link org.eclipse.cmmndi.CMMNShape#getChoreographyActivityShape <em>Choreography Activity Shape</em>}</li>
  *   <li>{@link org.eclipse.cmmndi.CMMNShape#getCmmnElement <em>Cmmn Element</em>}</li>
  *   <li>{@link org.eclipse.cmmndi.CMMNShape#isIsExpanded <em>Is Expanded</em>}</li>
  *   <li>{@link org.eclipse.cmmndi.CMMNShape#isIsHorizontal <em>Is Horizontal</em>}</li>
  *   <li>{@link org.eclipse.cmmndi.CMMNShape#isIsMarkerVisible <em>Is Marker Visible</em>}</li>
- *   <li>{@link org.eclipse.cmmndi.CMMNShape#isIsMessageVisible <em>Is Message Visible</em>}</li>
- *   <li>{@link org.eclipse.cmmndi.CMMNShape#getParticipantBandKind <em>Participant Band Kind</em>}</li>
  * </ul>
  * </p>
  *
@@ -57,33 +52,6 @@ public interface CMMNShape extends LabeledShape {
      * @generated
      */
     void setCMMNLabel(CMMNLabel value);
-
-    /**
-     * Returns the value of the '<em><b>Choreography Activity Shape</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Choreography Activity Shape</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Choreography Activity Shape</em>' attribute.
-     * @see #setChoreographyActivityShape(QName)
-     * @see org.eclipse.cmmndi.CmmnDiPackage#getCMMNShape_ChoreographyActivityShape()
-     * @model dataType="org.eclipse.emf.ecore.xml.type.QName"
-     *        extendedMetaData="kind='attribute' name='choreographyActivityShape'"
-     * @generated
-     */
-    QName getChoreographyActivityShape();
-
-    /**
-     * Sets the value of the '{@link org.eclipse.cmmndi.CMMNShape#getChoreographyActivityShape <em>Choreography Activity Shape</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Choreography Activity Shape</em>' attribute.
-     * @see #getChoreographyActivityShape()
-     * @generated
-     */
-    void setChoreographyActivityShape(QName value);
 
     /**
      * Returns the value of the '<em><b>Cmmn Element</b></em>' reference.
@@ -272,116 +240,5 @@ public interface CMMNShape extends LabeledShape {
      * @generated
      */
     boolean isSetIsMarkerVisible();
-
-    /**
-     * Returns the value of the '<em><b>Is Message Visible</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Is Message Visible</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Is Message Visible</em>' attribute.
-     * @see #isSetIsMessageVisible()
-     * @see #unsetIsMessageVisible()
-     * @see #setIsMessageVisible(boolean)
-     * @see org.eclipse.cmmndi.CmmnDiPackage#getCMMNShape_IsMessageVisible()
-     * @model unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Boolean"
-     *        extendedMetaData="kind='attribute' name='isMessageVisible'"
-     * @generated
-     */
-    boolean isIsMessageVisible();
-
-    /**
-     * Sets the value of the '{@link org.eclipse.cmmndi.CMMNShape#isIsMessageVisible <em>Is Message Visible</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Is Message Visible</em>' attribute.
-     * @see #isSetIsMessageVisible()
-     * @see #unsetIsMessageVisible()
-     * @see #isIsMessageVisible()
-     * @generated
-     */
-    void setIsMessageVisible(boolean value);
-
-    /**
-     * Unsets the value of the '{@link org.eclipse.cmmndi.CMMNShape#isIsMessageVisible <em>Is Message Visible</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #isSetIsMessageVisible()
-     * @see #isIsMessageVisible()
-     * @see #setIsMessageVisible(boolean)
-     * @generated
-     */
-    void unsetIsMessageVisible();
-
-    /**
-     * Returns whether the value of the '{@link org.eclipse.cmmndi.CMMNShape#isIsMessageVisible <em>Is Message Visible</em>}' attribute is set.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return whether the value of the '<em>Is Message Visible</em>' attribute is set.
-     * @see #unsetIsMessageVisible()
-     * @see #isIsMessageVisible()
-     * @see #setIsMessageVisible(boolean)
-     * @generated
-     */
-    boolean isSetIsMessageVisible();
-
-    /**
-     * Returns the value of the '<em><b>Participant Band Kind</b></em>' attribute.
-     * The literals are from the enumeration {@link org.eclipse.cmmndi.ParticipantBandKind}.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Participant Band Kind</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Participant Band Kind</em>' attribute.
-     * @see org.eclipse.cmmndi.ParticipantBandKind
-     * @see #isSetParticipantBandKind()
-     * @see #unsetParticipantBandKind()
-     * @see #setParticipantBandKind(ParticipantBandKind)
-     * @see org.eclipse.cmmndi.CmmnDiPackage#getCMMNShape_ParticipantBandKind()
-     * @model unsettable="true"
-     *        extendedMetaData="kind='attribute' name='participantBandKind'"
-     * @generated
-     */
-    ParticipantBandKind getParticipantBandKind();
-
-    /**
-     * Sets the value of the '{@link org.eclipse.cmmndi.CMMNShape#getParticipantBandKind <em>Participant Band Kind</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Participant Band Kind</em>' attribute.
-     * @see org.eclipse.cmmndi.ParticipantBandKind
-     * @see #isSetParticipantBandKind()
-     * @see #unsetParticipantBandKind()
-     * @see #getParticipantBandKind()
-     * @generated
-     */
-    void setParticipantBandKind(ParticipantBandKind value);
-
-    /**
-     * Unsets the value of the '{@link org.eclipse.cmmndi.CMMNShape#getParticipantBandKind <em>Participant Band Kind</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #isSetParticipantBandKind()
-     * @see #getParticipantBandKind()
-     * @see #setParticipantBandKind(ParticipantBandKind)
-     * @generated
-     */
-    void unsetParticipantBandKind();
-
-    /**
-     * Returns whether the value of the '{@link org.eclipse.cmmndi.CMMNShape#getParticipantBandKind <em>Participant Band Kind</em>}' attribute is set.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return whether the value of the '<em>Participant Band Kind</em>' attribute is set.
-     * @see #unsetParticipantBandKind()
-     * @see #getParticipantBandKind()
-     * @see #setParticipantBandKind(ParticipantBandKind)
-     * @generated
-     */
-    boolean isSetParticipantBandKind();
 
 } // CMMNShape

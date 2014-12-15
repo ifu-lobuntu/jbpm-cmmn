@@ -14,7 +14,9 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+import org.eclipse.emf.ecore.util.BasicFeatureMap;
 import org.eclipse.emf.ecore.util.EObjectWithInverseEList;
+import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
@@ -30,22 +32,13 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link org.eclipse.dd.cmmn.di.impl.DiagramElementImpl#getModelElement <em>Model Element</em>}</li>
  *   <li>{@link org.eclipse.dd.cmmn.di.impl.DiagramElementImpl#getStyle <em>Style</em>}</li>
  *   <li>{@link org.eclipse.dd.cmmn.di.impl.DiagramElementImpl#getId <em>Id</em>}</li>
+ *   <li>{@link org.eclipse.dd.cmmn.di.impl.DiagramElementImpl#getAnyAttribute <em>Any Attribute</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
 public class DiagramElementImpl extends MinimalEObjectImpl.Container implements DiagramElement {
-    /**
-     * The cached value of the '{@link #getOwningDiagram() <em>Owning Diagram</em>}' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getOwningDiagram()
-     * @generated
-     * @ordered
-     */
-    protected Diagram owningDiagram;
-
     /**
      * The cached value of the '{@link #getOwningElement() <em>Owning Element</em>}' reference.
      * <!-- begin-user-doc -->
@@ -107,6 +100,16 @@ public class DiagramElementImpl extends MinimalEObjectImpl.Container implements 
     protected String id = ID_EDEFAULT;
 
     /**
+     * The cached value of the '{@link #getAnyAttribute() <em>Any Attribute</em>}' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getAnyAttribute()
+     * @generated
+     * @ordered
+     */
+    protected FeatureMap anyAttribute;
+
+    /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -128,25 +131,18 @@ public class DiagramElementImpl extends MinimalEObjectImpl.Container implements 
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
+     * @generated NOT
      */
     public Diagram getOwningDiagram() {
-        return owningDiagram;
+        return getOwningDiagram(eContainer());
     }
 
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public NotificationChain basicSetOwningDiagram(Diagram newOwningDiagram, NotificationChain msgs) {
-        Diagram oldOwningDiagram = owningDiagram;
-        owningDiagram = newOwningDiagram;
-        if (eNotificationRequired()) {
-            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, DiPackage.DIAGRAM_ELEMENT__OWNING_DIAGRAM, oldOwningDiagram, newOwningDiagram);
-            if (msgs == null) msgs = notification; else msgs.add(notification);
+    private Diagram getOwningDiagram(EObject container) {
+        if(container instanceof Diagram){
+            return (Diagram)container;
+        }else{
+            return getOwningDiagram(container.eContainer());
         }
-        return msgs;
     }
 
     /**
@@ -263,14 +259,22 @@ public class DiagramElementImpl extends MinimalEObjectImpl.Container implements 
      * <!-- end-user-doc -->
      * @generated
      */
+    public FeatureMap getAnyAttribute() {
+        if (anyAttribute == null) {
+            anyAttribute = new BasicFeatureMap(this, DiPackage.DIAGRAM_ELEMENT__ANY_ATTRIBUTE);
+        }
+        return anyAttribute;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @SuppressWarnings("unchecked")
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case DiPackage.DIAGRAM_ELEMENT__OWNING_DIAGRAM:
-                if (owningDiagram != null)
-                    msgs = ((InternalEObject)owningDiagram).eInverseRemove(this, DiPackage.DIAGRAM__ROOT_ELEMENT, Diagram.class, msgs);
-                return basicSetOwningDiagram((Diagram)otherEnd, msgs);
             case DiPackage.DIAGRAM_ELEMENT__OWNING_ELEMENT:
                 if (owningElement != null)
                     msgs = ((InternalEObject)owningElement).eInverseRemove(this, DiPackage.DIAGRAM_ELEMENT__OWNED_ELEMENT, DiagramElement.class, msgs);
@@ -289,12 +293,12 @@ public class DiagramElementImpl extends MinimalEObjectImpl.Container implements 
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case DiPackage.DIAGRAM_ELEMENT__OWNING_DIAGRAM:
-                return basicSetOwningDiagram(null, msgs);
             case DiPackage.DIAGRAM_ELEMENT__OWNING_ELEMENT:
                 return basicSetOwningElement(null, msgs);
             case DiPackage.DIAGRAM_ELEMENT__OWNED_ELEMENT:
                 return ((InternalEList<?>)getOwnedElement()).basicRemove(otherEnd, msgs);
+            case DiPackage.DIAGRAM_ELEMENT__ANY_ATTRIBUTE:
+                return ((InternalEList<?>)getAnyAttribute()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -321,6 +325,9 @@ public class DiagramElementImpl extends MinimalEObjectImpl.Container implements 
                 return basicGetStyle();
             case DiPackage.DIAGRAM_ELEMENT__ID:
                 return getId();
+            case DiPackage.DIAGRAM_ELEMENT__ANY_ATTRIBUTE:
+                if (coreType) return getAnyAttribute();
+                return ((FeatureMap.Internal)getAnyAttribute()).getWrapper();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -335,6 +342,9 @@ public class DiagramElementImpl extends MinimalEObjectImpl.Container implements 
         switch (featureID) {
             case DiPackage.DIAGRAM_ELEMENT__ID:
                 setId((String)newValue);
+                return;
+            case DiPackage.DIAGRAM_ELEMENT__ANY_ATTRIBUTE:
+                ((FeatureMap.Internal)getAnyAttribute()).set(newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -351,6 +361,9 @@ public class DiagramElementImpl extends MinimalEObjectImpl.Container implements 
             case DiPackage.DIAGRAM_ELEMENT__ID:
                 setId(ID_EDEFAULT);
                 return;
+            case DiPackage.DIAGRAM_ELEMENT__ANY_ATTRIBUTE:
+                getAnyAttribute().clear();
+                return;
         }
         super.eUnset(featureID);
     }
@@ -364,7 +377,7 @@ public class DiagramElementImpl extends MinimalEObjectImpl.Container implements 
     public boolean eIsSet(int featureID) {
         switch (featureID) {
             case DiPackage.DIAGRAM_ELEMENT__OWNING_DIAGRAM:
-                return owningDiagram != null;
+                return getOwningDiagram() != null;
             case DiPackage.DIAGRAM_ELEMENT__OWNING_ELEMENT:
                 return owningElement != null;
             case DiPackage.DIAGRAM_ELEMENT__OWNED_ELEMENT:
@@ -375,6 +388,8 @@ public class DiagramElementImpl extends MinimalEObjectImpl.Container implements 
                 return style != null;
             case DiPackage.DIAGRAM_ELEMENT__ID:
                 return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
+            case DiPackage.DIAGRAM_ELEMENT__ANY_ATTRIBUTE:
+                return anyAttribute != null && !anyAttribute.isEmpty();
         }
         return super.eIsSet(featureID);
     }
@@ -391,6 +406,8 @@ public class DiagramElementImpl extends MinimalEObjectImpl.Container implements 
         StringBuffer result = new StringBuffer(super.toString());
         result.append(" (id: ");
         result.append(id);
+        result.append(", anyAttribute: ");
+        result.append(anyAttribute);
         result.append(')');
         return result.toString();
     }

@@ -59,12 +59,12 @@ public interface TParameterMapping extends TCmmnElement {
      *             
      * <!-- end-model-doc -->
      * @return the value of the '<em>Source Ref</em>' reference.
-     * @see #setSourceRef(TCaseParameter)
+     * @see #setSourceRef(TParameter)
      * @see org.eclipse.cmmn1.Cmmn1Package#getTParameterMapping_SourceRef()
      * @model extendedMetaData="kind='attribute' name='sourceRef'"
      * @generated
      */
-    TCaseParameter getSourceRef();
+    TParameter getSourceRef();
 
     /**
      * Sets the value of the '{@link org.eclipse.cmmn1.TParameterMapping#getSourceRef <em>Source Ref</em>}' reference.
@@ -74,7 +74,7 @@ public interface TParameterMapping extends TCmmnElement {
      * @see #getSourceRef()
      * @generated
      */
-    void setSourceRef(TCaseParameter value);
+    void setSourceRef(TParameter value);
 
     /**
      * Returns the value of the '<em><b>Target Ref</b></em>' reference.
@@ -86,12 +86,12 @@ public interface TParameterMapping extends TCmmnElement {
      *             
      * <!-- end-model-doc -->
      * @return the value of the '<em>Target Ref</em>' reference.
-     * @see #setTargetRef(TCaseParameter)
+     * @see #setTargetRef(TParameter)
      * @see org.eclipse.cmmn1.Cmmn1Package#getTParameterMapping_TargetRef()
      * @model extendedMetaData="kind='attribute' name='targetRef'"
      * @generated
      */
-    TCaseParameter getTargetRef();
+    TParameter getTargetRef();
 
     /**
      * Sets the value of the '{@link org.eclipse.cmmn1.TParameterMapping#getTargetRef <em>Target Ref</em>}' reference.
@@ -101,6 +101,6 @@ public interface TParameterMapping extends TCmmnElement {
      * @see #getTargetRef()
      * @generated
      */
-    void setTargetRef(TCaseParameter value);
+    void setTargetRef(TParameter value);
 
 } // TParameterMapping

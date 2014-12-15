@@ -83,7 +83,7 @@ public interface Diagram extends EObject {
      * @return the value of the '<em>Root Element</em>' reference.
      * @see org.eclipse.dd.cmmn.di.DiPackage#getDiagram_RootElement()
      * @see org.eclipse.dd.cmmn.di.DiagramElement#getOwningDiagram
-     * @model opposite="owningDiagram" resolveProxies="false" required="true" transient="true" changeable="false" derived="true" ordered="false"
+     * @model opposite="owningDiagram" resolveProxies="false" required="true" transient="true" changeable="false" volatile="true" derived="true" ordered="false"
      * @generated
      */
     DiagramElement getRootElement();
@@ -99,7 +99,7 @@ public interface Diagram extends EObject {
      * @return the value of the '<em>Id</em>' attribute.
      * @see #setId(String)
      * @see org.eclipse.dd.cmmn.di.DiPackage#getDiagram_Id()
-     * @model id="true" dataType="org.eclipse.emf.ecore.xml.type.NCName"
+     * @model id="true" dataType="org.eclipse.emf.ecore.xml.type.ID"
      *        extendedMetaData="kind='attribute' name='id'"
      * @generated
      */

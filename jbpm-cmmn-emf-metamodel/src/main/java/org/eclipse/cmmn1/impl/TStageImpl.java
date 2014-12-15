@@ -15,6 +15,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.BasicFeatureMap;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -86,14 +87,14 @@ public class TStageImpl extends TPlanFragmentImpl implements TStage {
     protected boolean autoCompleteESet;
 
     /**
-     * The cached value of the '{@link #getExitCriteriaRefs() <em>Exit Criteria Refs</em>}' reference.
+     * The cached value of the '{@link #getExitCriteriaRefs() <em>Exit Criteria Refs</em>}' reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see #getExitCriteriaRefs()
      * @generated
      * @ordered
      */
-    protected TSentry exitCriteriaRefs;
+    protected EList<TSentry> exitCriteriaRefs;
 
     /**
      * <!-- begin-user-doc -->
@@ -229,37 +230,11 @@ public class TStageImpl extends TPlanFragmentImpl implements TStage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public TSentry getExitCriteriaRefs() {
-        if (exitCriteriaRefs != null && exitCriteriaRefs.eIsProxy()) {
-            InternalEObject oldExitCriteriaRefs = (InternalEObject)exitCriteriaRefs;
-            exitCriteriaRefs = (TSentry)eResolveProxy(oldExitCriteriaRefs);
-            if (exitCriteriaRefs != oldExitCriteriaRefs) {
-                if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, Cmmn1Package.TSTAGE__EXIT_CRITERIA_REFS, oldExitCriteriaRefs, exitCriteriaRefs));
-            }
+    public EList<TSentry> getExitCriteriaRefs() {
+        if (exitCriteriaRefs == null) {
+            exitCriteriaRefs = new EObjectResolvingEList<TSentry>(TSentry.class, this, Cmmn1Package.TSTAGE__EXIT_CRITERIA_REFS);
         }
         return exitCriteriaRefs;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public TSentry basicGetExitCriteriaRefs() {
-        return exitCriteriaRefs;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setExitCriteriaRefs(TSentry newExitCriteriaRefs) {
-        TSentry oldExitCriteriaRefs = exitCriteriaRefs;
-        exitCriteriaRefs = newExitCriteriaRefs;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, Cmmn1Package.TSTAGE__EXIT_CRITERIA_REFS, oldExitCriteriaRefs, exitCriteriaRefs));
     }
 
     /**
@@ -298,8 +273,7 @@ public class TStageImpl extends TPlanFragmentImpl implements TStage {
             case Cmmn1Package.TSTAGE__AUTO_COMPLETE:
                 return isAutoComplete();
             case Cmmn1Package.TSTAGE__EXIT_CRITERIA_REFS:
-                if (resolve) return getExitCriteriaRefs();
-                return basicGetExitCriteriaRefs();
+                return getExitCriteriaRefs();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -327,7 +301,8 @@ public class TStageImpl extends TPlanFragmentImpl implements TStage {
                 setAutoComplete((Boolean)newValue);
                 return;
             case Cmmn1Package.TSTAGE__EXIT_CRITERIA_REFS:
-                setExitCriteriaRefs((TSentry)newValue);
+                getExitCriteriaRefs().clear();
+                getExitCriteriaRefs().addAll((Collection<? extends TSentry>)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -354,7 +329,7 @@ public class TStageImpl extends TPlanFragmentImpl implements TStage {
                 unsetAutoComplete();
                 return;
             case Cmmn1Package.TSTAGE__EXIT_CRITERIA_REFS:
-                setExitCriteriaRefs((TSentry)null);
+                getExitCriteriaRefs().clear();
                 return;
         }
         super.eUnset(featureID);
@@ -377,7 +352,7 @@ public class TStageImpl extends TPlanFragmentImpl implements TStage {
             case Cmmn1Package.TSTAGE__AUTO_COMPLETE:
                 return isSetAutoComplete();
             case Cmmn1Package.TSTAGE__EXIT_CRITERIA_REFS:
-                return exitCriteriaRefs != null;
+                return exitCriteriaRefs != null && !exitCriteriaRefs.isEmpty();
         }
         return super.eIsSet(featureID);
     }

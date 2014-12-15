@@ -535,21 +535,21 @@ public class Cmmn1PackageImpl extends EPackageImpl implements Cmmn1Package {
         XMLTypePackage.eINSTANCE.eClass();
 
         // Obtain or create and register interdependencies
+        DcPackageImpl theDcPackage = (DcPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(DcPackage.eNS_URI) instanceof DcPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(DcPackage.eNS_URI) : DcPackage.eINSTANCE);
         CmmnDiPackageImpl theCmmnDiPackage = (CmmnDiPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(CmmnDiPackage.eNS_URI) instanceof CmmnDiPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(CmmnDiPackage.eNS_URI) : CmmnDiPackage.eINSTANCE);
         DiPackageImpl theDiPackage = (DiPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(DiPackage.eNS_URI) instanceof DiPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(DiPackage.eNS_URI) : DiPackage.eINSTANCE);
-        DcPackageImpl theDcPackage = (DcPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(DcPackage.eNS_URI) instanceof DcPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(DcPackage.eNS_URI) : DcPackage.eINSTANCE);
 
         // Create package meta-data objects
         theCmmn1Package.createPackageContents();
+        theDcPackage.createPackageContents();
         theCmmnDiPackage.createPackageContents();
         theDiPackage.createPackageContents();
-        theDcPackage.createPackageContents();
 
         // Initialize created meta-data
         theCmmn1Package.initializePackageContents();
+        theDcPackage.initializePackageContents();
         theCmmnDiPackage.initializePackageContents();
         theDiPackage.initializePackageContents();
-        theDcPackage.initializePackageContents();
 
         // Register package validator
         EValidator.Registry.INSTANCE.put
@@ -1006,8 +1006,8 @@ public class Cmmn1PackageImpl extends EPackageImpl implements Cmmn1Package {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getTApplicabilityRule_ContextRef() {
-        return (EAttribute)tApplicabilityRuleEClass.getEStructuralFeatures().get(1);
+    public EReference getTApplicabilityRule_ContextRef() {
+        return (EReference)tApplicabilityRuleEClass.getEStructuralFeatures().get(1);
     }
 
     /**
@@ -1575,6 +1575,24 @@ public class Cmmn1PackageImpl extends EPackageImpl implements Cmmn1Package {
      */
     public EReference getTDiscretionaryItem_DefinitionRef() {
         return (EReference)tDiscretionaryItemEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getTDiscretionaryItem_EntryCriteriaRefs() {
+        return (EReference)tDiscretionaryItemEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getTDiscretionaryItem_ExitCriteriaRefs() {
+        return (EReference)tDiscretionaryItemEClass.getEStructuralFeatures().get(3);
     }
 
     /**
@@ -2653,7 +2671,7 @@ public class Cmmn1PackageImpl extends EPackageImpl implements Cmmn1Package {
 
         tApplicabilityRuleEClass = createEClass(TAPPLICABILITY_RULE);
         createEReference(tApplicabilityRuleEClass, TAPPLICABILITY_RULE__CONDITION);
-        createEAttribute(tApplicabilityRuleEClass, TAPPLICABILITY_RULE__CONTEXT_REF);
+        createEReference(tApplicabilityRuleEClass, TAPPLICABILITY_RULE__CONTEXT_REF);
 
         tCaseEClass = createEClass(TCASE);
         createEReference(tCaseEClass, TCASE__CASE_FILE_MODEL);
@@ -2730,6 +2748,8 @@ public class Cmmn1PackageImpl extends EPackageImpl implements Cmmn1Package {
         tDiscretionaryItemEClass = createEClass(TDISCRETIONARY_ITEM);
         createEReference(tDiscretionaryItemEClass, TDISCRETIONARY_ITEM__ITEM_CONTROL);
         createEReference(tDiscretionaryItemEClass, TDISCRETIONARY_ITEM__DEFINITION_REF);
+        createEReference(tDiscretionaryItemEClass, TDISCRETIONARY_ITEM__ENTRY_CRITERIA_REFS);
+        createEReference(tDiscretionaryItemEClass, TDISCRETIONARY_ITEM__EXIT_CRITERIA_REFS);
 
         tEventEClass = createEClass(TEVENT);
 
@@ -3002,7 +3022,7 @@ public class Cmmn1PackageImpl extends EPackageImpl implements Cmmn1Package {
 
         initEClass(tApplicabilityRuleEClass, TApplicabilityRule.class, "TApplicabilityRule", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getTApplicabilityRule_Condition(), this.getTExpression(), null, "condition", null, 0, 1, TApplicabilityRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getTApplicabilityRule_ContextRef(), theXMLTypePackage.getIDREF(), "contextRef", null, 0, 1, TApplicabilityRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getTApplicabilityRule_ContextRef(), this.getTCaseFileItem(), null, "contextRef", null, 0, 1, TApplicabilityRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(tCaseEClass, TCase.class, "TCase", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getTCase_CaseFileModel(), this.getTCaseFile(), null, "caseFileModel", null, 0, 1, TCase.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3079,6 +3099,8 @@ public class Cmmn1PackageImpl extends EPackageImpl implements Cmmn1Package {
         initEClass(tDiscretionaryItemEClass, TDiscretionaryItem.class, "TDiscretionaryItem", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getTDiscretionaryItem_ItemControl(), this.getTPlanItemControl(), null, "itemControl", null, 0, 1, TDiscretionaryItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getTDiscretionaryItem_DefinitionRef(), this.getTPlanItemDefinition(), null, "definitionRef", null, 0, 1, TDiscretionaryItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getTDiscretionaryItem_EntryCriteriaRefs(), this.getTSentry(), null, "entryCriteriaRefs", null, 0, -1, TDiscretionaryItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getTDiscretionaryItem_ExitCriteriaRefs(), this.getTSentry(), null, "exitCriteriaRefs", null, 0, -1, TDiscretionaryItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(tEventEClass, TEvent.class, "TEvent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -3091,7 +3113,7 @@ public class Cmmn1PackageImpl extends EPackageImpl implements Cmmn1Package {
         initEReference(getTHumanTask_PerformerRef(), this.getTRole(), null, "performerRef", null, 0, 1, THumanTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(tIfPartEClass, TIfPart.class, "TIfPart", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getTIfPart_Condition(), this.getTExpression(), null, "condition", null, 0, 1, TIfPart.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getTIfPart_Condition(), this.getTExpression(), null, "condition", null, 0, -1, TIfPart.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getTIfPart_ContextRef(), this.getTCaseFileItem(), null, "contextRef", null, 0, 1, TIfPart.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(tImportEClass, TImport.class, "TImport", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -3113,8 +3135,8 @@ public class Cmmn1PackageImpl extends EPackageImpl implements Cmmn1Package {
 
         initEClass(tParameterMappingEClass, TParameterMapping.class, "TParameterMapping", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getTParameterMapping_Transformation(), this.getTExpression(), null, "transformation", null, 0, 1, TParameterMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getTParameterMapping_SourceRef(), this.getTCaseParameter(), null, "sourceRef", null, 0, 1, TParameterMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getTParameterMapping_TargetRef(), this.getTCaseParameter(), null, "targetRef", null, 0, 1, TParameterMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getTParameterMapping_SourceRef(), this.getTParameter(), null, "sourceRef", null, 0, 1, TParameterMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getTParameterMapping_TargetRef(), this.getTParameter(), null, "targetRef", null, 0, 1, TParameterMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(tPlanFragmentEClass, TPlanFragment.class, "TPlanFragment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getTPlanFragment_PlanItem(), this.getTPlanItem(), null, "planItem", null, 0, -1, TPlanFragment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3190,13 +3212,13 @@ public class Cmmn1PackageImpl extends EPackageImpl implements Cmmn1Package {
         initEAttribute(getTStage_PlanItemDefinitionGroup(), ecorePackage.getEFeatureMapEntry(), "planItemDefinitionGroup", null, 0, -1, TStage.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getTStage_PlanItemDefinition(), this.getTPlanItemDefinition(), null, "planItemDefinition", null, 0, -1, TStage.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
         initEAttribute(getTStage_AutoComplete(), theXMLTypePackage.getBoolean(), "autoComplete", "false", 0, 1, TStage.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getTStage_ExitCriteriaRefs(), this.getTSentry(), null, "exitCriteriaRefs", null, 0, 1, TStage.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getTStage_ExitCriteriaRefs(), this.getTSentry(), null, "exitCriteriaRefs", null, 0, -1, TStage.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(tStartTriggerEClass, TStartTrigger.class, "TStartTrigger", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         initEClass(tTableItemEClass, TTableItem.class, "TTableItem", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getTTableItem_ApplicabilityRuleRefs(), this.getTApplicabilityRule(), null, "applicabilityRuleRefs", null, 0, -1, TTableItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getTTableItem_AuthorizedRoleRefs(), this.getTRole(), null, "authorizedRoleRefs", null, 0, 1, TTableItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getTTableItem_AuthorizedRoleRefs(), this.getTRole(), null, "authorizedRoleRefs", null, 0, -1, TTableItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(tTaskEClass, TTask.class, "TTask", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getTTask_Inputs(), this.getTCaseParameter(), null, "inputs", null, 0, -1, TTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -4241,6 +4263,20 @@ public class Cmmn1PackageImpl extends EPackageImpl implements Cmmn1Package {
            new String[] {
              "kind", "attribute",
              "name", "definitionRef"
+           });	
+        addAnnotation
+          (getTDiscretionaryItem_EntryCriteriaRefs(), 
+           source, 
+           new String[] {
+             "kind", "attribute",
+             "name", "entryCriteriaRefs"
+           });	
+        addAnnotation
+          (getTDiscretionaryItem_ExitCriteriaRefs(), 
+           source, 
+           new String[] {
+             "kind", "attribute",
+             "name", "exitCriteriaRefs"
            });	
         addAnnotation
           (tEventEClass, 

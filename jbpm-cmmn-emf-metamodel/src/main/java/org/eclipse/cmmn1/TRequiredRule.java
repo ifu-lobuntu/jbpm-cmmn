@@ -61,7 +61,7 @@ public interface TRequiredRule extends TCmmnElement {
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * 
-     *               contextRef MUST refer a CaseFileItem if specified. 
+     *               contextRef MUST refer a CaseFileItem if specified.
      *             
      * <!-- end-model-doc -->
      * @return the value of the '<em>Context Ref</em>' reference.

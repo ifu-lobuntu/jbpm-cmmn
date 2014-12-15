@@ -8,6 +8,7 @@ import org.eclipse.cmmndi.CMMNDiagram;
 import org.eclipse.cmmndi.CMMNLabelStyle;
 import org.eclipse.cmmndi.CMMNPlane;
 import org.eclipse.cmmndi.CmmnDiPackage;
+import org.eclipse.dd.cmmn.di.DiagramElement;
 import org.eclipse.dd.cmmn.di.impl.DiagramImpl;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -25,8 +26,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.cmmndi.impl.CMMNDiagramImpl#getPlane <em>Plane</em>}</li>
- *   <li>{@link org.eclipse.cmmndi.impl.CMMNDiagramImpl#getLabelStyle <em>Label Style</em>}</li>
+ *   <li>{@link org.eclipse.cmmndi.impl.CMMNDiagramImpl#getCMMNPlane <em>CMMN Plane</em>}</li>
+ *   <li>{@link org.eclipse.cmmndi.impl.CMMNDiagramImpl#getCMMNLabelStyle <em>CMMN Label Style</em>}</li>
  * </ul>
  * </p>
  *
@@ -34,24 +35,24 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class CMMNDiagramImpl extends DiagramImpl implements CMMNDiagram {
     /**
-     * The cached value of the '{@link #getPlane() <em>Plane</em>}' containment reference.
+     * The cached value of the '{@link #getCMMNPlane() <em>CMMN Plane</em>}' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getPlane()
+     * @see #getCMMNPlane()
      * @generated
      * @ordered
      */
-    protected CMMNPlane plane;
+    protected CMMNPlane cMMNPlane;
 
     /**
-     * The cached value of the '{@link #getLabelStyle() <em>Label Style</em>}' containment reference list.
+     * The cached value of the '{@link #getCMMNLabelStyle() <em>CMMN Label Style</em>}' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getLabelStyle()
+     * @see #getCMMNLabelStyle()
      * @generated
      * @ordered
      */
-    protected EList<CMMNLabelStyle> labelStyle;
+    protected EList<CMMNLabelStyle> cMMNLabelStyle;
 
     /**
      * <!-- begin-user-doc -->
@@ -62,6 +63,10 @@ public class CMMNDiagramImpl extends DiagramImpl implements CMMNDiagram {
         super();
     }
 
+    @Override
+    public DiagramElement getRootElement() {
+        return this.getCMMNPlane();
+    }
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -77,8 +82,8 @@ public class CMMNDiagramImpl extends DiagramImpl implements CMMNDiagram {
      * <!-- end-user-doc -->
      * @generated
      */
-    public CMMNPlane getPlane() {
-        return plane;
+    public CMMNPlane getCMMNPlane() {
+        return cMMNPlane;
     }
 
     /**
@@ -86,11 +91,11 @@ public class CMMNDiagramImpl extends DiagramImpl implements CMMNDiagram {
      * <!-- end-user-doc -->
      * @generated
      */
-    public NotificationChain basicSetPlane(CMMNPlane newPlane, NotificationChain msgs) {
-        CMMNPlane oldPlane = plane;
-        plane = newPlane;
+    public NotificationChain basicSetCMMNPlane(CMMNPlane newCMMNPlane, NotificationChain msgs) {
+        CMMNPlane oldCMMNPlane = cMMNPlane;
+        cMMNPlane = newCMMNPlane;
         if (eNotificationRequired()) {
-            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CmmnDiPackage.CMMN_DIAGRAM__PLANE, oldPlane, newPlane);
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CmmnDiPackage.CMMN_DIAGRAM__CMMN_PLANE, oldCMMNPlane, newCMMNPlane);
             if (msgs == null) msgs = notification; else msgs.add(notification);
         }
         return msgs;
@@ -101,18 +106,18 @@ public class CMMNDiagramImpl extends DiagramImpl implements CMMNDiagram {
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setPlane(CMMNPlane newPlane) {
-        if (newPlane != plane) {
+    public void setCMMNPlane(CMMNPlane newCMMNPlane) {
+        if (newCMMNPlane != cMMNPlane) {
             NotificationChain msgs = null;
-            if (plane != null)
-                msgs = ((InternalEObject)plane).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CmmnDiPackage.CMMN_DIAGRAM__PLANE, null, msgs);
-            if (newPlane != null)
-                msgs = ((InternalEObject)newPlane).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CmmnDiPackage.CMMN_DIAGRAM__PLANE, null, msgs);
-            msgs = basicSetPlane(newPlane, msgs);
+            if (cMMNPlane != null)
+                msgs = ((InternalEObject)cMMNPlane).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CmmnDiPackage.CMMN_DIAGRAM__CMMN_PLANE, null, msgs);
+            if (newCMMNPlane != null)
+                msgs = ((InternalEObject)newCMMNPlane).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CmmnDiPackage.CMMN_DIAGRAM__CMMN_PLANE, null, msgs);
+            msgs = basicSetCMMNPlane(newCMMNPlane, msgs);
             if (msgs != null) msgs.dispatch();
         }
         else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, CmmnDiPackage.CMMN_DIAGRAM__PLANE, newPlane, newPlane));
+            eNotify(new ENotificationImpl(this, Notification.SET, CmmnDiPackage.CMMN_DIAGRAM__CMMN_PLANE, newCMMNPlane, newCMMNPlane));
     }
 
     /**
@@ -120,11 +125,11 @@ public class CMMNDiagramImpl extends DiagramImpl implements CMMNDiagram {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EList<CMMNLabelStyle> getLabelStyle() {
-        if (labelStyle == null) {
-            labelStyle = new EObjectContainmentEList<CMMNLabelStyle>(CMMNLabelStyle.class, this, CmmnDiPackage.CMMN_DIAGRAM__LABEL_STYLE);
+    public EList<CMMNLabelStyle> getCMMNLabelStyle() {
+        if (cMMNLabelStyle == null) {
+            cMMNLabelStyle = new EObjectContainmentEList<CMMNLabelStyle>(CMMNLabelStyle.class, this, CmmnDiPackage.CMMN_DIAGRAM__CMMN_LABEL_STYLE);
         }
-        return labelStyle;
+        return cMMNLabelStyle;
     }
 
     /**
@@ -135,10 +140,10 @@ public class CMMNDiagramImpl extends DiagramImpl implements CMMNDiagram {
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case CmmnDiPackage.CMMN_DIAGRAM__PLANE:
-                return basicSetPlane(null, msgs);
-            case CmmnDiPackage.CMMN_DIAGRAM__LABEL_STYLE:
-                return ((InternalEList<?>)getLabelStyle()).basicRemove(otherEnd, msgs);
+            case CmmnDiPackage.CMMN_DIAGRAM__CMMN_PLANE:
+                return basicSetCMMNPlane(null, msgs);
+            case CmmnDiPackage.CMMN_DIAGRAM__CMMN_LABEL_STYLE:
+                return ((InternalEList<?>)getCMMNLabelStyle()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -151,10 +156,10 @@ public class CMMNDiagramImpl extends DiagramImpl implements CMMNDiagram {
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case CmmnDiPackage.CMMN_DIAGRAM__PLANE:
-                return getPlane();
-            case CmmnDiPackage.CMMN_DIAGRAM__LABEL_STYLE:
-                return getLabelStyle();
+            case CmmnDiPackage.CMMN_DIAGRAM__CMMN_PLANE:
+                return getCMMNPlane();
+            case CmmnDiPackage.CMMN_DIAGRAM__CMMN_LABEL_STYLE:
+                return getCMMNLabelStyle();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -168,12 +173,12 @@ public class CMMNDiagramImpl extends DiagramImpl implements CMMNDiagram {
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case CmmnDiPackage.CMMN_DIAGRAM__PLANE:
-                setPlane((CMMNPlane)newValue);
+            case CmmnDiPackage.CMMN_DIAGRAM__CMMN_PLANE:
+                setCMMNPlane((CMMNPlane)newValue);
                 return;
-            case CmmnDiPackage.CMMN_DIAGRAM__LABEL_STYLE:
-                getLabelStyle().clear();
-                getLabelStyle().addAll((Collection<? extends CMMNLabelStyle>)newValue);
+            case CmmnDiPackage.CMMN_DIAGRAM__CMMN_LABEL_STYLE:
+                getCMMNLabelStyle().clear();
+                getCMMNLabelStyle().addAll((Collection<? extends CMMNLabelStyle>)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -187,11 +192,11 @@ public class CMMNDiagramImpl extends DiagramImpl implements CMMNDiagram {
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case CmmnDiPackage.CMMN_DIAGRAM__PLANE:
-                setPlane((CMMNPlane)null);
+            case CmmnDiPackage.CMMN_DIAGRAM__CMMN_PLANE:
+                setCMMNPlane((CMMNPlane)null);
                 return;
-            case CmmnDiPackage.CMMN_DIAGRAM__LABEL_STYLE:
-                getLabelStyle().clear();
+            case CmmnDiPackage.CMMN_DIAGRAM__CMMN_LABEL_STYLE:
+                getCMMNLabelStyle().clear();
                 return;
         }
         super.eUnset(featureID);
@@ -205,10 +210,10 @@ public class CMMNDiagramImpl extends DiagramImpl implements CMMNDiagram {
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case CmmnDiPackage.CMMN_DIAGRAM__PLANE:
-                return plane != null;
-            case CmmnDiPackage.CMMN_DIAGRAM__LABEL_STYLE:
-                return labelStyle != null && !labelStyle.isEmpty();
+            case CmmnDiPackage.CMMN_DIAGRAM__CMMN_PLANE:
+                return cMMNPlane != null;
+            case CmmnDiPackage.CMMN_DIAGRAM__CMMN_LABEL_STYLE:
+                return cMMNLabelStyle != null && !cMMNLabelStyle.isEmpty();
         }
         return super.eIsSet(featureID);
     }

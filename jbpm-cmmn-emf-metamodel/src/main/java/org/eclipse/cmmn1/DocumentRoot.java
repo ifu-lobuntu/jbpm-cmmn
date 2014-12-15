@@ -182,7 +182,7 @@ public interface DocumentRoot extends EObject {
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * 
-     *         caseFile is the root element for the CMMN Case File Model 
+     *         caseFile is the root element for the CMMN Case File Model
      *         and is a container for CaseFileItems.
      *       
      * <!-- end-model-doc -->
@@ -211,7 +211,7 @@ public interface DocumentRoot extends EObject {
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * 
-     *         caseFileItem is the root element for CMMN data. 
+     *         caseFileItem is the root element for CMMN data.
      *       
      * <!-- end-model-doc -->
      * @return the value of the '<em>Case File Item</em>' containment reference.
@@ -736,7 +736,7 @@ public interface DocumentRoot extends EObject {
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * 
-     *         manualActivationRule is the root element for specifying an 
+     *         manualActivationRule is the root element for specifying an
      *         manual activation rule for a PlanItemDefinition element.
      *       
      * <!-- end-model-doc -->
@@ -1098,7 +1098,7 @@ public interface DocumentRoot extends EObject {
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * 
-     *         repetitionRule is the root element for specifying a 
+     *         repetitionRule is the root element for specifying a
      *         repetition rule for a PlanItemDefinition element.
      *       
      * <!-- end-model-doc -->
@@ -1127,7 +1127,7 @@ public interface DocumentRoot extends EObject {
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * 
-     *         requiredRule is the root element for specifying a 
+     *         requiredRule is the root element for specifying a
      *         required rule for a PlanItemDefinition element.
      *       
      * <!-- end-model-doc -->
@@ -1156,7 +1156,7 @@ public interface DocumentRoot extends EObject {
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * 
-     *         role is the root element for Case Roles. 
+     *         role is the root element for Case Roles.
      *       
      * <!-- end-model-doc -->
      * @return the value of the '<em>Role</em>' containment reference.

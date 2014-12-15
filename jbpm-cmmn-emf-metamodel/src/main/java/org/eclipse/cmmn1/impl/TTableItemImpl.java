@@ -7,11 +7,8 @@ import org.eclipse.cmmn1.Cmmn1Package;
 import org.eclipse.cmmn1.TApplicabilityRule;
 import org.eclipse.cmmn1.TRole;
 import org.eclipse.cmmn1.TTableItem;
-import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 
 /**
@@ -40,14 +37,14 @@ public abstract class TTableItemImpl extends TCmmnElementImpl implements TTableI
     protected EList<TApplicabilityRule> applicabilityRuleRefs;
 
     /**
-     * The cached value of the '{@link #getAuthorizedRoleRefs() <em>Authorized Role Refs</em>}' reference.
+     * The cached value of the '{@link #getAuthorizedRoleRefs() <em>Authorized Role Refs</em>}' reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see #getAuthorizedRoleRefs()
      * @generated
      * @ordered
      */
-    protected TRole authorizedRoleRefs;
+    protected EList<TRole> authorizedRoleRefs;
 
     /**
      * <!-- begin-user-doc -->
@@ -85,37 +82,11 @@ public abstract class TTableItemImpl extends TCmmnElementImpl implements TTableI
      * <!-- end-user-doc -->
      * @generated
      */
-    public TRole getAuthorizedRoleRefs() {
-        if (authorizedRoleRefs != null && authorizedRoleRefs.eIsProxy()) {
-            InternalEObject oldAuthorizedRoleRefs = (InternalEObject)authorizedRoleRefs;
-            authorizedRoleRefs = (TRole)eResolveProxy(oldAuthorizedRoleRefs);
-            if (authorizedRoleRefs != oldAuthorizedRoleRefs) {
-                if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, Cmmn1Package.TTABLE_ITEM__AUTHORIZED_ROLE_REFS, oldAuthorizedRoleRefs, authorizedRoleRefs));
-            }
+    public EList<TRole> getAuthorizedRoleRefs() {
+        if (authorizedRoleRefs == null) {
+            authorizedRoleRefs = new EObjectResolvingEList<TRole>(TRole.class, this, Cmmn1Package.TTABLE_ITEM__AUTHORIZED_ROLE_REFS);
         }
         return authorizedRoleRefs;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public TRole basicGetAuthorizedRoleRefs() {
-        return authorizedRoleRefs;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setAuthorizedRoleRefs(TRole newAuthorizedRoleRefs) {
-        TRole oldAuthorizedRoleRefs = authorizedRoleRefs;
-        authorizedRoleRefs = newAuthorizedRoleRefs;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, Cmmn1Package.TTABLE_ITEM__AUTHORIZED_ROLE_REFS, oldAuthorizedRoleRefs, authorizedRoleRefs));
     }
 
     /**
@@ -129,8 +100,7 @@ public abstract class TTableItemImpl extends TCmmnElementImpl implements TTableI
             case Cmmn1Package.TTABLE_ITEM__APPLICABILITY_RULE_REFS:
                 return getApplicabilityRuleRefs();
             case Cmmn1Package.TTABLE_ITEM__AUTHORIZED_ROLE_REFS:
-                if (resolve) return getAuthorizedRoleRefs();
-                return basicGetAuthorizedRoleRefs();
+                return getAuthorizedRoleRefs();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -149,7 +119,8 @@ public abstract class TTableItemImpl extends TCmmnElementImpl implements TTableI
                 getApplicabilityRuleRefs().addAll((Collection<? extends TApplicabilityRule>)newValue);
                 return;
             case Cmmn1Package.TTABLE_ITEM__AUTHORIZED_ROLE_REFS:
-                setAuthorizedRoleRefs((TRole)newValue);
+                getAuthorizedRoleRefs().clear();
+                getAuthorizedRoleRefs().addAll((Collection<? extends TRole>)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -167,7 +138,7 @@ public abstract class TTableItemImpl extends TCmmnElementImpl implements TTableI
                 getApplicabilityRuleRefs().clear();
                 return;
             case Cmmn1Package.TTABLE_ITEM__AUTHORIZED_ROLE_REFS:
-                setAuthorizedRoleRefs((TRole)null);
+                getAuthorizedRoleRefs().clear();
                 return;
         }
         super.eUnset(featureID);
@@ -184,7 +155,7 @@ public abstract class TTableItemImpl extends TCmmnElementImpl implements TTableI
             case Cmmn1Package.TTABLE_ITEM__APPLICABILITY_RULE_REFS:
                 return applicabilityRuleRefs != null && !applicabilityRuleRefs.isEmpty();
             case Cmmn1Package.TTABLE_ITEM__AUTHORIZED_ROLE_REFS:
-                return authorizedRoleRefs != null;
+                return authorizedRoleRefs != null && !authorizedRoleRefs.isEmpty();
         }
         return super.eIsSet(featureID);
     }

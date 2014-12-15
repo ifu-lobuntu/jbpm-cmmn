@@ -149,7 +149,8 @@ public interface TStage extends TPlanFragment {
     boolean isSetAutoComplete();
 
     /**
-     * Returns the value of the '<em><b>Exit Criteria Refs</b></em>' reference.
+     * Returns the value of the '<em><b>Exit Criteria Refs</b></em>' reference list.
+     * The list contents are of type {@link org.eclipse.cmmn1.TSentry}.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
@@ -157,22 +158,11 @@ public interface TStage extends TPlanFragment {
      *               exitCriteriaRefs refers zero or more "sentry" elements.
      *             
      * <!-- end-model-doc -->
-     * @return the value of the '<em>Exit Criteria Refs</em>' reference.
-     * @see #setExitCriteriaRefs(TSentry)
+     * @return the value of the '<em>Exit Criteria Refs</em>' reference list.
      * @see org.eclipse.cmmn1.Cmmn1Package#getTStage_ExitCriteriaRefs()
      * @model extendedMetaData="kind='attribute' name='exitCriteriaRefs'"
      * @generated
      */
-    TSentry getExitCriteriaRefs();
-
-    /**
-     * Sets the value of the '{@link org.eclipse.cmmn1.TStage#getExitCriteriaRefs <em>Exit Criteria Refs</em>}' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Exit Criteria Refs</em>' reference.
-     * @see #getExitCriteriaRefs()
-     * @generated
-     */
-    void setExitCriteriaRefs(TSentry value);
+    EList<TSentry> getExitCriteriaRefs();
 
 } // TStage

@@ -6,12 +6,12 @@ import org.eclipse.cmmn1.TCmmnElement;
 import org.eclipse.cmmndi.CMMNEdge;
 import org.eclipse.cmmndi.CMMNLabel;
 import org.eclipse.cmmndi.CmmnDiPackage;
-import org.eclipse.cmmndi.MessageVisibleKind;
 import org.eclipse.dd.cmmn.di.DiagramElement;
 import org.eclipse.dd.cmmn.di.impl.LabeledEdgeImpl;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
@@ -22,9 +22,8 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.cmmndi.impl.CMMNEdgeImpl#getLabel <em>Label</em>}</li>
+ *   <li>{@link org.eclipse.cmmndi.impl.CMMNEdgeImpl#getCMMNLabel <em>CMMN Label</em>}</li>
  *   <li>{@link org.eclipse.cmmndi.impl.CMMNEdgeImpl#getCmmnElement <em>Cmmn Element</em>}</li>
- *   <li>{@link org.eclipse.cmmndi.impl.CMMNEdgeImpl#getMessageVisibleKind <em>Message Visible Kind</em>}</li>
  *   <li>{@link org.eclipse.cmmndi.impl.CMMNEdgeImpl#getSourceElement <em>Source Element</em>}</li>
  *   <li>{@link org.eclipse.cmmndi.impl.CMMNEdgeImpl#getTargetElement <em>Target Element</em>}</li>
  * </ul>
@@ -34,14 +33,14 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  */
 public class CMMNEdgeImpl extends LabeledEdgeImpl implements CMMNEdge {
     /**
-     * The cached value of the '{@link #getLabel() <em>Label</em>}' containment reference.
+     * The cached value of the '{@link #getCMMNLabel() <em>CMMN Label</em>}' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getLabel()
+     * @see #getCMMNLabel()
      * @generated
      * @ordered
      */
-    protected CMMNLabel label;
+    protected CMMNLabel cMMNLabel;
 
     /**
      * The cached value of the '{@link #getCmmnElement() <em>Cmmn Element</em>}' reference.
@@ -52,35 +51,6 @@ public class CMMNEdgeImpl extends LabeledEdgeImpl implements CMMNEdge {
      * @ordered
      */
     protected TCmmnElement cmmnElement;
-
-    /**
-     * The default value of the '{@link #getMessageVisibleKind() <em>Message Visible Kind</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getMessageVisibleKind()
-     * @generated
-     * @ordered
-     */
-    protected static final MessageVisibleKind MESSAGE_VISIBLE_KIND_EDEFAULT = MessageVisibleKind.INITIATING;
-
-    /**
-     * The cached value of the '{@link #getMessageVisibleKind() <em>Message Visible Kind</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getMessageVisibleKind()
-     * @generated
-     * @ordered
-     */
-    protected MessageVisibleKind messageVisibleKind = MESSAGE_VISIBLE_KIND_EDEFAULT;
-
-    /**
-     * This is true if the Message Visible Kind attribute has been set.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    protected boolean messageVisibleKindESet;
 
     /**
      * The cached value of the '{@link #getSourceElement() <em>Source Element</em>}' reference.
@@ -126,8 +96,8 @@ public class CMMNEdgeImpl extends LabeledEdgeImpl implements CMMNEdge {
      * <!-- end-user-doc -->
      * @generated
      */
-    public CMMNLabel getLabel() {
-        return label;
+    public CMMNLabel getCMMNLabel() {
+        return cMMNLabel;
     }
 
     /**
@@ -135,11 +105,11 @@ public class CMMNEdgeImpl extends LabeledEdgeImpl implements CMMNEdge {
      * <!-- end-user-doc -->
      * @generated
      */
-    public NotificationChain basicSetLabel(CMMNLabel newLabel, NotificationChain msgs) {
-        CMMNLabel oldLabel = label;
-        label = newLabel;
+    public NotificationChain basicSetCMMNLabel(CMMNLabel newCMMNLabel, NotificationChain msgs) {
+        CMMNLabel oldCMMNLabel = cMMNLabel;
+        cMMNLabel = newCMMNLabel;
         if (eNotificationRequired()) {
-            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CmmnDiPackage.CMMN_EDGE__LABEL, oldLabel, newLabel);
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CmmnDiPackage.CMMN_EDGE__CMMN_LABEL, oldCMMNLabel, newCMMNLabel);
             if (msgs == null) msgs = notification; else msgs.add(notification);
         }
         return msgs;
@@ -150,18 +120,32 @@ public class CMMNEdgeImpl extends LabeledEdgeImpl implements CMMNEdge {
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setLabel(CMMNLabel newLabel) {
-        if (newLabel != label) {
+    public void setCMMNLabel(CMMNLabel newCMMNLabel) {
+        if (newCMMNLabel != cMMNLabel) {
             NotificationChain msgs = null;
-            if (label != null)
-                msgs = ((InternalEObject)label).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CmmnDiPackage.CMMN_EDGE__LABEL, null, msgs);
-            if (newLabel != null)
-                msgs = ((InternalEObject)newLabel).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CmmnDiPackage.CMMN_EDGE__LABEL, null, msgs);
-            msgs = basicSetLabel(newLabel, msgs);
+            if (cMMNLabel != null)
+                msgs = ((InternalEObject)cMMNLabel).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CmmnDiPackage.CMMN_EDGE__CMMN_LABEL, null, msgs);
+            if (newCMMNLabel != null)
+                msgs = ((InternalEObject)newCMMNLabel).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CmmnDiPackage.CMMN_EDGE__CMMN_LABEL, null, msgs);
+            msgs = basicSetCMMNLabel(newCMMNLabel, msgs);
             if (msgs != null) msgs.dispatch();
         }
         else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, CmmnDiPackage.CMMN_EDGE__LABEL, newLabel, newLabel));
+            eNotify(new ENotificationImpl(this, Notification.SET, CmmnDiPackage.CMMN_EDGE__CMMN_LABEL, newCMMNLabel, newCMMNLabel));
+    }
+
+    @Override
+    public DiagramElement getSource() {
+        return getSourceElement();
+    }
+    @Override
+    public DiagramElement getTarget() {
+        return getTargetElement();
+    }
+
+    @Override
+    public EObject getModelElement() {
+        return getCmmnElement();
     }
 
     /**
@@ -200,52 +184,6 @@ public class CMMNEdgeImpl extends LabeledEdgeImpl implements CMMNEdge {
         cmmnElement = newCmmnElement;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, CmmnDiPackage.CMMN_EDGE__CMMN_ELEMENT, oldCmmnElement, cmmnElement));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public MessageVisibleKind getMessageVisibleKind() {
-        return messageVisibleKind;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setMessageVisibleKind(MessageVisibleKind newMessageVisibleKind) {
-        MessageVisibleKind oldMessageVisibleKind = messageVisibleKind;
-        messageVisibleKind = newMessageVisibleKind == null ? MESSAGE_VISIBLE_KIND_EDEFAULT : newMessageVisibleKind;
-        boolean oldMessageVisibleKindESet = messageVisibleKindESet;
-        messageVisibleKindESet = true;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, CmmnDiPackage.CMMN_EDGE__MESSAGE_VISIBLE_KIND, oldMessageVisibleKind, messageVisibleKind, !oldMessageVisibleKindESet));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void unsetMessageVisibleKind() {
-        MessageVisibleKind oldMessageVisibleKind = messageVisibleKind;
-        boolean oldMessageVisibleKindESet = messageVisibleKindESet;
-        messageVisibleKind = MESSAGE_VISIBLE_KIND_EDEFAULT;
-        messageVisibleKindESet = false;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.UNSET, CmmnDiPackage.CMMN_EDGE__MESSAGE_VISIBLE_KIND, oldMessageVisibleKind, MESSAGE_VISIBLE_KIND_EDEFAULT, oldMessageVisibleKindESet));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public boolean isSetMessageVisibleKind() {
-        return messageVisibleKindESet;
     }
 
     /**
@@ -332,8 +270,8 @@ public class CMMNEdgeImpl extends LabeledEdgeImpl implements CMMNEdge {
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case CmmnDiPackage.CMMN_EDGE__LABEL:
-                return basicSetLabel(null, msgs);
+            case CmmnDiPackage.CMMN_EDGE__CMMN_LABEL:
+                return basicSetCMMNLabel(null, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -346,13 +284,11 @@ public class CMMNEdgeImpl extends LabeledEdgeImpl implements CMMNEdge {
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case CmmnDiPackage.CMMN_EDGE__LABEL:
-                return getLabel();
+            case CmmnDiPackage.CMMN_EDGE__CMMN_LABEL:
+                return getCMMNLabel();
             case CmmnDiPackage.CMMN_EDGE__CMMN_ELEMENT:
                 if (resolve) return getCmmnElement();
                 return basicGetCmmnElement();
-            case CmmnDiPackage.CMMN_EDGE__MESSAGE_VISIBLE_KIND:
-                return getMessageVisibleKind();
             case CmmnDiPackage.CMMN_EDGE__SOURCE_ELEMENT:
                 if (resolve) return getSourceElement();
                 return basicGetSourceElement();
@@ -371,14 +307,11 @@ public class CMMNEdgeImpl extends LabeledEdgeImpl implements CMMNEdge {
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case CmmnDiPackage.CMMN_EDGE__LABEL:
-                setLabel((CMMNLabel)newValue);
+            case CmmnDiPackage.CMMN_EDGE__CMMN_LABEL:
+                setCMMNLabel((CMMNLabel)newValue);
                 return;
             case CmmnDiPackage.CMMN_EDGE__CMMN_ELEMENT:
                 setCmmnElement((TCmmnElement)newValue);
-                return;
-            case CmmnDiPackage.CMMN_EDGE__MESSAGE_VISIBLE_KIND:
-                setMessageVisibleKind((MessageVisibleKind)newValue);
                 return;
             case CmmnDiPackage.CMMN_EDGE__SOURCE_ELEMENT:
                 setSourceElement((DiagramElement)newValue);
@@ -398,14 +331,11 @@ public class CMMNEdgeImpl extends LabeledEdgeImpl implements CMMNEdge {
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case CmmnDiPackage.CMMN_EDGE__LABEL:
-                setLabel((CMMNLabel)null);
+            case CmmnDiPackage.CMMN_EDGE__CMMN_LABEL:
+                setCMMNLabel((CMMNLabel)null);
                 return;
             case CmmnDiPackage.CMMN_EDGE__CMMN_ELEMENT:
                 setCmmnElement((TCmmnElement)null);
-                return;
-            case CmmnDiPackage.CMMN_EDGE__MESSAGE_VISIBLE_KIND:
-                unsetMessageVisibleKind();
                 return;
             case CmmnDiPackage.CMMN_EDGE__SOURCE_ELEMENT:
                 setSourceElement((DiagramElement)null);
@@ -425,34 +355,16 @@ public class CMMNEdgeImpl extends LabeledEdgeImpl implements CMMNEdge {
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case CmmnDiPackage.CMMN_EDGE__LABEL:
-                return label != null;
+            case CmmnDiPackage.CMMN_EDGE__CMMN_LABEL:
+                return cMMNLabel != null;
             case CmmnDiPackage.CMMN_EDGE__CMMN_ELEMENT:
                 return cmmnElement != null;
-            case CmmnDiPackage.CMMN_EDGE__MESSAGE_VISIBLE_KIND:
-                return isSetMessageVisibleKind();
             case CmmnDiPackage.CMMN_EDGE__SOURCE_ELEMENT:
                 return sourceElement != null;
             case CmmnDiPackage.CMMN_EDGE__TARGET_ELEMENT:
                 return targetElement != null;
         }
         return super.eIsSet(featureID);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public String toString() {
-        if (eIsProxy()) return super.toString();
-
-        StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (messageVisibleKind: ");
-        if (messageVisibleKindESet) result.append(messageVisibleKind); else result.append("<unset>");
-        result.append(')');
-        return result.toString();
     }
 
 } //CMMNEdgeImpl

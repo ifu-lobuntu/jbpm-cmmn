@@ -34,7 +34,7 @@ public interface TChildren extends TCmmnElement {
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * 
-     *         caseFileItem is the root element for CMMN data. 
+     *         caseFileItem is the root element for CMMN data.
      *       
      * <!-- end-model-doc -->
      * @return the value of the '<em>Case File Item</em>' containment reference list.

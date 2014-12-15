@@ -2,17 +2,15 @@
  */
 package org.eclipse.cmmndi.impl;
 
-import javax.xml.namespace.QName;
-
 import org.eclipse.cmmn1.TCmmnElement;
 import org.eclipse.cmmndi.CMMNLabel;
 import org.eclipse.cmmndi.CMMNShape;
 import org.eclipse.cmmndi.CmmnDiPackage;
-import org.eclipse.cmmndi.ParticipantBandKind;
 import org.eclipse.dd.cmmn.di.impl.LabeledShapeImpl;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
@@ -24,13 +22,10 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.eclipse.cmmndi.impl.CMMNShapeImpl#getCMMNLabel <em>CMMN Label</em>}</li>
- *   <li>{@link org.eclipse.cmmndi.impl.CMMNShapeImpl#getChoreographyActivityShape <em>Choreography Activity Shape</em>}</li>
  *   <li>{@link org.eclipse.cmmndi.impl.CMMNShapeImpl#getCmmnElement <em>Cmmn Element</em>}</li>
  *   <li>{@link org.eclipse.cmmndi.impl.CMMNShapeImpl#isIsExpanded <em>Is Expanded</em>}</li>
  *   <li>{@link org.eclipse.cmmndi.impl.CMMNShapeImpl#isIsHorizontal <em>Is Horizontal</em>}</li>
  *   <li>{@link org.eclipse.cmmndi.impl.CMMNShapeImpl#isIsMarkerVisible <em>Is Marker Visible</em>}</li>
- *   <li>{@link org.eclipse.cmmndi.impl.CMMNShapeImpl#isIsMessageVisible <em>Is Message Visible</em>}</li>
- *   <li>{@link org.eclipse.cmmndi.impl.CMMNShapeImpl#getParticipantBandKind <em>Participant Band Kind</em>}</li>
  * </ul>
  * </p>
  *
@@ -46,26 +41,6 @@ public class CMMNShapeImpl extends LabeledShapeImpl implements CMMNShape {
      * @ordered
      */
     protected CMMNLabel cMMNLabel;
-
-    /**
-     * The default value of the '{@link #getChoreographyActivityShape() <em>Choreography Activity Shape</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getChoreographyActivityShape()
-     * @generated
-     * @ordered
-     */
-    protected static final QName CHOREOGRAPHY_ACTIVITY_SHAPE_EDEFAULT = null;
-
-    /**
-     * The cached value of the '{@link #getChoreographyActivityShape() <em>Choreography Activity Shape</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getChoreographyActivityShape()
-     * @generated
-     * @ordered
-     */
-    protected QName choreographyActivityShape = CHOREOGRAPHY_ACTIVITY_SHAPE_EDEFAULT;
 
     /**
      * The cached value of the '{@link #getCmmnElement() <em>Cmmn Element</em>}' reference.
@@ -165,64 +140,6 @@ public class CMMNShapeImpl extends LabeledShapeImpl implements CMMNShape {
     protected boolean isMarkerVisibleESet;
 
     /**
-     * The default value of the '{@link #isIsMessageVisible() <em>Is Message Visible</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #isIsMessageVisible()
-     * @generated
-     * @ordered
-     */
-    protected static final boolean IS_MESSAGE_VISIBLE_EDEFAULT = false;
-
-    /**
-     * The cached value of the '{@link #isIsMessageVisible() <em>Is Message Visible</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #isIsMessageVisible()
-     * @generated
-     * @ordered
-     */
-    protected boolean isMessageVisible = IS_MESSAGE_VISIBLE_EDEFAULT;
-
-    /**
-     * This is true if the Is Message Visible attribute has been set.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    protected boolean isMessageVisibleESet;
-
-    /**
-     * The default value of the '{@link #getParticipantBandKind() <em>Participant Band Kind</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getParticipantBandKind()
-     * @generated
-     * @ordered
-     */
-    protected static final ParticipantBandKind PARTICIPANT_BAND_KIND_EDEFAULT = ParticipantBandKind.TOP_INITIATING;
-
-    /**
-     * The cached value of the '{@link #getParticipantBandKind() <em>Participant Band Kind</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getParticipantBandKind()
-     * @generated
-     * @ordered
-     */
-    protected ParticipantBandKind participantBandKind = PARTICIPANT_BAND_KIND_EDEFAULT;
-
-    /**
-     * This is true if the Participant Band Kind attribute has been set.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    protected boolean participantBandKindESet;
-
-    /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -284,25 +201,9 @@ public class CMMNShapeImpl extends LabeledShapeImpl implements CMMNShape {
             eNotify(new ENotificationImpl(this, Notification.SET, CmmnDiPackage.CMMN_SHAPE__CMMN_LABEL, newCMMNLabel, newCMMNLabel));
     }
 
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public QName getChoreographyActivityShape() {
-        return choreographyActivityShape;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setChoreographyActivityShape(QName newChoreographyActivityShape) {
-        QName oldChoreographyActivityShape = choreographyActivityShape;
-        choreographyActivityShape = newChoreographyActivityShape;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, CmmnDiPackage.CMMN_SHAPE__CHOREOGRAPHY_ACTIVITY_SHAPE, oldChoreographyActivityShape, choreographyActivityShape));
+    @Override
+    public EObject getModelElement() {
+        return getCmmnElement();
     }
 
     /**
@@ -486,98 +387,6 @@ public class CMMNShapeImpl extends LabeledShapeImpl implements CMMNShape {
      * <!-- end-user-doc -->
      * @generated
      */
-    public boolean isIsMessageVisible() {
-        return isMessageVisible;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setIsMessageVisible(boolean newIsMessageVisible) {
-        boolean oldIsMessageVisible = isMessageVisible;
-        isMessageVisible = newIsMessageVisible;
-        boolean oldIsMessageVisibleESet = isMessageVisibleESet;
-        isMessageVisibleESet = true;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, CmmnDiPackage.CMMN_SHAPE__IS_MESSAGE_VISIBLE, oldIsMessageVisible, isMessageVisible, !oldIsMessageVisibleESet));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void unsetIsMessageVisible() {
-        boolean oldIsMessageVisible = isMessageVisible;
-        boolean oldIsMessageVisibleESet = isMessageVisibleESet;
-        isMessageVisible = IS_MESSAGE_VISIBLE_EDEFAULT;
-        isMessageVisibleESet = false;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.UNSET, CmmnDiPackage.CMMN_SHAPE__IS_MESSAGE_VISIBLE, oldIsMessageVisible, IS_MESSAGE_VISIBLE_EDEFAULT, oldIsMessageVisibleESet));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public boolean isSetIsMessageVisible() {
-        return isMessageVisibleESet;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public ParticipantBandKind getParticipantBandKind() {
-        return participantBandKind;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setParticipantBandKind(ParticipantBandKind newParticipantBandKind) {
-        ParticipantBandKind oldParticipantBandKind = participantBandKind;
-        participantBandKind = newParticipantBandKind == null ? PARTICIPANT_BAND_KIND_EDEFAULT : newParticipantBandKind;
-        boolean oldParticipantBandKindESet = participantBandKindESet;
-        participantBandKindESet = true;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, CmmnDiPackage.CMMN_SHAPE__PARTICIPANT_BAND_KIND, oldParticipantBandKind, participantBandKind, !oldParticipantBandKindESet));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void unsetParticipantBandKind() {
-        ParticipantBandKind oldParticipantBandKind = participantBandKind;
-        boolean oldParticipantBandKindESet = participantBandKindESet;
-        participantBandKind = PARTICIPANT_BAND_KIND_EDEFAULT;
-        participantBandKindESet = false;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.UNSET, CmmnDiPackage.CMMN_SHAPE__PARTICIPANT_BAND_KIND, oldParticipantBandKind, PARTICIPANT_BAND_KIND_EDEFAULT, oldParticipantBandKindESet));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public boolean isSetParticipantBandKind() {
-        return participantBandKindESet;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
@@ -597,8 +406,6 @@ public class CMMNShapeImpl extends LabeledShapeImpl implements CMMNShape {
         switch (featureID) {
             case CmmnDiPackage.CMMN_SHAPE__CMMN_LABEL:
                 return getCMMNLabel();
-            case CmmnDiPackage.CMMN_SHAPE__CHOREOGRAPHY_ACTIVITY_SHAPE:
-                return getChoreographyActivityShape();
             case CmmnDiPackage.CMMN_SHAPE__CMMN_ELEMENT:
                 if (resolve) return getCmmnElement();
                 return basicGetCmmnElement();
@@ -608,10 +415,6 @@ public class CMMNShapeImpl extends LabeledShapeImpl implements CMMNShape {
                 return isIsHorizontal();
             case CmmnDiPackage.CMMN_SHAPE__IS_MARKER_VISIBLE:
                 return isIsMarkerVisible();
-            case CmmnDiPackage.CMMN_SHAPE__IS_MESSAGE_VISIBLE:
-                return isIsMessageVisible();
-            case CmmnDiPackage.CMMN_SHAPE__PARTICIPANT_BAND_KIND:
-                return getParticipantBandKind();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -627,9 +430,6 @@ public class CMMNShapeImpl extends LabeledShapeImpl implements CMMNShape {
             case CmmnDiPackage.CMMN_SHAPE__CMMN_LABEL:
                 setCMMNLabel((CMMNLabel)newValue);
                 return;
-            case CmmnDiPackage.CMMN_SHAPE__CHOREOGRAPHY_ACTIVITY_SHAPE:
-                setChoreographyActivityShape((QName)newValue);
-                return;
             case CmmnDiPackage.CMMN_SHAPE__CMMN_ELEMENT:
                 setCmmnElement((TCmmnElement)newValue);
                 return;
@@ -641,12 +441,6 @@ public class CMMNShapeImpl extends LabeledShapeImpl implements CMMNShape {
                 return;
             case CmmnDiPackage.CMMN_SHAPE__IS_MARKER_VISIBLE:
                 setIsMarkerVisible((Boolean)newValue);
-                return;
-            case CmmnDiPackage.CMMN_SHAPE__IS_MESSAGE_VISIBLE:
-                setIsMessageVisible((Boolean)newValue);
-                return;
-            case CmmnDiPackage.CMMN_SHAPE__PARTICIPANT_BAND_KIND:
-                setParticipantBandKind((ParticipantBandKind)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -663,9 +457,6 @@ public class CMMNShapeImpl extends LabeledShapeImpl implements CMMNShape {
             case CmmnDiPackage.CMMN_SHAPE__CMMN_LABEL:
                 setCMMNLabel((CMMNLabel)null);
                 return;
-            case CmmnDiPackage.CMMN_SHAPE__CHOREOGRAPHY_ACTIVITY_SHAPE:
-                setChoreographyActivityShape(CHOREOGRAPHY_ACTIVITY_SHAPE_EDEFAULT);
-                return;
             case CmmnDiPackage.CMMN_SHAPE__CMMN_ELEMENT:
                 setCmmnElement((TCmmnElement)null);
                 return;
@@ -677,12 +468,6 @@ public class CMMNShapeImpl extends LabeledShapeImpl implements CMMNShape {
                 return;
             case CmmnDiPackage.CMMN_SHAPE__IS_MARKER_VISIBLE:
                 unsetIsMarkerVisible();
-                return;
-            case CmmnDiPackage.CMMN_SHAPE__IS_MESSAGE_VISIBLE:
-                unsetIsMessageVisible();
-                return;
-            case CmmnDiPackage.CMMN_SHAPE__PARTICIPANT_BAND_KIND:
-                unsetParticipantBandKind();
                 return;
         }
         super.eUnset(featureID);
@@ -698,8 +483,6 @@ public class CMMNShapeImpl extends LabeledShapeImpl implements CMMNShape {
         switch (featureID) {
             case CmmnDiPackage.CMMN_SHAPE__CMMN_LABEL:
                 return cMMNLabel != null;
-            case CmmnDiPackage.CMMN_SHAPE__CHOREOGRAPHY_ACTIVITY_SHAPE:
-                return CHOREOGRAPHY_ACTIVITY_SHAPE_EDEFAULT == null ? choreographyActivityShape != null : !CHOREOGRAPHY_ACTIVITY_SHAPE_EDEFAULT.equals(choreographyActivityShape);
             case CmmnDiPackage.CMMN_SHAPE__CMMN_ELEMENT:
                 return cmmnElement != null;
             case CmmnDiPackage.CMMN_SHAPE__IS_EXPANDED:
@@ -708,10 +491,6 @@ public class CMMNShapeImpl extends LabeledShapeImpl implements CMMNShape {
                 return isSetIsHorizontal();
             case CmmnDiPackage.CMMN_SHAPE__IS_MARKER_VISIBLE:
                 return isSetIsMarkerVisible();
-            case CmmnDiPackage.CMMN_SHAPE__IS_MESSAGE_VISIBLE:
-                return isSetIsMessageVisible();
-            case CmmnDiPackage.CMMN_SHAPE__PARTICIPANT_BAND_KIND:
-                return isSetParticipantBandKind();
         }
         return super.eIsSet(featureID);
     }
@@ -726,18 +505,12 @@ public class CMMNShapeImpl extends LabeledShapeImpl implements CMMNShape {
         if (eIsProxy()) return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (choreographyActivityShape: ");
-        result.append(choreographyActivityShape);
-        result.append(", isExpanded: ");
+        result.append(" (isExpanded: ");
         if (isExpandedESet) result.append(isExpanded); else result.append("<unset>");
         result.append(", isHorizontal: ");
         if (isHorizontalESet) result.append(isHorizontal); else result.append("<unset>");
         result.append(", isMarkerVisible: ");
         if (isMarkerVisibleESet) result.append(isMarkerVisible); else result.append("<unset>");
-        result.append(", isMessageVisible: ");
-        if (isMessageVisibleESet) result.append(isMessageVisible); else result.append("<unset>");
-        result.append(", participantBandKind: ");
-        if (participantBandKindESet) result.append(participantBandKind); else result.append("<unset>");
         result.append(')');
         return result.toString();
     }

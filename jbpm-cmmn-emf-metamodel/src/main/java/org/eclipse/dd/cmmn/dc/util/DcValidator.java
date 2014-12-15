@@ -3,6 +3,7 @@
 package org.eclipse.dd.cmmn.dc.util;
 
 import java.util.Map;
+import org.eclipse.dd.cmmn.dc.*;
 import org.eclipse.dd.cmmn.dc.Bounds;
 import org.eclipse.dd.cmmn.dc.DcPackage;
 import org.eclipse.dd.cmmn.dc.DocumentRoot;

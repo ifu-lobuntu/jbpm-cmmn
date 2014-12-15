@@ -198,7 +198,7 @@ public interface TCaseFileItem extends TCmmnElement {
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * 
-     *               If this "caseFileItem" maintains references to "caseFileItem" childs, then 
+     *               If this "caseFileItem" maintains references to "caseFileItem" childs, then
      *               targetRefs MUST refer to "caseFileItem" elements; the targets of this caseFileItem.
      *             
      * <!-- end-model-doc -->

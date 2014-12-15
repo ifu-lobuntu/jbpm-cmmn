@@ -3,7 +3,6 @@
 package org.eclipse.dd.cmmn.di.impl;
 
 import java.util.Collection;
-
 import org.eclipse.dd.cmmn.dc.Point;
 import org.eclipse.dd.cmmn.di.DiPackage;
 import org.eclipse.dd.cmmn.di.DiagramElement;
@@ -42,7 +41,6 @@ public abstract class EdgeImpl extends DiagramElementImpl implements Edge {
      * @ordered
      */
     protected DiagramElement source;
-
     /**
      * The cached value of the '{@link #getTarget() <em>Target</em>}' reference.
      * <!-- begin-user-doc -->
@@ -52,7 +50,6 @@ public abstract class EdgeImpl extends DiagramElementImpl implements Edge {
      * @ordered
      */
     protected DiagramElement target;
-
     /**
      * The cached value of the '{@link #getWaypoint() <em>Waypoint</em>}' containment reference list.
      * <!-- begin-user-doc -->

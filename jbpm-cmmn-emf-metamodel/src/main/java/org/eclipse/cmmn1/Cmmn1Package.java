@@ -593,7 +593,7 @@ public interface Cmmn1Package extends EPackage {
     int TAPPLICABILITY_RULE__CONDITION = TCMMN_ELEMENT_FEATURE_COUNT + 0;
 
     /**
-     * The feature id for the '<em><b>Context Ref</b></em>' attribute.
+     * The feature id for the '<em><b>Context Ref</b></em>' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -2023,7 +2023,7 @@ public interface Cmmn1Package extends EPackage {
     int TTABLE_ITEM__APPLICABILITY_RULE_REFS = TCMMN_ELEMENT_FEATURE_COUNT + 0;
 
     /**
-     * The feature id for the '<em><b>Authorized Role Refs</b></em>' reference.
+     * The feature id for the '<em><b>Authorized Role Refs</b></em>' reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -2096,7 +2096,7 @@ public interface Cmmn1Package extends EPackage {
     int TDISCRETIONARY_ITEM__APPLICABILITY_RULE_REFS = TTABLE_ITEM__APPLICABILITY_RULE_REFS;
 
     /**
-     * The feature id for the '<em><b>Authorized Role Refs</b></em>' reference.
+     * The feature id for the '<em><b>Authorized Role Refs</b></em>' reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -2123,13 +2123,31 @@ public interface Cmmn1Package extends EPackage {
     int TDISCRETIONARY_ITEM__DEFINITION_REF = TTABLE_ITEM_FEATURE_COUNT + 1;
 
     /**
+     * The feature id for the '<em><b>Entry Criteria Refs</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TDISCRETIONARY_ITEM__ENTRY_CRITERIA_REFS = TTABLE_ITEM_FEATURE_COUNT + 2;
+
+    /**
+     * The feature id for the '<em><b>Exit Criteria Refs</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TDISCRETIONARY_ITEM__EXIT_CRITERIA_REFS = TTABLE_ITEM_FEATURE_COUNT + 3;
+
+    /**
      * The number of structural features of the '<em>TDiscretionary Item</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int TDISCRETIONARY_ITEM_FEATURE_COUNT = TTABLE_ITEM_FEATURE_COUNT + 2;
+    int TDISCRETIONARY_ITEM_FEATURE_COUNT = TTABLE_ITEM_FEATURE_COUNT + 4;
 
     /**
      * The number of operations of the '<em>TDiscretionary Item</em>' class.
@@ -2451,7 +2469,7 @@ public interface Cmmn1Package extends EPackage {
     int TIF_PART__ANY_ATTRIBUTE = TCMMN_ELEMENT__ANY_ATTRIBUTE;
 
     /**
-     * The feature id for the '<em><b>Condition</b></em>' containment reference.
+     * The feature id for the '<em><b>Condition</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -3253,7 +3271,7 @@ public interface Cmmn1Package extends EPackage {
     int TPLANNING_TABLE__APPLICABILITY_RULE_REFS = TTABLE_ITEM__APPLICABILITY_RULE_REFS;
 
     /**
-     * The feature id for the '<em><b>Authorized Role Refs</b></em>' reference.
+     * The feature id for the '<em><b>Authorized Role Refs</b></em>' reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -4081,7 +4099,7 @@ public interface Cmmn1Package extends EPackage {
     int TSTAGE__AUTO_COMPLETE = TPLAN_FRAGMENT_FEATURE_COUNT + 3;
 
     /**
-     * The feature id for the '<em><b>Exit Criteria Refs</b></em>' reference.
+     * The feature id for the '<em><b>Exit Criteria Refs</b></em>' reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -4928,15 +4946,15 @@ public interface Cmmn1Package extends EPackage {
     EReference getTApplicabilityRule_Condition();
 
     /**
-     * Returns the meta object for the attribute '{@link org.eclipse.cmmn1.TApplicabilityRule#getContextRef <em>Context Ref</em>}'.
+     * Returns the meta object for the reference '{@link org.eclipse.cmmn1.TApplicabilityRule#getContextRef <em>Context Ref</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Context Ref</em>'.
+     * @return the meta object for the reference '<em>Context Ref</em>'.
      * @see org.eclipse.cmmn1.TApplicabilityRule#getContextRef()
      * @see #getTApplicabilityRule()
      * @generated
      */
-    EAttribute getTApplicabilityRule_ContextRef();
+    EReference getTApplicabilityRule_ContextRef();
 
     /**
      * Returns the meta object for class '{@link org.eclipse.cmmn1.TCase <em>TCase</em>}'.
@@ -5619,6 +5637,28 @@ public interface Cmmn1Package extends EPackage {
     EReference getTDiscretionaryItem_DefinitionRef();
 
     /**
+     * Returns the meta object for the reference list '{@link org.eclipse.cmmn1.TDiscretionaryItem#getEntryCriteriaRefs <em>Entry Criteria Refs</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference list '<em>Entry Criteria Refs</em>'.
+     * @see org.eclipse.cmmn1.TDiscretionaryItem#getEntryCriteriaRefs()
+     * @see #getTDiscretionaryItem()
+     * @generated
+     */
+    EReference getTDiscretionaryItem_EntryCriteriaRefs();
+
+    /**
+     * Returns the meta object for the reference list '{@link org.eclipse.cmmn1.TDiscretionaryItem#getExitCriteriaRefs <em>Exit Criteria Refs</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference list '<em>Exit Criteria Refs</em>'.
+     * @see org.eclipse.cmmn1.TDiscretionaryItem#getExitCriteriaRefs()
+     * @see #getTDiscretionaryItem()
+     * @generated
+     */
+    EReference getTDiscretionaryItem_ExitCriteriaRefs();
+
+    /**
      * Returns the meta object for class '{@link org.eclipse.cmmn1.TEvent <em>TEvent</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -5703,10 +5743,10 @@ public interface Cmmn1Package extends EPackage {
     EClass getTIfPart();
 
     /**
-     * Returns the meta object for the containment reference '{@link org.eclipse.cmmn1.TIfPart#getCondition <em>Condition</em>}'.
+     * Returns the meta object for the containment reference list '{@link org.eclipse.cmmn1.TIfPart#getCondition <em>Condition</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the containment reference '<em>Condition</em>'.
+     * @return the meta object for the containment reference list '<em>Condition</em>'.
      * @see org.eclipse.cmmn1.TIfPart#getCondition()
      * @see #getTIfPart()
      * @generated
@@ -6528,10 +6568,10 @@ public interface Cmmn1Package extends EPackage {
     EAttribute getTStage_AutoComplete();
 
     /**
-     * Returns the meta object for the reference '{@link org.eclipse.cmmn1.TStage#getExitCriteriaRefs <em>Exit Criteria Refs</em>}'.
+     * Returns the meta object for the reference list '{@link org.eclipse.cmmn1.TStage#getExitCriteriaRefs <em>Exit Criteria Refs</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Exit Criteria Refs</em>'.
+     * @return the meta object for the reference list '<em>Exit Criteria Refs</em>'.
      * @see org.eclipse.cmmn1.TStage#getExitCriteriaRefs()
      * @see #getTStage()
      * @generated
@@ -6570,10 +6610,10 @@ public interface Cmmn1Package extends EPackage {
     EReference getTTableItem_ApplicabilityRuleRefs();
 
     /**
-     * Returns the meta object for the reference '{@link org.eclipse.cmmn1.TTableItem#getAuthorizedRoleRefs <em>Authorized Role Refs</em>}'.
+     * Returns the meta object for the reference list '{@link org.eclipse.cmmn1.TTableItem#getAuthorizedRoleRefs <em>Authorized Role Refs</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Authorized Role Refs</em>'.
+     * @return the meta object for the reference list '<em>Authorized Role Refs</em>'.
      * @see org.eclipse.cmmn1.TTableItem#getAuthorizedRoleRefs()
      * @see #getTTableItem()
      * @generated
@@ -7222,12 +7262,12 @@ public interface Cmmn1Package extends EPackage {
         EReference TAPPLICABILITY_RULE__CONDITION = eINSTANCE.getTApplicabilityRule_Condition();
 
         /**
-         * The meta object literal for the '<em><b>Context Ref</b></em>' attribute feature.
+         * The meta object literal for the '<em><b>Context Ref</b></em>' reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute TAPPLICABILITY_RULE__CONTEXT_REF = eINSTANCE.getTApplicabilityRule_ContextRef();
+        EReference TAPPLICABILITY_RULE__CONTEXT_REF = eINSTANCE.getTApplicabilityRule_ContextRef();
 
         /**
          * The meta object literal for the '{@link org.eclipse.cmmn1.impl.TCaseImpl <em>TCase</em>}' class.
@@ -7760,6 +7800,22 @@ public interface Cmmn1Package extends EPackage {
         EReference TDISCRETIONARY_ITEM__DEFINITION_REF = eINSTANCE.getTDiscretionaryItem_DefinitionRef();
 
         /**
+         * The meta object literal for the '<em><b>Entry Criteria Refs</b></em>' reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference TDISCRETIONARY_ITEM__ENTRY_CRITERIA_REFS = eINSTANCE.getTDiscretionaryItem_EntryCriteriaRefs();
+
+        /**
+         * The meta object literal for the '<em><b>Exit Criteria Refs</b></em>' reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference TDISCRETIONARY_ITEM__EXIT_CRITERIA_REFS = eINSTANCE.getTDiscretionaryItem_ExitCriteriaRefs();
+
+        /**
          * The meta object literal for the '{@link org.eclipse.cmmn1.impl.TEventImpl <em>TEvent</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -7832,7 +7888,7 @@ public interface Cmmn1Package extends EPackage {
         EClass TIF_PART = eINSTANCE.getTIfPart();
 
         /**
-         * The meta object literal for the '<em><b>Condition</b></em>' containment reference feature.
+         * The meta object literal for the '<em><b>Condition</b></em>' containment reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
@@ -8492,7 +8548,7 @@ public interface Cmmn1Package extends EPackage {
         EAttribute TSTAGE__AUTO_COMPLETE = eINSTANCE.getTStage_AutoComplete();
 
         /**
-         * The meta object literal for the '<em><b>Exit Criteria Refs</b></em>' reference feature.
+         * The meta object literal for the '<em><b>Exit Criteria Refs</b></em>' reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
@@ -8528,7 +8584,7 @@ public interface Cmmn1Package extends EPackage {
         EReference TTABLE_ITEM__APPLICABILITY_RULE_REFS = eINSTANCE.getTTableItem_ApplicabilityRuleRefs();
 
         /**
-         * The meta object literal for the '<em><b>Authorized Role Refs</b></em>' reference feature.
+         * The meta object literal for the '<em><b>Authorized Role Refs</b></em>' reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated

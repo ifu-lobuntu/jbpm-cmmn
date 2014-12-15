@@ -49,7 +49,7 @@ public interface TApplicabilityRule extends TCmmnElement {
     void setCondition(TExpression value);
 
     /**
-     * Returns the value of the '<em><b>Context Ref</b></em>' attribute.
+     * Returns the value of the '<em><b>Context Ref</b></em>' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
@@ -57,23 +57,22 @@ public interface TApplicabilityRule extends TCmmnElement {
      *               contexRef refers a "caseFileItem" element
      *             
      * <!-- end-model-doc -->
-     * @return the value of the '<em>Context Ref</em>' attribute.
-     * @see #setContextRef(String)
+     * @return the value of the '<em>Context Ref</em>' reference.
+     * @see #setContextRef(TCaseFileItem)
      * @see org.eclipse.cmmn1.Cmmn1Package#getTApplicabilityRule_ContextRef()
-     * @model dataType="org.eclipse.emf.ecore.xml.type.IDREF"
-     *        extendedMetaData="kind='attribute' name='contextRef'"
+     * @model extendedMetaData="kind='attribute' name='contextRef'"
      * @generated
      */
-    String getContextRef();
+    TCaseFileItem getContextRef();
 
     /**
-     * Sets the value of the '{@link org.eclipse.cmmn1.TApplicabilityRule#getContextRef <em>Context Ref</em>}' attribute.
+     * Sets the value of the '{@link org.eclipse.cmmn1.TApplicabilityRule#getContextRef <em>Context Ref</em>}' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Context Ref</em>' attribute.
+     * @param value the new value of the '<em>Context Ref</em>' reference.
      * @see #getContextRef()
      * @generated
      */
-    void setContextRef(String value);
+    void setContextRef(TCaseFileItem value);
 
 } // TApplicabilityRule

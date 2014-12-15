@@ -68,6 +68,106 @@ public interface DiPackage extends EPackage {
     int DOCUMENT_ROOT = 0;
 
     /**
+     * The meta object id for the '{@link org.eclipse.dd.cmmn.di.impl.DiagramImpl <em>Diagram</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.dd.cmmn.di.impl.DiagramImpl
+     * @see org.eclipse.dd.cmmn.di.impl.DiPackageImpl#getDiagram()
+     * @generated
+     */
+    int DIAGRAM = 1;
+
+    /**
+     * The meta object id for the '{@link org.eclipse.dd.cmmn.di.impl.DiagramElementImpl <em>Diagram Element</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.dd.cmmn.di.impl.DiagramElementImpl
+     * @see org.eclipse.dd.cmmn.di.impl.DiPackageImpl#getDiagramElement()
+     * @generated
+     */
+    int DIAGRAM_ELEMENT = 2;
+
+    /**
+     * The meta object id for the '{@link org.eclipse.dd.cmmn.di.impl.EdgeImpl <em>Edge</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.dd.cmmn.di.impl.EdgeImpl
+     * @see org.eclipse.dd.cmmn.di.impl.DiPackageImpl#getEdge()
+     * @generated
+     */
+    int EDGE = 3;
+
+    /**
+     * The meta object id for the '{@link org.eclipse.dd.cmmn.di.impl.NodeImpl <em>Node</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.dd.cmmn.di.impl.NodeImpl
+     * @see org.eclipse.dd.cmmn.di.impl.DiPackageImpl#getNode()
+     * @generated
+     */
+    int NODE = 7;
+
+    /**
+     * The meta object id for the '{@link org.eclipse.dd.cmmn.di.impl.LabelImpl <em>Label</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.dd.cmmn.di.impl.LabelImpl
+     * @see org.eclipse.dd.cmmn.di.impl.DiPackageImpl#getLabel()
+     * @generated
+     */
+    int LABEL = 4;
+
+    /**
+     * The meta object id for the '{@link org.eclipse.dd.cmmn.di.impl.LabeledEdgeImpl <em>Labeled Edge</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.dd.cmmn.di.impl.LabeledEdgeImpl
+     * @see org.eclipse.dd.cmmn.di.impl.DiPackageImpl#getLabeledEdge()
+     * @generated
+     */
+    int LABELED_EDGE = 5;
+
+    /**
+     * The meta object id for the '{@link org.eclipse.dd.cmmn.di.impl.ShapeImpl <em>Shape</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.dd.cmmn.di.impl.ShapeImpl
+     * @see org.eclipse.dd.cmmn.di.impl.DiPackageImpl#getShape()
+     * @generated
+     */
+    int SHAPE = 9;
+
+    /**
+     * The meta object id for the '{@link org.eclipse.dd.cmmn.di.impl.LabeledShapeImpl <em>Labeled Shape</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.dd.cmmn.di.impl.LabeledShapeImpl
+     * @see org.eclipse.dd.cmmn.di.impl.DiPackageImpl#getLabeledShape()
+     * @generated
+     */
+    int LABELED_SHAPE = 6;
+
+    /**
+     * The meta object id for the '{@link org.eclipse.dd.cmmn.di.impl.PlaneImpl <em>Plane</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.dd.cmmn.di.impl.PlaneImpl
+     * @see org.eclipse.dd.cmmn.di.impl.DiPackageImpl#getPlane()
+     * @generated
+     */
+    int PLANE = 8;
+
+    /**
+     * The meta object id for the '{@link org.eclipse.dd.cmmn.di.impl.StyleImpl <em>Style</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.dd.cmmn.di.impl.StyleImpl
+     * @see org.eclipse.dd.cmmn.di.impl.DiPackageImpl#getStyle()
+     * @generated
+     */
+    int STYLE = 10;
+
+    /**
      * The feature id for the '<em><b>Mixed</b></em>' attribute list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -203,16 +303,6 @@ public interface DiPackage extends EPackage {
     int DOCUMENT_ROOT_OPERATION_COUNT = 0;
 
     /**
-     * The meta object id for the '{@link org.eclipse.dd.cmmn.di.impl.DiagramImpl <em>Diagram</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.eclipse.dd.cmmn.di.impl.DiagramImpl
-     * @see org.eclipse.dd.cmmn.di.impl.DiPackageImpl#getDiagram()
-     * @generated
-     */
-    int DIAGRAM = 1;
-
-    /**
      * The feature id for the '<em><b>Documentation</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -285,16 +375,6 @@ public interface DiPackage extends EPackage {
     int DIAGRAM_OPERATION_COUNT = 0;
 
     /**
-     * The meta object id for the '{@link org.eclipse.dd.cmmn.di.impl.DiagramElementImpl <em>Diagram Element</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.eclipse.dd.cmmn.di.impl.DiagramElementImpl
-     * @see org.eclipse.dd.cmmn.di.impl.DiPackageImpl#getDiagramElement()
-     * @generated
-     */
-    int DIAGRAM_ELEMENT = 2;
-
-    /**
      * The feature id for the '<em><b>Owning Diagram</b></em>' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -349,13 +429,22 @@ public interface DiPackage extends EPackage {
     int DIAGRAM_ELEMENT__ID = 5;
 
     /**
+     * The feature id for the '<em><b>Any Attribute</b></em>' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DIAGRAM_ELEMENT__ANY_ATTRIBUTE = 6;
+
+    /**
      * The number of structural features of the '<em>Diagram Element</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int DIAGRAM_ELEMENT_FEATURE_COUNT = 6;
+    int DIAGRAM_ELEMENT_FEATURE_COUNT = 7;
 
     /**
      * The number of operations of the '<em>Diagram Element</em>' class.
@@ -365,16 +454,6 @@ public interface DiPackage extends EPackage {
      * @ordered
      */
     int DIAGRAM_ELEMENT_OPERATION_COUNT = 0;
-
-    /**
-     * The meta object id for the '{@link org.eclipse.dd.cmmn.di.impl.EdgeImpl <em>Edge</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.eclipse.dd.cmmn.di.impl.EdgeImpl
-     * @see org.eclipse.dd.cmmn.di.impl.DiPackageImpl#getEdge()
-     * @generated
-     */
-    int EDGE = 3;
 
     /**
      * The feature id for the '<em><b>Owning Diagram</b></em>' reference.
@@ -431,6 +510,15 @@ public interface DiPackage extends EPackage {
     int EDGE__ID = DIAGRAM_ELEMENT__ID;
 
     /**
+     * The feature id for the '<em><b>Any Attribute</b></em>' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EDGE__ANY_ATTRIBUTE = DIAGRAM_ELEMENT__ANY_ATTRIBUTE;
+
+    /**
      * The feature id for the '<em><b>Source</b></em>' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -474,16 +562,6 @@ public interface DiPackage extends EPackage {
      * @ordered
      */
     int EDGE_OPERATION_COUNT = DIAGRAM_ELEMENT_OPERATION_COUNT + 0;
-
-    /**
-     * The meta object id for the '{@link org.eclipse.dd.cmmn.di.impl.NodeImpl <em>Node</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.eclipse.dd.cmmn.di.impl.NodeImpl
-     * @see org.eclipse.dd.cmmn.di.impl.DiPackageImpl#getNode()
-     * @generated
-     */
-    int NODE = 7;
 
     /**
      * The feature id for the '<em><b>Owning Diagram</b></em>' reference.
@@ -540,6 +618,15 @@ public interface DiPackage extends EPackage {
     int NODE__ID = DIAGRAM_ELEMENT__ID;
 
     /**
+     * The feature id for the '<em><b>Any Attribute</b></em>' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int NODE__ANY_ATTRIBUTE = DIAGRAM_ELEMENT__ANY_ATTRIBUTE;
+
+    /**
      * The number of structural features of the '<em>Node</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -556,16 +643,6 @@ public interface DiPackage extends EPackage {
      * @ordered
      */
     int NODE_OPERATION_COUNT = DIAGRAM_ELEMENT_OPERATION_COUNT + 0;
-
-    /**
-     * The meta object id for the '{@link org.eclipse.dd.cmmn.di.impl.LabelImpl <em>Label</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.eclipse.dd.cmmn.di.impl.LabelImpl
-     * @see org.eclipse.dd.cmmn.di.impl.DiPackageImpl#getLabel()
-     * @generated
-     */
-    int LABEL = 4;
 
     /**
      * The feature id for the '<em><b>Owning Diagram</b></em>' reference.
@@ -622,6 +699,15 @@ public interface DiPackage extends EPackage {
     int LABEL__ID = NODE__ID;
 
     /**
+     * The feature id for the '<em><b>Any Attribute</b></em>' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LABEL__ANY_ATTRIBUTE = NODE__ANY_ATTRIBUTE;
+
+    /**
      * The feature id for the '<em><b>Bounds</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -647,16 +733,6 @@ public interface DiPackage extends EPackage {
      * @ordered
      */
     int LABEL_OPERATION_COUNT = NODE_OPERATION_COUNT + 0;
-
-    /**
-     * The meta object id for the '{@link org.eclipse.dd.cmmn.di.impl.LabeledEdgeImpl <em>Labeled Edge</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.eclipse.dd.cmmn.di.impl.LabeledEdgeImpl
-     * @see org.eclipse.dd.cmmn.di.impl.DiPackageImpl#getLabeledEdge()
-     * @generated
-     */
-    int LABELED_EDGE = 5;
 
     /**
      * The feature id for the '<em><b>Owning Diagram</b></em>' reference.
@@ -713,6 +789,15 @@ public interface DiPackage extends EPackage {
     int LABELED_EDGE__ID = EDGE__ID;
 
     /**
+     * The feature id for the '<em><b>Any Attribute</b></em>' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LABELED_EDGE__ANY_ATTRIBUTE = EDGE__ANY_ATTRIBUTE;
+
+    /**
      * The feature id for the '<em><b>Source</b></em>' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -765,16 +850,6 @@ public interface DiPackage extends EPackage {
      * @ordered
      */
     int LABELED_EDGE_OPERATION_COUNT = EDGE_OPERATION_COUNT + 0;
-
-    /**
-     * The meta object id for the '{@link org.eclipse.dd.cmmn.di.impl.ShapeImpl <em>Shape</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.eclipse.dd.cmmn.di.impl.ShapeImpl
-     * @see org.eclipse.dd.cmmn.di.impl.DiPackageImpl#getShape()
-     * @generated
-     */
-    int SHAPE = 9;
 
     /**
      * The feature id for the '<em><b>Owning Diagram</b></em>' reference.
@@ -831,6 +906,15 @@ public interface DiPackage extends EPackage {
     int SHAPE__ID = NODE__ID;
 
     /**
+     * The feature id for the '<em><b>Any Attribute</b></em>' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SHAPE__ANY_ATTRIBUTE = NODE__ANY_ATTRIBUTE;
+
+    /**
      * The feature id for the '<em><b>Bounds</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -856,16 +940,6 @@ public interface DiPackage extends EPackage {
      * @ordered
      */
     int SHAPE_OPERATION_COUNT = NODE_OPERATION_COUNT + 0;
-
-    /**
-     * The meta object id for the '{@link org.eclipse.dd.cmmn.di.impl.LabeledShapeImpl <em>Labeled Shape</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.eclipse.dd.cmmn.di.impl.LabeledShapeImpl
-     * @see org.eclipse.dd.cmmn.di.impl.DiPackageImpl#getLabeledShape()
-     * @generated
-     */
-    int LABELED_SHAPE = 6;
 
     /**
      * The feature id for the '<em><b>Owning Diagram</b></em>' reference.
@@ -922,6 +996,15 @@ public interface DiPackage extends EPackage {
     int LABELED_SHAPE__ID = SHAPE__ID;
 
     /**
+     * The feature id for the '<em><b>Any Attribute</b></em>' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LABELED_SHAPE__ANY_ATTRIBUTE = SHAPE__ANY_ATTRIBUTE;
+
+    /**
      * The feature id for the '<em><b>Bounds</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -956,16 +1039,6 @@ public interface DiPackage extends EPackage {
      * @ordered
      */
     int LABELED_SHAPE_OPERATION_COUNT = SHAPE_OPERATION_COUNT + 0;
-
-    /**
-     * The meta object id for the '{@link org.eclipse.dd.cmmn.di.impl.PlaneImpl <em>Plane</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.eclipse.dd.cmmn.di.impl.PlaneImpl
-     * @see org.eclipse.dd.cmmn.di.impl.DiPackageImpl#getPlane()
-     * @generated
-     */
-    int PLANE = 8;
 
     /**
      * The feature id for the '<em><b>Owning Diagram</b></em>' reference.
@@ -1022,6 +1095,15 @@ public interface DiPackage extends EPackage {
     int PLANE__ID = NODE__ID;
 
     /**
+     * The feature id for the '<em><b>Any Attribute</b></em>' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PLANE__ANY_ATTRIBUTE = NODE__ANY_ATTRIBUTE;
+
+    /**
      * The feature id for the '<em><b>Plane Element</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1056,16 +1138,6 @@ public interface DiPackage extends EPackage {
      * @ordered
      */
     int PLANE_OPERATION_COUNT = NODE_OPERATION_COUNT + 1;
-
-    /**
-     * The meta object id for the '{@link org.eclipse.dd.cmmn.di.impl.StyleImpl <em>Style</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.eclipse.dd.cmmn.di.impl.StyleImpl
-     * @see org.eclipse.dd.cmmn.di.impl.DiPackageImpl#getStyle()
-     * @generated
-     */
-    int STYLE = 10;
 
     /**
      * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -1399,6 +1471,17 @@ public interface DiPackage extends EPackage {
      * @generated
      */
     EAttribute getDiagramElement_Id();
+
+    /**
+     * Returns the meta object for the attribute list '{@link org.eclipse.dd.cmmn.di.DiagramElement#getAnyAttribute <em>Any Attribute</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute list '<em>Any Attribute</em>'.
+     * @see org.eclipse.dd.cmmn.di.DiagramElement#getAnyAttribute()
+     * @see #getDiagramElement()
+     * @generated
+     */
+    EAttribute getDiagramElement_AnyAttribute();
 
     /**
      * Returns the meta object for class '{@link org.eclipse.dd.cmmn.di.Edge <em>Edge</em>}'.
@@ -1841,6 +1924,14 @@ public interface DiPackage extends EPackage {
          * @generated
          */
         EAttribute DIAGRAM_ELEMENT__ID = eINSTANCE.getDiagramElement_Id();
+
+        /**
+         * The meta object literal for the '<em><b>Any Attribute</b></em>' attribute list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute DIAGRAM_ELEMENT__ANY_ATTRIBUTE = eINSTANCE.getDiagramElement_AnyAttribute();
 
         /**
          * The meta object literal for the '{@link org.eclipse.dd.cmmn.di.impl.EdgeImpl <em>Edge</em>}' class.

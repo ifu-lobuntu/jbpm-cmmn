@@ -51,7 +51,7 @@ public interface TCaseTask extends TTask {
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * 
-     *               caseRef refers a "case" element which is re-usable and can 
+     *               caseRef refers a "case" element which is re-usable and can
      *               be imported via some other file.
      *             
      * <!-- end-model-doc -->

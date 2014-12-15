@@ -4,6 +4,7 @@ package org.eclipse.cmmn1.impl;
 
 import org.eclipse.cmmn1.Cmmn1Package;
 import org.eclipse.cmmn1.TApplicabilityRule;
+import org.eclipse.cmmn1.TCaseFileItem;
 import org.eclipse.cmmn1.TExpression;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -37,24 +38,14 @@ public class TApplicabilityRuleImpl extends TCmmnElementImpl implements TApplica
     protected TExpression condition;
 
     /**
-     * The default value of the '{@link #getContextRef() <em>Context Ref</em>}' attribute.
+     * The cached value of the '{@link #getContextRef() <em>Context Ref</em>}' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see #getContextRef()
      * @generated
      * @ordered
      */
-    protected static final String CONTEXT_REF_EDEFAULT = null;
-
-    /**
-     * The cached value of the '{@link #getContextRef() <em>Context Ref</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getContextRef()
-     * @generated
-     * @ordered
-     */
-    protected String contextRef = CONTEXT_REF_EDEFAULT;
+    protected TCaseFileItem contextRef;
 
     /**
      * <!-- begin-user-doc -->
@@ -123,7 +114,15 @@ public class TApplicabilityRuleImpl extends TCmmnElementImpl implements TApplica
      * <!-- end-user-doc -->
      * @generated
      */
-    public String getContextRef() {
+    public TCaseFileItem getContextRef() {
+        if (contextRef != null && contextRef.eIsProxy()) {
+            InternalEObject oldContextRef = (InternalEObject)contextRef;
+            contextRef = (TCaseFileItem)eResolveProxy(oldContextRef);
+            if (contextRef != oldContextRef) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, Cmmn1Package.TAPPLICABILITY_RULE__CONTEXT_REF, oldContextRef, contextRef));
+            }
+        }
         return contextRef;
     }
 
@@ -132,8 +131,17 @@ public class TApplicabilityRuleImpl extends TCmmnElementImpl implements TApplica
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setContextRef(String newContextRef) {
-        String oldContextRef = contextRef;
+    public TCaseFileItem basicGetContextRef() {
+        return contextRef;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setContextRef(TCaseFileItem newContextRef) {
+        TCaseFileItem oldContextRef = contextRef;
         contextRef = newContextRef;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, Cmmn1Package.TAPPLICABILITY_RULE__CONTEXT_REF, oldContextRef, contextRef));
@@ -164,7 +172,8 @@ public class TApplicabilityRuleImpl extends TCmmnElementImpl implements TApplica
             case Cmmn1Package.TAPPLICABILITY_RULE__CONDITION:
                 return getCondition();
             case Cmmn1Package.TAPPLICABILITY_RULE__CONTEXT_REF:
-                return getContextRef();
+                if (resolve) return getContextRef();
+                return basicGetContextRef();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -181,7 +190,7 @@ public class TApplicabilityRuleImpl extends TCmmnElementImpl implements TApplica
                 setCondition((TExpression)newValue);
                 return;
             case Cmmn1Package.TAPPLICABILITY_RULE__CONTEXT_REF:
-                setContextRef((String)newValue);
+                setContextRef((TCaseFileItem)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -199,7 +208,7 @@ public class TApplicabilityRuleImpl extends TCmmnElementImpl implements TApplica
                 setCondition((TExpression)null);
                 return;
             case Cmmn1Package.TAPPLICABILITY_RULE__CONTEXT_REF:
-                setContextRef(CONTEXT_REF_EDEFAULT);
+                setContextRef((TCaseFileItem)null);
                 return;
         }
         super.eUnset(featureID);
@@ -216,25 +225,9 @@ public class TApplicabilityRuleImpl extends TCmmnElementImpl implements TApplica
             case Cmmn1Package.TAPPLICABILITY_RULE__CONDITION:
                 return condition != null;
             case Cmmn1Package.TAPPLICABILITY_RULE__CONTEXT_REF:
-                return CONTEXT_REF_EDEFAULT == null ? contextRef != null : !CONTEXT_REF_EDEFAULT.equals(contextRef);
+                return contextRef != null;
         }
         return super.eIsSet(featureID);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public String toString() {
-        if (eIsProxy()) return super.toString();
-
-        StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (contextRef: ");
-        result.append(contextRef);
-        result.append(')');
-        return result.toString();
     }
 
 } //TApplicabilityRuleImpl

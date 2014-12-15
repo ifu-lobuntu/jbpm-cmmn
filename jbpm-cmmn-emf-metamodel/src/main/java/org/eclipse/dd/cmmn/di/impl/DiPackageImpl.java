@@ -167,20 +167,20 @@ public class DiPackageImpl extends EPackageImpl implements DiPackage {
 
         // Obtain or create and register interdependencies
         Cmmn1PackageImpl theCmmn1Package = (Cmmn1PackageImpl)(EPackage.Registry.INSTANCE.getEPackage(Cmmn1Package.eNS_URI) instanceof Cmmn1PackageImpl ? EPackage.Registry.INSTANCE.getEPackage(Cmmn1Package.eNS_URI) : Cmmn1Package.eINSTANCE);
-        CmmnDiPackageImpl theCmmnDiPackage = (CmmnDiPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(CmmnDiPackage.eNS_URI) instanceof CmmnDiPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(CmmnDiPackage.eNS_URI) : CmmnDiPackage.eINSTANCE);
         DcPackageImpl theDcPackage = (DcPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(DcPackage.eNS_URI) instanceof DcPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(DcPackage.eNS_URI) : DcPackage.eINSTANCE);
+        CmmnDiPackageImpl theCmmnDiPackage = (CmmnDiPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(CmmnDiPackage.eNS_URI) instanceof CmmnDiPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(CmmnDiPackage.eNS_URI) : CmmnDiPackage.eINSTANCE);
 
         // Create package meta-data objects
         theDiPackage.createPackageContents();
         theCmmn1Package.createPackageContents();
-        theCmmnDiPackage.createPackageContents();
         theDcPackage.createPackageContents();
+        theCmmnDiPackage.createPackageContents();
 
         // Initialize created meta-data
         theDiPackage.initializePackageContents();
         theCmmn1Package.initializePackageContents();
-        theCmmnDiPackage.initializePackageContents();
         theDcPackage.initializePackageContents();
+        theCmmnDiPackage.initializePackageContents();
 
         // Register package validator
         EValidator.Registry.INSTANCE.put
@@ -457,6 +457,15 @@ public class DiPackageImpl extends EPackageImpl implements DiPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    public EAttribute getDiagramElement_AnyAttribute() {
+        return (EAttribute)diagramElementEClass.getEStructuralFeatures().get(6);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getEdge() {
         return edgeEClass;
     }
@@ -672,6 +681,7 @@ public class DiPackageImpl extends EPackageImpl implements DiPackage {
         createEReference(diagramElementEClass, DIAGRAM_ELEMENT__MODEL_ELEMENT);
         createEReference(diagramElementEClass, DIAGRAM_ELEMENT__STYLE);
         createEAttribute(diagramElementEClass, DIAGRAM_ELEMENT__ID);
+        createEAttribute(diagramElementEClass, DIAGRAM_ELEMENT__ANY_ATTRIBUTE);
 
         edgeEClass = createEClass(EDGE);
         createEReference(edgeEClass, EDGE__SOURCE);
@@ -759,18 +769,19 @@ public class DiPackageImpl extends EPackageImpl implements DiPackage {
         initEClass(diagramEClass, Diagram.class, "Diagram", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getDiagram_Documentation(), ecorePackage.getEString(), "documentation", null, 0, 1, Diagram.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
         initEReference(getDiagram_OwnedStyle(), this.getStyle(), null, "ownedStyle", null, 0, -1, Diagram.class, IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, !IS_ORDERED);
-        initEReference(getDiagram_RootElement(), this.getDiagramElement(), this.getDiagramElement_OwningDiagram(), "rootElement", null, 1, 1, Diagram.class, IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, !IS_ORDERED);
-        initEAttribute(getDiagram_Id(), theXMLTypePackage.getNCName(), "id", null, 0, 1, Diagram.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getDiagram_RootElement(), this.getDiagramElement(), this.getDiagramElement_OwningDiagram(), "rootElement", null, 1, 1, Diagram.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, !IS_ORDERED);
+        initEAttribute(getDiagram_Id(), theXMLTypePackage.getID(), "id", null, 0, 1, Diagram.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getDiagram_Name(), ecorePackage.getEString(), "name", null, 0, 1, Diagram.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
         initEAttribute(getDiagram_Resolution(), ecorePackage.getEFloat(), "resolution", null, 0, 1, Diagram.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 
         initEClass(diagramElementEClass, DiagramElement.class, "DiagramElement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getDiagramElement_OwningDiagram(), this.getDiagram(), this.getDiagram_RootElement(), "owningDiagram", null, 0, 1, DiagramElement.class, IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, !IS_ORDERED);
+        initEReference(getDiagramElement_OwningDiagram(), this.getDiagram(), this.getDiagram_RootElement(), "owningDiagram", null, 0, 1, DiagramElement.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, !IS_ORDERED);
         initEReference(getDiagramElement_OwningElement(), this.getDiagramElement(), this.getDiagramElement_OwnedElement(), "owningElement", null, 0, 1, DiagramElement.class, IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, !IS_ORDERED);
         initEReference(getDiagramElement_OwnedElement(), this.getDiagramElement(), this.getDiagramElement_OwningElement(), "ownedElement", null, 0, -1, DiagramElement.class, IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, !IS_ORDERED);
         initEReference(getDiagramElement_ModelElement(), ecorePackage.getEObject(), null, "modelElement", null, 0, 1, DiagramElement.class, IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, !IS_ORDERED);
         initEReference(getDiagramElement_Style(), this.getStyle(), null, "style", null, 0, 1, DiagramElement.class, IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, !IS_ORDERED);
-        initEAttribute(getDiagramElement_Id(), theXMLTypePackage.getNCName(), "id", null, 0, 1, DiagramElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getDiagramElement_Id(), theXMLTypePackage.getID(), "id", null, 0, 1, DiagramElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getDiagramElement_AnyAttribute(), ecorePackage.getEFeatureMapEntry(), "anyAttribute", null, 0, -1, DiagramElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(edgeEClass, Edge.class, "Edge", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getEdge_Source(), this.getDiagramElement(), null, "source", null, 0, 1, Edge.class, IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, !IS_ORDERED);
@@ -979,6 +990,15 @@ public class DiPackageImpl extends EPackageImpl implements DiPackage {
            new String[] {
              "kind", "attribute",
              "name", "id"
+           });	
+        addAnnotation
+          (getDiagramElement_AnyAttribute(), 
+           source, 
+           new String[] {
+             "kind", "attributeWildcard",
+             "wildcards", "##other",
+             "name", ":3",
+             "processing", "lax"
            });	
         addAnnotation
           (edgeEClass, 

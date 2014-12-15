@@ -68,6 +68,16 @@ public interface DcPackage extends EPackage {
     int DOCUMENT_ROOT = 0;
 
     /**
+     * The meta object id for the '{@link org.eclipse.dd.cmmn.dc.impl.BoundsImpl <em>Bounds</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.dd.cmmn.dc.impl.BoundsImpl
+     * @see org.eclipse.dd.cmmn.dc.impl.DcPackageImpl#getBounds()
+     * @generated
+     */
+    int BOUNDS = 1;
+
+    /**
      * The feature id for the '<em><b>Mixed</b></em>' attribute list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -138,16 +148,6 @@ public interface DcPackage extends EPackage {
      * @ordered
      */
     int DOCUMENT_ROOT_OPERATION_COUNT = 0;
-
-    /**
-     * The meta object id for the '{@link org.eclipse.dd.cmmn.dc.impl.BoundsImpl <em>Bounds</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.eclipse.dd.cmmn.dc.impl.BoundsImpl
-     * @see org.eclipse.dd.cmmn.dc.impl.DcPackageImpl#getBounds()
-     * @generated
-     */
-    int BOUNDS = 1;
 
     /**
      * The feature id for the '<em><b>Height</b></em>' attribute.

@@ -34,7 +34,7 @@ public interface TPlanItemControl extends TCmmnElement {
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * 
-     *         repetitionRule is the root element for specifying a 
+     *         repetitionRule is the root element for specifying a
      *         repetition rule for a PlanItemDefinition element.
      *       
      * <!-- end-model-doc -->
@@ -63,7 +63,7 @@ public interface TPlanItemControl extends TCmmnElement {
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * 
-     *         requiredRule is the root element for specifying a 
+     *         requiredRule is the root element for specifying a
      *         required rule for a PlanItemDefinition element.
      *       
      * <!-- end-model-doc -->
@@ -92,7 +92,7 @@ public interface TPlanItemControl extends TCmmnElement {
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * 
-     *         manualActivationRule is the root element for specifying an 
+     *         manualActivationRule is the root element for specifying an
      *         manual activation rule for a PlanItemDefinition element.
      *       
      * <!-- end-model-doc -->

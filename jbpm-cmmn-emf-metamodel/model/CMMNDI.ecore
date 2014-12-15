@@ -6,15 +6,15 @@
       <details key="name" value="CMMNDiagram"/>
       <details key="kind" value="elementOnly"/>
     </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="plane" lowerBound="1" eType="#//CMMNPlane"
-        containment="true" resolveProxies="false">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="cMMNPlane" lowerBound="1"
+        eType="#//CMMNPlane" containment="true" resolveProxies="false">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="CMMNPlane"/>
         <details key="namespace" value="##targetNamespace"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="labelStyle" upperBound="-1"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="cMMNLabelStyle" upperBound="-1"
         eType="#//CMMNLabelStyle" containment="true" resolveProxies="false">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
@@ -28,7 +28,7 @@
       <details key="name" value="CMMNEdge"/>
       <details key="kind" value="elementOnly"/>
     </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="label" eType="#//CMMNLabel"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="cMMNLabel" eType="#//CMMNLabel"
         containment="true" resolveProxies="false">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
@@ -40,13 +40,6 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="attribute"/>
         <details key="name" value="CMMNElement"/>
-      </eAnnotations>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="messageVisibleKind" eType="#//MessageVisibleKind"
-        unsettable="true">
-      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
-        <details key="kind" value="attribute"/>
-        <details key="name" value="messageVisibleKind"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="sourceElement" eType="ecore:EClass DI.ecore#//DiagramElement">
@@ -93,7 +86,7 @@
       <details key="name" value="CMMNPlane"/>
       <details key="kind" value="elementOnly"/>
     </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="cmmnElement" eType="ecore:EClass CMMN10.ecore#//TCmmnElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="cmmnElement" eType="ecore:EClass CMMN10.ecore#//TDefinitions">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="attribute"/>
         <details key="name" value="CMMNElement"/>
@@ -111,13 +104,6 @@
         <details key="kind" value="element"/>
         <details key="name" value="CMMNLabel"/>
         <details key="namespace" value="##targetNamespace"/>
-      </eAnnotations>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="choreographyActivityShape"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//QName">
-      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
-        <details key="kind" value="attribute"/>
-        <details key="name" value="choreographyActivityShape"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="cmmnElement" eType="ecore:EClass CMMN10.ecore#//TCmmnElement">
@@ -145,20 +131,6 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="attribute"/>
         <details key="name" value="isMarkerVisible"/>
-      </eAnnotations>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isMessageVisible" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Boolean"
-        unsettable="true">
-      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
-        <details key="kind" value="attribute"/>
-        <details key="name" value="isMessageVisible"/>
-      </eAnnotations>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="participantBandKind" eType="#//ParticipantBandKind"
-        unsettable="true">
-      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
-        <details key="kind" value="attribute"/>
-        <details key="name" value="participantBandKind"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
@@ -246,35 +218,5 @@
         <details key="affiliation" value="http://www.omg.org/spec/DD/20100524/DI#DiagramElement"/>
       </eAnnotations>
     </eStructuralFeatures>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EEnum" name="MessageVisibleKind">
-    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
-      <details key="name" value="MessageVisibleKind"/>
-    </eAnnotations>
-    <eLiterals name="initiating"/>
-    <eLiterals name="nonInitiating" value="1" literal="non_initiating"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EDataType" name="MessageVisibleKindObject" instanceClassName="org.eclipse.emf.common.util.Enumerator">
-    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
-      <details key="name" value="MessageVisibleKind:Object"/>
-      <details key="baseType" value="MessageVisibleKind"/>
-    </eAnnotations>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EEnum" name="ParticipantBandKind">
-    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
-      <details key="name" value="ParticipantBandKind"/>
-    </eAnnotations>
-    <eLiterals name="topInitiating" literal="top_initiating"/>
-    <eLiterals name="middleInitiating" value="1" literal="middle_initiating"/>
-    <eLiterals name="bottomInitiating" value="2" literal="bottom_initiating"/>
-    <eLiterals name="topNonInitiating" value="3" literal="top_non_initiating"/>
-    <eLiterals name="middleNonInitiating" value="4" literal="middle_non_initiating"/>
-    <eLiterals name="bottomNonInitiating" value="5" literal="bottom_non_initiating"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EDataType" name="ParticipantBandKindObject" instanceClassName="org.eclipse.emf.common.util.Enumerator">
-    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
-      <details key="name" value="ParticipantBandKind:Object"/>
-      <details key="baseType" value="ParticipantBandKind"/>
-    </eAnnotations>
   </eClassifiers>
 </ecore:EPackage>
