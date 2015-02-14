@@ -36,7 +36,7 @@ public interface Plane extends Node {
      * @return the value of the '<em>Plane Element</em>' containment reference list.
      * @see org.eclipse.dd.cmmn.di.DiPackage#getPlane_PlaneElement()
      * @model containment="true"
-     *        extendedMetaData="kind='element' name='DiagramElement' namespace='http://www.omg.org/spec/DD/20100524/DI' group='http://www.omg.org/spec/DD/20100524/DI#DiagramElement'"
+     *        extendedMetaData="kind='element' name='DiagramElement' namespace='http://www.omg.org/spec/DD/20150101/DI' group='http://www.omg.org/spec/DD/20150101/DI#DiagramElement'"
      * @generated
      */
     EList<DiagramElement> getPlaneElement();

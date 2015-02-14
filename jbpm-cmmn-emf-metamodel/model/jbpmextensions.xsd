@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:jbpmext="http://www.jbpm.org/cmmn/jbpmext"
+	targetNamespace="http://www.jbpm.org/cmmn/jbpmext"
+	elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+	<simpleType name="ExternalURI">
+		<restriction base="string">
+		</restriction>
+	</simpleType>
+
+	<attribute name="processURI" type="jbpmext:ExternalURI"/>
+
+</schema>

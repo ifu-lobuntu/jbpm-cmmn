@@ -35,7 +35,7 @@ public interface CMMNLabelStyle extends Style {
      * @see #setFont(Font)
      * @see org.eclipse.cmmndi.CmmnDiPackage#getCMMNLabelStyle_Font()
      * @model containment="true" required="true"
-     *        extendedMetaData="kind='element' name='Font' namespace='http://www.omg.org/spec/DD/20100524/DC'"
+     *        extendedMetaData="kind='element' name='Font' namespace='http://www.omg.org/spec/DD/20150101/DC'"
      * @generated
      */
     Font getFont();

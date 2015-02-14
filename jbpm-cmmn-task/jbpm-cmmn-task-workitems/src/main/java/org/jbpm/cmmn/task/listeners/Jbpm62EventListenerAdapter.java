@@ -179,13 +179,25 @@ public class Jbpm62EventListenerAdapter extends ExternalTaskEventListener
 	@Override
 	public void beforeTaskCompletedEvent(Task task) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void beforeTaskAddedEvent(Task t) {
 		// TODO Auto-generated method stub
-		
+
 	}
+
+    @Override
+    public void beforeTaskUpdatedEvent(TaskEvent event) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void afterTaskUpdatedEvent(TaskEvent event) {
+        // TODO Auto-generated method stub
+
+    }
 
 }

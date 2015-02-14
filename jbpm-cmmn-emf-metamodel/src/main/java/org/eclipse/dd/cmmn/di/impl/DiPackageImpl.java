@@ -867,7 +867,7 @@ public class DiPackageImpl extends EPackageImpl implements DiPackage {
            new String[] {
              "kind", "element",
              "name", "DiagramElement",
-             "namespace", "http://www.omg.org/spec/DD/20100524/DI"
+             "namespace", "http://www.omg.org/spec/DD/20150101/DI"
            });	
         addAnnotation
           (getDocumentRoot_Diagram(), 
@@ -875,7 +875,7 @@ public class DiPackageImpl extends EPackageImpl implements DiPackage {
            new String[] {
              "kind", "element",
              "name", "Diagram",
-             "namespace", "http://www.omg.org/spec/DD/20100524/DI"
+             "namespace", "http://www.omg.org/spec/DD/20150101/DI"
            });	
         addAnnotation
           (getDocumentRoot_Edge(), 
@@ -883,7 +883,7 @@ public class DiPackageImpl extends EPackageImpl implements DiPackage {
            new String[] {
              "kind", "element",
              "name", "Edge",
-             "namespace", "http://www.omg.org/spec/DD/20100524/DI"
+             "namespace", "http://www.omg.org/spec/DD/20150101/DI"
            });	
         addAnnotation
           (getDocumentRoot_Label(), 
@@ -891,7 +891,7 @@ public class DiPackageImpl extends EPackageImpl implements DiPackage {
            new String[] {
              "kind", "element",
              "name", "Label",
-             "namespace", "http://www.omg.org/spec/DD/20100524/DI"
+             "namespace", "http://www.omg.org/spec/DD/20150101/DI"
            });	
         addAnnotation
           (getDocumentRoot_LabeledEdge(), 
@@ -899,7 +899,7 @@ public class DiPackageImpl extends EPackageImpl implements DiPackage {
            new String[] {
              "kind", "element",
              "name", "LabeledEdge",
-             "namespace", "http://www.omg.org/spec/DD/20100524/DI"
+             "namespace", "http://www.omg.org/spec/DD/20150101/DI"
            });	
         addAnnotation
           (getDocumentRoot_LabeledShape(), 
@@ -907,7 +907,7 @@ public class DiPackageImpl extends EPackageImpl implements DiPackage {
            new String[] {
              "kind", "element",
              "name", "LabeledShape",
-             "namespace", "http://www.omg.org/spec/DD/20100524/DI"
+             "namespace", "http://www.omg.org/spec/DD/20150101/DI"
            });	
         addAnnotation
           (getDocumentRoot_Node(), 
@@ -915,7 +915,7 @@ public class DiPackageImpl extends EPackageImpl implements DiPackage {
            new String[] {
              "kind", "element",
              "name", "Node",
-             "namespace", "http://www.omg.org/spec/DD/20100524/DI"
+             "namespace", "http://www.omg.org/spec/DD/20150101/DI"
            });	
         addAnnotation
           (getDocumentRoot_Plane(), 
@@ -923,7 +923,7 @@ public class DiPackageImpl extends EPackageImpl implements DiPackage {
            new String[] {
              "kind", "element",
              "name", "Plane",
-             "namespace", "http://www.omg.org/spec/DD/20100524/DI"
+             "namespace", "http://www.omg.org/spec/DD/20150101/DI"
            });	
         addAnnotation
           (getDocumentRoot_Shape(), 
@@ -931,7 +931,7 @@ public class DiPackageImpl extends EPackageImpl implements DiPackage {
            new String[] {
              "kind", "element",
              "name", "Shape",
-             "namespace", "http://www.omg.org/spec/DD/20100524/DI"
+             "namespace", "http://www.omg.org/spec/DD/20150101/DI"
            });	
         addAnnotation
           (getDocumentRoot_Style(), 
@@ -939,7 +939,7 @@ public class DiPackageImpl extends EPackageImpl implements DiPackage {
            new String[] {
              "kind", "element",
              "name", "Style",
-             "namespace", "http://www.omg.org/spec/DD/20100524/DI"
+             "namespace", "http://www.omg.org/spec/DD/20150101/DI"
            });	
         addAnnotation
           (diagramEClass, 
@@ -1013,7 +1013,7 @@ public class DiPackageImpl extends EPackageImpl implements DiPackage {
            new String[] {
              "kind", "element",
              "name", "waypoint",
-             "namespace", "http://www.omg.org/spec/DD/20100524/DI"
+             "namespace", "http://www.omg.org/spec/DD/20150101/DI"
            });	
         addAnnotation
           (labelEClass, 
@@ -1028,7 +1028,7 @@ public class DiPackageImpl extends EPackageImpl implements DiPackage {
            new String[] {
              "kind", "element",
              "name", "Bounds",
-             "namespace", "http://www.omg.org/spec/DD/20100524/DC"
+             "namespace", "http://www.omg.org/spec/DD/20150101/DC"
            });	
         addAnnotation
           (labeledEdgeEClass, 
@@ -1064,8 +1064,8 @@ public class DiPackageImpl extends EPackageImpl implements DiPackage {
            new String[] {
              "kind", "element",
              "name", "DiagramElement",
-             "namespace", "http://www.omg.org/spec/DD/20100524/DI",
-             "group", "http://www.omg.org/spec/DD/20100524/DI#DiagramElement"
+             "namespace", "http://www.omg.org/spec/DD/20150101/DI",
+             "group", "http://www.omg.org/spec/DD/20150101/DI#DiagramElement"
            });	
         addAnnotation
           (shapeEClass, 
@@ -1080,7 +1080,7 @@ public class DiPackageImpl extends EPackageImpl implements DiPackage {
            new String[] {
              "kind", "element",
              "name", "Bounds",
-             "namespace", "http://www.omg.org/spec/DD/20100524/DC"
+             "namespace", "http://www.omg.org/spec/DD/20150101/DC"
            });	
         addAnnotation
           (styleEClass, 

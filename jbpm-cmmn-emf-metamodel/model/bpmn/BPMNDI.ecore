@@ -45,7 +45,7 @@
         <details key="kind" value="element"/>
         <details key="name" value="BPMNEdge"/>
         <details key="namespace" value="http://www.omg.org/spec/BPMN/20100524/DI"/>
-        <details key="affiliation" value="http://www.omg.org/spec/DD/20100524/DI#DiagramElement"/>
+        <details key="affiliation" value="http://www.omg.org/spec/DD/20150101/DI#DiagramElement"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="bPMNLabel" upperBound="-2"
@@ -82,7 +82,7 @@
         <details key="kind" value="element"/>
         <details key="name" value="BPMNShape"/>
         <details key="namespace" value="http://www.omg.org/spec/BPMN/20100524/DI"/>
-        <details key="affiliation" value="http://www.omg.org/spec/DD/20100524/DI#DiagramElement"/>
+        <details key="affiliation" value="http://www.omg.org/spec/DD/20150101/DI#DiagramElement"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
@@ -173,7 +173,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="Font"/>
-        <details key="namespace" value="http://www.omg.org/spec/DD/20100524/DC"/>
+        <details key="namespace" value="http://www.omg.org/spec/DD/20150101/DC"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>

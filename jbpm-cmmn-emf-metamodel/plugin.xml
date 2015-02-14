@@ -67,7 +67,7 @@
    <extension point="org.eclipse.emf.ecore.generated_package">
       <!-- @generated CMMN10 -->
       <package
-            uri="http://www.omg.org/spec/DD/20100524/DI-XMI"
+            uri="http://www.omg.org/spec/DD/20150101/DI-XMI"
             class="org.eclipse.dd.cmmn.di.DiPackage"
             genModel="model/CMMN10.genmodel"/>
    </extension>
@@ -82,7 +82,7 @@
    <extension point="org.eclipse.emf.ecore.generated_package">
       <!-- @generated CMMN10 -->
       <package
-            uri="http://www.omg.org/spec/DD/20100524/DC-XMI"
+            uri="http://www.omg.org/spec/DD/20150101/DC-XMI"
             class="org.eclipse.dd.cmmn.dc.DcPackage"
             genModel="model/CMMN10.genmodel"/>
    </extension>
@@ -94,4 +94,18 @@
             class="org.eclipse.dd.cmmn.dc.util.DcResourceFactoryImpl"/>
    </extension>
 
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated jbpmextensions -->
+      <package
+            uri="http://www.jbpm.org/cmmn/jbpmext"
+            class="org.jbpm.cmmn.jbpmext.JbpmextPackage"
+            genModel="model/jbpmextensions.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <!-- @generated jbpmextensions -->
+      <parser
+            type="jbpmext"
+            class="org.jbpm.cmmn.jbpmext.util.JbpmextResourceFactoryImpl"/>
+   </extension>
 </plugin>

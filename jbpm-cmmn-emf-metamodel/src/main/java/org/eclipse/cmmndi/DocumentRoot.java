@@ -123,7 +123,7 @@ public interface DocumentRoot extends EObject {
      * @see #setCMMNEdge(CMMNEdge)
      * @see org.eclipse.cmmndi.CmmnDiPackage#getDocumentRoot_CMMNEdge()
      * @model containment="true" upper="-2" transient="true" volatile="true" derived="true"
-     *        extendedMetaData="kind='element' name='CMMNEdge' namespace='##targetNamespace' affiliation='http://www.omg.org/spec/DD/20100524/DI#DiagramElement'"
+     *        extendedMetaData="kind='element' name='CMMNEdge' namespace='##targetNamespace' affiliation='http://www.omg.org/spec/DD/20150101/DI#DiagramElement'"
      * @generated
      */
     CMMNEdge getCMMNEdge();
@@ -231,7 +231,7 @@ public interface DocumentRoot extends EObject {
      * @see #setCMMNShape(CMMNShape)
      * @see org.eclipse.cmmndi.CmmnDiPackage#getDocumentRoot_CMMNShape()
      * @model containment="true" upper="-2" transient="true" volatile="true" derived="true"
-     *        extendedMetaData="kind='element' name='CMMNShape' namespace='##targetNamespace' affiliation='http://www.omg.org/spec/DD/20100524/DI#DiagramElement'"
+     *        extendedMetaData="kind='element' name='CMMNShape' namespace='##targetNamespace' affiliation='http://www.omg.org/spec/DD/20150101/DI#DiagramElement'"
      * @generated
      */
     CMMNShape getCMMNShape();

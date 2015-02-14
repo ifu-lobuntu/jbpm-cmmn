@@ -93,7 +93,7 @@ public interface DocumentRoot extends EObject {
      * @see #setBounds(Bounds)
      * @see org.eclipse.dd.cmmn.dc.DcPackage#getDocumentRoot_Bounds()
      * @model containment="true" upper="-2" transient="true" volatile="true" derived="true"
-     *        extendedMetaData="kind='element' name='Bounds' namespace='http://www.omg.org/spec/DD/20100524/DC'"
+     *        extendedMetaData="kind='element' name='Bounds' namespace='http://www.omg.org/spec/DD/20150101/DC'"
      * @generated
      */
     Bounds getBounds();
@@ -120,7 +120,7 @@ public interface DocumentRoot extends EObject {
      * @see #setFont(Font)
      * @see org.eclipse.dd.cmmn.dc.DcPackage#getDocumentRoot_Font()
      * @model containment="true" upper="-2" transient="true" volatile="true" derived="true"
-     *        extendedMetaData="kind='element' name='Font' namespace='http://www.omg.org/spec/DD/20100524/DC'"
+     *        extendedMetaData="kind='element' name='Font' namespace='http://www.omg.org/spec/DD/20150101/DC'"
      * @generated
      */
     Font getFont();
@@ -147,7 +147,7 @@ public interface DocumentRoot extends EObject {
      * @see #setPoint(Point)
      * @see org.eclipse.dd.cmmn.dc.DcPackage#getDocumentRoot_Point()
      * @model containment="true" upper="-2" transient="true" volatile="true" derived="true"
-     *        extendedMetaData="kind='element' name='Point' namespace='http://www.omg.org/spec/DD/20100524/DC'"
+     *        extendedMetaData="kind='element' name='Point' namespace='http://www.omg.org/spec/DD/20150101/DC'"
      * @generated
      */
     Point getPoint();

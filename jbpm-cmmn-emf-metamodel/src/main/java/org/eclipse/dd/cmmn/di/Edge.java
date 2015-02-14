@@ -67,7 +67,7 @@ public interface Edge extends DiagramElement {
      * @return the value of the '<em>Waypoint</em>' containment reference list.
      * @see org.eclipse.dd.cmmn.di.DiPackage#getEdge_Waypoint()
      * @model containment="true" lower="2"
-     *        extendedMetaData="kind='element' name='waypoint' namespace='http://www.omg.org/spec/DD/20100524/DI'"
+     *        extendedMetaData="kind='element' name='waypoint' namespace='http://www.omg.org/spec/DD/20150101/DI'"
      * @generated
      */
     EList<Point> getWaypoint();

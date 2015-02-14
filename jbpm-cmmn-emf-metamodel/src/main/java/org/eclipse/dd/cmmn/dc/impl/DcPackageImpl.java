@@ -518,7 +518,7 @@ public class DcPackageImpl extends EPackageImpl implements DcPackage {
            new String[] {
              "kind", "element",
              "name", "Bounds",
-             "namespace", "http://www.omg.org/spec/DD/20100524/DC"
+             "namespace", "http://www.omg.org/spec/DD/20150101/DC"
            });	
         addAnnotation
           (getDocumentRoot_Font(), 
@@ -526,7 +526,7 @@ public class DcPackageImpl extends EPackageImpl implements DcPackage {
            new String[] {
              "kind", "element",
              "name", "Font",
-             "namespace", "http://www.omg.org/spec/DD/20100524/DC"
+             "namespace", "http://www.omg.org/spec/DD/20150101/DC"
            });	
         addAnnotation
           (getDocumentRoot_Point(), 
@@ -534,7 +534,7 @@ public class DcPackageImpl extends EPackageImpl implements DcPackage {
            new String[] {
              "kind", "element",
              "name", "Point",
-             "namespace", "http://www.omg.org/spec/DD/20100524/DC"
+             "namespace", "http://www.omg.org/spec/DD/20150101/DC"
            });	
         addAnnotation
           (boundsEClass, 

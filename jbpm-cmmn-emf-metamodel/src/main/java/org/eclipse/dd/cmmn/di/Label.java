@@ -34,7 +34,7 @@ public interface Label extends Node {
      * @see #setBounds(Bounds)
      * @see org.eclipse.dd.cmmn.di.DiPackage#getLabel_Bounds()
      * @model containment="true" ordered="false"
-     *        extendedMetaData="kind='element' name='Bounds' namespace='http://www.omg.org/spec/DD/20100524/DC'"
+     *        extendedMetaData="kind='element' name='Bounds' namespace='http://www.omg.org/spec/DD/20150101/DC'"
      * @generated
      */
     Bounds getBounds();

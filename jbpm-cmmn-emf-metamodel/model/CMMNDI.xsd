@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:cmmndi="http://www.omg.org/spec/CMMN/20131201/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:cmmndi="http://www.omg.org/spec/CMMN/20131201/DI" xmlns:dc="http://www.omg.org/spec/DD/20150101/DC" xmlns:di="http://www.omg.org/spec/DD/20150101/DI"
 targetNamespace="http://www.omg.org/spec/CMMN/20131201/DI"  elementFormDefault="qualified" attributeFormDefault="unqualified">
 
-	<xsd:import namespace="http://www.omg.org/spec/DD/20100524/DC" schemaLocation="DC.xsd" />
-	<xsd:import namespace="http://www.omg.org/spec/DD/20100524/DI" schemaLocation="DI.xsd" />
+	<xsd:import namespace="http://www.omg.org/spec/DD/20150101/DC" schemaLocation="DC.xsd" />
+	<xsd:import namespace="http://www.omg.org/spec/DD/20150101/DI" schemaLocation="DI.xsd" />
 
 	<xsd:element name="CMMNDiagram" type="cmmndi:CMMNDiagram" />
 	<xsd:element name="CMMNPlane" type="cmmndi:CMMNPlane" />

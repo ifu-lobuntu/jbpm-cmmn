@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="di" nsURI="http://www.omg.org/spec/DD/20100524/DI-XMI" nsPrefix="di">
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="di" nsURI="http://www.omg.org/spec/DD/20150101/DI-XMI" nsPrefix="di">
   <eClassifiers xsi:type="ecore:EClass" name="DocumentRoot">
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="name" value=""/>
@@ -35,7 +35,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="DiagramElement"/>
-        <details key="namespace" value="http://www.omg.org/spec/DD/20100524/DI"/>
+        <details key="namespace" value="http://www.omg.org/spec/DD/20150101/DI"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="diagram" upperBound="-2"
@@ -44,7 +44,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="Diagram"/>
-        <details key="namespace" value="http://www.omg.org/spec/DD/20100524/DI"/>
+        <details key="namespace" value="http://www.omg.org/spec/DD/20150101/DI"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="edge" upperBound="-2" eType="#//Edge"
@@ -52,7 +52,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="Edge"/>
-        <details key="namespace" value="http://www.omg.org/spec/DD/20100524/DI"/>
+        <details key="namespace" value="http://www.omg.org/spec/DD/20150101/DI"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="label" upperBound="-2"
@@ -61,7 +61,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="Label"/>
-        <details key="namespace" value="http://www.omg.org/spec/DD/20100524/DI"/>
+        <details key="namespace" value="http://www.omg.org/spec/DD/20150101/DI"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="labeledEdge" upperBound="-2"
@@ -70,7 +70,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="LabeledEdge"/>
-        <details key="namespace" value="http://www.omg.org/spec/DD/20100524/DI"/>
+        <details key="namespace" value="http://www.omg.org/spec/DD/20150101/DI"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="labeledShape" upperBound="-2"
@@ -79,7 +79,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="LabeledShape"/>
-        <details key="namespace" value="http://www.omg.org/spec/DD/20100524/DI"/>
+        <details key="namespace" value="http://www.omg.org/spec/DD/20150101/DI"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="node" upperBound="-2" eType="#//Node"
@@ -87,7 +87,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="Node"/>
-        <details key="namespace" value="http://www.omg.org/spec/DD/20100524/DI"/>
+        <details key="namespace" value="http://www.omg.org/spec/DD/20150101/DI"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="plane" upperBound="-2"
@@ -96,7 +96,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="Plane"/>
-        <details key="namespace" value="http://www.omg.org/spec/DD/20100524/DI"/>
+        <details key="namespace" value="http://www.omg.org/spec/DD/20150101/DI"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="shape" upperBound="-2"
@@ -105,7 +105,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="Shape"/>
-        <details key="namespace" value="http://www.omg.org/spec/DD/20100524/DI"/>
+        <details key="namespace" value="http://www.omg.org/spec/DD/20150101/DI"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="style" upperBound="-2"
@@ -114,7 +114,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="Style"/>
-        <details key="namespace" value="http://www.omg.org/spec/DD/20100524/DI"/>
+        <details key="namespace" value="http://www.omg.org/spec/DD/20150101/DI"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
@@ -207,7 +207,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="waypoint"/>
-        <details key="namespace" value="http://www.omg.org/spec/DD/20100524/DI"/>
+        <details key="namespace" value="http://www.omg.org/spec/DD/20150101/DI"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
@@ -221,7 +221,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="Bounds"/>
-        <details key="namespace" value="http://www.omg.org/spec/DD/20100524/DC"/>
+        <details key="namespace" value="http://www.omg.org/spec/DD/20150101/DC"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
@@ -276,8 +276,8 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="DiagramElement"/>
-        <details key="namespace" value="http://www.omg.org/spec/DD/20100524/DI"/>
-        <details key="group" value="http://www.omg.org/spec/DD/20100524/DI#DiagramElement"/>
+        <details key="namespace" value="http://www.omg.org/spec/DD/20150101/DI"/>
+        <details key="group" value="http://www.omg.org/spec/DD/20150101/DI#DiagramElement"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
@@ -291,7 +291,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="Bounds"/>
-        <details key="namespace" value="http://www.omg.org/spec/DD/20100524/DC"/>
+        <details key="namespace" value="http://www.omg.org/spec/DD/20150101/DC"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>

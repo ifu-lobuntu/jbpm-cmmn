@@ -10,6 +10,8 @@ import org.eclipse.cmmn1.Cmmn1Factory;
 import org.eclipse.cmmn1.Cmmn1Package;
 import org.eclipse.cmmn1.TDefinitions;
 import org.eclipse.cmmn1.TImport;
+import org.eclipse.cmmndi.CmmnDiPackage;
+import org.eclipse.dd.cmmn.di.DiPackage;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -55,6 +57,9 @@ public class Cmmn1ResourceImpl extends XMLResourceImpl {
         referrables.add(Cmmn1Package.eINSTANCE.getTSentry());
         referrables.add(Cmmn1Package.eINSTANCE.getTStage());
         referrables.add(Cmmn1Package.eINSTANCE.getTTimerEvent());
+        referrables.add(Cmmn1Package.eINSTANCE.getTProperty());
+        referrables.add(CmmnDiPackage.eINSTANCE.getCMMNShape());
+        referrables.add(CmmnDiPackage.eINSTANCE.getCMMNEdge());
     }
     private CmmnXmlHelper xmlHelper;
     private QNameURIHandler uriHandler;
@@ -143,12 +148,12 @@ public class Cmmn1ResourceImpl extends XMLResourceImpl {
             TDefinitions importedDef = ImportHelper.getDefinitions(referenced);
             // only handle CMMN imports (with declared target namespace)
             if (importedDef != null && importedDef.getTargetNamespace() != null) {
-                TImport newImport = Cmmn1Factory.eINSTANCE.createTImport();
-                newImport.setImportType(NamespaceHelper.xmiToXsdNamespaceUri(Cmmn1Package.eNS_URI));
-                newImport.setNamespace(importedDef.getTargetNamespace());
-                // Counterpart: location.resolve(referencingURI) == referencedURI !
-                newImport.setLocation(referencedURI.deresolve(referencingURI).toString());
-                definitions.getImport().add(newImport);
+//                TImport newImport = Cmmn1Factory.eINSTANCE.createTImport();
+//                newImport.setImportType(NamespaceHelper.xmiToXsdNamespaceUri(Cmmn1Package.eNS_URI));
+//                newImport.setNamespace(importedDef.getTargetNamespace());
+//                // Counterpart: location.resolve(referencingURI) == referencedURI !
+//                newImport.setLocation(referencedURI.deresolve(referencingURI).toString());
+//                definitions.getImport().add(newImport);
             }
         }
     }

@@ -100,7 +100,7 @@ public interface DocumentRoot extends EObject {
      * @see #setDiagramElement(DiagramElement)
      * @see org.eclipse.dd.cmmn.di.DiPackage#getDocumentRoot_DiagramElement()
      * @model containment="true" upper="-2" transient="true" volatile="true" derived="true"
-     *        extendedMetaData="kind='element' name='DiagramElement' namespace='http://www.omg.org/spec/DD/20100524/DI'"
+     *        extendedMetaData="kind='element' name='DiagramElement' namespace='http://www.omg.org/spec/DD/20150101/DI'"
      * @generated
      */
     DiagramElement getDiagramElement();
@@ -127,7 +127,7 @@ public interface DocumentRoot extends EObject {
      * @see #setDiagram(Diagram)
      * @see org.eclipse.dd.cmmn.di.DiPackage#getDocumentRoot_Diagram()
      * @model containment="true" upper="-2" transient="true" volatile="true" derived="true"
-     *        extendedMetaData="kind='element' name='Diagram' namespace='http://www.omg.org/spec/DD/20100524/DI'"
+     *        extendedMetaData="kind='element' name='Diagram' namespace='http://www.omg.org/spec/DD/20150101/DI'"
      * @generated
      */
     Diagram getDiagram();
@@ -154,7 +154,7 @@ public interface DocumentRoot extends EObject {
      * @see #setEdge(Edge)
      * @see org.eclipse.dd.cmmn.di.DiPackage#getDocumentRoot_Edge()
      * @model containment="true" upper="-2" transient="true" volatile="true" derived="true"
-     *        extendedMetaData="kind='element' name='Edge' namespace='http://www.omg.org/spec/DD/20100524/DI'"
+     *        extendedMetaData="kind='element' name='Edge' namespace='http://www.omg.org/spec/DD/20150101/DI'"
      * @generated
      */
     Edge getEdge();
@@ -181,7 +181,7 @@ public interface DocumentRoot extends EObject {
      * @see #setLabel(Label)
      * @see org.eclipse.dd.cmmn.di.DiPackage#getDocumentRoot_Label()
      * @model containment="true" upper="-2" transient="true" volatile="true" derived="true"
-     *        extendedMetaData="kind='element' name='Label' namespace='http://www.omg.org/spec/DD/20100524/DI'"
+     *        extendedMetaData="kind='element' name='Label' namespace='http://www.omg.org/spec/DD/20150101/DI'"
      * @generated
      */
     Label getLabel();
@@ -208,7 +208,7 @@ public interface DocumentRoot extends EObject {
      * @see #setLabeledEdge(LabeledEdge)
      * @see org.eclipse.dd.cmmn.di.DiPackage#getDocumentRoot_LabeledEdge()
      * @model containment="true" upper="-2" transient="true" volatile="true" derived="true"
-     *        extendedMetaData="kind='element' name='LabeledEdge' namespace='http://www.omg.org/spec/DD/20100524/DI'"
+     *        extendedMetaData="kind='element' name='LabeledEdge' namespace='http://www.omg.org/spec/DD/20150101/DI'"
      * @generated
      */
     LabeledEdge getLabeledEdge();
@@ -235,7 +235,7 @@ public interface DocumentRoot extends EObject {
      * @see #setLabeledShape(LabeledShape)
      * @see org.eclipse.dd.cmmn.di.DiPackage#getDocumentRoot_LabeledShape()
      * @model containment="true" upper="-2" transient="true" volatile="true" derived="true"
-     *        extendedMetaData="kind='element' name='LabeledShape' namespace='http://www.omg.org/spec/DD/20100524/DI'"
+     *        extendedMetaData="kind='element' name='LabeledShape' namespace='http://www.omg.org/spec/DD/20150101/DI'"
      * @generated
      */
     LabeledShape getLabeledShape();
@@ -262,7 +262,7 @@ public interface DocumentRoot extends EObject {
      * @see #setNode(Node)
      * @see org.eclipse.dd.cmmn.di.DiPackage#getDocumentRoot_Node()
      * @model containment="true" upper="-2" transient="true" volatile="true" derived="true"
-     *        extendedMetaData="kind='element' name='Node' namespace='http://www.omg.org/spec/DD/20100524/DI'"
+     *        extendedMetaData="kind='element' name='Node' namespace='http://www.omg.org/spec/DD/20150101/DI'"
      * @generated
      */
     Node getNode();
@@ -289,7 +289,7 @@ public interface DocumentRoot extends EObject {
      * @see #setPlane(Plane)
      * @see org.eclipse.dd.cmmn.di.DiPackage#getDocumentRoot_Plane()
      * @model containment="true" upper="-2" transient="true" volatile="true" derived="true"
-     *        extendedMetaData="kind='element' name='Plane' namespace='http://www.omg.org/spec/DD/20100524/DI'"
+     *        extendedMetaData="kind='element' name='Plane' namespace='http://www.omg.org/spec/DD/20150101/DI'"
      * @generated
      */
     Plane getPlane();
@@ -316,7 +316,7 @@ public interface DocumentRoot extends EObject {
      * @see #setShape(Shape)
      * @see org.eclipse.dd.cmmn.di.DiPackage#getDocumentRoot_Shape()
      * @model containment="true" upper="-2" transient="true" volatile="true" derived="true"
-     *        extendedMetaData="kind='element' name='Shape' namespace='http://www.omg.org/spec/DD/20100524/DI'"
+     *        extendedMetaData="kind='element' name='Shape' namespace='http://www.omg.org/spec/DD/20150101/DI'"
      * @generated
      */
     Shape getShape();
@@ -343,7 +343,7 @@ public interface DocumentRoot extends EObject {
      * @see #setStyle(Style)
      * @see org.eclipse.dd.cmmn.di.DiPackage#getDocumentRoot_Style()
      * @model containment="true" upper="-2" transient="true" volatile="true" derived="true"
-     *        extendedMetaData="kind='element' name='Style' namespace='http://www.omg.org/spec/DD/20100524/DI'"
+     *        extendedMetaData="kind='element' name='Style' namespace='http://www.omg.org/spec/DD/20150101/DI'"
      * @generated
      */
     Style getStyle();

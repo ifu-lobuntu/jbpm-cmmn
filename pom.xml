@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<parent>
 		<groupId>org.jbpm</groupId>
 		<artifactId>jbpm</artifactId>
@@ -20,6 +19,11 @@
 	</modules>
 	<dependencyManagement>
 		<dependencies>
+			<dependency>
+				<groupId>${project.parent.groupId}</groupId>
+				<artifactId>jbpm-cmmn-emf-metamodel</artifactId>
+				<version>${project.parent.version}</version>
+			</dependency>
 			<dependency>
 				<groupId>${project.parent.groupId}</groupId>
 				<artifactId>jbpm-cmmn-common</artifactId>

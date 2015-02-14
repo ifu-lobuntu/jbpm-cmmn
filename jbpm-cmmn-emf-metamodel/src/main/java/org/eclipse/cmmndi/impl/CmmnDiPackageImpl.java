@@ -672,7 +672,7 @@ public class CmmnDiPackageImpl extends EPackageImpl implements CmmnDiPackage {
            new String[] {
              "kind", "element",
              "name", "Font",
-             "namespace", "http://www.omg.org/spec/DD/20100524/DC"
+             "namespace", "http://www.omg.org/spec/DD/20150101/DC"
            });	
         addAnnotation
           (cmmnPlaneEClass, 
@@ -774,7 +774,7 @@ public class CmmnDiPackageImpl extends EPackageImpl implements CmmnDiPackage {
              "kind", "element",
              "name", "CMMNEdge",
              "namespace", "##targetNamespace",
-             "affiliation", "http://www.omg.org/spec/DD/20100524/DI#DiagramElement"
+             "affiliation", "http://www.omg.org/spec/DD/20150101/DI#DiagramElement"
            });	
         addAnnotation
           (getDocumentRoot_CMMNLabel(), 
@@ -807,7 +807,7 @@ public class CmmnDiPackageImpl extends EPackageImpl implements CmmnDiPackage {
              "kind", "element",
              "name", "CMMNShape",
              "namespace", "##targetNamespace",
-             "affiliation", "http://www.omg.org/spec/DD/20100524/DI#DiagramElement"
+             "affiliation", "http://www.omg.org/spec/DD/20150101/DI#DiagramElement"
            });
     }
 

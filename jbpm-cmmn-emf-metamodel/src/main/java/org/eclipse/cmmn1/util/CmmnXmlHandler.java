@@ -6,7 +6,6 @@ import java.util.Set;
 
 import javax.xml.namespace.QName;
 
-import org.eclipse.bpmn2.Extension;
 import org.eclipse.cmmn1.Cmmn1Package;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -86,12 +85,12 @@ public class CmmnXmlHandler extends SAXXMLHandler {
     public void endElement(String uri, String localName, String name) {
         // Detect Extension object
         EObject peekObject = objects.peek();
-        if (peekObject instanceof Extension) {
-            Extension extension = (Extension) peekObject;
-            if (extension.isMustUnderstand() && null != extension.getXsdDefinition()) {
-                loadExtensionSchema(extension.getXsdDefinition());
-            }
-        }
+//        if (peekObject instanceof Extension) {
+//            Extension extension = (Extension) peekObject;
+//            if (extension.isMustUnderstand() && null != extension.getXsdDefinition()) {
+//                loadExtensionSchema(extension.getXsdDefinition());
+//            }
+//        }
         super.endElement(uri, localName, name);
     }
 }

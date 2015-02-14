@@ -84,7 +84,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="Font"/>
-        <details key="namespace" value="http://www.omg.org/spec/DD/20100524/DC"/>
+        <details key="namespace" value="http://www.omg.org/spec/DD/20150101/DC"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
@@ -206,7 +206,7 @@
         <details key="kind" value="element"/>
         <details key="name" value="CMMNEdge"/>
         <details key="namespace" value="##targetNamespace"/>
-        <details key="affiliation" value="http://www.omg.org/spec/DD/20100524/DI#DiagramElement"/>
+        <details key="affiliation" value="http://www.omg.org/spec/DD/20150101/DI#DiagramElement"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="cMMNLabel" upperBound="-2"
@@ -243,7 +243,7 @@
         <details key="kind" value="element"/>
         <details key="name" value="CMMNShape"/>
         <details key="namespace" value="##targetNamespace"/>
-        <details key="affiliation" value="http://www.omg.org/spec/DD/20100524/DI#DiagramElement"/>
+        <details key="affiliation" value="http://www.omg.org/spec/DD/20150101/DI#DiagramElement"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
