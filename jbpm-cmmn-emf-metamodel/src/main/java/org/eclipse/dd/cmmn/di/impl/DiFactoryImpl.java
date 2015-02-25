@@ -2,7 +2,10 @@
  */
 package org.eclipse.dd.cmmn.di.impl;
 
-import org.eclipse.dd.cmmn.di.*;
+import org.eclipse.dd.cmmn.di.DiFactory;
+import org.eclipse.dd.cmmn.di.DiPackage;
+import org.eclipse.dd.cmmn.di.DiagramElement;
+import org.eclipse.dd.cmmn.di.DocumentRoot;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;

@@ -3,6 +3,7 @@
 package org.eclipse.dd.cmmn.di.impl;
 
 import java.util.Collection;
+
 import org.eclipse.dd.cmmn.dc.Point;
 import org.eclipse.dd.cmmn.di.DiPackage;
 import org.eclipse.dd.cmmn.di.DiagramElement;

@@ -3,6 +3,8 @@ package org.eclipse.cmmn1.util;
 import java.io.File;
 import java.io.IOException;
 
+import org.eclipse.bpmn2.Definitions;
+import org.eclipse.bpmn2.Import;
 import org.eclipse.cmmn1.DocumentRoot;
 import org.eclipse.cmmn1.TDefinitions;
 import org.eclipse.cmmn1.TImport;

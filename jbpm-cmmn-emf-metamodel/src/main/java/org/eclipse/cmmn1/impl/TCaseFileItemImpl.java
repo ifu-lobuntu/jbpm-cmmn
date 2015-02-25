@@ -3,6 +3,7 @@
 package org.eclipse.cmmn1.impl;
 
 import java.util.Collection;
+
 import org.eclipse.cmmn1.Cmmn1Package;
 import org.eclipse.cmmn1.MultiplicityEnum;
 import org.eclipse.cmmn1.TCaseFileItem;

@@ -5,7 +5,8 @@ package org.jbpm.cmmn.jbpmext.util;
 import org.eclipse.cmmn1.Switch;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-import org.jbpm.cmmn.jbpmext.*;
+import org.jbpm.cmmn.jbpmext.DocumentRoot;
+import org.jbpm.cmmn.jbpmext.JbpmextPackage;
 
 /**
  * <!-- begin-user-doc -->

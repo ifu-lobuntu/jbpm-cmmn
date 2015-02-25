@@ -16,4 +16,6 @@
 
 	<attribute name="color" type="color:HexColor"/>
 
+	<attribute name="font-size" type="integer"/>
+
 </schema>

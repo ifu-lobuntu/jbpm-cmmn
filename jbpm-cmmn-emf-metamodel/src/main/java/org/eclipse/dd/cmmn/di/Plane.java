@@ -3,6 +3,7 @@
 package org.eclipse.dd.cmmn.di;
 
 import java.util.Map;
+
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.common.util.EList;
 

@@ -3,6 +3,7 @@
 package org.eclipse.cmmn1.util;
 
 import java.util.Map;
+
 import org.eclipse.cmmn1.CaseFileItemTransition;
 import org.eclipse.cmmn1.Cmmn1Package;
 import org.eclipse.cmmn1.DefinitionTypeEnumMember1;

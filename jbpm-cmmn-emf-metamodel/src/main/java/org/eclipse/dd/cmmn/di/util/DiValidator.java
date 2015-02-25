@@ -3,7 +3,7 @@
 package org.eclipse.dd.cmmn.di.util;
 
 import java.util.Map;
-import org.eclipse.dd.cmmn.di.*;
+
 import org.eclipse.dd.cmmn.di.DiPackage;
 import org.eclipse.dd.cmmn.di.Diagram;
 import org.eclipse.dd.cmmn.di.DiagramElement;

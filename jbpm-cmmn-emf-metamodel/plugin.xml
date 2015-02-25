@@ -108,4 +108,32 @@
             type="jbpmext"
             class="org.jbpm.cmmn.jbpmext.util.JbpmextResourceFactoryImpl"/>
    </extension>
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated color -->
+      <package
+            uri="http://www.omg.org/spec/DD/non-normative/color"
+            class="org.eclipse.dd.color.color.ColorPackage"
+            genModel="model/color.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <!-- @generated color -->
+      <parser
+            type="color"
+            class="org.eclipse.dd.color.color.util.ColorResourceFactoryImpl"/>
+   </extension>
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated UMLDI -->
+      <package
+            uri="http://www.omg.org/spec/UML/20131201/DI"
+            class="org.eclipse.uml2.di.umldi.UMLDIPackage"
+            genModel="model/UMLDI.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <!-- @generated UMLDI -->
+      <parser
+            type="umldi"
+            class="org.eclipse.uml2.di.umldi.util.UMLDIResourceFactoryImpl"/>
+   </extension>
 </plugin>

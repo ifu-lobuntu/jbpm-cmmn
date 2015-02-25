@@ -6,15 +6,13 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
-
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-
 import org.eclipse.emf.ecore.xml.type.XMLTypeFactory;
 import org.eclipse.emf.ecore.xml.type.XMLTypePackage;
-
-import org.jbpm.cmmn.jbpmext.*;
+import org.jbpm.cmmn.jbpmext.DocumentRoot;
+import org.jbpm.cmmn.jbpmext.JbpmextFactory;
+import org.jbpm.cmmn.jbpmext.JbpmextPackage;
 
 /**
  * <!-- begin-user-doc -->

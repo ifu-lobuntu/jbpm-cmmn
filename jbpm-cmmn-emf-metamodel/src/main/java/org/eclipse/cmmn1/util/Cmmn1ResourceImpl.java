@@ -6,12 +6,9 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import org.eclipse.cmmn1.Cmmn1Factory;
 import org.eclipse.cmmn1.Cmmn1Package;
 import org.eclipse.cmmn1.TDefinitions;
-import org.eclipse.cmmn1.TImport;
 import org.eclipse.cmmndi.CmmnDiPackage;
-import org.eclipse.dd.cmmn.di.DiPackage;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;

@@ -2,9 +2,9 @@ package org.eclipse.cmmn1.util;
 
 import javax.xml.XMLConstants;
 
+import org.eclipse.bpmn2.Definitions;
 import org.eclipse.cmmn1.TDefinitions;
 import org.eclipse.cmmn1.TImport;
-import org.eclipse.cmmn1.util.Cmmn1ResourceImpl;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.xmi.impl.XMLHelperImpl;

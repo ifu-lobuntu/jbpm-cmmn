@@ -4,6 +4,7 @@ package org.eclipse.dd.cmmn.dc.impl;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
+
 import org.eclipse.dd.cmmn.dc.DcPackage;
 import org.eclipse.dd.cmmn.dc.Font;
 import org.eclipse.dd.cmmn.dc.util.DcValidator;
