@@ -340,6 +340,15 @@ public class CmmnDiPackageImpl extends EPackageImpl implements CmmnDiPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    public EReference getCMMNShape_ChildShapes() {
+        return (EReference)cmmnShapeEClass.getEStructuralFeatures().get(5);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getDocumentRoot() {
         return documentRootEClass;
     }
@@ -478,6 +487,7 @@ public class CmmnDiPackageImpl extends EPackageImpl implements CmmnDiPackage {
         createEAttribute(cmmnShapeEClass, CMMN_SHAPE__IS_EXPANDED);
         createEAttribute(cmmnShapeEClass, CMMN_SHAPE__IS_HORIZONTAL);
         createEAttribute(cmmnShapeEClass, CMMN_SHAPE__IS_MARKER_VISIBLE);
+        createEReference(cmmnShapeEClass, CMMN_SHAPE__CHILD_SHAPES);
 
         documentRootEClass = createEClass(DOCUMENT_ROOT);
         createEAttribute(documentRootEClass, DOCUMENT_ROOT__MIXED);
@@ -558,6 +568,7 @@ public class CmmnDiPackageImpl extends EPackageImpl implements CmmnDiPackage {
         initEAttribute(getCMMNShape_IsExpanded(), theXMLTypePackage.getBoolean(), "isExpanded", null, 0, 1, CMMNShape.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getCMMNShape_IsHorizontal(), theXMLTypePackage.getBoolean(), "isHorizontal", null, 0, 1, CMMNShape.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getCMMNShape_IsMarkerVisible(), theXMLTypePackage.getBoolean(), "isMarkerVisible", null, 0, 1, CMMNShape.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getCMMNShape_ChildShapes(), theDiPackage.getDiagramElement(), null, "childShapes", null, 0, -1, CMMNShape.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(documentRootEClass, DocumentRoot.class, "DocumentRoot", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getDocumentRoot_Mixed(), ecorePackage.getEFeatureMapEntry(), "mixed", null, 0, -1, null, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

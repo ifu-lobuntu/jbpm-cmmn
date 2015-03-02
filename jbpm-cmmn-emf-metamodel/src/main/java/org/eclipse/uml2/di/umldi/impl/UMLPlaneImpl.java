@@ -2,8 +2,10 @@
  */
 package org.eclipse.uml2.di.umldi.impl;
 
+import org.eclipse.dd.cmmn.di.DiagramElement;
 import org.eclipse.dd.cmmn.di.impl.PlaneImpl;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -154,6 +156,10 @@ public class UMLPlaneImpl extends PlaneImpl implements UMLPlane {
     @Override
     public EObject getModelElement() {
         return getUmlElement();
+    }
+    @Override
+    public EList<DiagramElement> getOwnedElement() {
+        return super.getPlaneElement();
     }
 
 } //UMLPlaneImpl

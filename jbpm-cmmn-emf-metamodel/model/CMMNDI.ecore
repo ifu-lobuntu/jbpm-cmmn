@@ -133,6 +133,8 @@
         <details key="name" value="isMarkerVisible"/>
       </eAnnotations>
     </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="childShapes" upperBound="-1"
+        eType="ecore:EClass DI.ecore#//DiagramElement" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DocumentRoot">
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">

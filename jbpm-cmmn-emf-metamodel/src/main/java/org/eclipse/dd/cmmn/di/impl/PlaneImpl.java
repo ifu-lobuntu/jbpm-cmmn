@@ -189,5 +189,9 @@ public abstract class PlaneImpl extends NodeImpl implements Plane {
         }
         return super.eInvoke(operationID, arguments);
     }
+    @Override
+    public EList<DiagramElement> getOwnedElement() {
+        return getPlaneElement();
+    }
 
 } //PlaneImpl

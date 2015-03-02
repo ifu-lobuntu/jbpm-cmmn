@@ -892,13 +892,22 @@ public interface CmmnDiPackage extends EPackage {
     int CMMN_SHAPE__IS_MARKER_VISIBLE = DiPackage.LABELED_SHAPE_FEATURE_COUNT + 4;
 
     /**
+     * The feature id for the '<em><b>Child Shapes</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CMMN_SHAPE__CHILD_SHAPES = DiPackage.LABELED_SHAPE_FEATURE_COUNT + 5;
+
+    /**
      * The number of structural features of the '<em>CMMN Shape</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int CMMN_SHAPE_FEATURE_COUNT = DiPackage.LABELED_SHAPE_FEATURE_COUNT + 5;
+    int CMMN_SHAPE_FEATURE_COUNT = DiPackage.LABELED_SHAPE_FEATURE_COUNT + 6;
 
     /**
      * The number of operations of the '<em>CMMN Shape</em>' class.
@@ -1260,6 +1269,17 @@ public interface CmmnDiPackage extends EPackage {
     EAttribute getCMMNShape_IsMarkerVisible();
 
     /**
+     * Returns the meta object for the containment reference list '{@link org.eclipse.cmmndi.CMMNShape#getChildShapes <em>Child Shapes</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Child Shapes</em>'.
+     * @see org.eclipse.cmmndi.CMMNShape#getChildShapes()
+     * @see #getCMMNShape()
+     * @generated
+     */
+    EReference getCMMNShape_ChildShapes();
+
+    /**
      * Returns the meta object for class '{@link org.eclipse.cmmndi.DocumentRoot <em>Document Root</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1562,6 +1582,14 @@ public interface CmmnDiPackage extends EPackage {
          * @generated
          */
         EAttribute CMMN_SHAPE__IS_MARKER_VISIBLE = eINSTANCE.getCMMNShape_IsMarkerVisible();
+
+        /**
+         * The meta object literal for the '<em><b>Child Shapes</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference CMMN_SHAPE__CHILD_SHAPES = eINSTANCE.getCMMNShape_ChildShapes();
 
         /**
          * The meta object literal for the '{@link org.eclipse.cmmndi.impl.DocumentRootImpl <em>Document Root</em>}' class.

@@ -2,17 +2,22 @@
  */
 package org.eclipse.cmmndi.impl;
 
+import java.util.Collection;
 import org.eclipse.cmmn1.TCmmnElement;
 import org.eclipse.cmmndi.CMMNLabel;
 import org.eclipse.cmmndi.CMMNShape;
 import org.eclipse.cmmndi.CmmnDiPackage;
+import org.eclipse.dd.cmmn.di.DiagramElement;
 import org.eclipse.dd.cmmn.di.impl.LabeledShapeImpl;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -26,6 +31,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *   <li>{@link org.eclipse.cmmndi.impl.CMMNShapeImpl#isIsExpanded <em>Is Expanded</em>}</li>
  *   <li>{@link org.eclipse.cmmndi.impl.CMMNShapeImpl#isIsHorizontal <em>Is Horizontal</em>}</li>
  *   <li>{@link org.eclipse.cmmndi.impl.CMMNShapeImpl#isIsMarkerVisible <em>Is Marker Visible</em>}</li>
+ *   <li>{@link org.eclipse.cmmndi.impl.CMMNShapeImpl#getChildShapes <em>Child Shapes</em>}</li>
  * </ul>
  * </p>
  *
@@ -138,6 +144,16 @@ public class CMMNShapeImpl extends LabeledShapeImpl implements CMMNShape {
      * @ordered
      */
     protected boolean isMarkerVisibleESet;
+
+    /**
+     * The cached value of the '{@link #getChildShapes() <em>Child Shapes</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getChildShapes()
+     * @generated
+     * @ordered
+     */
+    protected EList<DiagramElement> childShapes;
 
     /**
      * <!-- begin-user-doc -->
@@ -387,11 +403,25 @@ public class CMMNShapeImpl extends LabeledShapeImpl implements CMMNShape {
      * <!-- end-user-doc -->
      * @generated
      */
+    public EList<DiagramElement> getChildShapes() {
+        if (childShapes == null) {
+            childShapes = new EObjectContainmentEList<DiagramElement>(DiagramElement.class, this, CmmnDiPackage.CMMN_SHAPE__CHILD_SHAPES);
+        }
+        return childShapes;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
             case CmmnDiPackage.CMMN_SHAPE__CMMN_LABEL:
                 return basicSetCMMNLabel(null, msgs);
+            case CmmnDiPackage.CMMN_SHAPE__CHILD_SHAPES:
+                return ((InternalEList<?>)getChildShapes()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -415,6 +445,8 @@ public class CMMNShapeImpl extends LabeledShapeImpl implements CMMNShape {
                 return isIsHorizontal();
             case CmmnDiPackage.CMMN_SHAPE__IS_MARKER_VISIBLE:
                 return isIsMarkerVisible();
+            case CmmnDiPackage.CMMN_SHAPE__CHILD_SHAPES:
+                return getChildShapes();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -424,6 +456,7 @@ public class CMMNShapeImpl extends LabeledShapeImpl implements CMMNShape {
      * <!-- end-user-doc -->
      * @generated
      */
+    @SuppressWarnings("unchecked")
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
@@ -441,6 +474,10 @@ public class CMMNShapeImpl extends LabeledShapeImpl implements CMMNShape {
                 return;
             case CmmnDiPackage.CMMN_SHAPE__IS_MARKER_VISIBLE:
                 setIsMarkerVisible((Boolean)newValue);
+                return;
+            case CmmnDiPackage.CMMN_SHAPE__CHILD_SHAPES:
+                getChildShapes().clear();
+                getChildShapes().addAll((Collection<? extends DiagramElement>)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -469,6 +506,9 @@ public class CMMNShapeImpl extends LabeledShapeImpl implements CMMNShape {
             case CmmnDiPackage.CMMN_SHAPE__IS_MARKER_VISIBLE:
                 unsetIsMarkerVisible();
                 return;
+            case CmmnDiPackage.CMMN_SHAPE__CHILD_SHAPES:
+                getChildShapes().clear();
+                return;
         }
         super.eUnset(featureID);
     }
@@ -491,6 +531,8 @@ public class CMMNShapeImpl extends LabeledShapeImpl implements CMMNShape {
                 return isSetIsHorizontal();
             case CmmnDiPackage.CMMN_SHAPE__IS_MARKER_VISIBLE:
                 return isSetIsMarkerVisible();
+            case CmmnDiPackage.CMMN_SHAPE__CHILD_SHAPES:
+                return childShapes != null && !childShapes.isEmpty();
         }
         return super.eIsSet(featureID);
     }
@@ -515,4 +557,8 @@ public class CMMNShapeImpl extends LabeledShapeImpl implements CMMNShape {
         return result.toString();
     }
 
+    @Override
+    public EList<DiagramElement> getOwnedElement() {
+        return getChildShapes();
+    }
 } //CMMNShapeImpl

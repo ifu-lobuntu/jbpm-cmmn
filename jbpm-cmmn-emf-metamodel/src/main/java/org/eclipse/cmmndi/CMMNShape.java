@@ -3,7 +3,9 @@
 package org.eclipse.cmmndi;
 
 import org.eclipse.cmmn1.TCmmnElement;
+import org.eclipse.dd.cmmn.di.DiagramElement;
 import org.eclipse.dd.cmmn.di.LabeledShape;
+import org.eclipse.emf.common.util.EList;
 
 /**
  * <!-- begin-user-doc -->
@@ -18,6 +20,7 @@ import org.eclipse.dd.cmmn.di.LabeledShape;
  *   <li>{@link org.eclipse.cmmndi.CMMNShape#isIsExpanded <em>Is Expanded</em>}</li>
  *   <li>{@link org.eclipse.cmmndi.CMMNShape#isIsHorizontal <em>Is Horizontal</em>}</li>
  *   <li>{@link org.eclipse.cmmndi.CMMNShape#isIsMarkerVisible <em>Is Marker Visible</em>}</li>
+ *   <li>{@link org.eclipse.cmmndi.CMMNShape#getChildShapes <em>Child Shapes</em>}</li>
  * </ul>
  * </p>
  *
@@ -240,5 +243,21 @@ public interface CMMNShape extends LabeledShape {
      * @generated
      */
     boolean isSetIsMarkerVisible();
+
+    /**
+     * Returns the value of the '<em><b>Child Shapes</b></em>' containment reference list.
+     * The list contents are of type {@link org.eclipse.dd.cmmn.di.DiagramElement}.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Child Shapes</em>' containment reference list isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Child Shapes</em>' containment reference list.
+     * @see org.eclipse.cmmndi.CmmnDiPackage#getCMMNShape_ChildShapes()
+     * @model containment="true"
+     * @generated
+     */
+    EList<DiagramElement> getChildShapes();
 
 } // CMMNShape
