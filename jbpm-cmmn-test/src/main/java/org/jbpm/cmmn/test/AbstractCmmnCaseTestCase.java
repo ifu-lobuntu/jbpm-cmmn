@@ -26,6 +26,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.transaction.UserTransaction;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.TransformerFactoryConfigurationError;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.jackrabbit.commons.cnd.CndImporter;
@@ -95,16 +101,13 @@ import org.jbpm.process.instance.ProcessInstanceFactoryRegistry;
 import org.jbpm.process.instance.event.DefaultSignalManagerFactory;
 import org.jbpm.process.instance.impl.DefaultProcessInstanceManagerFactory;
 import org.jbpm.ruleflow.core.RuleFlowProcess;
-import org.jbpm.runtime.manager.impl.DefaultRegisterableItemsFactory;
 import org.jbpm.runtime.manager.impl.SimpleRegisterableItemsFactory;
 import org.jbpm.runtime.manager.impl.factory.LocalTaskServiceFactory;
 import org.jbpm.services.task.identity.JBossUserGroupCallbackImpl;
 import org.jbpm.services.task.impl.model.GroupImpl;
 import org.jbpm.services.task.impl.model.UserImpl;
-import org.jbpm.services.task.lifecycle.listeners.TaskLifeCycleEventListener;
 import org.jbpm.services.task.wih.ExternalTaskEventListener;
 import org.jbpm.test.JbpmJUnitBaseTestCase;
-import org.jbpm.test.JbpmJUnitBaseTestCase.Strategy;
 import org.jbpm.workflow.instance.NodeInstanceContainer;
 import org.jbpm.workflow.instance.impl.NodeInstanceFactoryRegistry;
 import org.jbpm.workflow.instance.impl.factory.CreateNewNodeFactory;
@@ -126,6 +129,7 @@ import org.kie.api.runtime.manager.audit.NodeInstanceLog;
 import org.kie.api.runtime.process.NodeInstance;
 import org.kie.api.runtime.process.WorkItemHandler;
 import org.kie.api.task.TaskService;
+import org.kie.api.task.TaskLifeCycleEventListener;
 import org.kie.api.task.model.TaskSummary;
 import org.kie.internal.io.ResourceFactory;
 import org.kie.internal.task.api.ContentMarshallerContext;
@@ -177,6 +181,7 @@ public abstract class AbstractCmmnCaseTestCase extends JbpmJUnitBaseTestCase {
 
 	@Before
 	public void setUp() throws Exception {
+
 		stopwatch.start();
 		if (setupDataSource && (ds == null || emf == null)) {
 			ds = setupPoolingDataSource();
@@ -597,6 +602,7 @@ public abstract class AbstractCmmnCaseTestCase extends JbpmJUnitBaseTestCase {
 
 	@Override
 	protected RuntimeManager createRuntimeManager(String... processFile) {
+		writeProcessFiles(processFile);
 		DefinitionsHandler.registerTypeMap(CaseFileItemDefinitionType.UML_CLASS, new DefaultTypeMap());
 		DefinitionsHandler.registerTypeMap(CaseFileItemDefinitionType.CMIS_DOCUMENT, new JcrTypeMap());
 		DefinitionsHandler.registerTypeMap(CaseFileItemDefinitionType.CMIS_FOLDER, new JcrTypeMap());
@@ -656,6 +662,24 @@ public abstract class AbstractCmmnCaseTestCase extends JbpmJUnitBaseTestCase {
 		// groups ???
 		populateUsers();
 		return rm;
+	}
+
+	private void writeProcessFiles(String... processFile) throws TransformerFactoryConfigurationError {
+		try {
+			for (String string : processFile) {
+				TransformerFactory transformerFactory = TransformerFactory.newInstance();
+				Transformer transformer = transformerFactory.newTransformer();
+				DOMSource source = new DOMSource(DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new File("./src/test/resources/" + string)));
+				File outputFile = new File("./target/test-classes/" + string);
+				outputFile.getParentFile().mkdirs();
+				StreamResult result = new StreamResult(outputFile);
+				transformer.transform(source, result);
+			}
+		} catch (RuntimeException e) {
+			throw e;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	// temporary fix for bug in STandaloneJTa...STrategy

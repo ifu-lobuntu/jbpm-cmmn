@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE doc [
-<!ENTITY structureDefs SYSTEM "src/test/resources/test/structureDefs.xmlFragment">
-<!ENTITY caseFileModel SYSTEM "src/test/resources/test/caseFileModel.xmlFragment">
-<!ENTITY lifecycleTestTasks SYSTEM "src/test/resources/test/controllable/complexLifecycleTestTasks.xmlFragment">
+<!ENTITY structureDefs SYSTEM "../structureDefs.xmlFragment">
+<!ENTITY caseFileModel SYSTEM "../caseFileModel.xmlFragment">
+<!ENTITY lifecycleTestTasks SYSTEM "complexLifecycleTestTasks.xmlFragment">
 <!--!ENTITY structureDefs SYSTEM "structureDefs.xmlFragment">
 <!ENTITY caseFileModel SYSTEM "caseFileModel.xmlFragment"-->
 ]>

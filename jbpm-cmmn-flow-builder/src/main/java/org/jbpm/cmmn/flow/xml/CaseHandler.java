@@ -45,15 +45,6 @@ import org.xml.sax.SAXException;
 
 public class CaseHandler extends PlanItemContainerHandler implements Handler {
 	public static final String CURRENT_EVENT = "currentEvent";
-	public static final String CONNECTIONS = "BPMN.Connections";
-	public static final String LINKS = "BPMN.ThrowLinks";
-	public static final String ASSOCIATIONS = "BPMN.Associations";
-	public static final String ERRORS = "BPMN.Errors";
-	public static final String ESCALATIONS = "BPMN.Escalations";
-
-	static final String PROCESS_INSTANCE_SIGNAL_EVENT = "kcontext.getProcessInstance().signalEvent(\"";
-	static final String RUNTIME_SIGNAL_EVENT = "kcontext.getKnowledgeRuntime().signalEvent(\"";
-
 	public CaseHandler() {
 		if ((this.validParents == null) && (this.validPeers == null)) {
 			this.validParents = new HashSet<Class<?>>();

@@ -162,7 +162,7 @@
 					<execution>
 						<id>unpack-classes</id>
 						<goals>
-							<goal>unpack</goal>
+<!-- 							<goal>unpack</goal> -->
 						</goals>
 						<configuration>
 							<artifactItems>

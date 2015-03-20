@@ -15,7 +15,6 @@
 		<module>jbpm-cmmn-casefile</module>
 		<module>jbpm-cmmn-task</module>
 		<module>jbpm-cmmn-test</module>
-		<module>jbpm-cmmn-emf-metamodel</module>
 	</modules>
 	<dependencyManagement>
 		<dependencies>

@@ -2,6 +2,7 @@ package org.jbpm.cmmn.flow.core.planitem;
 
 import java.io.Serializable;
 
+import org.drools.core.process.core.datatype.DataType;
 import org.jbpm.cmmn.flow.core.CaseFileItem;
 import org.jbpm.cmmn.flow.core.CaseFileItemTransition;
 
@@ -26,6 +27,9 @@ public class CaseFileItemOnPart extends AbstractOnPart implements Serializable {
 	}
 
 	public void setSourceCaseFileItem(CaseFileItem caseFileItem) {
+		if(caseFileItem==null){
+			System.out.println();
+		}
 		this.sourceCaseFileItem = caseFileItem;
 	}
 
@@ -71,7 +75,9 @@ public class CaseFileItemOnPart extends AbstractOnPart implements Serializable {
 		if (getRelatedCaseFileItem() != null) {
 			return getRelatedCaseFileItem().getType().getStringType();
 		} else {
-			return getSourceCaseFileItem().getType().getStringType();
+			CaseFileItem cfi = getSourceCaseFileItem();
+			DataType type = cfi.getType();
+			return type.getStringType();
 		}
 	}
 
