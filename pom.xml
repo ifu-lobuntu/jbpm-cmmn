@@ -20,11 +20,6 @@
 		<dependencies>
 			<dependency>
 				<groupId>${project.parent.groupId}</groupId>
-				<artifactId>jbpm-cmmn-emf-metamodel</artifactId>
-				<version>${project.parent.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>${project.parent.groupId}</groupId>
 				<artifactId>jbpm-cmmn-common</artifactId>
 				<version>${project.parent.version}</version>
 			</dependency>

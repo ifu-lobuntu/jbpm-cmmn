@@ -90,6 +90,10 @@
 		</dependency>
 		<dependency>
 			<groupId>${project.parent.groupId}</groupId>
+			<artifactId>jbpm-cmmn-flow</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>${project.parent.groupId}</groupId>
 			<artifactId>jbpm-cmmn-flow-builder</artifactId>
 		</dependency>
 		<dependency>
