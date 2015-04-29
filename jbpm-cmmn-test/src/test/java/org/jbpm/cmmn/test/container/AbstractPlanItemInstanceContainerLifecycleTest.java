@@ -17,14 +17,6 @@ public abstract class AbstractPlanItemInstanceContainerLifecycleTest extends Abs
 		super();
 	}
 
-	public AbstractPlanItemInstanceContainerLifecycleTest(boolean setupDataSource, boolean sessionPersistence, String persistenceUnitName) {
-		super(setupDataSource, sessionPersistence, persistenceUnitName);
-	}
-
-	public AbstractPlanItemInstanceContainerLifecycleTest(boolean setupDataSource, boolean sessionPersistence) {
-		super(setupDataSource, sessionPersistence);
-	}
-
 	@Test
 	public void testCaseLifecycleCannotComplete() throws Exception {
 		// *****GIVEN

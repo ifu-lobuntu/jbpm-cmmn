@@ -22,7 +22,6 @@ public class CaseInstanceTest extends AbstractPlanItemInstanceContainerLifecycle
 	}
 
 	public CaseInstanceTest() {
-		super(true, true, "org.jbpm.persistence.jpa");
 	}
 
 	@Test

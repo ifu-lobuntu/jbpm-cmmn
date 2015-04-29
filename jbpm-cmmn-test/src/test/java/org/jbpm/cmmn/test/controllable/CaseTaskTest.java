@@ -28,7 +28,6 @@ public class CaseTaskTest extends AbstractControllableLifecycleTest {
 	}
 
 	public CaseTaskTest() {
-		super(true, true, "org.jbpm.persistence.jpa");
 	}
 
 	public String getEventGeneratingTaskUser() {

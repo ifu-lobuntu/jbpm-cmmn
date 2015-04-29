@@ -15,7 +15,6 @@ import test.cmmn.WallPlan;
 public class TimerEventTest extends AbstractOccurrableTestCase {
 
 	public TimerEventTest() {
-		super(true, true, "org.jbpm.persistence.jpa");
 	}
 
 	public String getCaseName() {

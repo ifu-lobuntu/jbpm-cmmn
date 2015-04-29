@@ -23,7 +23,6 @@ import test.cmmn.WallPlan;
 public class BuilderTest extends AbstractConstructionTestCase {
 
 	public BuilderTest() {
-		super(true, true, "org.jbpm.persistence.jpa");
 	}
 
 	@Test

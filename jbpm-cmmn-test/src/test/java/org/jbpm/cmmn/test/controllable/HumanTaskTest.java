@@ -21,7 +21,6 @@ public class HumanTaskTest extends AbstractControllableLifecycleTest {
 	}
 
 	public HumanTaskTest() {
-		super(true, true, "org.jbpm.persistence.jpa");
 	}
 
 	public String getEventGeneratingTaskUser() {

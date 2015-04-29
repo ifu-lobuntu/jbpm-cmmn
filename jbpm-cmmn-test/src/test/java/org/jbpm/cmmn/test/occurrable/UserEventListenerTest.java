@@ -5,7 +5,6 @@ import org.jbpm.cmmn.instance.CaseInstance;
 public class UserEventListenerTest extends AbstractOccurrableTestCase {
 
 	public UserEventListenerTest() {
-		super(true, true, "org.jbpm.persistence.jpa");
 	}
 
 	public String getCaseName() {

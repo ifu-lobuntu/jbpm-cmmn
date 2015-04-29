@@ -12,7 +12,6 @@ public class StageAsContainerTest extends AbstractPlanItemInstanceContainerLifec
 	}
 
 	public StageAsContainerTest() {
-		super(true, true, "org.jbpm.persistence.jpa");
 	}
 
 	@Override

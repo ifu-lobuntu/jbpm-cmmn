@@ -21,7 +21,6 @@ import test.cmmn.HousePlan;
 
 public abstract class SubscriptionScopeTest extends AbstractConstructionTestCase {
 	public SubscriptionScopeTest() {
-		super(true, true, "org.jbpm.persistence.jpa");
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })

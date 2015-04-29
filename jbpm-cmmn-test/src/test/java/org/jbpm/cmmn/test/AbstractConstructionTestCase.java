@@ -21,14 +21,6 @@ public class AbstractConstructionTestCase extends AbstractCmmnCaseTestCase {
 		super(true, true, "org.jbpm.persistence.jpa");
 	}
 
-	public AbstractConstructionTestCase(boolean setupDataSource, boolean sessionPersistence, String persistenceUnitName) {
-		super(setupDataSource, sessionPersistence, persistenceUnitName);
-	}
-
-	public AbstractConstructionTestCase(boolean setupDataSource, boolean sessionPersistence) {
-		super(setupDataSource, sessionPersistence);
-	}
-
 	@Override
 	protected Class<?>[] getClasses() {
 		return new Class<?>[] { ConstructionCase.class, HousePlan.class, House.class, Wall.class, WallPlan.class, RoofPlan.class,

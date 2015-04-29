@@ -29,14 +29,6 @@ public abstract class AbstractOccurrableTestCase extends AbstractConstructionTes
 		super();
 	}
 
-	public AbstractOccurrableTestCase(boolean setupDataSource, boolean sessionPersistence, String persistenceUnitName) {
-		super(setupDataSource, sessionPersistence, persistenceUnitName);
-	}
-
-	public AbstractOccurrableTestCase(boolean setupDataSource, boolean sessionPersistence) {
-		super(setupDataSource, sessionPersistence);
-	}
-
 	@Test
 	public void testSuspend() throws Exception {
 		// *****GIVEN

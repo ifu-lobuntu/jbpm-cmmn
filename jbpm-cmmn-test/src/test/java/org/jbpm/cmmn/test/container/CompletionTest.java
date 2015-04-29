@@ -17,7 +17,6 @@ import test.cmmn.HousePlan;
 public class CompletionTest extends AbstractConstructionTestCase {
 
 	public CompletionTest() {
-		super(true, true, "org.jbpm.persistence.jpa");
 	}
 
 	@Test

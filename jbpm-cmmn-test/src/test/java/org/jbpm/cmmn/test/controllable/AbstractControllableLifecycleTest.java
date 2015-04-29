@@ -27,15 +27,6 @@ public abstract class AbstractControllableLifecycleTest extends AbstractConstruc
 	public AbstractControllableLifecycleTest() {
 		super();
 	}
-
-	public AbstractControllableLifecycleTest(boolean setupDataSource, boolean sessionPersistence, String persistenceUnitName) {
-		super(setupDataSource, sessionPersistence, persistenceUnitName);
-	}
-
-	public AbstractControllableLifecycleTest(boolean setupDataSource, boolean sessionPersistence) {
-		super(setupDataSource, sessionPersistence);
-	}
-
 	@Test
 	public void testTaskLifecycleComplete() throws Exception {
 		stopwatch.start();

@@ -14,7 +14,6 @@ import test.cmmn.WallPlan;
 public abstract class CaseFileItemEventTest extends AbstractCaseFileItemEventTest {
 
 	public CaseFileItemEventTest() {
-		super(true, true, "org.jbpm.persistence.jpa");
 	}
 
 	@Override

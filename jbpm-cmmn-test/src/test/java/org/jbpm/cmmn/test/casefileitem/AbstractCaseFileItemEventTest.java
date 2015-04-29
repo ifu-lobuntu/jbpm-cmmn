@@ -12,15 +12,6 @@ public abstract class AbstractCaseFileItemEventTest extends AbstractConstruction
 	public AbstractCaseFileItemEventTest() {
 		super();
 	}
-
-	public AbstractCaseFileItemEventTest(boolean setupDataSource, boolean sessionPersistence, String persistenceUnitName) {
-		super(setupDataSource, sessionPersistence, persistenceUnitName);
-	}
-
-	public AbstractCaseFileItemEventTest(boolean setupDataSource, boolean sessionPersistence) {
-		super(setupDataSource, sessionPersistence);
-	}
-
 	protected abstract void addWallPlanAsChildToHousePlan() throws Exception;
 
 	protected abstract void removeWallPlansAsReferenceFromHouse();

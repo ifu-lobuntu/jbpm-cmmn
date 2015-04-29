@@ -26,7 +26,6 @@ public class ParameterTest extends AbstractConstructionTestCase {
 	private CaseInstance caseInstance;
 
 	public ParameterTest() {
-		super(true, true, "org.jbpm.persistence.jpa");
 	}
 
 	// TODO testTaskOutputParameters -writing to caseFilteItem - not essential for a pass-by-reference world

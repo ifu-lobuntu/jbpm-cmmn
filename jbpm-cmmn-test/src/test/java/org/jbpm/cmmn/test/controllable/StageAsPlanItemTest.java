@@ -10,7 +10,6 @@ public class StageAsPlanItemTest extends AbstractControllableLifecycleTest {
 	}
 
 	public StageAsPlanItemTest() {
-		super(true, true, "org.jbpm.persistence.jpa");
 	}
 
 	// @Test

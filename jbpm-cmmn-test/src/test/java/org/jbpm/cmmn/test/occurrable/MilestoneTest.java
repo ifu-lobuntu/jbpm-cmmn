@@ -17,7 +17,6 @@ import org.kie.api.task.model.TaskSummary;
 
 public class MilestoneTest extends AbstractOccurrableTestCase {
 	public MilestoneTest() {
-		super(true, true, "org.jbpm.persistence.jpa");
 	}
 
 

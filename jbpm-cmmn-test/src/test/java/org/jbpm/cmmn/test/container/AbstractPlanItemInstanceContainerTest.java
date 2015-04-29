@@ -29,14 +29,6 @@ public abstract class AbstractPlanItemInstanceContainerTest extends AbstractCons
 		super();
 	}
 
-	public AbstractPlanItemInstanceContainerTest(boolean setupDataSource, boolean sessionPersistence, String persistenceUnitName) {
-		super(setupDataSource, sessionPersistence, persistenceUnitName);
-	}
-
-	public AbstractPlanItemInstanceContainerTest(boolean setupDataSource, boolean sessionPersistence) {
-		super(setupDataSource, sessionPersistence);
-	}
-
 	public abstract String getProcessFile();
 
 	public abstract String getCaseName();
