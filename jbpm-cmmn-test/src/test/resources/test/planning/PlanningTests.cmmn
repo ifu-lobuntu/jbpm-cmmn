@@ -18,8 +18,8 @@
 						<cmmn:body>return false;</cmmn:body>
 					</cmmn:condition>
 				</cmmn:applicabilityRule>
-				<cmmn:discretionaryItem definitionRef="theHumanTaskId" id="theHumanTaskDiscretionaryItemWithEntryCriteriaId" entryCriteriaRefs="waitingForDiscretionaryStartUserEventSentryId1" />
-				<cmmn:discretionaryItem definitionRef="theCaseTaskId" id="theCaseTaskDiscretionaryItemId">
+				<cmmn:tableItem xsi:type="cmmn:tDiscretionaryItem" definitionRef="theHumanTaskId" id="theHumanTaskDiscretionaryItemWithEntryCriteriaId" entryCriteriaRefs="waitingForDiscretionaryStartUserEventSentryId1" />
+				<cmmn:tableItem xsi:type="cmmn:tDiscretionaryItem" definitionRef="theCaseTaskId" id="theCaseTaskDiscretionaryItemId">
 					<cmmn:itemControl>
 						<cmmn:requiredRule>
 							<cmmn:condition language="http://www.java.com/java">
@@ -27,10 +27,10 @@
 							</cmmn:condition>
 						</cmmn:requiredRule>
 					</cmmn:itemControl>
-				</cmmn:discretionaryItem>
-				<cmmn:discretionaryItem definitionRef="theCaseTaskId" id="theUnapplicableItem" applicabilityRuleRefs="theFalseApplicabilityRule">
-				</cmmn:discretionaryItem>
-				<cmmn:discretionaryItem definitionRef="theHumanTaskId" id="theHumanTaskDiscretionaryItemId">
+				</cmmn:tableItem>
+				<cmmn:tableItem xsi:type="cmmn:tDiscretionaryItem" definitionRef="theCaseTaskId" id="theUnapplicableItem" applicabilityRuleRefs="theFalseApplicabilityRule">
+				</cmmn:tableItem>
+				<cmmn:tableItem xsi:type="cmmn:tDiscretionaryItem" definitionRef="theHumanTaskId" id="theHumanTaskDiscretionaryItemId">
 					<cmmn:itemControl>
 						<cmmn:requiredRule>
 							<cmmn:condition language="http://www.java.com/java">
@@ -38,8 +38,8 @@
 							</cmmn:condition>
 						</cmmn:requiredRule>
 					</cmmn:itemControl>
-				</cmmn:discretionaryItem>
-				<cmmn:discretionaryItem definitionRef="theStageId" id="theStageDiscretionaryItemId">
+				</cmmn:tableItem>
+				<cmmn:tableItem xsi:type="cmmn:tDiscretionaryItem" definitionRef="theStageId" id="theStageDiscretionaryItemId">
 					<cmmn:itemControl>
 						<cmmn:manualActivationRule>
 							<cmmn:condition language="http://www.java.com/java">
@@ -47,7 +47,7 @@
 							</cmmn:condition>
 						</cmmn:manualActivationRule>
 					</cmmn:itemControl>
-				</cmmn:discretionaryItem>
+				</cmmn:tableItem>
 			</cmmn:planningTable>
 			<cmmn:planItem id="discretionaryStartUserEventPlanItemId" definitionRef="discretionaryStartUserEventId" name="DiscretionaryStartUserEventPlanItem">
 			</cmmn:planItem>
@@ -56,7 +56,7 @@
 					<cmmn:standardEvent>occur</cmmn:standardEvent>
 				</cmmn:planItemOnPart>
 			</cmmn:sentry>
-			<cmmn:userEvent id="discretionaryStartUserEventId" name="DiscretionaryStartUserEvent"></cmmn:userEvent>
+			<cmmn:planItemDefinition xsi:type="cmmn:tUserEvent" id="discretionaryStartUserEventId" name="DiscretionaryStartUserEvent"></cmmn:planItemDefinition>
 			&planItemDefinitions;
 			&planItemsAndSentries;
 		</cmmn:casePlanModel>

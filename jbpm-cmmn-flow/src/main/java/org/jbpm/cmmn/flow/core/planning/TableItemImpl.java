@@ -40,10 +40,18 @@ public class TableItemImpl extends AbstractItem implements TableItem{
 		return PlannerRoleCalculator.getPlannerRoles(theCase.getPlanningTable());
 	}
 
-	@Override
-	public PlanningTable getParentTable() {
-		return planningTable;
-	}
+    @Override
+    public PlanningTable getParentTable() {
+        return planningTable;
+    }
+    @Override
+    public PlanningTable getRootTable() {
+        if(planningTable==null){
+            return (PlanningTableImpl)this;
+        }else{
+            return planningTable.getRootTable();
+        }
+    }
 
 	public void setParentTable(PlanningTableImpl planningTable) {
 		this.planningTable = planningTable;

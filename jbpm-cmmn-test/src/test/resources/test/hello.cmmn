@@ -37,14 +37,14 @@
 					<cmmn:standardEvent>complete</cmmn:standardEvent>
 				</cmmn:planItemOnPart>
 			</cmmn:sentry>
-			<cmmn:humanTask id="layFoundationId" name="LayFoundation" performerRef="builderRoleId" isBlocking="true">
+			<cmmn:planItemDefinition xsi:type="cmmn:tHumanTask" id="layFoundationId" name="LayFoundation" performerRef="builderRoleId" isBlocking="true">
 				<cmmn:defaultControl>
 				</cmmn:defaultControl>
-			</cmmn:humanTask>
-			<cmmn:humanTask id="layBricksId" name="LayBricks" performerRef="builderRoleId" isBlocking="true">
+			</cmmn:planItemDefinition>
+			<cmmn:planItemDefinition xsi:type="cmmn:tHumanTask" id="layBricksId" name="LayBricks" performerRef="builderRoleId" isBlocking="true">
 				<cmmn:defaultControl>
 				</cmmn:defaultControl>
-			</cmmn:humanTask>
+			</cmmn:planItemDefinition>
 		</cmmn:casePlanModel>
 		<cmmn:caseRoles name="Painter" id="painterRoleId" />
 		<cmmn:caseRoles name="Builders" id="builderRoleId" />

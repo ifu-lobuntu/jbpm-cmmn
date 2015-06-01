@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 public class IdGenerator {
 	private static Logger logger = LoggerFactory.getLogger(IdGenerator.class);
-	static Set<Long> ids = new HashSet<Long>();
+	static ThreadLocal<Set<Long>> ids = new ThreadLocal<Set<Long>>();
 
 	@SuppressWarnings("unchecked")
 	public static long next(ExtensibleXmlParser p) {
@@ -25,7 +25,6 @@ public class IdGenerator {
 		return object;
 
 	}
-
 	public static long getIdAsUniqueAsUuid(ExtensibleXmlParser p, CMMNElement e) {
 		String elementId = e.getElementId();
 		return getIdAsUniqueAsId(p, elementId);
@@ -54,18 +53,35 @@ public class IdGenerator {
 			}
 		}
 		long abs = Math.abs(result);
-		if (ids.contains(abs)) {
+		Set<Long> idSet = getIdSet();
+		if (idSet.contains(abs)) {
 			logger.info("duplicate found:" + elementId);
 		}
-		ids.add(abs);
+		idSet.add(abs);
 		return abs;
 	}
+
+    protected static Set<Long> getIdSet() {
+        Set<Long> idSet=null;
+		if(ids.get()==null){
+		    ids.set( new HashSet<Long>());
+		}
+		idSet=ids.get();
+        return idSet;
+    }
 
 	public static long getIdAsUniqueAsUuid(ExtensibleXmlParser parser, PlanItemInfoImpl<?> planItem) {
 		return getIdAsUniqueAsId(parser, planItem.getElementId());
 	}
 
 	public static void reset() {
-		ids.clear();
+		getIdSet().clear();
 	}
+	@Deprecated
+    public static String toXmlId(String value) {
+        if(value!=null && value.startsWith("#")){
+            return value.substring(1);
+        }
+        return value;
+    }
 }

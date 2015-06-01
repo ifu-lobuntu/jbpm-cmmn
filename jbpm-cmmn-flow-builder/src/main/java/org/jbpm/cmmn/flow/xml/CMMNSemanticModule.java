@@ -20,22 +20,16 @@ public class CMMNSemanticModule extends DefaultSemanticModule {
 		super.addHandler("inputs", new CaseParameterHandler());
 		super.addHandler("outputs", new CaseParameterHandler());
 		super.addHandler("planItem", new PlanItemHandler());
-		super.addHandler("humanTask", new HumanTaskHandler());
-		super.addHandler("caseTask", new CaseTaskHandler());
+		super.addHandler("planItemDefinition", new PlanItemDefinitionHandler());
 		super.addHandler("parameterMapping", new ParameterMappingHandler());
-		super.addHandler("userEvent", new UserEventHandler());
-		super.addHandler("timerEvent", new TimerEventHandler());
 		super.addHandler("planItemOnPart", new PlanItemOnPartHandler());
 		super.addHandler("planItemStartTrigger", new PlanItemOnPartHandler());
-		super.addHandler("milestone", new MilestoneHandler());
 		super.addHandler("caseFileItemOnPart", new CaseFileItemOnPartHandler());
 		super.addHandler("caseFileItemStartTrigger", new CaseFileItemOnPartHandler());
-		super.addHandler("stage", new StageHandler());
 		super.addHandler("defaultControl", new PlanItemControlHandler());
 		super.addHandler("itemControl", new PlanItemControlHandler());
 		super.addHandler("planningTable", new PlanningTableHandler());
-		super.addHandler("discretionaryItem", new DiscretionaryItemHandler());
-		super.addHandler("applicabilityRule", new ApplicabilityRuleHandler());
+		super.addHandler("tableItem", new TableItemHandler());
 		this.handlersByClass.put(SentryImpl.class, sentryHandler);
 
 	}

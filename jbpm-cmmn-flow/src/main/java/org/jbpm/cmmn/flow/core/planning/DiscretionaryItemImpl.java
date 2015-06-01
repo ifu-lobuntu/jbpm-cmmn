@@ -124,16 +124,6 @@ public class DiscretionaryItemImpl<T extends PlanItemDefinition> extends TableIt
 
 	}
 
-	public void copyFromDefinition() {
-		long id = this.id;
-		HashMap<Object, Object> copiedState = new HashMap<Object, Object>();
-		T from = getDefinition();
-		this.setNodeContainer(getParentTable().getFirstPlanItemContainer());
-		copiedState.put(from, this);
-		copy(copiedState, from, this);
-		this.id = id;
-	}
-
 	@Override
 	public PlanItemControl getEffectiveItemControl() {
 		if (getItemControl() == null) {

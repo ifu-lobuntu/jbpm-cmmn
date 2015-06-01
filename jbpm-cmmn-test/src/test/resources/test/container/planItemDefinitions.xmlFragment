@@ -1,5 +1,5 @@
-			<cmmn:userEvent id="endUserEventId" name="EndUserEvent" />
-			<cmmn:caseTask id="theCaseTaskId" name="TheCaseTask" caseRef="subcase:SubCase" isBlocking="true">
+			<cmmn:planItemDefinition xsi:type="cmmn:tUserEvent" id="endUserEventId" name="EndUserEvent" />
+			<cmmn:planItemDefinition xsi:type="cmmn:tCaseTask" id="theCaseTaskId" name="TheCaseTask" caseRef="subcase:SubCase" isBlocking="true">
 				<cmmn:defaultControl>
 					<cmmn:requiredRule>
 						<cmmn:condition language="http://www.java.com/java">
@@ -14,8 +14,8 @@
 				<cmmn:parameterMapping sourceRef="housePlanTaskParameter" targetRef="housePlanSubCaseParameterId" />
 				<cmmn:parameterMapping sourceRef="wallPlanTaskParameter" targetRef="wallPlanSubCaseParameterId">
 				</cmmn:parameterMapping>
-			</cmmn:caseTask>
-			<cmmn:stage id="theStageId" name="TheStage" autoComplete="true">
+			</cmmn:planItemDefinition>
+			<cmmn:planItemDefinition xsi:type="cmmn:tStage" id="theStageId" name="TheStage" autoComplete="true">
 				<cmmn:planItem id="stageCompletingEventPlanItemId" name="StageCompletingEventPlanItem" definitionRef="stageCompletingEventId" />
 				<cmmn:planItem definitionRef="theMilestoneId" name="TheMilestonePlanItemInTheStage" id="theMilestonePlanItemInTheStageId" entryCriteriaRefs="waitingForStageCompletingEventId">
 					<cmmn:itemControl>
@@ -33,9 +33,9 @@
 				</cmmn:sentry>
 				<cmmn:planningTable id="theStagePlanningTable" authorizedRoleRefs="constructionProjectManagerRoleId">
 				</cmmn:planningTable>
-			</cmmn:stage>
-			<cmmn:userEvent id="stageCompletingEventId" name="StageCompletingEvent"></cmmn:userEvent>
-			<cmmn:humanTask id="theHumanTaskId" name="TheHumanTask" performerRef="builderRoleId">
+			</cmmn:planItemDefinition>
+			<cmmn:planItemDefinition xsi:type="cmmn:tUserEvent" id="stageCompletingEventId" name="StageCompletingEvent"></cmmn:planItemDefinition>
+			<cmmn:planItemDefinition xsi:type="cmmn:tHumanTask" id="theHumanTaskId" name="TheHumanTask" performerRef="builderRoleId">
 				<cmmn:defaultControl>
 					<cmmn:requiredRule>
 						<cmmn:condition language="http://www.java.com/java">
@@ -43,8 +43,8 @@
 						</cmmn:condition>
 					</cmmn:requiredRule>
 				</cmmn:defaultControl>
-			</cmmn:humanTask>
-			<cmmn:milestone id="theMilestoneId" name="TheMilestone">
+			</cmmn:planItemDefinition>
+			<cmmn:planItemDefinition xsi:type="cmmn:tMilestone" id="theMilestoneId" name="TheMilestone">
 				<cmmn:defaultControl>
 					<cmmn:requiredRule>
 						<cmmn:condition language="http://www.java.com/java">
@@ -52,11 +52,11 @@
 						</cmmn:condition>
 					</cmmn:requiredRule>
 				</cmmn:defaultControl>
-			</cmmn:milestone>
-			<cmmn:timerEvent id="theTimerEventId" name="TheTimerEvent">
+			</cmmn:planItemDefinition>
+			<cmmn:planItemDefinition xsi:type="cmmn:tTimerEvent" id="theTimerEventId" name="TheTimerEvent">
 				<cmmn:timerExpression language="ISO 8601">
 					<cmmn:body>R5/2028-03-01T13:00:00Z/P2D</cmmn:body>
 				</cmmn:timerExpression>
-			</cmmn:timerEvent>
-			<cmmn:userEvent id="theUserEventId" name="TheUserEvent" />
-			<cmmn:userEvent id="startUserEventId" name="StartUserEvent" />
+			</cmmn:planItemDefinition>
+			<cmmn:planItemDefinition xsi:type="cmmn:tUserEvent" id="theUserEventId" name="TheUserEvent" />
+			<cmmn:planItemDefinition xsi:type="cmmn:tUserEvent" id="startUserEventId" name="StartUserEvent" />

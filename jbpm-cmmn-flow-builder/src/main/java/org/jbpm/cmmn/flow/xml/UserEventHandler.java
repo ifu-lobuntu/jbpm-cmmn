@@ -6,7 +6,7 @@ import org.jbpm.cmmn.flow.core.impl.CaseImpl;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class UserEventHandler extends AbstractCaseElementHandler {
+public class UserEventHandler extends AbstractCaseElementHandler implements PlanItemDefinitionHandlerDelegate {
 
 	@Override
 	public Object start(String uri, String localName, Attributes attrs, ExtensibleXmlParser parser) throws SAXException {

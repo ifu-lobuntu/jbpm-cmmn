@@ -3,7 +3,6 @@ package org.jbpm.cmmn.flow.xml;
 import java.util.HashSet;
 
 import org.drools.core.xml.ExtensibleXmlParser;
-import org.drools.core.xml.Handler;
 import org.jbpm.cmmn.flow.core.CaseParameter;
 import org.jbpm.cmmn.flow.core.CaseRole;
 import org.jbpm.cmmn.flow.core.PlanItem;
@@ -22,7 +21,7 @@ import org.jbpm.process.core.context.variable.Variable;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class StageHandler extends PlanItemContainerHandler implements Handler {
+public class StageHandler extends PlanItemContainerHandler implements PlanItemDefinitionHandlerDelegate{
 	public StageHandler() {
 		this.validParents = new HashSet<Class<?>>();
 		this.validParents.add(CaseImpl.class);

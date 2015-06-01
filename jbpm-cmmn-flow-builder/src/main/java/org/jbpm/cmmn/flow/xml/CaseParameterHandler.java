@@ -28,7 +28,7 @@ public class CaseParameterHandler extends AbstractCaseElementHandler implements 
 	public Object start(String uri, String localName, Attributes attrs, ExtensibleXmlParser parser) throws SAXException {
 		parser.startElementBuilder(localName, attrs);
 		CaseParameter cp = new CaseParameter();
-		cp.setBindingRef(attrs.getValue("bindingRef"));
+		cp.setBindingRef(IdGenerator.toXmlId(attrs.getValue("bindingRef")));
 		cp.setElementId(attrs.getValue("id"));
 		cp.setName(attrs.getValue("name"));
 		if (parser.getParent() instanceof CaseImpl) {

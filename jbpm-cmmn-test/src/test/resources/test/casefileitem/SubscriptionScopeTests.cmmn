@@ -31,7 +31,7 @@
 					<cmmn:standardEvent>delete</cmmn:standardEvent>
 				</cmmn:caseFileItemOnPart>
 			</cmmn:sentry>
-			<cmmn:humanTask id="theTask" name="The Task" performerRef="builderRoleId" isBlocking="true">
+			<cmmn:planItemDefinition xsi:type="cmmn:tHumanTask" id="theTask" name="The Task" performerRef="builderRoleId" isBlocking="true">
 				<cmmn:defaultControl>
 					<cmmn:manualActivationRule>
 						<cmmn:condition language="http://wwwjava.com/java">
@@ -49,9 +49,9 @@
 						<cmmn:body>return housePlan.getWallPlans();</cmmn:body>
 					</cmmn:bindingRefinement>
 				</cmmn:outputs>
-			</cmmn:humanTask>
-			<cmmn:userEvent name="TheUserEvent" id="theUserEventId">
-			</cmmn:userEvent>
+			</cmmn:planItemDefinition>
+			<cmmn:planItemDefinition xsi:type="cmmn:tUserEvent" name="TheUserEvent" id="theUserEventId">
+			</cmmn:planItemDefinition>
 		</cmmn:casePlanModel>
 		<cmmn:caseRoles name="Builders" id="builderRoleId" />
 		<cmmn:input bindingRef="housePlanFileItemId" id="housePlanInputId" name="housePlan">

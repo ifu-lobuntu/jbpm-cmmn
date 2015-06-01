@@ -1,14 +1,13 @@
 package org.jbpm.cmmn.flow.xml;
 
 import org.drools.core.xml.ExtensibleXmlParser;
-import org.drools.core.xml.Handler;
 import org.jbpm.cmmn.flow.core.ApplicabilityRule;
 import org.jbpm.cmmn.flow.core.planning.DiscretionaryItemImpl;
 import org.jbpm.cmmn.flow.core.planning.PlanningTableImpl;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class DiscretionaryItemHandler extends AbstractTableItemHandler implements Handler {
+public class DiscretionaryItemHandler extends AbstractTableItemHandler  {
 	public DiscretionaryItemHandler() {
 		super();
 		super.validParents.add(null);
@@ -23,7 +22,7 @@ public class DiscretionaryItemHandler extends AbstractTableItemHandler implement
 	public Object start(String uri, String localName, Attributes attrs, ExtensibleXmlParser parser) throws SAXException {
 		parser.startElementBuilder(localName, attrs);
 		DiscretionaryItemImpl item = new DiscretionaryItemImpl();
-		item.setDefinitionRef(attrs.getValue("definitionRef"));
+		item.setDefinitionRef(IdGenerator.toXmlId(attrs.getValue("definitionRef")));
 		populateCommonItems(attrs, item);
 		String entry = attrs.getValue("entryCriteriaRefs");
 		if (entry != null) {

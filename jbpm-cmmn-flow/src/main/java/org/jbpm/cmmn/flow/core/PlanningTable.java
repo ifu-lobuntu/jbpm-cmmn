@@ -15,4 +15,6 @@ public interface PlanningTable extends TableItem {
 
 	Collection<? extends TableItem> getTableItems();
 
+    PlanningTableContainer getPlanningTableContainer();
+
 }

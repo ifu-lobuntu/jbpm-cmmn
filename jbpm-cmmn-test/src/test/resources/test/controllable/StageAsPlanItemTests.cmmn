@@ -13,7 +13,7 @@
 		&caseFileModel;
 		<cmmn:casePlanModel name="StageTests">
 		 &lifecycleTestTasks;
-			<cmmn:stage id="theEventGeneratingTask" name="The Stage" autoComplete="true">
+			<cmmn:planItemDefinition xsi:type="cmmn:tStage" id="theEventGeneratingTask" name="The Stage" autoComplete="true">
 				<cmmn:planningTable id="theStagePlanningTable" authorizedRoleRefs="constructionProjectManagerRoleId">
 				</cmmn:planningTable>
 				<cmmn:planItem id="stageCompletingEventPlanItemId" name="StageCompletingEventPlanItem" definitionRef="stageCompletingEventId"/>
@@ -31,9 +31,9 @@
 						<cmmn:standardEvent>occur</cmmn:standardEvent>
 					</cmmn:planItemOnPart>
 				</cmmn:sentry>
-			</cmmn:stage>
-			<cmmn:milestone id="theMilestone" name="TheMilestone" />
-			<cmmn:userEvent id="stageCompletingEventId" name="StageCompletingEvent"></cmmn:userEvent>
+			</cmmn:planItemDefinition>
+			<cmmn:planItemDefinition xsi:type="cmmn:tMilestone" id="theMilestone" name="TheMilestone" />
+			<cmmn:planItemDefinition xsi:type="cmmn:tUserEvent" id="stageCompletingEventId" name="StageCompletingEvent"></cmmn:planItemDefinition>
 		</cmmn:casePlanModel>
 		<cmmn:caseRoles name="Builders" id="builderRoleId" />
 		<cmmn:caseRoles name="ConstructionProjectManagers" id="constructionProjectManagerRoleId" />

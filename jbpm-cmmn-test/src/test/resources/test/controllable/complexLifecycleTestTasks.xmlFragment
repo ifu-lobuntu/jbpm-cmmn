@@ -126,7 +126,7 @@
 					<cmmn:standardEvent>occur</cmmn:standardEvent>
 				</cmmn:planItemOnPart>
 			</cmmn:sentry>
-			<cmmn:humanTask id="theTask" name="The Task" performerRef="builderRoleId" isBlocking="true">
+			<cmmn:planItemDefinition xsi:type="cmmn:tHumanTask" id="theTask" name="The Task" performerRef="builderRoleId" isBlocking="true">
 				<cmmn:defaultControl>
 					<cmmn:requiredRule>
 					    <cmmn:condition>return housePlan.getWallPlans().size()>0;</cmmn:condition>
@@ -134,7 +134,7 @@
 				</cmmn:defaultControl>
 				<cmmn:inputs name="wallPlan" bindingRef="wallPlanFileItemId"></cmmn:inputs>
 				<cmmn:outputs name="wall" bindingRef="wallFileItemId"></cmmn:outputs>
-			</cmmn:humanTask>
-			<cmmn:userEvent id="theUserEvent" name="TheUserEvent"/>
-			<cmmn:userEvent id="userEventToStartAutoActivatedTaskId" name="UserEventToStartAutoActivatedTask"/>
-			<cmmn:userEvent id="userEventToStartManuallyActivatedTaskId" name="UserEventToStartManuallyActivatedTask"/>
+			</cmmn:planItemDefinition>
+			<cmmn:planItemDefinition xsi:type="cmmn:tUserEvent" id="theUserEvent" name="TheUserEvent"/>
+			<cmmn:planItemDefinition xsi:type="cmmn:tUserEvent" id="userEventToStartAutoActivatedTaskId" name="UserEventToStartAutoActivatedTask"/>
+			<cmmn:planItemDefinition xsi:type="cmmn:tUserEvent" id="userEventToStartManuallyActivatedTaskId" name="UserEventToStartManuallyActivatedTask"/>

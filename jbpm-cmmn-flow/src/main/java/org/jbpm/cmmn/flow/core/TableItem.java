@@ -8,5 +8,6 @@ public interface TableItem extends CMMNElement{
 	Map<String, ApplicabilityRule> getApplicabilityRules();
 
 	PlanningTable getParentTable();
+    PlanningTable getRootTable();
 
 }

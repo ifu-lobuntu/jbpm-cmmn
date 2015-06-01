@@ -56,8 +56,8 @@
 			<!-- generic -->
 			&occurrableLifcycleTestTasks;
 			<!-- Milestone specific -->
-			<cmmn:milestone id="theOccurrablePlanItemDefinitionId" name="TheOccurrablePlanItemDefinition">
-			</cmmn:milestone>
+			<cmmn:planItemDefinition xsi:type="cmmn:tMilestone" id="theOccurrablePlanItemDefinitionId" name="TheOccurrablePlanItemDefinition">
+			</cmmn:planItemDefinition>
 			<cmmn:sentry id="waitingForTheUserEventSentryId" name="WaitingForTheUserEventSentry">
 				<cmmn:planItemOnPart id="onTheUserEventOccurPartId" sourceRef="theUserEventPlanItemId">
 					<cmmn:standardEvent>occur</cmmn:standardEvent>
@@ -68,7 +68,7 @@
 					<cmmn:standardEvent>occur</cmmn:standardEvent>
 				</cmmn:planItemOnPart>
 			</cmmn:sentry>
-			<cmmn:userEvent id="theUserEventId" name="TheUserEvent"></cmmn:userEvent>
+			<cmmn:planItemDefinition xsi:type="cmmn:tUserEvent" id="theUserEventId" name="TheUserEvent"></cmmn:planItemDefinition>
 			<cmmn:sentry id="waitingForTheRepeatablePlanItemSentryId" name="WaitingForTheRepeatablePlanItemSentry">
 				<cmmn:planItemOnPart id="onTheRepeatablePlanItemOccurPartId" sourceRef="theRepeatableMilestonePlanItemId">
 					<cmmn:standardEvent>occur</cmmn:standardEvent>

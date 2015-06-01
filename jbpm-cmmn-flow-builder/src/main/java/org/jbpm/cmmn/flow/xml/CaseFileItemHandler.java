@@ -45,7 +45,7 @@ public class CaseFileItemHandler extends BaseAbstractHandler implements Handler 
 		variable.setMetaData("DataObject", "true");
 		variable.setElementId(attrs.getValue("id"));
 		variable.setName(name);
-		variable.setDefinitionRef(attrs.getValue("definitionRef"));
+		variable.setDefinitionRef(IdGenerator.toXmlId(attrs.getValue("definitionRef")));
 		String targetRefs = attrs.getValue("targetRefs");
 		String multiplicity = attrs.getValue("multiplicity");
 		if (multiplicity != null) {

@@ -11,7 +11,7 @@
 		&caseFileModel;
 		<cmmn:casePlanModel name="PlanItemEventTests">
 		    &lifecycleTestTasks;
-			<cmmn:humanTask id="theEventGeneratingTask" name="The Event Generating Task" performerRef="eventGeneratingBuilderRoleId" isBlocking="true">
+			<cmmn:planItemDefinition xsi:type="cmmn:tHumanTask" id="theEventGeneratingTask" name="The Event Generating Task" performerRef="eventGeneratingBuilderRoleId" isBlocking="true">
 				<cmmn:defaultControl />
 				<cmmn:inputs name="wallPlan" bindingRef="wallPlanFileItemId"></cmmn:inputs>
 				<cmmn:outputs bindingRef="wallPlanFileItemId" id="wallPlanOutputId" name="wallPlanOutput">
@@ -24,7 +24,7 @@
 						<cmmn:body>return housePlan.getRoofPlan();</cmmn:body>
 					</cmmn:bindingRefinement>
 				</cmmn:outputs>
-			</cmmn:humanTask>
+			</cmmn:planItemDefinition>
 		</cmmn:casePlanModel>
 		<cmmn:caseRoles name="EventGeneratingBuilders" id="eventGeneratingBuilderRoleId" />
 		<cmmn:caseRoles name="Builders" id="builderRoleId" />

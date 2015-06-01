@@ -1,7 +1,6 @@
 package org.jbpm.cmmn.flow.xml;
 
 import java.lang.reflect.Field;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashSet;
 import java.util.Map;
@@ -19,9 +18,9 @@ import org.w3c.dom.Element;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class CaseFileItemDefinitionHandler extends BaseAbstractHandler implements Handler {
+public class ImportHandler extends BaseAbstractHandler implements Handler {
 
-    public CaseFileItemDefinitionHandler() {
+    public ImportHandler() {
         if ((this.validParents == null) && (this.validPeers == null)) {
             this.validParents = new HashSet<Class<?>>();
             this.validParents.add(Definitions.class);

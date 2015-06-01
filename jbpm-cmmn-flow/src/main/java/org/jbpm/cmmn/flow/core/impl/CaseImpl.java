@@ -12,6 +12,8 @@ import org.jbpm.cmmn.flow.core.PlanItemDefinition;
 import org.jbpm.cmmn.flow.core.PlanItemInfo;
 import org.jbpm.cmmn.flow.core.PlanningTable;
 import org.jbpm.cmmn.flow.core.planitem.PlanItemContainerUtil;
+import org.jbpm.cmmn.flow.core.task.AbstractPlanItemDefinition;
+import org.jbpm.cmmn.flow.core.task.HumanTask;
 import org.jbpm.ruleflow.core.RuleFlowProcess;
 import org.jbpm.workflow.core.node.EndNode;
 import org.jbpm.workflow.core.node.Join;
@@ -119,8 +121,8 @@ public class CaseImpl extends RuleFlowProcess implements Case {
 
 	public void addPlanItemDefinition(PlanItemDefinition d) {
 		planItemDefinitions.put(d.getElementId(), d);
-		if (d instanceof Stage) {
-			((Stage) d).setCase(this);
+		if(d instanceof AbstractPlanItemDefinition){
+		    ((AbstractPlanItemDefinition) d).setCase(this);
 		}
 	}
 

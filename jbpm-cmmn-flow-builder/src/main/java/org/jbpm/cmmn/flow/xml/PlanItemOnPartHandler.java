@@ -34,7 +34,7 @@ public class PlanItemOnPartHandler extends BaseAbstractHandler implements Handle
 		PlanItemOnPart part = localName.equals("planItemOnPart") ? new PlanItemOnPart() : new PlanItemStartTrigger();
 		part.setName(attrs.getValue("id"));
 		part.setId(IdGenerator.getIdAsUniqueAsUuid(parser, part));
-		part.setSourceRef(attrs.getValue("sourceRef"));
+		part.setSourceRef(IdGenerator.toXmlId(attrs.getValue("sourceRef")));
 
 		Object parent = parser.getParent();
 		if (parent instanceof SentryImpl) {

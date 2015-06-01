@@ -24,8 +24,8 @@ public class ParameterMappingHandler extends AbstractCaseElementHandler implemen
 	public Object start(String uri, String localName, Attributes attrs, ExtensibleXmlParser parser) throws SAXException {
 		parser.startElementBuilder(localName, attrs);
 		ParameterMapping cp = new ParameterMapping();
-		cp.setSourceRef(attrs.getValue("sourceRef"));
-		cp.setTargetRef(attrs.getValue("targetRef"));
+		cp.setSourceRef(IdGenerator.toXmlId(attrs.getValue("sourceRef")));
+		cp.setTargetRef(IdGenerator.toXmlId(attrs.getValue("targetRef")));
 		cp.setElementId(attrs.getValue("id"));
 		if (parser.getParent() instanceof CaseTask) {
 			CaseTask ht = (CaseTask) parser.getParent();

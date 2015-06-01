@@ -4,8 +4,12 @@ import java.util.Collection;
 import java.util.HashSet;
 
 import org.jbpm.cmmn.flow.core.ApplicabilityRule;
+import org.jbpm.cmmn.flow.core.Case;
 import org.jbpm.cmmn.flow.core.PlanItemContainer;
 import org.jbpm.cmmn.flow.core.PlanningTable;
+import org.jbpm.cmmn.flow.core.PlanningTableContainer;
+import org.jbpm.cmmn.flow.core.impl.Stage;
+import org.jbpm.cmmn.flow.core.task.HumanTask;
 import org.kie.api.definition.process.Node;
 
 public class PlanningTableImpl extends TableItemImpl implements PlanningTable {
@@ -14,7 +18,7 @@ public class PlanningTableImpl extends TableItemImpl implements PlanningTable {
 	private Collection<ApplicabilityRule> applicabilityRules = new HashSet<ApplicabilityRule>();
 	private Collection<TableItemImpl> tableItems = new HashSet<TableItemImpl>();
 	private long id;
-	private PlanItemContainer planItemContainer;
+	private PlanningTableContainer planningTableContainer;
 
 	@Override
 	public Node getNode(long id) {
@@ -71,14 +75,23 @@ public class PlanningTableImpl extends TableItemImpl implements PlanningTable {
 	}
 
 	public PlanItemContainer getFirstPlanItemContainer() {
-		if (planItemContainer == null && getParentTable() != null) {
-			return getParentTable().getFirstPlanItemContainer();
-		}
-		return this.planItemContainer;
+	    PlanningTableContainer ptc = getRootTable().getPlanningTableContainer();
+	    if(ptc instanceof Stage || ptc instanceof Case){
+	        return (PlanItemContainer) ptc;
+	    }else{
+	        //TODO This is a bug in CMMN
+	        //A HumanTask may be referenced from multiple stages
+	        return ((HumanTask)ptc).getCase(); 
+	    }
 	}
 
-	public void setPlanItemContainer(PlanItemContainer planItemContainer) {
-		this.planItemContainer = planItemContainer;
-	}
+    public PlanningTableContainer getPlanningTableContainer() {
+        return planningTableContainer;
+    }
+
+    public void setPlanningTableContainer(PlanningTableContainer planningTableContainer) {
+        this.planningTableContainer = planningTableContainer;
+    }
+
 
 }

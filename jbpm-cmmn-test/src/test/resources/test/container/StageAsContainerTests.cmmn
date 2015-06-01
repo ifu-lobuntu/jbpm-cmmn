@@ -22,10 +22,10 @@
 				</cmmn:itemControl>
 			</cmmn:planItem>
 			&planItemDefinitions;
-			<cmmn:stage id="theTopLevelStageId" name="TheTopLevelStage" autoComplete="false">
+			<cmmn:planItemDefinition xsi:type="cmmn:tStage" id="theTopLevelStageId" name="TheTopLevelStage" autoComplete="false">
 			&planItemsAndSentries;
 				<cmmn:planningTable id="theRootPlanningTableId" authorizedRoleRefs="constructionProjectManagerRoleId"/>
-			</cmmn:stage>
+			</cmmn:planItemDefinition>
 		</cmmn:casePlanModel>
 		<cmmn:caseRoles name="Builders" id="builderRoleId" />
 		<cmmn:caseRoles name="ConstructionProjectManagers" id="constructionProjectManagerRoleId" />

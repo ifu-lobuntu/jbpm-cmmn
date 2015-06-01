@@ -3,10 +3,11 @@ package org.jbpm.cmmn.flow.xml;
 import java.util.HashSet;
 
 import org.drools.core.xml.BaseAbstractHandler;
+import org.drools.core.xml.Handler;
 import org.jbpm.cmmn.flow.core.planning.TableItemImpl;
 import org.xml.sax.Attributes;
 
-public abstract class AbstractTableItemHandler extends BaseAbstractHandler {
+public abstract class AbstractTableItemHandler extends BaseAbstractHandler implements Handler {
 
 	public AbstractTableItemHandler() {
 		super();
@@ -31,7 +32,6 @@ public abstract class AbstractTableItemHandler extends BaseAbstractHandler {
 				item.putApplicabilityRule(string, null);
 			}
 		}
-
 	}
 
 }

@@ -41,11 +41,11 @@
 				</cmmn:planItemOnPart>
 			</cmmn:sentry>
 
-			<cmmn:humanTask id="theTask" name="The Task" performerRef="builderRoleId" isBlocking="true">
-			</cmmn:humanTask>
-			<cmmn:milestone id="theMilestoneId" name="TheMilestone">
-			</cmmn:milestone>
-			<cmmn:userEvent id="theUserEventId" name="TheUserEvent"></cmmn:userEvent>
+			<cmmn:planItemDefinition xsi:type="cmmn:tHumanTask" id="theTask" name="The Task" performerRef="builderRoleId" isBlocking="true">
+			</cmmn:planItemDefinition>
+			<cmmn:planItemDefinition xsi:type="cmmn:tMilestone" id="theMilestoneId" name="TheMilestone">
+			</cmmn:planItemDefinition>
+			<cmmn:planItemDefinition xsi:type="cmmn:tUserEvent" id="theUserEventId" name="TheUserEvent"></cmmn:planItemDefinition>
 		</cmmn:casePlanModel>
 		<cmmn:caseRoles name="Builders" id="builderRoleId" />
 		<cmmn:input bindingRef="housePlanFileItemId" id="housePlanInputId" name="housePlan">

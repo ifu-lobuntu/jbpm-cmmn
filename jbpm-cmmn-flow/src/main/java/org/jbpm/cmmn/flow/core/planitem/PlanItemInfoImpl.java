@@ -80,7 +80,7 @@ public class PlanItemInfoImpl<T extends PlanItemDefinition> implements PlanItemI
 		} else if (definition instanceof CaseTask) {
 			planItem = (PlanItem<T>) new CaseTaskPlanItem((PlanItemInfoImpl<CaseTask>) this, createFactoryNode());
 		}
-		planItem.setPlanItemContainer(nodeContainer); // possible duplication here of setNodeContainer
+        planItem.setPlanItemContainer(nodeContainer); // possible duplication here of setNodeContainer
 		planItem.setElementId(getElementId());
 		planItem.setName(getName());
 		planItem.setId(id);
@@ -89,7 +89,6 @@ public class PlanItemInfoImpl<T extends PlanItemDefinition> implements PlanItemI
 			nodeContainer.addNode(((MultiInstancePlanItem) planItem).getFactoryNode());
 			((MultiInstancePlanItem) planItem).getFactoryNode().setItemToInstantiate(planItem);
 		}
-
 		return planItem;
 	}
 
@@ -153,7 +152,6 @@ public class PlanItemInfoImpl<T extends PlanItemDefinition> implements PlanItemI
 	public void setContainer(PlanItemContainer nodeContainer) {
 		this.nodeContainer = nodeContainer;
 		nodeContainer.addPlanItemInfo(this);
-
 	}
 
 	public PlanItemControl getItemControl() {

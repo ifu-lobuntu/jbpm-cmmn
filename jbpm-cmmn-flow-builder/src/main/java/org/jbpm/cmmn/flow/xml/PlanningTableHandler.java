@@ -65,12 +65,14 @@ public class PlanningTableHandler extends AbstractTableItemHandler implements Ha
 		} else {
 			if (parent instanceof Stage) {
 				((Stage) parent).setPlanningTable(table);
+	            table.setPlanningTableContainer((Stage) parent);
 			} else if (parent instanceof CaseImpl) {
 				((CaseImpl) parent).setPlanningTable(table);
+	            table.setPlanningTableContainer((CaseImpl) parent);
 			} else if (parent instanceof HumanTask) {
 				((HumanTask) parent).setPlanningTable(table);
+				table.setPlanningTableContainer(((HumanTask) parent));
 			}
-			table.setPlanItemContainer((PlanItemContainer) parent);
 		}
 		return table;
 	}

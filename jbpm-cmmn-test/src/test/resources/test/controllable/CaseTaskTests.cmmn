@@ -13,7 +13,7 @@
 		<cmmn:casePlanModel name="CaseTaskTests">
 			&lifecycleTestTasks;
 			<cmmn:planningTable id="theRootPlanningTableId" authorizedRoleRefs="constructionProjectManagerRoleId">
-				<cmmn:discretionaryItem definitionRef="designHouseTaskId">
+				<cmmn:tableItem xsi:type="cmmn:tDiscretionaryItem" definitionRef="designHouseTaskId">
 					<cmmn:itemControl>
 						<cmmn:requiredRule>
 							<cmmn:condition language="http://www.java.com/java">
@@ -21,14 +21,14 @@
 							</cmmn:condition>
 						</cmmn:requiredRule>
 					</cmmn:itemControl>
-				</cmmn:discretionaryItem>
+				</cmmn:tableItem>
 				<cmmn:applicabilityRule id="noHouseplan">
 					<cmmn:condition language="http://www.java.com/java">
 						<cmmn:body>return housePlan==null;</cmmn:body>
 					</cmmn:condition>
 				</cmmn:applicabilityRule>
 			</cmmn:planningTable>
-			<cmmn:caseTask id="theEventGeneratingTask" name="TheCaseTask" caseRef="subcase:SubCase" isBlocking="true">
+			<cmmn:planItemDefinition xsi:type="cmmn:tCaseTask" id="theEventGeneratingTask" name="TheCaseTask" caseRef="subcase:SubCase" isBlocking="true">
 				<cmmn:inputs bindingRef="housePlanFileItemId" id="housePlanTaskParameter" name="housePlanTaskParameter">
 				</cmmn:inputs>
 				<cmmn:inputs bindingRef="wallPlanFileItemId" id="wallPlanTaskParameter" name="wallPlanTaskParameter">
@@ -71,8 +71,8 @@
 						</cmmn:body>
 					</cmmn:transformation>
 				</cmmn:parameterMapping>
-			</cmmn:caseTask>
-			<cmmn:humanTask id="designHouseTaskId" name="Design House" performerRef="designerRoleId"></cmmn:humanTask>
+			</cmmn:planItemDefinition>
+			<cmmn:planItemDefinition xsi:type="cmmn:tHumanTask" id="designHouseTaskId" name="Design House" performerRef="designerRoleId"></cmmn:planItemDefinition>
 		</cmmn:casePlanModel>
 		<cmmn:caseRoles name="Builders" id="builderRoleId" />
 		<cmmn:caseRoles name="Designers" id="designerRoleId" />

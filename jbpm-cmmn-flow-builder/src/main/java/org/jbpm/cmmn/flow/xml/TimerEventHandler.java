@@ -7,7 +7,7 @@ import org.w3c.dom.Element;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class TimerEventHandler extends AbstractCaseElementHandler {
+public class TimerEventHandler extends AbstractCaseElementHandler implements PlanItemDefinitionHandlerDelegate {
 
 	@Override
 	public Object start(String uri, String localName, Attributes attrs, ExtensibleXmlParser parser) throws SAXException {

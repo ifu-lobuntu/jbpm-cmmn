@@ -30,7 +30,7 @@ public class PlanItemHandler extends AbstractCaseElementHandler implements Handl
 			}
 		}
 		planItem.setElementId(attrs.getValue("id"));
-		planItem.setDefinitionRef(attrs.getValue("definitionRef"));
+		planItem.setDefinitionRef(IdGenerator.toXmlId(attrs.getValue("definitionRef")));
 		String exit = attrs.getValue("exitCriteriaRefs");
 		if (exit != null) {
 			for (String string : exit.split("\\ ")) {

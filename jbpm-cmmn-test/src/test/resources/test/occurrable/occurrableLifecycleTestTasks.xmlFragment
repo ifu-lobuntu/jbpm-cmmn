@@ -94,7 +94,7 @@
 					<cmmn:standardEvent>create</cmmn:standardEvent>
 				</cmmn:planItemOnPart>
 			</cmmn:sentry>
-			<cmmn:humanTask id="theTask" name="The Task" performerRef="builderRoleId" isBlocking="true">
-			</cmmn:humanTask>
+			<cmmn:planItemDefinition xsi:type="cmmn:tHumanTask" id="theTask" name="The Task" performerRef="builderRoleId" isBlocking="true">
+			</cmmn:planItemDefinition>
 			
 			

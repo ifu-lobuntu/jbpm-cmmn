@@ -23,7 +23,7 @@
 					</cmmn:condition>
 				</cmmn:ifPart>
 			</cmmn:sentry>
-			<cmmn:humanTask id="theTask" name="The Task" performerRef="builderRoleId" isBlocking="true">
+			<cmmn:planItemDefinition xsi:type="cmmn:tHumanTask" id="theTask" name="The Task" performerRef="builderRoleId" isBlocking="true">
 				<cmmn:defaultControl />
 				<cmmn:inputs name="wallPlan" bindingRef="wallPlanFileItemId">
 					<cmmn:bindingRefinement language="http://www.java.com/java">
@@ -31,7 +31,7 @@
 					</cmmn:bindingRefinement>
 				</cmmn:inputs>
 				<cmmn:outputs name="wall" bindingRef="wallFileItemId"></cmmn:outputs>
-			</cmmn:humanTask>
+			</cmmn:planItemDefinition>
 		</cmmn:casePlanModel>
 		<cmmn:caseRoles name="Builders" id="builderRoleId" />
 		<cmmn:input bindingRef="housePlanFileItemId" id="housePlanInputId" name="housePlan">

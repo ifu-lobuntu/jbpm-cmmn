@@ -1,251 +1,253 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<cmmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://asdf.com/" xmlns:DC="http://www.omg.org/spec/DD/20131001/DC" xmlns:cmmn="http://www.omg.org/spec/CMMN/20131201/MODEL" xmlns:cmmndi="http://www.omg.org/spec/CMMN/20131201/DI" xmlns:plansubmission.ucd="platform:/resource/construction/src/main/resources/org/jbpm/construction/plansubmission.ucd" xsi:schemaLocation="http://www.omg.org/spec/CMMN/20131201/MODEL CMMN10.xsd" xsi:type="cmmn:tDefinitions" id="_8vlXAu4yEeSx29YJAqJZcA" targetNamespace="http://asdf.com/">
-  <diagram xsi:type="cmmndi:CMMNDiagram" id="_8vmlIO4yEeSx29YJAqJZcA" cmmnElement="#_8vlXAu4yEeSx29YJAqJZcA">
+<cmmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://asdf.com/" xmlns:cmmn="http://www.omg.org/spec/CMMN/20131201/MODEL" xmlns:cmmndi="http://www.omg.org/spec/CMMN/20131201/DI" xmlns:construction="http://www.jbpm.org/construction" xsi:schemaLocation="http://www.omg.org/spec/CMMN/20131201/MODEL CMMN10.xsd" id="_8vlXAu4yEeSx29YJAqJZcA" targetNamespace="http://asdf.com/">
+  <diagram id="_8vmlIO4yEeSx29YJAqJZcA" cmmnElement="#_8vlXAu4yEeSx29YJAqJZcA">
     <localStyle xsi:type="cmmndi:CMMNStyle"/>
     <ownedCmmnDiagramElement xsi:type="cmmndi:CMMNShape" id="_8vmlIe4yEeSx29YJAqJZcA" cmmnElement="#construction.SubmitPlan">
       <localStyle xsi:type="cmmndi:CMMNStyle">
-        <fillColor xsi:type="DC:Color" red="255" green="255" blue="255"/>
-        <strokeColor xsi:type="DC:Color" red="0" green="0" blue="0"/>
-        <fontColor xsi:type="DC:Color" red="0" green="0" blue="0"/>
+        <fillColor red="255" green="255" blue="255"/>
+        <strokeColor red="0" green="0" blue="0"/>
+        <fontColor red="0" green="0" blue="0"/>
       </localStyle>
-      <bounds xsi:type="DC:Bounds" width="799.0" height="576.0"/>
-      <ownedShape xsi:type="cmmndi:CMMNShape" id="_MipKoO40EeSx29YJAqJZcA" isPlanningTableExpanded="true" cmmnElement="#_27EA7EAE-18E5-435B-B7F0-629230F003A2">
+      <bounds width="799.0" height="576.0"/>
+      <ownedShape id="_MipKoO40EeSx29YJAqJZcA" isPlanningTableExpanded="true" cmmnElement="#_27EA7EAE-18E5-435B-B7F0-629230F003A2">
         <localStyle xsi:type="cmmndi:CMMNStyle">
-          <fillColor xsi:type="DC:Color" red="255" green="255" blue="255"/>
-          <strokeColor xsi:type="DC:Color" red="0" green="0" blue="0"/>
-          <fontColor xsi:type="DC:Color" red="0" green="0" blue="0"/>
+          <fillColor red="255" green="255" blue="255"/>
+          <strokeColor red="0" green="0" blue="0"/>
+          <fontColor red="0" green="0" blue="0"/>
         </localStyle>
-        <bounds xsi:type="DC:Bounds" x="75.0" y="45.0" width="100.0" height="80.0"/>
+        <bounds x="75.0" y="64.0" width="100.0" height="80.0"/>
       </ownedShape>
-      <ownedShape xsi:type="cmmndi:CMMNShape" id="_MitcEO40EeSx29YJAqJZcA" isPlanningTableExpanded="true" cmmnElement="#_57241085-2C7A-4998-8E05-614142918ED5">
+      <ownedShape id="_MitcEO40EeSx29YJAqJZcA" isPlanningTableExpanded="true" cmmnElement="#_57241085-2C7A-4998-8E05-614142918ED5">
         <localStyle xsi:type="cmmndi:CMMNStyle">
-          <fillColor xsi:type="DC:Color" red="255" green="255" blue="255"/>
-          <strokeColor xsi:type="DC:Color" red="0" green="0" blue="0"/>
-          <fontColor xsi:type="DC:Color" red="0" green="0" blue="0"/>
+          <fillColor red="255" green="255" blue="255"/>
+          <strokeColor red="0" green="0" blue="0"/>
+          <fontColor red="0" green="0" blue="0"/>
         </localStyle>
-        <bounds xsi:type="DC:Bounds" x="210.0" y="90.0" width="100.0" height="80.0"/>
+        <bounds x="210.0" y="90.0" width="100.0" height="80.0"/>
       </ownedShape>
-      <ownedShape xsi:type="cmmndi:CMMNShape" id="_MiuDIO40EeSx29YJAqJZcA" isPlanningTableExpanded="true" cmmnElement="#_29E50A4B-E992-4B8E-8CAA-BCC06B42F68C">
+      <ownedShape id="_MiuDIO40EeSx29YJAqJZcA" isPlanningTableExpanded="true" cmmnElement="#_29E50A4B-E992-4B8E-8CAA-BCC06B42F68C">
         <localStyle xsi:type="cmmndi:CMMNStyle">
-          <fillColor xsi:type="DC:Color" red="255" green="255" blue="255"/>
-          <strokeColor xsi:type="DC:Color" red="0" green="0" blue="0"/>
-          <fontColor xsi:type="DC:Color" red="0" green="0" blue="0"/>
+          <fillColor red="255" green="255" blue="255"/>
+          <strokeColor red="0" green="0" blue="0"/>
+          <fontColor red="0" green="0" blue="0"/>
         </localStyle>
-        <bounds xsi:type="DC:Bounds" x="75.0" y="195.0" width="100.0" height="80.0"/>
+        <bounds x="75.0" y="195.0" width="100.0" height="80.0"/>
       </ownedShape>
-      <ownedShape xsi:type="cmmndi:CMMNShape" id="_MivRQO40EeSx29YJAqJZcA" isPlanningTableExpanded="true" cmmnElement="#_C9FB7358-5EF9-48FD-857E-CFFC7C37FC99">
+      <ownedShape id="_MivRQO40EeSx29YJAqJZcA" isPlanningTableExpanded="true" cmmnElement="#_C9FB7358-5EF9-48FD-857E-CFFC7C37FC99">
         <localStyle xsi:type="cmmndi:CMMNStyle">
-          <fillColor xsi:type="DC:Color" red="255" green="255" blue="255"/>
-          <strokeColor xsi:type="DC:Color" red="0" green="0" blue="0"/>
-          <fontColor xsi:type="DC:Color" red="0" green="0" blue="0"/>
+          <fillColor red="255" green="255" blue="255"/>
+          <strokeColor red="0" green="0" blue="0"/>
+          <fontColor red="0" green="0" blue="0"/>
         </localStyle>
-        <bounds xsi:type="DC:Bounds" x="255.0" y="195.0" width="100.0" height="80.0"/>
+        <bounds x="255.0" y="195.0" width="100.0" height="80.0"/>
       </ownedShape>
-      <ownedShape xsi:type="cmmndi:CMMNShape" id="_MiwfYO40EeSx29YJAqJZcA" isPlanningTableExpanded="true" cmmnElement="#_7DD0AD19-6465-4250-9DA1-96929E206434">
+      <ownedShape id="_MiwfYO40EeSx29YJAqJZcA" isPlanningTableExpanded="true" cmmnElement="#_7DD0AD19-6465-4250-9DA1-96929E206434">
         <localStyle xsi:type="cmmndi:CMMNStyle">
-          <fillColor xsi:type="DC:Color" red="255" green="255" blue="255"/>
-          <strokeColor xsi:type="DC:Color" red="0" green="0" blue="0"/>
-          <fontColor xsi:type="DC:Color" red="0" green="0" blue="0"/>
+          <fillColor red="255" green="255" blue="255"/>
+          <strokeColor red="0" green="0" blue="0"/>
+          <fontColor red="0" green="0" blue="0"/>
         </localStyle>
-        <bounds xsi:type="DC:Bounds" x="255.0" y="330.0" width="100.0" height="80.0"/>
+        <bounds x="255.0" y="330.0" width="100.0" height="80.0"/>
       </ownedShape>
-      <ownedShape xsi:type="cmmndi:CMMNShape" id="_MixGcO40EeSx29YJAqJZcA" isPlanningTableExpanded="true" cmmnElement="#_F581ECAF-FB92-4367-91C0-174C03BF2C12">
+      <ownedShape id="_MixGcO40EeSx29YJAqJZcA" isPlanningTableExpanded="true" cmmnElement="#_F581ECAF-FB92-4367-91C0-174C03BF2C12">
         <localStyle xsi:type="cmmndi:CMMNStyle">
-          <fillColor xsi:type="DC:Color" red="255" green="255" blue="255"/>
-          <strokeColor xsi:type="DC:Color" red="0" green="0" blue="0"/>
-          <fontColor xsi:type="DC:Color" red="0" green="0" blue="0"/>
+          <fillColor red="255" green="255" blue="255"/>
+          <strokeColor red="0" green="0" blue="0"/>
+          <fontColor red="0" green="0" blue="0"/>
         </localStyle>
-        <bounds xsi:type="DC:Bounds" x="450.0" y="210.0" width="100.0" height="80.0"/>
+        <bounds x="450.0" y="210.0" width="100.0" height="80.0"/>
       </ownedShape>
-      <ownedShape xsi:type="cmmndi:CMMNShape" id="_MixGce40EeSx29YJAqJZcA" isPlanningTableExpanded="true" cmmnElement="#_651323A2-70C9-4B50-A654-4D76DE2A34D1">
+      <ownedShape id="_MixGce40EeSx29YJAqJZcA" isPlanningTableExpanded="true" cmmnElement="#_651323A2-70C9-4B50-A654-4D76DE2A34D1">
         <localStyle xsi:type="cmmndi:CMMNStyle">
-          <fillColor xsi:type="DC:Color" red="255" green="255" blue="255"/>
-          <strokeColor xsi:type="DC:Color" red="0" green="0" blue="0"/>
-          <fontColor xsi:type="DC:Color" red="0" green="0" blue="0"/>
+          <fillColor red="255" green="255" blue="255"/>
+          <strokeColor red="0" green="0" blue="0"/>
+          <fontColor red="0" green="0" blue="0"/>
         </localStyle>
-        <bounds xsi:type="DC:Bounds" x="450.0" y="375.0" width="100.0" height="80.0"/>
+        <bounds x="450.0" y="375.0" width="100.0" height="80.0"/>
       </ownedShape>
-      <ownedShape xsi:type="cmmndi:CMMNShape" id="_MixGcu40EeSx29YJAqJZcA" isPlanningTableExpanded="true" cmmnElement="#_A46C83DC-9996-49B1-9A09-C756CDAF9635">
+      <ownedShape id="_MixGcu40EeSx29YJAqJZcA" isPlanningTableExpanded="true" cmmnElement="#_A46C83DC-9996-49B1-9A09-C756CDAF9635">
         <localStyle xsi:type="cmmndi:CMMNStyle">
-          <fillColor xsi:type="DC:Color" red="255" green="255" blue="255"/>
-          <strokeColor xsi:type="DC:Color" red="0" green="0" blue="0"/>
-          <fontColor xsi:type="DC:Color" red="0" green="0" blue="0"/>
+          <fillColor red="255" green="255" blue="255"/>
+          <strokeColor red="0" green="0" blue="0"/>
+          <fontColor red="0" green="0" blue="0"/>
         </localStyle>
-        <bounds xsi:type="DC:Bounds" x="495.0" y="45.0" width="100.0" height="80.0"/>
+        <bounds x="510.0" y="64.0" width="100.0" height="80.0"/>
       </ownedShape>
-      <ownedShape xsi:type="cmmndi:CMMNShape" id="_MixtgO40EeSx29YJAqJZcA" isPlanningTableExpanded="true" cmmnElement="#_2B1C7E03-9960-4439-9913-CA8B63AF093E">
+      <ownedShape id="_MixtgO40EeSx29YJAqJZcA" isPlanningTableExpanded="true" cmmnElement="#_2B1C7E03-9960-4439-9913-CA8B63AF093E">
         <localStyle xsi:type="cmmndi:CMMNStyle">
-          <fillColor xsi:type="DC:Color" red="255" green="255" blue="255"/>
-          <strokeColor xsi:type="DC:Color" red="0" green="0" blue="0"/>
-          <fontColor xsi:type="DC:Color" red="0" green="0" blue="0"/>
+          <fillColor red="255" green="255" blue="255"/>
+          <strokeColor red="0" green="0" blue="0"/>
+          <fontColor red="0" green="0" blue="0"/>
         </localStyle>
-        <bounds xsi:type="DC:Bounds" x="327.0" y="64.0" width="100.0" height="80.0"/>
+        <bounds x="327.0" y="64.0" width="100.0" height="80.0"/>
       </ownedShape>
-      <ownedShape xsi:type="cmmndi:CMMNShape" id="_15VUEO42EeSx29YJAqJZcA" cmmnElement="#_5D5586AF-DF94-4CE8-A1C1-1EE98C9F1C42">
+      <ownedShape id="_15VUEO42EeSx29YJAqJZcA" cmmnElement="#_5D5586AF-DF94-4CE8-A1C1-1EE98C9F1C42">
         <localStyle xsi:type="cmmndi:CMMNStyle">
-          <fillColor xsi:type="DC:Color" red="255" green="255" blue="255"/>
-          <strokeColor xsi:type="DC:Color" red="0" green="0" blue="0"/>
-          <fontColor xsi:type="DC:Color" red="0" green="0" blue="0"/>
+          <fillColor red="255" green="255" blue="255"/>
+          <strokeColor red="0" green="0" blue="0"/>
+          <fontColor red="0" green="0" blue="0"/>
         </localStyle>
-        <bounds xsi:type="DC:Bounds" x="41.5" y="315.0" width="89.0" height="100.0"/>
+        <bounds x="45.0" y="315.0" width="89.0" height="100.0"/>
       </ownedShape>
     </ownedCmmnDiagramElement>
     <ownedCmmnDiagramElement xsi:type="cmmndi:CMMNEdge" id="_Miy7oO40EeSx29YJAqJZcA" sourceShape="#_MiuDIO40EeSx29YJAqJZcA" targetShape="#_MivRQO40EeSx29YJAqJZcA">
       <localStyle xsi:type="cmmndi:CMMNStyle">
-        <fillColor xsi:type="DC:Color" red="255" green="255" blue="255"/>
-        <strokeColor xsi:type="DC:Color" red="0" green="0" blue="0"/>
-        <fontColor xsi:type="DC:Color" red="0" green="0" blue="0"/>
+        <fillColor red="255" green="255" blue="255"/>
+        <strokeColor red="0" green="0" blue="0"/>
+        <fontColor red="0" green="0" blue="0"/>
       </localStyle>
-      <waypoint xsi:type="DC:Point" x="125.0" y="235.0"/>
-      <waypoint xsi:type="DC:Point" x="305.0" y="235.0"/>
+      <waypoint x="125.0" y="235.0"/>
+      <waypoint x="305.0" y="235.0"/>
     </ownedCmmnDiagramElement>
   </diagram>
-  <cmmn:caseFileItemDefinition xsi:type="cmmn:tCaseFileItemDefinition" id="_15rSUO42EeSx29YJAqJZcA" structureRef="plansubmission.ucd:_E321730A-9217-4405-882C-E928728BAC0C"/>
-  <cmmn:case xsi:type="cmmn:tCase" id="construction.SubmitPlan" name="construction.SubmitPlan">
-    <cmmn:caseFileModel xsi:type="cmmn:tCaseFile">
-      <cmmn:caseFileItem xsi:type="cmmn:tCaseFileItem" id="_5D5586AF-DF94-4CE8-A1C1-1EE98C9F1C42" definitionRef="#_15rSUO42EeSx29YJAqJZcA" multiplicity="ExactlyOne" name="BuildingPlan"/>
+  <cmmn:import importType="UML" location="platform:/resource/construction/src/main/resources/org/jbpm/construction/plansubmission.ucd" namespace="http://www.jbpm.org/construction"/>
+  <cmmn:import importType="UML" location="platform:/resource/construction/src/main/resources/org/jbpm/construction/plansubmission.ucd" namespace="http://www.jbpm.org/construction"/>
+  <cmmn:caseFileItemDefinition id="_15rSUO42EeSx29YJAqJZcA" definitionType="http://www.omg.org/spec/CMMN/DefinitionType/UMLClass" importRef="#//@definitions/@import.1" structureRef="construction:BuildingPlan"/>
+  <cmmn:case id="construction.SubmitPlan" name="construction.SubmitPlan">
+    <cmmn:caseFileModel>
+      <cmmn:caseFileItem id="_5D5586AF-DF94-4CE8-A1C1-1EE98C9F1C42" definitionRef="_15rSUO42EeSx29YJAqJZcA" multiplicity="ExactlyOne" name="BuildingPlan"/>
     </cmmn:caseFileModel>
-    <cmmn:casePlanModel xsi:type="cmmn:tStage" id="_8vlXBO4yEeSx29YJAqJZcA" autoComplete="true">
-      <cmmn:planItem xsi:type="cmmn:tPlanItem" id="_27EA7EAE-18E5-435B-B7F0-629230F003A2" definitionRef="#_MjCMMO40EeSx29YJAqJZcA" name="Elicit Requirements">
-        <cmmn:itemControl xsi:type="cmmn:tPlanItemControl">
-          <cmmn:repetitionRule xsi:type="cmmn:tRepetitionRule">
-            <cmmn:condition xsi:type="cmmn:tExpression" language="http://www.oracle.com/java"/>
+    <cmmn:casePlanModel id="_8vlXBO4yEeSx29YJAqJZcA" autoComplete="true">
+      <cmmn:planItem id="_27EA7EAE-18E5-435B-B7F0-629230F003A2" definitionRef="_MjCMMO40EeSx29YJAqJZcA" name="Elicit Requirements">
+        <cmmn:itemControl>
+          <cmmn:repetitionRule>
+            <cmmn:condition language="http://www.oracle.com/java"/>
           </cmmn:repetitionRule>
-          <cmmn:requiredRule xsi:type="cmmn:tRequiredRule">
-            <cmmn:condition xsi:type="cmmn:tExpression" language="http://www.oracle.com/java"/>
+          <cmmn:requiredRule>
+            <cmmn:condition language="http://www.oracle.com/java"/>
           </cmmn:requiredRule>
-          <cmmn:manualActivationRule xsi:type="cmmn:tManualActivationRule">
-            <cmmn:condition xsi:type="cmmn:tExpression" language="http://www.oracle.com/java"/>
+          <cmmn:manualActivationRule>
+            <cmmn:condition language="http://www.oracle.com/java"/>
           </cmmn:manualActivationRule>
         </cmmn:itemControl>
       </cmmn:planItem>
-      <cmmn:planItem xsi:type="cmmn:tPlanItem" id="_57241085-2C7A-4998-8E05-614142918ED5" definitionRef="#_MjCzQO40EeSx29YJAqJZcA" name="Draft Building Plan">
-        <cmmn:itemControl xsi:type="cmmn:tPlanItemControl">
-          <cmmn:repetitionRule xsi:type="cmmn:tRepetitionRule">
-            <cmmn:condition xsi:type="cmmn:tExpression" language="http://www.oracle.com/java"/>
+      <cmmn:planItem id="_57241085-2C7A-4998-8E05-614142918ED5" definitionRef="_MjCzQO40EeSx29YJAqJZcA" name="Draft Building Plan">
+        <cmmn:itemControl>
+          <cmmn:repetitionRule>
+            <cmmn:condition language="http://www.oracle.com/java"/>
           </cmmn:repetitionRule>
-          <cmmn:requiredRule xsi:type="cmmn:tRequiredRule">
-            <cmmn:condition xsi:type="cmmn:tExpression" language="http://www.oracle.com/java"/>
+          <cmmn:requiredRule>
+            <cmmn:condition language="http://www.oracle.com/java"/>
           </cmmn:requiredRule>
-          <cmmn:manualActivationRule xsi:type="cmmn:tManualActivationRule">
-            <cmmn:condition xsi:type="cmmn:tExpression" language="http://www.oracle.com/java"/>
+          <cmmn:manualActivationRule>
+            <cmmn:condition language="http://www.oracle.com/java"/>
           </cmmn:manualActivationRule>
         </cmmn:itemControl>
       </cmmn:planItem>
-      <cmmn:planItem xsi:type="cmmn:tPlanItem" id="_29E50A4B-E992-4B8E-8CAA-BCC06B42F68C" definitionRef="#_MjCzQe40EeSx29YJAqJZcA" name="Inspect Plan">
-        <cmmn:itemControl xsi:type="cmmn:tPlanItemControl">
-          <cmmn:repetitionRule xsi:type="cmmn:tRepetitionRule">
-            <cmmn:condition xsi:type="cmmn:tExpression" language="http://www.oracle.com/java"/>
+      <cmmn:planItem id="_29E50A4B-E992-4B8E-8CAA-BCC06B42F68C" definitionRef="_MjCzQe40EeSx29YJAqJZcA" name="Inspect Plan">
+        <cmmn:itemControl>
+          <cmmn:repetitionRule>
+            <cmmn:condition language="http://www.oracle.com/java"/>
           </cmmn:repetitionRule>
-          <cmmn:requiredRule xsi:type="cmmn:tRequiredRule">
-            <cmmn:condition xsi:type="cmmn:tExpression" language="http://www.oracle.com/java"/>
+          <cmmn:requiredRule>
+            <cmmn:condition language="http://www.oracle.com/java"/>
           </cmmn:requiredRule>
-          <cmmn:manualActivationRule xsi:type="cmmn:tManualActivationRule">
-            <cmmn:condition xsi:type="cmmn:tExpression" language="http://www.oracle.com/java"/>
+          <cmmn:manualActivationRule>
+            <cmmn:condition language="http://www.oracle.com/java"/>
           </cmmn:manualActivationRule>
         </cmmn:itemControl>
       </cmmn:planItem>
-      <cmmn:planItem xsi:type="cmmn:tPlanItem" id="_7DD0AD19-6465-4250-9DA1-96929E206434" definitionRef="#_MjCzQu40EeSx29YJAqJZcA" name="Amend Submission">
-        <cmmn:itemControl xsi:type="cmmn:tPlanItemControl">
-          <cmmn:repetitionRule xsi:type="cmmn:tRepetitionRule">
-            <cmmn:condition xsi:type="cmmn:tExpression" language="http://www.oracle.com/java"/>
+      <cmmn:planItem id="_7DD0AD19-6465-4250-9DA1-96929E206434" definitionRef="_MjCzQu40EeSx29YJAqJZcA" name="Amend Submission">
+        <cmmn:itemControl>
+          <cmmn:repetitionRule>
+            <cmmn:condition language="http://www.oracle.com/java"/>
           </cmmn:repetitionRule>
-          <cmmn:requiredRule xsi:type="cmmn:tRequiredRule">
-            <cmmn:condition xsi:type="cmmn:tExpression" language="http://www.oracle.com/java"/>
+          <cmmn:requiredRule>
+            <cmmn:condition language="http://www.oracle.com/java"/>
           </cmmn:requiredRule>
-          <cmmn:manualActivationRule xsi:type="cmmn:tManualActivationRule">
-            <cmmn:condition xsi:type="cmmn:tExpression" language="http://www.oracle.com/java"/>
+          <cmmn:manualActivationRule>
+            <cmmn:condition language="http://www.oracle.com/java"/>
           </cmmn:manualActivationRule>
         </cmmn:itemControl>
       </cmmn:planItem>
-      <cmmn:planItem xsi:type="cmmn:tPlanItem" id="_F581ECAF-FB92-4367-91C0-174C03BF2C12" definitionRef="#_MjCzQ-40EeSx29YJAqJZcA" name="Submit Plan for Approval">
-        <cmmn:itemControl xsi:type="cmmn:tPlanItemControl">
-          <cmmn:repetitionRule xsi:type="cmmn:tRepetitionRule">
-            <cmmn:condition xsi:type="cmmn:tExpression" language="http://www.oracle.com/java"/>
+      <cmmn:planItem id="_F581ECAF-FB92-4367-91C0-174C03BF2C12" definitionRef="_MjCzQ-40EeSx29YJAqJZcA" name="Submit Plan for Approval">
+        <cmmn:itemControl>
+          <cmmn:repetitionRule>
+            <cmmn:condition language="http://www.oracle.com/java"/>
           </cmmn:repetitionRule>
-          <cmmn:requiredRule xsi:type="cmmn:tRequiredRule">
-            <cmmn:condition xsi:type="cmmn:tExpression" language="http://www.oracle.com/java"/>
+          <cmmn:requiredRule>
+            <cmmn:condition language="http://www.oracle.com/java"/>
           </cmmn:requiredRule>
-          <cmmn:manualActivationRule xsi:type="cmmn:tManualActivationRule">
-            <cmmn:condition xsi:type="cmmn:tExpression" language="http://www.oracle.com/java"/>
+          <cmmn:manualActivationRule>
+            <cmmn:condition language="http://www.oracle.com/java"/>
           </cmmn:manualActivationRule>
         </cmmn:itemControl>
       </cmmn:planItem>
-      <cmmn:planItem xsi:type="cmmn:tPlanItem" id="_651323A2-70C9-4B50-A654-4D76DE2A34D1" definitionRef="#_MjCzRO40EeSx29YJAqJZcA" name="Rework Plan">
-        <cmmn:itemControl xsi:type="cmmn:tPlanItemControl">
-          <cmmn:repetitionRule xsi:type="cmmn:tRepetitionRule">
-            <cmmn:condition xsi:type="cmmn:tExpression" language="http://www.oracle.com/java"/>
+      <cmmn:planItem id="_651323A2-70C9-4B50-A654-4D76DE2A34D1" definitionRef="_MjCzRO40EeSx29YJAqJZcA" name="Rework Plan">
+        <cmmn:itemControl>
+          <cmmn:repetitionRule>
+            <cmmn:condition language="http://www.oracle.com/java"/>
           </cmmn:repetitionRule>
-          <cmmn:requiredRule xsi:type="cmmn:tRequiredRule">
-            <cmmn:condition xsi:type="cmmn:tExpression" language="http://www.oracle.com/java"/>
+          <cmmn:requiredRule>
+            <cmmn:condition language="http://www.oracle.com/java"/>
           </cmmn:requiredRule>
-          <cmmn:manualActivationRule xsi:type="cmmn:tManualActivationRule">
-            <cmmn:condition xsi:type="cmmn:tExpression" language="http://www.oracle.com/java"/>
+          <cmmn:manualActivationRule>
+            <cmmn:condition language="http://www.oracle.com/java"/>
           </cmmn:manualActivationRule>
         </cmmn:itemControl>
       </cmmn:planItem>
-      <cmmn:planItem xsi:type="cmmn:tPlanItem" id="_A46C83DC-9996-49B1-9A09-C756CDAF9635" definitionRef="#_MjCzRe40EeSx29YJAqJZcA" name="Collect Council Response">
-        <cmmn:itemControl xsi:type="cmmn:tPlanItemControl">
-          <cmmn:repetitionRule xsi:type="cmmn:tRepetitionRule">
-            <cmmn:condition xsi:type="cmmn:tExpression" language="http://www.oracle.com/java"/>
+      <cmmn:planItem id="_A46C83DC-9996-49B1-9A09-C756CDAF9635" definitionRef="_MjCzRe40EeSx29YJAqJZcA" name="Collect Council Response">
+        <cmmn:itemControl>
+          <cmmn:repetitionRule>
+            <cmmn:condition language="http://www.oracle.com/java"/>
           </cmmn:repetitionRule>
-          <cmmn:requiredRule xsi:type="cmmn:tRequiredRule">
-            <cmmn:condition xsi:type="cmmn:tExpression" language="http://www.oracle.com/java"/>
+          <cmmn:requiredRule>
+            <cmmn:condition language="http://www.oracle.com/java"/>
           </cmmn:requiredRule>
-          <cmmn:manualActivationRule xsi:type="cmmn:tManualActivationRule">
-            <cmmn:condition xsi:type="cmmn:tExpression" language="http://www.oracle.com/java"/>
+          <cmmn:manualActivationRule>
+            <cmmn:condition language="http://www.oracle.com/java"/>
           </cmmn:manualActivationRule>
         </cmmn:itemControl>
       </cmmn:planItem>
-      <cmmn:planItem xsi:type="cmmn:tPlanItem" id="_2B1C7E03-9960-4439-9913-CA8B63AF093E" definitionRef="#_MjCzRu40EeSx29YJAqJZcA" name="Endorse Submission">
-        <cmmn:itemControl xsi:type="cmmn:tPlanItemControl">
-          <cmmn:repetitionRule xsi:type="cmmn:tRepetitionRule">
-            <cmmn:condition xsi:type="cmmn:tExpression" language="http://www.oracle.com/java"/>
+      <cmmn:planItem id="_2B1C7E03-9960-4439-9913-CA8B63AF093E" definitionRef="_MjCzRu40EeSx29YJAqJZcA" name="Endorse Submission">
+        <cmmn:itemControl>
+          <cmmn:repetitionRule>
+            <cmmn:condition language="http://www.oracle.com/java"/>
           </cmmn:repetitionRule>
-          <cmmn:requiredRule xsi:type="cmmn:tRequiredRule">
-            <cmmn:condition xsi:type="cmmn:tExpression" language="http://www.oracle.com/java"/>
+          <cmmn:requiredRule>
+            <cmmn:condition language="http://www.oracle.com/java"/>
           </cmmn:requiredRule>
-          <cmmn:manualActivationRule xsi:type="cmmn:tManualActivationRule">
-            <cmmn:condition xsi:type="cmmn:tExpression" language="http://www.oracle.com/java"/>
+          <cmmn:manualActivationRule>
+            <cmmn:condition language="http://www.oracle.com/java"/>
           </cmmn:manualActivationRule>
         </cmmn:itemControl>
       </cmmn:planItem>
-      <cmmn:planItemDefinition xsi:type="cmmn:tHumanTask" id="_MjCMMO40EeSx29YJAqJZcA" name="Elicit Requirements" isBlocking="true" performerRef="#Draftsman"/>
-      <cmmn:planItemDefinition xsi:type="cmmn:tHumanTask" id="_MjCzQO40EeSx29YJAqJZcA" name="Draft Building Plan" isBlocking="true" performerRef="#Draftsman"/>
-      <cmmn:planItemDefinition xsi:type="cmmn:tHumanTask" id="_MjCzQe40EeSx29YJAqJZcA" name="Inspect Plan" isBlocking="true" performerRef="#Engineer">
-        <cmmn:planningTable xsi:type="cmmn:tPlanningTable">
-          <cmmn:tableItem xsi:type="cmmn:tDiscretionaryItem" id="_C9FB7358-5EF9-48FD-857E-CFFC7C37FC99" applicabilityRuleRefs="#_q7TgcO5bEeSjMdQZRAyUjQ" definitionRef="#_MjDaUe40EeSx29YJAqJZcA">
-            <cmmn:itemControl xsi:type="cmmn:tPlanItemControl">
-              <cmmn:repetitionRule xsi:type="cmmn:tRepetitionRule">
-                <cmmn:condition xsi:type="cmmn:tExpression" language="http://www.oracle.com/java"/>
+      <cmmn:planItemDefinition xsi:type="cmmn:tHumanTask" id="_MjCMMO40EeSx29YJAqJZcA" name="Elicit Requirements" isBlocking="true" performerRef="Draftsman"/>
+      <cmmn:planItemDefinition xsi:type="cmmn:tHumanTask" id="_MjCzQO40EeSx29YJAqJZcA" name="Draft Building Plan" isBlocking="true" performerRef="Draftsman"/>
+      <cmmn:planItemDefinition xsi:type="cmmn:tHumanTask" id="_MjCzQe40EeSx29YJAqJZcA" name="Inspect Plan" isBlocking="true" performerRef="Engineer">
+        <cmmn:planningTable>
+          <cmmn:tableItem xsi:type="cmmn:tDiscretionaryItem" id="_C9FB7358-5EF9-48FD-857E-CFFC7C37FC99" applicabilityRuleRefs="_H1HzcAB7EeWJi49Y9v5bvA" definitionRef="_MjDaUe40EeSx29YJAqJZcA">
+            <cmmn:itemControl>
+              <cmmn:repetitionRule>
+                <cmmn:condition language="http://www.oracle.com/java"/>
               </cmmn:repetitionRule>
-              <cmmn:requiredRule xsi:type="cmmn:tRequiredRule">
-                <cmmn:condition xsi:type="cmmn:tExpression" language="http://www.oracle.com/java"/>
+              <cmmn:requiredRule>
+                <cmmn:condition language="http://www.oracle.com/java"/>
               </cmmn:requiredRule>
-              <cmmn:manualActivationRule xsi:type="cmmn:tManualActivationRule">
-                <cmmn:condition xsi:type="cmmn:tExpression" language="http://www.oracle.com/java"/>
+              <cmmn:manualActivationRule>
+                <cmmn:condition language="http://www.oracle.com/java"/>
               </cmmn:manualActivationRule>
             </cmmn:itemControl>
           </cmmn:tableItem>
-          <cmmn:applicabilityRule xsi:type="cmmn:tApplicabilityRule" id="_q7TgcO5bEeSjMdQZRAyUjQ">
-            <cmmn:condition xsi:type="cmmn:tExpression" language="http://www.oracle.com/java"/>
+          <cmmn:applicabilityRule id="_H1HzcAB7EeWJi49Y9v5bvA">
+            <cmmn:condition language="http://www.oracle.com/java"/>
           </cmmn:applicabilityRule>
         </cmmn:planningTable>
       </cmmn:planItemDefinition>
-      <cmmn:planItemDefinition xsi:type="cmmn:tHumanTask" id="_MjDaUe40EeSx29YJAqJZcA" name="Inspect Site" isBlocking="true" performerRef="#Engineer"/>
-      <cmmn:planItemDefinition xsi:type="cmmn:tHumanTask" id="_MjCzQu40EeSx29YJAqJZcA" name="Amend Submission" isBlocking="true" performerRef="#Engineer"/>
+      <cmmn:planItemDefinition xsi:type="cmmn:tHumanTask" id="_MjDaUe40EeSx29YJAqJZcA" name="Inspect Site" isBlocking="true" performerRef="Engineer"/>
+      <cmmn:planItemDefinition xsi:type="cmmn:tHumanTask" id="_MjCzQu40EeSx29YJAqJZcA" name="Amend Submission" isBlocking="true" performerRef="Engineer"/>
       <cmmn:planItemDefinition xsi:type="cmmn:tHumanTask" id="_MjCzQ-40EeSx29YJAqJZcA" name="Submit Plan for Approval" isBlocking="true">
-        <cmmn:inputs xsi:type="cmmn:tCaseParameter" id="_15r5Ye42EeSx29YJAqJZcA" name="buildingPlan" bindingRef="#_5D5586AF-DF94-4CE8-A1C1-1EE98C9F1C42">
-          <cmmn:bindingRefinement xsi:type="cmmn:tExpression" language=""><cmmn:body></cmmn:body></cmmn:bindingRefinement>
+        <cmmn:inputs id="_15r5Ye42EeSx29YJAqJZcA" name="buildingPlan">
+          <cmmn:bindingRefinement language=""><cmmn:body></cmmn:body></cmmn:bindingRefinement>
         </cmmn:inputs>
       </cmmn:planItemDefinition>
-      <cmmn:planItemDefinition xsi:type="cmmn:tHumanTask" id="_MjCzRO40EeSx29YJAqJZcA" name="Rework Plan" isBlocking="true" performerRef="#Draftsman"/>
+      <cmmn:planItemDefinition xsi:type="cmmn:tHumanTask" id="_MjCzRO40EeSx29YJAqJZcA" name="Rework Plan" isBlocking="true" performerRef="Draftsman"/>
       <cmmn:planItemDefinition xsi:type="cmmn:tHumanTask" id="_MjCzRe40EeSx29YJAqJZcA" name="Collect Council Response" isBlocking="true"/>
-      <cmmn:planItemDefinition xsi:type="cmmn:tHumanTask" id="_MjCzRu40EeSx29YJAqJZcA" name="Endorse Submission" isBlocking="true" performerRef="#Customer"/>
+      <cmmn:planItemDefinition xsi:type="cmmn:tHumanTask" id="_MjCzRu40EeSx29YJAqJZcA" name="Endorse Submission" isBlocking="true" performerRef="Customer"/>
     </cmmn:casePlanModel>
-    <cmmn:caseRoles xsi:type="cmmn:tRole" id="Draftsman" name="Draftsman"/>
-    <cmmn:caseRoles xsi:type="cmmn:tRole" id="Customer" name="Customer"/>
-    <cmmn:caseRoles xsi:type="cmmn:tRole" id="Engineer" name="Engineer"/>
-    <cmmn:caseRoles xsi:type="cmmn:tRole" id="Council_Liason" name="Council_Liason"/>
+    <cmmn:caseRoles id="Draftsman" name="Draftsman"/>
+    <cmmn:caseRoles id="Customer" name="Customer"/>
+    <cmmn:caseRoles id="Engineer" name="Engineer"/>
+    <cmmn:caseRoles id="Council_Liason" name="Council_Liason"/>
   </cmmn:case>
 </cmmn:definitions>

@@ -26,28 +26,28 @@
 			<!-- generic -->
 			&occurrableLifcycleTestTasks;
 			<!-- TimerEvent specific -->
-			<cmmn:timerEvent id="theOccurrablePlanItemDefinitionId" name="TheTimerEvent">
+			<cmmn:planItemDefinition xsi:type="cmmn:tTimerEvent" id="theOccurrablePlanItemDefinitionId" name="TheTimerEvent">
 				<cmmn:timerExpression language="http://www.mvel.org/mvel">
 					<cmmn:body>R5/P1D</cmmn:body>
 				</cmmn:timerExpression>
-			</cmmn:timerEvent>
-			<cmmn:timerEvent id="timerEventWithCaseFileItemTriggerId" name="TimerEventWithCaseFileItemTrigger">
+			</cmmn:planItemDefinition>
+			<cmmn:planItemDefinition xsi:type="cmmn:tTimerEvent" id="timerEventWithCaseFileItemTriggerId" name="TimerEventWithCaseFileItemTrigger">
 				<cmmn:caseFileItemStartTrigger sourceRef="wallPlanFileItemId" id="wallPlanCreatedTrigger">
 					<standardEvent>create</standardEvent>
 				</cmmn:caseFileItemStartTrigger>
 				<cmmn:timerExpression language="http://www.mvel.org/mvel">
 					<cmmn:body>R5/P1D</cmmn:body>
 				</cmmn:timerExpression>
-			</cmmn:timerEvent>
-			<cmmn:timerEvent id="timerEventWithPlanItemTriggerId" name="TimerEventWithPlanItemTrigger">
+			</cmmn:planItemDefinition>
+			<cmmn:planItemDefinition xsi:type="cmmn:tTimerEvent" id="timerEventWithPlanItemTriggerId" name="TimerEventWithPlanItemTrigger">
 				<cmmn:planItemStartTrigger sourceRef="theUserEventPlanItemId" id="theUserEventTrigger">
 					<standardEvent>occur</standardEvent>
 				</cmmn:planItemStartTrigger>
 				<cmmn:timerExpression language="http://www.mvel.org/mvel">
 					<cmmn:body>R5/P1D</cmmn:body>
 				</cmmn:timerExpression>
-			</cmmn:timerEvent>
-			<cmmn:userEvent id="theUserEventId" name="TheUserEvent" />
+			</cmmn:planItemDefinition>
+			<cmmn:planItemDefinition xsi:type="cmmn:tUserEvent" id="theUserEventId" name="TheUserEvent" />
 		</cmmn:casePlanModel>
 		<cmmn:caseRoles name="Builders" id="builderRoleId" />
 		<cmmn:input bindingRef="housePlanFileItemId" id="housePlanInputId" name="housePlan">

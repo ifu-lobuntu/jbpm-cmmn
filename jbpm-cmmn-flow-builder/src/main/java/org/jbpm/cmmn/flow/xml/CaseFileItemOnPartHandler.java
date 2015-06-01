@@ -44,8 +44,8 @@ public class CaseFileItemOnPartHandler extends BaseAbstractHandler implements Ha
 		} else {
 			((TimerEvent) parent).setStartTrigger((CaseFileItemStartTrigger) part);
 		}
-		part.setSourceRef(attrs.getValue("sourceRef"));
-		part.setRelationRef(attrs.getValue("relationRef"));
+		part.setSourceRef(IdGenerator.toXmlId(attrs.getValue("sourceRef")));
+		part.setRelationRef(IdGenerator.toXmlId(attrs.getValue("relationRef")));
 		return part;
 	}
 

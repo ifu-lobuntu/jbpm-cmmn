@@ -7,7 +7,7 @@ import org.jbpm.cmmn.flow.core.task.CaseTask;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class CaseTaskHandler extends AbstractCaseElementHandler implements Handler {
+public class CaseTaskHandler extends AbstractCaseElementHandler implements PlanItemDefinitionHandlerDelegate {
 	public CaseTaskHandler() {
 
 	}

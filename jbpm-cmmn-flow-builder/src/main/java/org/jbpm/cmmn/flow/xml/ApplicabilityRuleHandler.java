@@ -29,7 +29,7 @@ public class ApplicabilityRuleHandler extends AbstractTableItemHandler implement
 		parser.startElementBuilder(localName, attrs);
 		ApplicabilityRule rule = new ApplicabilityRule();
 		rule.setElementId(attrs.getValue("id"));
-		rule.setContextRef(attrs.getValue("contextRef"));
+		rule.setContextRef(IdGenerator.toXmlId(attrs.getValue("contextRef")));
 		PlanningTableImpl parent = (PlanningTableImpl) parser.getParent();
 		parent.addOwnedApplicabilityRule(rule);
 		return rule;
