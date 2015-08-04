@@ -18,7 +18,7 @@ public class SubmitPlannTest extends AbstractCmmnCaseTestCase{
     }
     @Test
     public void testIt() throws Exception{
-        String root="/home/ampie/Code/pavanecce/cmmn-examples/construction/src/main/resources/";
+        String root="/home/ampie/Code/cmmn-examples/construction/src/main/resources/";
         String resource = "org/jbpm/construction/SubmitPlan.cmmn";
         FileUtils.copyFile(new File(root,resource), new File("./src/test/resources/" + resource));
         super.createRuntimeManager(resource);
