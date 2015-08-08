@@ -50,7 +50,7 @@ public class SubmitPlanCommand extends AbstractPlanningCommand<Void> {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			addContent(plannedTask.getId(), plannedTask.getParameterOverrides());
+			addContent(plannedTask, plannedTask.getParameterOverrides());
 			Task currentTask = oldTask;
 			InternalTaskData td = (InternalTaskData) currentTask.getTaskData();
 			td.setActualOwner(plannedTask.getTaskData().getActualOwner());

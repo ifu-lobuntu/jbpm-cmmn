@@ -39,7 +39,7 @@ public class AutomaticallyStartTaskCommand extends AbstractTaskCommand<Void> {
 		User user = TaskModelProvider.getTaskModelProviderService().getTaskModelFactory().newUser();
 		((InternalOrganizationalEntity) user).setId(userId);
 		fireBeforeTaskStartedAutomaticallyEvent(task);
-		addContent(task.getId(), updatedParameters);
+		addContent(task, updatedParameters);
 		td.setStatus(Status.InProgress);
 		td.setActualOwner(user);
 		fireAfterTaskStartedAutomaticallyEvent(task);

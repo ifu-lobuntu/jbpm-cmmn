@@ -22,6 +22,7 @@ import org.kie.internal.task.api.TaskPersistenceContext;
 import org.kie.internal.task.api.TaskQueryService;
 import org.kie.internal.task.api.model.ContentData;
 import org.kie.internal.task.api.model.InternalContent;
+import org.kie.internal.task.api.model.InternalTaskData;
 
 public abstract class AbstractTaskCommand<T> extends TaskCommand<T> {
 
@@ -43,9 +44,15 @@ public abstract class AbstractTaskCommand<T> extends TaskCommand<T> {
 		init(taskContext);
 		return execute();
 	}
+	@Deprecated
+	protected void addContent(Task task, Map<String, Object> params) {
+		ContentMarshallerContext mc = taskContext.getTaskContentService().getMarshallerContext(task);
+			ContentData contentData = ContentMarshallerHelper.marshal(params, mc.getEnvironment());
+			InternalContent newlyCreatedContent = (InternalContent) TaskModelProvider.getFactory().newContent();
+			newlyCreatedContent.setContent(contentData.getContent());
+		((InternalTaskData)task.getTaskData()).setDocumentContentId(newlyCreatedContent.getId());
+			persist(newlyCreatedContent);
 
-	protected void addContent(Long id, Map<String, Object> params) {
-		taskContext.getTaskContentService().addContent(id, params);
 	}
 
 	protected void persist(Object o) {
