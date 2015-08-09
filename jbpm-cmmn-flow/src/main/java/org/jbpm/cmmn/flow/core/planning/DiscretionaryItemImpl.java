@@ -11,14 +11,10 @@ import org.drools.core.process.core.Work;
 import org.drools.core.process.core.impl.ParameterDefinitionImpl;
 import org.drools.core.process.core.impl.WorkImpl;
 import org.jbpm.cmmn.common.WorkItemParameters;
-import org.jbpm.cmmn.flow.core.DiscretionaryItem;
-import org.jbpm.cmmn.flow.core.PlanItemContainer;
-import org.jbpm.cmmn.flow.core.PlanItemControl;
-import org.jbpm.cmmn.flow.core.PlanItemDefinition;
-import org.jbpm.cmmn.flow.core.Sentry;
-import org.jbpm.cmmn.flow.core.TaskDefinition;
+import org.jbpm.cmmn.flow.core.*;
 import org.jbpm.cmmn.flow.core.impl.PlannerRoleCalculator;
 import org.jbpm.cmmn.flow.core.impl.Stage;
+import org.jbpm.cmmn.flow.core.planitem.HumanTaskPlanItem;
 import org.jbpm.cmmn.flow.core.planitem.PlanItemInstanceFactoryNode;
 import org.jbpm.cmmn.flow.core.planitem.SentryImpl;
 import org.jbpm.workflow.core.Node;
@@ -170,5 +166,10 @@ public class DiscretionaryItemImpl<T extends PlanItemDefinition> extends TableIt
 		}
 		return factoryNode;
 	}
-
+	public void copyFromDefinition() {
+		HashMap<Object, Object> copiedState = new HashMap<Object, Object>();
+		T def = getDefinition();
+		copiedState.put(def, this);
+		copy(copiedState, def, this);
+	}
 }

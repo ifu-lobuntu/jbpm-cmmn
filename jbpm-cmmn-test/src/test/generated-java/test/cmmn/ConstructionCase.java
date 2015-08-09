@@ -14,51 +14,35 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.apache.jackrabbit.ocm.mapper.impl.annotation.Bean;
-import org.apache.jackrabbit.ocm.mapper.impl.annotation.Field;
-import org.apache.jackrabbit.ocm.mapper.impl.annotation.Node;
-
-@Node(jcrType = "test:constructionCase", discriminator = false)
 @Entity(name = "ConstructionCase")
 @Table(name = "construction_case")
 public class ConstructionCase {
-	@Field(jcrName = "test:active", jcrType = "BOOLEAN")
 	@Basic()
 	@Column(name = "active")
 	private Boolean active = false;
-	@Bean(jcrName = "test:house")
 	@OneToOne(mappedBy = "constructionCase", cascade = CascadeType.ALL)
 	private House house = null;
-	@Bean(jcrName = "test:housePlan")
 	@OneToOne(mappedBy = "constructionCase", cascade = CascadeType.ALL)
 	private HousePlan housePlan = null;
-	@Field(uuid = true)
 	@Id()
 	@GeneratedValue()
 	private String id = null;
-	@Field(jcrName = "test:name", jcrType = "STRING")
 	@Basic()
 	@Column(name = "name")
 	private String name = "";
-	@Field(jcrName = "test:numberOfWalls", jcrType = "LONG")
 	@Basic()
 	@Column(name = "number_of_walls")
 	private Integer numberOfWalls = 0;
-	@Field(jcrName = "test:path", path = true, jcrType = "STRING")
 	private String path = "/ConstructionCaseCollection";
-	@Field(jcrName = "test:picture", jcrType = "BINARY")
 	@Lob()
 	@Column(name = "picture")
 	private byte[] picture = null;
-	@Field(jcrName = "test:pricePerSquareMetre", jcrType = "DOUBLE")
 	@Basic()
 	@Column(name = "price_per_square_metre")
 	private Double pricePerSquareMetre = 0.0;
-	@Field(jcrName = "test:startDate", jcrType = "DATE")
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "start_date")
 	private Date startDate = null;
-	@Field(jcrName = "test:uuid", jcrType = "String")
 	@javax.persistence.Basic()
 	private String uuid = getUuid();
 

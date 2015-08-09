@@ -12,8 +12,6 @@
 	<modules>
 		<module>jbpm-cmmn-casefile-common</module>
 		<module>jbpm-cmmn-casefile-jpa</module>
-		<module>jbpm-cmmn-casefile-jcr</module>
-		<module>jbpm-cmmn-casefile-ocm</module>
 		<module>jbpm-cmmn-casefile-cmis</module>
 	</modules>
 	

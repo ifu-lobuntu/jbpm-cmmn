@@ -15,7 +15,9 @@ import test.cmmn.House;
 import test.cmmn.HousePlan;
 
 public class CompletionTest extends AbstractConstructionTestCase {
-
+	{
+		super.isJpa=true;
+	}
 	public CompletionTest() {
 	}
 

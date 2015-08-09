@@ -55,9 +55,6 @@ public class DefinitionsHandler extends BaseAbstractHandler implements Handler {
     @Override
     public Object start(final String uri, final String localName, final Attributes attrs, final ExtensibleXmlParser parser) throws SAXException {
         parser.startElementBuilder(localName, attrs);
-        for(int i = 0; i < attrs.getLength(); i ++){
-            System.out.println(attrs.getValue(i));
-        }
         ((ProcessBuildData) parser.getData()).setMetaData(CASE_FILE_ITEM_DEFINITIONS, new HashMap<String, CaseFileItemDefinition>());
         return new Definitions();
     }

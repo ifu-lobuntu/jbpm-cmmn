@@ -10,34 +10,21 @@ import javax.persistence.JoinColumns;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.apache.jackrabbit.ocm.manager.beanconverter.impl.ParentBeanConverterImpl;
-import org.apache.jackrabbit.ocm.manager.beanconverter.impl.ReferenceBeanConverterImpl;
-import org.apache.jackrabbit.ocm.mapper.impl.annotation.Bean;
-import org.apache.jackrabbit.ocm.mapper.impl.annotation.Field;
-import org.apache.jackrabbit.ocm.mapper.impl.annotation.Node;
-
-@Node(jcrType = "test:roofPlan", discriminator = false)
 @Entity(name = "RoofPlan")
 @Table(name = "roof_plan")
 public class RoofPlan {
-	@Bean(jcrName = "test:house", converter = ReferenceBeanConverterImpl.class)
 	@OneToOne(mappedBy = "roofPlan")
 	private House house = null;
-	@Bean(jcrName = "test:housePlan", converter = ParentBeanConverterImpl.class)
 	@OneToOne()
 	@JoinColumns(value = { @JoinColumn(name = "house_plan_id", referencedColumnName = "id") })
 	private HousePlan housePlan = null;
-	@Field(uuid = true)
 	@Id()
 	@GeneratedValue()
 	private String id = null;
-	@Field(jcrName = "test:shortDescription", jcrType = "STRING")
 	@Basic()
 	@Column(name = "short_description")
 	private String shortDescription = "";
-	@Field(path = true)
 	String path;
-	@Field(jcrName = "test:uuid", jcrType = "String")
 	@javax.persistence.Basic()
 	private String uuid = getUuid();
 

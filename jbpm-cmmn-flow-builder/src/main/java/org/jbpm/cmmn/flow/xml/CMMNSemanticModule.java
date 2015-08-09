@@ -5,9 +5,8 @@ import org.jbpm.cmmn.flow.core.planitem.SentryImpl;
 
 public class CMMNSemanticModule extends DefaultSemanticModule {
 	public static final String CMMN_URI = "http://www.omg.org/spec/CMMN/20131201/MODEL";
-
-	public CMMNSemanticModule() {
-		super(CMMN_URI);
+	public CMMNSemanticModule(String uri) {
+		super(uri);
 		super.addHandler("case", new CaseHandler());
 		super.addHandler("definitions", new DefinitionsHandler());
 		super.addHandler("caseFileItem", new CaseFileItemHandler());
@@ -30,8 +29,11 @@ public class CMMNSemanticModule extends DefaultSemanticModule {
 		super.addHandler("itemControl", new PlanItemControlHandler());
 		super.addHandler("planningTable", new PlanningTableHandler());
 		super.addHandler("tableItem", new TableItemHandler());
+		super.addHandler("applicabilityRule", new ApplicabilityRuleHandler());
 		this.handlersByClass.put(SentryImpl.class, sentryHandler);
-
+	}
+	public CMMNSemanticModule() {
+		this(CMMN_URI);
 	}
 
 }

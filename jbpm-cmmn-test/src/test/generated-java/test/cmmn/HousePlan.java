@@ -13,27 +13,17 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.apache.jackrabbit.ocm.manager.beanconverter.impl.ParentBeanConverterImpl;
-import org.apache.jackrabbit.ocm.mapper.impl.annotation.Bean;
-import org.apache.jackrabbit.ocm.mapper.impl.annotation.Collection;
-import org.apache.jackrabbit.ocm.mapper.impl.annotation.Field;
-import org.apache.jackrabbit.ocm.mapper.impl.annotation.Node;
 
 import test.cmmn.collection.OneToManySet;
-
-@Node(jcrType = "test:housePlan", discriminator = false)
 @Entity(name = "HousePlan")
 @Table(name = "house_plan")
 public class HousePlan {
-	@Bean(jcrName = "test:constructionCase", converter = ParentBeanConverterImpl.class)
 	@OneToOne()
 	@JoinColumns(value = { @JoinColumn(name = "construction_case_id", referencedColumnName = "id") })
 	private ConstructionCase constructionCase = null;
-	@Field(uuid = true)
 	@Id()
 	@GeneratedValue()
 	private String id = null;
-	@Bean(jcrName = "test:roofPlan")
 	@OneToOne(mappedBy = "housePlan", cascade = CascadeType.ALL)
 	private RoofPlan roofPlan = null;
 	@SuppressWarnings("serial")
@@ -63,7 +53,6 @@ public class HousePlan {
 			return o instanceof RoomPlan;
 		}
 	};
-	@Collection(jcrName = "test:roomPlans", jcrElementName = "test:roomPlan")
 	@OneToMany(mappedBy = "housePlan", cascade = CascadeType.ALL)
 	private Set<RoomPlan> roomPlans = new HashSet<RoomPlan>();
 	@SuppressWarnings("serial")
@@ -93,12 +82,9 @@ public class HousePlan {
 			return o instanceof WallPlan;
 		}
 	};
-	@Collection(jcrName = "test:wallPlans", jcrElementName = "test:wallPlan")
 	@OneToMany(mappedBy = "housePlan", cascade = CascadeType.ALL)
 	private Set<WallPlan> wallPlans = new HashSet<WallPlan>();
-	@Field(path = true)
 	String path;
-	@Field(jcrName = "test:uuid", jcrType = "String")
 	@javax.persistence.Basic()
 	private String uuid = getUuid();
 

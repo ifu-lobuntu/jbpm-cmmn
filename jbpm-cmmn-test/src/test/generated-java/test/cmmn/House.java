@@ -15,33 +15,21 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.apache.jackrabbit.ocm.manager.beanconverter.impl.ParentBeanConverterImpl;
-import org.apache.jackrabbit.ocm.manager.beanconverter.impl.ReferenceBeanConverterImpl;
-import org.apache.jackrabbit.ocm.manager.collectionconverter.impl.BeanReferenceCollectionConverterImpl;
-import org.apache.jackrabbit.ocm.mapper.impl.annotation.Bean;
-import org.apache.jackrabbit.ocm.mapper.impl.annotation.Collection;
-import org.apache.jackrabbit.ocm.mapper.impl.annotation.Field;
-import org.apache.jackrabbit.ocm.mapper.impl.annotation.Node;
 
 import test.cmmn.collection.OneToManySet;
 
-@Node(jcrType = "test:house", discriminator = false)
 @Entity(name = "House")
 @Table(name = "house")
 public class House {
-	@Bean(jcrName = "test:constructionCase", converter = ParentBeanConverterImpl.class)
 	@OneToOne()
 	@JoinColumns(value = { @JoinColumn(name = "construction_case_id", referencedColumnName = "id") })
 	private ConstructionCase constructionCase = null;
-	@Field(jcrName = "test:description", jcrType = "STRING")
 	@Basic()
 	@Column(name = "description")
 	private String description = "";
-	@Field(uuid = true)
 	@Id()
 	@GeneratedValue()
 	private String id = null;
-	@Bean(jcrName = "test:roofPlan", converter = ReferenceBeanConverterImpl.class)
 	@OneToOne()
 	@JoinColumns(value = { @JoinColumn(name = "roof_plan_id", referencedColumnName = "id") })
 	private RoofPlan roofPlan = null;
@@ -72,7 +60,6 @@ public class House {
 			return o instanceof WallPlan;
 		}
 	};
-	@Collection(jcrName = "test:wallPlans", collectionConverter = BeanReferenceCollectionConverterImpl.class)
 	@OneToMany(mappedBy = "house")
 	private Set<WallPlan> wallPlans = new HashSet<WallPlan>();
 	@SuppressWarnings("serial")
@@ -102,12 +89,9 @@ public class House {
 			return o instanceof Wall;
 		}
 	};
-	@Collection(jcrName = "test:walls", jcrElementName = "test:wall")
 	@OneToMany(mappedBy = "house", cascade = CascadeType.ALL)
 	private Set<Wall> walls = new HashSet<Wall>();
-	@Field(path = true)
 	String path;
-	@Field(jcrName = "test:uuid", jcrType = "String")
 	@javax.persistence.Basic()
 	private String uuid = getUuid();
 

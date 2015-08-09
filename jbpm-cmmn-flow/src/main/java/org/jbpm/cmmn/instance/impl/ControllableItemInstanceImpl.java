@@ -169,9 +169,6 @@ public abstract class ControllableItemInstanceImpl<T extends PlanItemDefinition,
 
 	@Override
 	public void internalTrigger(NodeInstance from, String type) {
-		if(getItem().getName().equals("TheAutoActivatedTaskPlanItem")){
-			System.out.println();
-		}
 		super.internalTrigger(from, type);
 		workItem = createWorkItem(getItem().getWork());
 		if (isBlocking()) {

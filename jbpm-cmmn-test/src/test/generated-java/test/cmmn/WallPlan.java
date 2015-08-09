@@ -15,30 +15,19 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.apache.jackrabbit.ocm.manager.beanconverter.impl.ReferenceBeanConverterImpl;
-import org.apache.jackrabbit.ocm.manager.collectionconverter.impl.BeanReferenceCollectionConverterImpl;
-import org.apache.jackrabbit.ocm.mapper.impl.annotation.Bean;
-import org.apache.jackrabbit.ocm.mapper.impl.annotation.Collection;
-import org.apache.jackrabbit.ocm.mapper.impl.annotation.Field;
-import org.apache.jackrabbit.ocm.mapper.impl.annotation.Node;
-import org.jbpm.cmmn.ocm.GrandParentBeanConverterImpl;
 
 import test.cmmn.collection.ManyToManyCollection;
 import test.cmmn.collection.ManyToManySet;
 
-@Node(jcrType = "test:wallPlan", discriminator = false)
 @Entity(name = "WallPlan")
 @Table(name = "wall_plan")
 public class WallPlan {
-	@Bean(jcrName = "test:house", converter = ReferenceBeanConverterImpl.class)
 	@ManyToOne()
 	@JoinColumns(value = { @JoinColumn(name = "house_id", referencedColumnName = "id") })
 	private House house = null;
-	@Bean(jcrName = "test:housePlan", converter = GrandParentBeanConverterImpl.class)
 	@ManyToOne()
 	@JoinColumns(value = { @JoinColumn(name = "house_plan_id", referencedColumnName = "id") })
 	private HousePlan housePlan = null;
-	@Field(uuid = true)
 	@Id()
 	@GeneratedValue()
 	private String id = null;
@@ -61,20 +50,15 @@ public class WallPlan {
 			return o instanceof RoomPlan;
 		}
 	};
-	@Collection(jcrName = "test:roomPlans", collectionConverter = BeanReferenceCollectionConverterImpl.class)
 	@ManyToMany(mappedBy = "wallPlans")
 	private Set<RoomPlan> roomPlans = new HashSet<RoomPlan>();
-	@Field(jcrName = "test:shortDescription", jcrType = "STRING")
 	@Basic()
 	@Column(name = "short_description")
 	private String shortDescription = "";
-	@Bean(jcrName = "test:wall", converter = ReferenceBeanConverterImpl.class)
 	@OneToOne()
 	@JoinColumns(value = { @JoinColumn(name = "wall_id", referencedColumnName = "id") })
 	private Wall wall = null;
-	@Field(path = true)
 	String path;
-	@Field(jcrName = "test:uuid", jcrType = "String")
 	@javax.persistence.Basic()
 	private String uuid = getUuid();
 

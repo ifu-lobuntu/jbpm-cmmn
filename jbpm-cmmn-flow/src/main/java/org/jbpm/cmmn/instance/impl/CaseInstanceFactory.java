@@ -71,15 +71,17 @@ public class CaseInstanceFactory extends AbstractProcessInstanceFactory implemen
 			if (variableScope != null) {
 				Collection<CaseParameter> inputParameters = theCase.getInputParameters();
 				for (CaseParameter caseParameter : inputParameters) {
-					Object var = parameters.get(caseParameter.getName());
-					if (caseParameter.getBoundVariable().isCollection() && !(var instanceof Collection)) {
-						Set<Object> newVal = new HashSet<Object>();
-						if (var != null) {
-							newVal.add(var);
+					if(caseParameter.getBoundVariable()!=null) {
+						Object var = parameters.get(caseParameter.getName());
+						if (caseParameter.getBoundVariable().isCollection() && !(var instanceof Collection)) {
+							Set<Object> newVal = new HashSet<Object>();
+							if (var != null) {
+								newVal.add(var);
+							}
+							var = newVal;
 						}
-						var = newVal;
+						variableScopeInstance.setVariable(caseParameter.getBoundVariable().getName(), var);
 					}
-					variableScopeInstance.setVariable(caseParameter.getBoundVariable().getName(), var);
 				}
 			} else {
 				throw new IllegalArgumentException("This process does not support parameters!");

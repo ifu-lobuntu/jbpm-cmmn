@@ -1,42 +1,7 @@
 package org.jbpm.cmmn.test;
 
-import static org.kie.api.runtime.EnvironmentName.OBJECT_MARSHALLING_STRATEGIES;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.lang.reflect.Field;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.concurrent.TimeUnit;
-
-import javax.jcr.Node;
-import javax.jcr.NodeIterator;
-import javax.jcr.Session;
-import javax.jcr.SimpleCredentials;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.transaction.UserTransaction;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.TransformerFactoryConfigurationError;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-
-import org.apache.commons.io.FileUtils;
-import org.apache.jackrabbit.commons.cnd.CndImporter;
-import org.apache.jackrabbit.core.TransientRepository;
-import org.apache.jackrabbit.ocm.mapper.impl.annotation.AnnotationMapperImpl;
+import bitronix.tm.jndi.BitronixContext;
+import bitronix.tm.resource.jdbc.PoolingDataSource;
 import org.drools.core.ClockType;
 import org.drools.core.audit.event.LogEvent;
 import org.drools.core.audit.event.RuleFlowNodeLogEvent;
@@ -55,17 +20,7 @@ import org.jbpm.cmmn.flow.core.event.PlanItemStartTrigger;
 import org.jbpm.cmmn.flow.core.impl.CaseImpl;
 import org.jbpm.cmmn.flow.core.impl.DefaultJoin;
 import org.jbpm.cmmn.flow.core.impl.DefaultSplit;
-import org.jbpm.cmmn.flow.core.planitem.AbstractOnPart;
-import org.jbpm.cmmn.flow.core.planitem.CaseFileItemOnPart;
-import org.jbpm.cmmn.flow.core.planitem.CaseTaskPlanItem;
-import org.jbpm.cmmn.flow.core.planitem.HumanTaskPlanItem;
-import org.jbpm.cmmn.flow.core.planitem.MilestonePlanItem;
-import org.jbpm.cmmn.flow.core.planitem.PlanItemInstanceFactoryNode;
-import org.jbpm.cmmn.flow.core.planitem.PlanItemOnPart;
-import org.jbpm.cmmn.flow.core.planitem.SentryImpl;
-import org.jbpm.cmmn.flow.core.planitem.StagePlanItem;
-import org.jbpm.cmmn.flow.core.planitem.TimerEventPlanItem;
-import org.jbpm.cmmn.flow.core.planitem.UserEventPlanItem;
+import org.jbpm.cmmn.flow.core.planitem.*;
 import org.jbpm.cmmn.flow.core.planning.DiscretionaryItemImpl;
 import org.jbpm.cmmn.flow.xml.CMMNBuilder;
 import org.jbpm.cmmn.flow.xml.DefaultTypeMap;
@@ -75,21 +30,10 @@ import org.jbpm.cmmn.instance.CaseInstance;
 import org.jbpm.cmmn.instance.PlanElementState;
 import org.jbpm.cmmn.instance.PlanItemInstance;
 import org.jbpm.cmmn.instance.factory.DelegatingNodeInstanceFactory;
-import org.jbpm.cmmn.instance.impl.CaseInstanceFactory;
-import org.jbpm.cmmn.instance.impl.DefaultJoinInstance;
-import org.jbpm.cmmn.instance.impl.DefaultSplitInstance;
-import org.jbpm.cmmn.instance.impl.OnPartInstanceImpl;
-import org.jbpm.cmmn.instance.impl.PlanItemInstanceFactoryNodeInstance;
-import org.jbpm.cmmn.instance.impl.SentryInstance;
-import org.jbpm.cmmn.instance.impl.StageInstance;
+import org.jbpm.cmmn.instance.impl.*;
 import org.jbpm.cmmn.instance.subscription.SubscriptionManager;
 import org.jbpm.cmmn.instance.subscription.impl.AbstractDurableSubscriptionManager;
 import org.jbpm.cmmn.marshalling.CaseInstanceMarshaller;
-import org.jbpm.cmmn.ocm.ObjectContentManagerFactory;
-import org.jbpm.cmmn.ocm.OcmCaseFilePersistence;
-import org.jbpm.cmmn.ocm.OcmCollectionPlaceHolderResolveStrategy;
-import org.jbpm.cmmn.ocm.OcmPlaceHolderResolveStrategy;
-import org.jbpm.cmmn.ocm.OcmSubscriptionManager;
 import org.jbpm.cmmn.task.listeners.CaseTaskLifecycleListener;
 import org.jbpm.cmmn.task.registration.CaseRegisterableItemsFactory;
 import org.jbpm.marshalling.impl.ProcessInstanceResolverStrategy;
@@ -128,15 +72,35 @@ import org.kie.api.runtime.manager.RuntimeManager;
 import org.kie.api.runtime.manager.audit.NodeInstanceLog;
 import org.kie.api.runtime.process.NodeInstance;
 import org.kie.api.runtime.process.WorkItemHandler;
-import org.kie.api.task.TaskService;
 import org.kie.api.task.TaskLifeCycleEventListener;
+import org.kie.api.task.TaskService;
 import org.kie.api.task.model.TaskSummary;
 import org.kie.internal.io.ResourceFactory;
 import org.kie.internal.task.api.ContentMarshallerContext;
 import org.kie.internal.task.api.EventService;
 import org.kie.internal.task.api.InternalTaskService;
 
-import bitronix.tm.jndi.BitronixContext;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.transaction.UserTransaction;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.TransformerFactoryConfigurationError;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.Field;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.util.*;
+
+import static org.kie.api.runtime.EnvironmentName.OBJECT_MARSHALLING_STRATEGIES;
+
 //import test.ConstructionCase;
 //import test.House;
 //import test.HousePlan;
@@ -144,7 +108,6 @@ import bitronix.tm.jndi.BitronixContext;
 //import test.RoomPlan;
 //import test.Wall;
 //import test.WallPlan;
-import bitronix.tm.resource.jdbc.PoolingDataSource;
 
 public abstract class AbstractCmmnCaseTestCase extends JbpmJUnitBaseTestCase {
 	static {
@@ -153,14 +116,12 @@ public abstract class AbstractCmmnCaseTestCase extends JbpmJUnitBaseTestCase {
 	}
 	protected CaseFilePersistence persistence;
 	protected boolean isJpa = false;
-	private static ObjectContentManagerFactory objectContentManagerFactory;
 	private RuntimeEngine runtimeEngine;
 	private UserTransaction transaction;
 	private RuntimeManager runtimeManager;
 	private static EntityManagerFactory emf;
 	private static PoolingDataSource ds;
 	private String persistenceUnitName;
-	private static Session jcrSession;
 	protected Stopwatch stopwatch = new Stopwatch(getClass());
 
 	protected EntityManagerFactory getEmf() {
@@ -371,24 +332,7 @@ public abstract class AbstractCmmnCaseTestCase extends JbpmJUnitBaseTestCase {
 
 		persistence = null;
 
-		if (jcrSession != null) {
-			removeChildren(jcrSession, "/cases");
-			removeChildren(jcrSession, "/subscriptions");
-			jcrSession.save();
-		}
 		stopwatch.lap("tearDown");
-	}
-
-	protected void removeChildren(Session session, String path) {
-		try {
-			Node node = session.getNode(path);
-			NodeIterator nodes = node.getNodes();
-			while (nodes.hasNext()) {
-				Node object = nodes.nextNode();
-				object.remove();
-			}
-		} catch (Exception e) {
-		}
 	}
 
 	protected void assertTaskTypeCreated(List<TaskSummary> list, String expected, int... numberOfTimes) {
@@ -408,12 +352,7 @@ public abstract class AbstractCmmnCaseTestCase extends JbpmJUnitBaseTestCase {
 	public CaseFilePersistence getPersistence() {
 		try {
 			if (persistence == null) {
-				if (isJpa) {
-					persistence = new JpaCaseFilePersistence(emf, runtimeManager);
-				} else {
-					OcmCaseFilePersistence ocmObjectPersistence = new OcmCaseFilePersistence(getOcmFactory(), runtimeManager);
-					persistence = ocmObjectPersistence;
-				}
+				persistence = new JpaCaseFilePersistence(emf, runtimeManager);
 			}
 			return persistence;
 		} catch (RuntimeException e) {
@@ -726,8 +665,6 @@ public abstract class AbstractCmmnCaseTestCase extends JbpmJUnitBaseTestCase {
 		}
 		if (isJpa) {
 			env.set(JpaCaseFilePersistence.ENV_NAME, getPersistence());
-		} else {
-			env.set(ObjectContentManagerFactory.OBJECT_CONTENT_MANAGER_FACTORY, getOcmFactory());
 		}
 		env.set("org.kie.internal.runtime.manager.TaskServiceFactory", LocalTaskServiceFactory.class.getName());
 	}
@@ -773,8 +710,8 @@ public abstract class AbstractCmmnCaseTestCase extends JbpmJUnitBaseTestCase {
 					new JpaCollectionPlaceHolderResolverStrategy(env),
 					new SerializablePlaceholderResolverStrategy(ClassObjectMarshallingStrategyAcceptor.DEFAULT) };
 		} else {
-			return new ObjectMarshallingStrategy[] { new ProcessInstanceResolverStrategy(), new OcmPlaceHolderResolveStrategy(env),
-					new JpaPlaceHolderResolverStrategy(env), new OcmCollectionPlaceHolderResolveStrategy(env),
+			return new ObjectMarshallingStrategy[] { new ProcessInstanceResolverStrategy(),
+					new JpaPlaceHolderResolverStrategy(env),
 					new JpaCollectionPlaceHolderResolverStrategy(env),
 					new SerializablePlaceholderResolverStrategy(ClassObjectMarshallingStrategyAcceptor.DEFAULT) };
 
@@ -784,61 +721,12 @@ public abstract class AbstractCmmnCaseTestCase extends JbpmJUnitBaseTestCase {
 	protected AbstractDurableSubscriptionManager<?, ?> getSubscriptionManager() {
 		if (isJpa) {
 			return new HibernateSubscriptionManager();
-		} else {
-			return (AbstractDurableSubscriptionManager<?, ?>) getOcmFactory().getEventListener();
 		}
+		return null;
 	}
 
-	@SuppressWarnings("rawtypes")
-	protected ObjectContentManagerFactory getOcmFactory() {
-		if (objectContentManagerFactory == null) {
-			try {
-				objectContentManagerFactory = new ObjectContentManagerFactory(getJcrSession(), new AnnotationMapperImpl(
-						Arrays.<Class> asList(getClasses())), new OcmSubscriptionManager(runtimeManager));
-				stopwatch.lap("new OcmFactory()");
-				OcmSubscriptionManager eventListener = (OcmSubscriptionManager) objectContentManagerFactory.getEventListener();
-				eventListener.setOcmFactory(objectContentManagerFactory);
-				return objectContentManagerFactory;
-			} catch (RuntimeException e) {
-				throw e;
-			} catch (Exception e) {
-				throw new RuntimeException(e);
-			}
-		}
-		return objectContentManagerFactory;
-	}
 
-	protected Session getJcrSession() {
-		if (jcrSession == null) {
-			try {
-				stopwatch.start();
-				TransientRepository jcrRepo = new TransientRepository();
-				stopwatch.lap("new TransientRepository()");
-				FileUtils.deleteDirectory(new File("./repository"));
-				stopwatch.lap("deleteJcrRepository", 10, TimeUnit.SECONDS);
-				jcrSession = jcrRepo.login(new SimpleCredentials("admin", "admin".toCharArray()));
-				stopwatch.lap("login", 10, TimeUnit.SECONDS);
-				jcrSession.getRootNode().addNode("cases");
-				jcrSession.getRootNode().addNode("subscriptions");
-				stopwatch.lap("addNode");
-				CndImporter.registerNodeTypes(
-						new InputStreamReader(AbstractCmmnCaseTestCase.class.getResourceAsStream("/META-INF/definitions.cnd")), jcrSession);
-				CndImporter.registerNodeTypes(new InputStreamReader(AbstractCmmnCaseTestCase.class.getResourceAsStream("/test.cnd")),
-						jcrSession);
-				stopwatch.lap("registerNodeTypes", 3, TimeUnit.SECONDS);
-				jcrSession.save();
-				// We have to keep one session open or the TransientRepository
-				// resets
-				// session.logout();
-				stopwatch.lap("save()");
-			} catch (RuntimeException e) {
-				throw e;
-			} catch (Exception e) {
-				throw new RuntimeException(e);
-			}
-		}
-		return jcrSession;
-	}
+
 
 	protected void clearHistory() {
 		if (sessionPersistence && getRuntimeManager() != null && getRuntimeEngine() != null && getRuntimeEngine().getAuditService() != null) {

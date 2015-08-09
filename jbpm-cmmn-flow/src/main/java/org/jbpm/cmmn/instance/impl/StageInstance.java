@@ -49,7 +49,12 @@ public class StageInstance extends ControllableItemInstanceImpl<Stage, TaskItemW
 	private void triggerDefaultStart() {
 		StartNode defaultStart = getItem().getDefinition().getDefaultStart();
 		NodeInstance nodeInstance = getNodeInstance(defaultStart);
-		((org.jbpm.workflow.instance.NodeInstance) nodeInstance).trigger(null, null);
+		try {
+			((org.jbpm.workflow.instance.NodeInstance) nodeInstance).trigger(null, null);
+		} catch (Exception e) {
+			nodeInstance.getNode();
+			e.printStackTrace();
+		}
 	}
 
 	@Override

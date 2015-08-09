@@ -1,8 +1,6 @@
 package org.jbpm.cmmn.test;
 
 import org.jbpm.cmmn.instance.CaseInstance;
-import org.jbpm.cmmn.ocm.OcmCaseFileItemSubscriptionInfo;
-import org.jbpm.cmmn.ocm.OcmCaseSubscriptionInfo;
 
 import test.cmmn.ConstructionCase;
 import test.cmmn.House;
@@ -24,7 +22,7 @@ public class AbstractConstructionTestCase extends AbstractCmmnCaseTestCase {
 	@Override
 	protected Class<?>[] getClasses() {
 		return new Class<?>[] { ConstructionCase.class, HousePlan.class, House.class, Wall.class, WallPlan.class, RoofPlan.class,
-				OcmCaseSubscriptionInfo.class, OcmCaseFileItemSubscriptionInfo.class, RoomPlan.class };
+				RoomPlan.class };
 	}
 
 }

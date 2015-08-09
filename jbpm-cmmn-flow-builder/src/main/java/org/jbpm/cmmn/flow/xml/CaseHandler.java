@@ -213,7 +213,7 @@ public class CaseHandler extends PlanItemContainerHandler implements Handler {
         for (TableItem ti : pt.getTableItems()) {
             if (ti instanceof DiscretionaryItemImpl
                     && (((DiscretionaryItemImpl<?>) ti).getDefinition() instanceof Stage || ((DiscretionaryItemImpl<?>) ti).getDefinition() instanceof CaseTask)) {
-//                ((DiscretionaryItemImpl<?>) ti).copyFromDefinition();
+                ((DiscretionaryItemImpl<?>) ti).copyFromDefinition();
             } else if (ti instanceof PlanningTableImpl) {
                 copyDiscretionaryItemsInTable((PlanningTableImpl) ti);
             }

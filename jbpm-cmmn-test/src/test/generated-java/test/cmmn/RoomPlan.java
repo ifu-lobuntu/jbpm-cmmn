@@ -15,29 +15,19 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.apache.jackrabbit.ocm.manager.collectionconverter.impl.BeanReferenceCollectionConverterImpl;
-import org.apache.jackrabbit.ocm.mapper.impl.annotation.Bean;
-import org.apache.jackrabbit.ocm.mapper.impl.annotation.Collection;
-import org.apache.jackrabbit.ocm.mapper.impl.annotation.Field;
-import org.apache.jackrabbit.ocm.mapper.impl.annotation.Node;
-import org.jbpm.cmmn.ocm.GrandParentBeanConverterImpl;
 
 import test.cmmn.collection.ManyToManyCollection;
 import test.cmmn.collection.ManyToManySet;
 
-@Node(jcrType = "test:roomPlan", discriminator = false)
 @Entity(name = "RoomPlan")
 @Table(name = "room_plan")
 public class RoomPlan {
-	@Bean(jcrName = "test:housePlan", converter = GrandParentBeanConverterImpl.class)
 	@ManyToOne()
 	@JoinColumns(value = { @JoinColumn(name = "house_plan_id", referencedColumnName = "id") })
 	private HousePlan housePlan = null;
-	@Field(uuid = true)
 	@Id()
 	@GeneratedValue()
 	private String id = null;
-	@Field(jcrName = "test:name", jcrType = "STRING")
 	@Basic()
 	@Column(name = "name")
 	private String name = "";
@@ -60,14 +50,11 @@ public class RoomPlan {
 			return o instanceof WallPlan;
 		}
 	};
-	@Collection(jcrName = "test:wallPlans", collectionConverter = BeanReferenceCollectionConverterImpl.class)
 	@ManyToMany()
 	@JoinTable(name = "room_plan_wall_plan", joinColumns = { @JoinColumn(name = "wall_plans_id", referencedColumnName = "id") },
 			inverseJoinColumns = { @JoinColumn(name = "room_plans_id", referencedColumnName = "id") })
 	private Set<WallPlan> wallPlans = new HashSet<WallPlan>();
-	@Field(path = true)
 	String path;
-	@Field(jcrName = "test:uuid", jcrType = "String")
 	@javax.persistence.Basic()
 	private String uuid = getUuid();
 

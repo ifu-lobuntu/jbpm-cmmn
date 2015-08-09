@@ -1,6 +1,7 @@
 package org.jbpm.cmmn.test.examples.construction;
 
 import java.io.File;
+import java.io.IOException;
 
 import org.apache.commons.io.FileUtils;
 import org.jbpm.cmmn.test.AbstractCmmnCaseTestCase;
@@ -20,7 +21,11 @@ public class SubmitPlannTest extends AbstractCmmnCaseTestCase{
     public void testIt() throws Exception{
         String root="/home/ampie/Code/cmmn-examples/construction/src/main/resources/";
         String resource = "org/jbpm/construction/SubmitPlan.cmmn";
-        FileUtils.copyFile(new File(root,resource), new File("./src/test/resources/" + resource));
+        try {
+            FileUtils.copyFile(new File(root,resource), new File("./src/test/resources/" + resource));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         super.createRuntimeManager(resource);
     }
 }

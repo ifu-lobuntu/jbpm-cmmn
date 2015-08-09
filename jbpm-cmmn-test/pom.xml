@@ -63,19 +63,6 @@
 			<artifactId>btm</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.jackrabbit</groupId>
-			<artifactId>jackrabbit-jcr-commons</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.jackrabbit</groupId>
-			<artifactId>jackrabbit-core</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.apache</groupId>
-			<artifactId>jackrabbit-ocm</artifactId>
-		</dependency>
-
-		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 		</dependency>
@@ -107,14 +94,6 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>${project.parent.groupId}</groupId>
-			<artifactId>jbpm-cmmn-casefile-jcr</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>${project.parent.groupId}</groupId>
-			<artifactId>jbpm-cmmn-casefile-ocm</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>${project.parent.groupId}</groupId>

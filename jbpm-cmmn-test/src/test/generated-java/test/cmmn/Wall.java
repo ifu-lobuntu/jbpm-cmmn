@@ -9,30 +9,18 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.apache.jackrabbit.ocm.manager.beanconverter.impl.ReferenceBeanConverterImpl;
-import org.apache.jackrabbit.ocm.mapper.impl.annotation.Bean;
-import org.apache.jackrabbit.ocm.mapper.impl.annotation.Field;
-import org.apache.jackrabbit.ocm.mapper.impl.annotation.Node;
-import org.jbpm.cmmn.ocm.GrandParentBeanConverterImpl;
-
-@Node(jcrType = "test:wall", discriminator = false)
 @Entity(name = "Wall")
 @Table(name = "wall")
 public class Wall {
-	@Bean(jcrName = "test:house", converter = GrandParentBeanConverterImpl.class)
 	@ManyToOne()
 	@JoinColumns(value = { @JoinColumn(name = "house_id", referencedColumnName = "id") })
 	private House house = null;
-	@Field(uuid = true)
 	@Id()
 	@GeneratedValue()
 	private String id = null;
-	@Bean(jcrName = "test:wallPlan", converter = ReferenceBeanConverterImpl.class)
 	@OneToOne(mappedBy = "wall")
 	private WallPlan wallPlan = null;
-	@Field(path = true)
 	String path;
-	@Field(jcrName = "test:uuid", jcrType = "String")
 	@javax.persistence.Basic()
 	private String uuid = getUuid();
 

@@ -222,7 +222,7 @@ public class CaseInstanceImpl extends RuleFlowProcessInstance implements CaseIns
 	}
 
 	private boolean isStandaloneCaseInstance() {
-		return getWorkItem().getProcessInstanceId() == getId();
+		return getWorkItem()==null || getWorkItem().getProcessInstanceId() == getId();
 	}
 
 	public void inernalSetWorkItemId(long readLong) {
