@@ -1,10 +1,10 @@
 package org.jbpm.cmmn.instance.subscription;
 
-import java.util.Collection;
-import java.util.Map;
-
 import org.jbpm.cmmn.flow.core.CaseFileItem;
 import org.jbpm.cmmn.instance.CaseInstance;
+
+import java.util.Collection;
+import java.util.Map;
 
 public interface SubscriptionManager<T extends DurableCaseSubscriptionInfo<X>,X extends DurableCaseFileItemSubscriptionInfo> {
 	String ENV_NAME = SubscriptionManager.class.getName();

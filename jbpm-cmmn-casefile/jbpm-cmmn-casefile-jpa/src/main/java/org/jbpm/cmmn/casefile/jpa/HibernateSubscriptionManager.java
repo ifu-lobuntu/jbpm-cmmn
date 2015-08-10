@@ -1,12 +1,12 @@
 package org.jbpm.cmmn.casefile.jpa;
 
-import static org.jbpm.cmmn.flow.core.CaseFileItemTransition.ADD_CHILD;
-import static org.jbpm.cmmn.flow.core.CaseFileItemTransition.ADD_REFERENCE;
-import static org.jbpm.cmmn.flow.core.CaseFileItemTransition.CREATE;
-import static org.jbpm.cmmn.flow.core.CaseFileItemTransition.DELETE;
-import static org.jbpm.cmmn.flow.core.CaseFileItemTransition.REMOVE_CHILD;
-import static org.jbpm.cmmn.flow.core.CaseFileItemTransition.REMOVE_REFERENCE;
-import static org.jbpm.cmmn.flow.core.CaseFileItemTransition.UPDATE;
+import static org.jbpm.cmmn.flow.common.CaseFileItemTransition.ADD_CHILD;
+import static org.jbpm.cmmn.flow.common.CaseFileItemTransition.ADD_REFERENCE;
+import static org.jbpm.cmmn.flow.common.CaseFileItemTransition.CREATE;
+import static org.jbpm.cmmn.flow.common.CaseFileItemTransition.DELETE;
+import static org.jbpm.cmmn.flow.common.CaseFileItemTransition.REMOVE_CHILD;
+import static org.jbpm.cmmn.flow.common.CaseFileItemTransition.REMOVE_REFERENCE;
+import static org.jbpm.cmmn.flow.common.CaseFileItemTransition.UPDATE;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -33,7 +33,7 @@ import org.hibernate.event.spi.PostDeleteEventListener;
 import org.hibernate.event.spi.PostInsertEvent;
 import org.hibernate.event.spi.PostInsertEventListener;
 import org.hibernate.type.OneToOneType;
-import org.jbpm.cmmn.flow.core.CaseFileItemTransition;
+import org.jbpm.cmmn.flow.common.CaseFileItemTransition;
 import org.jbpm.cmmn.instance.CaseInstance;
 import org.jbpm.cmmn.instance.subscription.CaseFileItemSubscriptionInfo;
 import org.jbpm.cmmn.instance.subscription.CaseSubscriptionKey;

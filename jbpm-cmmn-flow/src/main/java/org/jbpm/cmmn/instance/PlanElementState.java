@@ -1,28 +1,12 @@
 package org.jbpm.cmmn.instance;
 
-import static org.jbpm.cmmn.flow.core.PlanItemTransition.CLOSE;
-import static org.jbpm.cmmn.flow.core.PlanItemTransition.COMPLETE;
-import static org.jbpm.cmmn.flow.core.PlanItemTransition.CREATE;
-import static org.jbpm.cmmn.flow.core.PlanItemTransition.DISABLE;
-import static org.jbpm.cmmn.flow.core.PlanItemTransition.ENABLE;
-import static org.jbpm.cmmn.flow.core.PlanItemTransition.EXIT;
-import static org.jbpm.cmmn.flow.core.PlanItemTransition.FAULT;
-import static org.jbpm.cmmn.flow.core.PlanItemTransition.MANUAL_START;
-import static org.jbpm.cmmn.flow.core.PlanItemTransition.OCCUR;
-import static org.jbpm.cmmn.flow.core.PlanItemTransition.PARENT_RESUME;
-import static org.jbpm.cmmn.flow.core.PlanItemTransition.PARENT_SUSPEND;
-import static org.jbpm.cmmn.flow.core.PlanItemTransition.PARENT_TERMINATE;
-import static org.jbpm.cmmn.flow.core.PlanItemTransition.REACTIVATE;
-import static org.jbpm.cmmn.flow.core.PlanItemTransition.REENABLE;
-import static org.jbpm.cmmn.flow.core.PlanItemTransition.RESUME;
-import static org.jbpm.cmmn.flow.core.PlanItemTransition.START;
-import static org.jbpm.cmmn.flow.core.PlanItemTransition.SUSPEND;
-import static org.jbpm.cmmn.flow.core.PlanItemTransition.TERMINATE;
+import org.jbpm.cmmn.flow.common.impl.AbstractStandardEventNode;
+import org.jbpm.cmmn.flow.common.PlanItemTransition;
+import org.jbpm.cmmn.instance.impl.HumanTaskInstance;
 
 import java.util.Collection;
 
-import org.jbpm.cmmn.flow.core.PlanItemTransition;
-import org.jbpm.cmmn.flow.core.planitem.AbstractOnPart;
+import static org.jbpm.cmmn.flow.common.PlanItemTransition.*;
 
 public enum PlanElementState {
 	AVAILABLE() {
@@ -148,10 +132,10 @@ public enum PlanElementState {
 	}
 
 	private void signalEvent(PlanItemInstance<?> pi, PlanItemTransition transition) {
-		String eventToTrigger = AbstractOnPart.getType(pi.getItem().getPlanItemEventName(), transition);
+		String eventToTrigger = AbstractStandardEventNode.getType(pi.getItem().getPlanItemEventName(), transition);
 		Object eventObject = null;
-		if (pi instanceof PlanElementLifecycleWithTask) {
-			eventObject = ((PlanElementLifecycleWithTask) pi).getTask();
+		if (pi instanceof HumanTaskInstance) {
+			eventObject = ((HumanTaskInstance) pi).getTask();
 		}
 		if (eventObject == null) {
 			eventObject = "No task";
@@ -211,8 +195,8 @@ public enum PlanElementState {
 			for (PlanItemInstance<?> child : children) {
 				if (child.getPlanElementState().isBusyState(child)) {
 					if (isComplexLifecycle(child)) {
-						if (child instanceof ControllableItemInstance<?>) {
-							((ControllableItemInstance<?>) child).triggerTransitionOnTask(PARENT_SUSPEND);
+						if(child instanceof HumanTaskInstance){
+							((HumanTaskInstance) child).triggerTransitionOnTask(PARENT_SUSPEND);
 						} else {
 							((PlanItemInstanceLifecycleWithHistory<?>) child).parentSuspend();
 						}
@@ -258,8 +242,8 @@ public enum PlanElementState {
 				if (child instanceof OccurrablePlanItemInstance) {
 					((OccurrablePlanItemInstance<?>) child).resume();
 				} else if (isComplexLifecycle(child)) {
-					if (child instanceof ControllableItemInstance) {
-						((ControllableItemInstance<?>) child).triggerTransitionOnTask(PARENT_RESUME);
+					if (child instanceof HumanTaskInstance) {
+						((HumanTaskInstance) child).triggerTransitionOnTask(PARENT_RESUME);
 					} else {
 						((PlanItemInstanceLifecycleWithHistory<?>) child).parentResume();
 					}
@@ -284,8 +268,8 @@ public enum PlanElementState {
 		for (PlanItemInstance<?> child : children) {
 			if (!child.getPlanElementState().isTerminalState()) {
 				if (isComplexLifecycle(child)) {
-					if (child instanceof ControllableItemInstance<?>) {
-						((ControllableItemInstance<?>) child).triggerTransitionOnTask(EXIT);
+					if (child instanceof HumanTaskInstance) {
+						((HumanTaskInstance) child).triggerTransitionOnTask(EXIT);
 					} else {
 						((PlanItemInstanceLifecycleWithHistory<?>) child).exit();
 					}
@@ -340,7 +324,7 @@ public enum PlanElementState {
 
 	public void create(PlanItemInstanceLifecycleWithHistory<?> pi) {
 		PlanItemTransition transition = PlanItemTransition.CREATE;
-		String eventToTrigger = AbstractOnPart.getType(pi.getItem().getPlanItemEventName(), transition);
+		String eventToTrigger = AbstractStandardEventNode.getType(pi.getItem().getPlanItemEventName(), transition);
 		Object eventObject = null;
 		if (eventObject == null) {
 			eventObject = new Object();

@@ -1,7 +1,6 @@
 package org.jbpm.cmmn.flow.xml;
 
 import java.lang.reflect.Field;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashSet;
 import java.util.Map;
@@ -10,8 +9,9 @@ import org.drools.core.xml.BaseAbstractHandler;
 import org.drools.core.xml.ExtensibleXmlParser;
 import org.drools.core.xml.Handler;
 import org.jbpm.cmmn.flow.core.CaseFileItemDefinition;
+import org.jbpm.cmmn.flow.core.impl.CaseFileItemDefinitionImpl;
 import org.jbpm.cmmn.flow.core.CaseFileItemDefinitionType;
-import org.jbpm.cmmn.flow.core.Definitions;
+import org.jbpm.cmmn.flow.core.impl.DefinitionsImpl;
 import org.jbpm.cmmn.flow.util.NamespacePackageConverter;
 import org.jbpm.compiler.xml.ProcessBuildData;
 import org.jbpm.ruleflow.core.RuleFlowProcess;
@@ -24,11 +24,11 @@ public class CaseFileItemDefinitionHandler extends BaseAbstractHandler implement
     public CaseFileItemDefinitionHandler() {
         if ((this.validParents == null) && (this.validPeers == null)) {
             this.validParents = new HashSet<Class<?>>();
-            this.validParents.add(Definitions.class);
+            this.validParents.add(DefinitionsImpl.class);
 
             this.validPeers = new HashSet<Class<?>>();
             this.validPeers.add(null);
-            this.validPeers.add(CaseFileItemDefinition.class);
+            this.validPeers.add(CaseFileItemDefinitionImpl.class);
             this.validPeers.add(RuleFlowProcess.class);
             this.allowNesting = false;
         }
@@ -42,7 +42,7 @@ public class CaseFileItemDefinitionHandler extends BaseAbstractHandler implement
         ProcessBuildData buildData = (ProcessBuildData) parser.getData();
         Map<String, CaseFileItemDefinition> itemDefinitions = (Map<String, CaseFileItemDefinition>) buildData
                 .getMetaData(DefinitionsHandler.CASE_FILE_ITEM_DEFINITIONS);
-        CaseFileItemDefinition caseFileItemDefinition = new CaseFileItemDefinition(id);
+        CaseFileItemDefinition caseFileItemDefinition = new CaseFileItemDefinitionImpl(id);
         caseFileItemDefinition.setDefinitionType(CaseFileItemDefinitionType.resolveByUri(attrs.getValue("definitionType")));
         itemDefinitions.put(id, caseFileItemDefinition);
         String structureRef = attrs.getValue("structureRef");
@@ -78,7 +78,7 @@ public class CaseFileItemDefinitionHandler extends BaseAbstractHandler implement
 
     @Override
     public Class<?> generateNodeFor() {
-        return CaseFileItemDefinition.class;
+        return CaseFileItemDefinitionImpl.class;
     }
 
 }

@@ -27,27 +27,9 @@ public class StageAsPlanItemTest extends AbstractControllableLifecycleTest {
 	// // *****THEN
 	// assertNodeTriggered(caseInstance.getId(), "TheStagePlanItem");
 	// list = getTaskService().getTasksAssignedAsPotentialOwner("Administrator", "en-UK");
-	// assertEquals(2, list.size()); //Tasks representing Stage and the Case
+	// assertEquals(2, list.size()); //Tasks representing StageImpl and the Case
 	// assertTaskTypeCreated(list, "TheStagePlanItem");
 	// }
-
-	@Override
-	public void failTask(long taskId) {
-		getPersistence().start();
-		long wi = getTaskService().getTaskById(taskId).getTaskData().getWorkItemId();
-		StageInstance spi = (StageInstance) reloadCaseInstance(caseInstance).findNodeForWorkItem(wi);
-		spi.fault();
-		getPersistence().commit();
-	}
-
-	@Override
-	public void completeTask(long taskId) {
-		getPersistence().start();
-		getRuntimeEngine().getKieSession().signalEvent("StageCompletingEvent", new Object(), caseInstance.getId());
-		getPersistence().commit();
-		assertPlanItemInState(caseInstance.getId(), "TheMilestonePlanItem", PlanElementState.COMPLETED);
-		assertEquals(Status.Completed, getTaskService().getTaskById(taskId).getTaskData().getStatus());
-	}
 
 	@Override
 	public String getEventGeneratingTaskUser() {

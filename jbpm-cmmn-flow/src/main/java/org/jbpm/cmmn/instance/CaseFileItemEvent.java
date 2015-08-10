@@ -1,6 +1,6 @@
 package org.jbpm.cmmn.instance;
 
-import org.jbpm.cmmn.flow.core.CaseFileItemTransition;
+import org.jbpm.cmmn.flow.common.CaseFileItemTransition;
 
 public class CaseFileItemEvent extends CaseEvent {
 	String caseFileItemName;

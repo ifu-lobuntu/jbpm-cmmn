@@ -1,6 +1,5 @@
 package org.jbpm.cmmn.instance.impl;
 
-import org.jbpm.cmmn.flow.core.PlanItemTransition;
 import org.jbpm.cmmn.flow.core.impl.DefaultJoin;
 import org.jbpm.cmmn.instance.CaseInstance;
 import org.jbpm.cmmn.instance.PlanItemInstanceContainer;
@@ -22,7 +21,7 @@ public class DefaultJoinInstance extends JoinInstance implements EventNodeInstan
 		if (!isInitializing && getNodeInstanceContainer() instanceof PlanItemInstanceContainer) {
 			PlanItemInstanceContainer piic = (PlanItemInstanceContainer) getNodeInstanceContainer();
 			if (piic.canComplete() && piic.getPlanItemContainer().isAutoComplete()) {
-				piic.triggerTransitionOnTask(PlanItemTransition.COMPLETE);
+				piic.complete();
 			}
 		}
 	}

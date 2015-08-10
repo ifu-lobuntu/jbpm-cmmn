@@ -5,12 +5,14 @@ import java.util.List;
 import java.util.Map;
 
 import org.jbpm.cmmn.common.WorkItemParameters;
+import org.jbpm.cmmn.flow.common.PlanItemTransition;
 import org.jbpm.cmmn.flow.core.impl.DefaultJoin;
 import org.jbpm.cmmn.instance.CaseInstance;
 import org.jbpm.cmmn.instance.PlanElementState;
 import org.jbpm.cmmn.instance.PlanItemInstance;
 import org.jbpm.cmmn.instance.PlanItemInstanceContainer;
 import org.jbpm.cmmn.instance.impl.CaseTaskInstance;
+import org.jbpm.cmmn.service.model.Plan;
 import org.jbpm.cmmn.test.AbstractConstructionTestCase;
 import org.kie.api.task.model.Status;
 import org.kie.api.task.model.TaskSummary;
@@ -45,6 +47,7 @@ public abstract class AbstractPlanItemInstanceContainerTest extends AbstractCons
 		ci1.signalEvent("StartUserEvent", new Object());
 		printState(" ", ci1);
 		getPersistence().commit();
+		Plan plan = getCmmnService().getPlan(caseInstance.getId());
 
 		assertPlanItemInState(caseInstance.getId(), "TheMilestonePlanItem", PlanElementState.COMPLETED);
 		assertPlanItemInState(caseInstance.getId(), "TheTimerEventPlanItem", PlanElementState.AVAILABLE);
@@ -55,31 +58,11 @@ public abstract class AbstractPlanItemInstanceContainerTest extends AbstractCons
 		assertPlanItemInState(caseInstance.getId(), "TheStagePlanItem", PlanElementState.AVAILABLE);
 		assertPlanItemInState(caseInstance.getId(), "TheCaseTaskPlanItem", PlanElementState.ENABLED);
 		assertEquals(PlanElementState.ACTIVE, ci1.getPlanElementState()); // Because autoComplete defaults to false
-		List<TaskSummary> subTasksByParent = getTaskService().getSubTasksByParent(getTaskService().getTaskByWorkItemId(getWorkitemId()).getId());
-		assertEquals(3, subTasksByParent.size());
-		CaseInstance subCase = startSubCaseTask(subTasksByParent);
+		getCmmnService().transitionPlanItem(caseInstance.getId(), plan.getPlannableItemsFor("TheCaseTaskPlanItem").get(0).getUniqueId(), PlanItemTransition.START);
 		assertPlanItemInState(caseInstance.getId(), "TheCaseTaskPlanItem", PlanElementState.ACTIVE);
-		return subCase;
-	}
-
-	public long getWorkitemId() {
-		return caseInstance.getWorkItemId();
-	}
-
-	private CaseInstance startSubCaseTask(List<TaskSummary> subTasksByParent) {
-		for (TaskSummary taskSummary : subTasksByParent) {
-			if (taskSummary.getName().equals("TheCaseTaskPlanItem")) {
-				getTaskService().start(taskSummary.getId(), "ConstructionProjectManager");
-				getPersistence().start();
-				long workItemId = getTaskService().getTaskById(taskSummary.getId()).getTaskData().getWorkItemId();
-				CaseTaskInstance ni = (CaseTaskInstance) reloadCaseInstance().findNodeForWorkItem(workItemId);
-				CaseInstance subCase = (CaseInstance) getRuntimeEngine().getKieSession().getProcessInstance(((CaseTaskInstance) ni).getProcessInstanceId());
-				getPersistence().commit();
-				return subCase;
-			}
-		}
 		return null;
 	}
+
 
 	protected CaseInstance reloadCaseInstance() {
 		return reloadCaseInstance(caseInstance);

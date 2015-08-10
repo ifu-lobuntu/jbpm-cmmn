@@ -10,10 +10,14 @@
 	<name>jBPM CMMN Common</name>
 	<packaging>bundle</packaging>
 	<dependencies>
-	<dependency>
-		<groupId>org.kie</groupId>
-		<artifactId>kie-api</artifactId>
-	</dependency>
+		<dependency>
+			<groupId>org.kie</groupId>
+			<artifactId>kie-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.jbpm</groupId>
+			<artifactId>jbpm-case-mgmt</artifactId>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>

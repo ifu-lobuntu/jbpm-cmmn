@@ -1,64 +1,27 @@
 package org.jbpm.cmmn.flow.core;
 
 import org.jbpm.process.instance.impl.Action;
-import org.jbpm.process.instance.impl.ReturnValueConstraintEvaluator;
 import org.jbpm.process.instance.impl.ReturnValueEvaluator;
 import org.jbpm.workflow.core.Constraint;
 import org.jbpm.workflow.core.DroolsAction;
-import org.jbpm.workflow.core.impl.ConstraintImpl;
 
-public class BindingRefinement {
-	private Constraint expression;
-	private Constraint parentExpression;
-	private DroolsAction setterOnParent;
 
-	public BindingRefinement(ConstraintImpl exp) {
-		this.expression = exp;
-	}
+public interface BindingRefinement {
+    Constraint getParentExpression();
 
-	public Constraint getParentExpression() {
-		return parentExpression;
-	}
+    void setParentExpression(Constraint bindingRefinement);
 
-	public void setParentExpression(Constraint bindingRefinement) {
-		this.parentExpression = bindingRefinement;
-	}
+    void setSetterOnParent(DroolsAction a);
 
-	public void setSetterOnParent(DroolsAction a) {
-		this.setterOnParent = a;
-	}
+    Constraint getExpression();
 
-	public Constraint getExpression() {
-		return expression;
-	}
+    void setExpression(Constraint bindingRefinement);
 
-	public void setExpression(Constraint bindingRefinement) {
-		this.expression = bindingRefinement;
-	}
+    ReturnValueEvaluator getEvaluator();
 
-	public ReturnValueEvaluator getEvaluator() {
-		if (expression instanceof ReturnValueConstraintEvaluator) {
-			return ((ReturnValueConstraintEvaluator) expression).getReturnValueEvaluator();
-		}
-		return null;
-	}
+    ReturnValueEvaluator getParentEvaluator();
 
-	public ReturnValueEvaluator getParentEvaluator() {
-		if (parentExpression instanceof ReturnValueConstraintEvaluator) {
-			return ((ReturnValueConstraintEvaluator) parentExpression).getReturnValueEvaluator();
-		}
-		return null;
-	}
+    Action getSetterOnParent();
 
-	public Action getSetterOnParent() {
-		if (setterOnParent != null) {
-			return (Action) setterOnParent.getMetaData("Action");
-		}
-		return null;
-	}
-
-	public boolean isValid() {
-		return expression instanceof ReturnValueConstraintEvaluator;
-	}
-
+    boolean isValid();
 }

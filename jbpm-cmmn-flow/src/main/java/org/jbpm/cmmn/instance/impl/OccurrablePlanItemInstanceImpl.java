@@ -1,14 +1,14 @@
 package org.jbpm.cmmn.instance.impl;
 
-import org.jbpm.cmmn.flow.core.ItemWithDefinition;
-import org.jbpm.cmmn.flow.core.PlanItem;
-import org.jbpm.cmmn.flow.core.PlanItemDefinition;
+import org.jbpm.cmmn.flow.common.ItemWithDefinition;
+import org.jbpm.cmmn.flow.definition.PlanItemDefinition;
+import org.jbpm.cmmn.flow.planitem.PlanItem;
 import org.jbpm.cmmn.instance.CaseInstance;
 import org.jbpm.cmmn.instance.OccurrablePlanItemInstance;
 import org.jbpm.cmmn.instance.PlanElementState;
 import org.jbpm.workflow.instance.node.StateBasedNodeInstance;
 
-public abstract class OccurrablePlanItemInstanceImpl<T extends PlanItemDefinition, X extends ItemWithDefinition<T>> extends StateBasedNodeInstance implements
+public abstract class OccurrablePlanItemInstanceImpl<T extends PlanItemDefinition> extends StateBasedNodeInstance implements
 		OccurrablePlanItemInstance<T> {
 
 	private static final long serialVersionUID = -3451322686745364562L;
@@ -55,8 +55,8 @@ public abstract class OccurrablePlanItemInstanceImpl<T extends PlanItemDefinitio
 	}
 
 	@SuppressWarnings("unchecked")
-	public X getItem() {
-		return (X) getNode();
+	public ItemWithDefinition<T> getItem() {
+		return (ItemWithDefinition<T>) getNode();
 	}
 
 	@Override

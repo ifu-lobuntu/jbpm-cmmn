@@ -1,8 +1,8 @@
 package org.jbpm.cmmn.instance.subscription;
 
-import java.util.Collection;
+import org.jbpm.cmmn.flow.common.CaseFileItemTransition;
 
-import org.jbpm.cmmn.flow.core.CaseFileItemTransition;
+import java.util.Collection;
 
 public interface DurableCaseSubscriptionInfo<T extends DurableCaseFileItemSubscriptionInfo> {
 

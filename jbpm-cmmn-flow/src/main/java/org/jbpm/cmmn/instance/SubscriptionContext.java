@@ -1,10 +1,10 @@
 package org.jbpm.cmmn.instance;
 
+import org.jbpm.cmmn.flow.core.CaseFileItem;
+
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
-
-import org.jbpm.cmmn.flow.core.CaseFileItem;
 
 public class SubscriptionContext {
 	Map<CaseFileItem, Collection<Object>> parentSubscriptions;

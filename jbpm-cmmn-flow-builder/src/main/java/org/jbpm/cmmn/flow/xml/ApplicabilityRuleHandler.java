@@ -4,9 +4,12 @@ import java.util.HashSet;
 
 import org.drools.core.xml.ExtensibleXmlParser;
 import org.drools.core.xml.Handler;
-import org.jbpm.cmmn.flow.core.ApplicabilityRule;
-import org.jbpm.cmmn.flow.core.planning.DiscretionaryItemImpl;
-import org.jbpm.cmmn.flow.core.planning.PlanningTableImpl;
+import org.jbpm.cmmn.flow.planning.ApplicabilityRule;
+import org.jbpm.cmmn.flow.planning.ApplicabilityRuleImpl;
+import org.jbpm.cmmn.flow.planning.DiscretionaryItem;
+import org.jbpm.cmmn.flow.planning.PlanningTable;
+import org.jbpm.cmmn.flow.planning.impl.DiscretionaryItemImpl;
+import org.jbpm.cmmn.flow.planning.impl.PlanningTableImpl;
 import org.w3c.dom.Element;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -17,17 +20,17 @@ public class ApplicabilityRuleHandler extends AbstractTableItemHandler implement
 		validParents = new HashSet<Class<?>>();
 		validPeers = new HashSet<Class<?>>();
 		super.validParents.add(null);
-		super.validParents.add(PlanningTableImpl.class);
+		super.validParents.add(PlanningTable.class);
 		super.validPeers.add(null);
-		super.validPeers.add(PlanningTableImpl.class);
-		super.validPeers.add(DiscretionaryItemImpl.class);
+		super.validPeers.add(PlanningTable.class);
+		super.validPeers.add(DiscretionaryItem.class);
 		super.validPeers.add(ApplicabilityRule.class);
 	}
 
 	@Override
 	public Object start(String uri, String localName, Attributes attrs, ExtensibleXmlParser parser) throws SAXException {
 		parser.startElementBuilder(localName, attrs);
-		ApplicabilityRule rule = new ApplicabilityRule();
+		ApplicabilityRuleImpl rule = new ApplicabilityRuleImpl();
 		rule.setElementId(attrs.getValue("id"));
 		rule.setContextRef(IdGenerator.toXmlId(attrs.getValue("contextRef")));
 		PlanningTableImpl parent = (PlanningTableImpl) parser.getParent();
@@ -38,14 +41,14 @@ public class ApplicabilityRuleHandler extends AbstractTableItemHandler implement
 	@Override
 	public Object end(String uri, String localName, ExtensibleXmlParser parser) throws SAXException {
 		Element el = parser.endElementBuilder();
-		ApplicabilityRule rule = (ApplicabilityRule) parser.getCurrent();
+		ApplicabilityRuleImpl rule = (ApplicabilityRuleImpl) parser.getCurrent();
 		rule.setCondition(ConstraintExtractor.extractExpression(el, "condition"));
 		return rule;
 	}
 
 	@Override
 	public Class<?> generateNodeFor() {
-		return ApplicabilityRule.class;
+		return ApplicabilityRuleImpl.class;
 	}
 
 }

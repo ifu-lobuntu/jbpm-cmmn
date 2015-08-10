@@ -1,9 +1,11 @@
 package org.jbpm.cmmn.flow.xml;
 
 import org.drools.core.xml.ExtensibleXmlParser;
-import org.jbpm.cmmn.flow.core.ApplicabilityRule;
-import org.jbpm.cmmn.flow.core.planning.DiscretionaryItemImpl;
-import org.jbpm.cmmn.flow.core.planning.PlanningTableImpl;
+import org.jbpm.cmmn.flow.planning.ApplicabilityRule;
+import org.jbpm.cmmn.flow.planning.DiscretionaryItem;
+import org.jbpm.cmmn.flow.planning.PlanningTable;
+import org.jbpm.cmmn.flow.planning.impl.DiscretionaryItemImpl;
+import org.jbpm.cmmn.flow.planning.impl.PlanningTableImpl;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
@@ -11,9 +13,9 @@ public class DiscretionaryItemHandler extends AbstractTableItemHandler  {
 	public DiscretionaryItemHandler() {
 		super();
 		super.validParents.add(null);
-		super.validParents.add(PlanningTableImpl.class);
-		super.validPeers.add(PlanningTableImpl.class);
-		super.validPeers.add(DiscretionaryItemImpl.class);
+		super.validParents.add(PlanningTable.class);
+		super.validPeers.add(PlanningTable.class);
+		super.validPeers.add(DiscretionaryItem.class);
 		super.validPeers.add(ApplicabilityRule.class);
 	}
 
@@ -38,7 +40,7 @@ public class DiscretionaryItemHandler extends AbstractTableItemHandler  {
 		}
 
 		item.setId(IdGenerator.getIdAsUniqueAsUuid(parser, item));
-		PlanningTableImpl parent = (PlanningTableImpl) parser.getParent();
+		PlanningTable parent = (PlanningTable) parser.getParent();
 		parent.addTableItem(item);
 		return item;
 	}

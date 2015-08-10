@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.Map;
 
 import org.drools.core.xml.ExtensibleXmlParser;
-import org.jbpm.cmmn.flow.core.task.AbstractPlanItemDefinition;
+import org.jbpm.cmmn.flow.definition.impl.AbstractPlanItemDefinition;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 

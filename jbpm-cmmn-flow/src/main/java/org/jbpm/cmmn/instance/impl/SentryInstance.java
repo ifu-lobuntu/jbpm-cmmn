@@ -1,15 +1,9 @@
 package org.jbpm.cmmn.instance.impl;
 
-import java.util.ArrayDeque;
-import java.util.Collection;
-import java.util.Deque;
-import java.util.HashSet;
-import java.util.List;
-
-import org.jbpm.cmmn.flow.core.PlanItemTransition;
-import org.jbpm.cmmn.flow.core.planitem.AbstractOnPart;
-import org.jbpm.cmmn.flow.core.planitem.PlanItemInstanceFactoryNode;
-import org.jbpm.cmmn.flow.core.planitem.SentryImpl;
+import org.jbpm.cmmn.flow.common.impl.AbstractStandardEventNode;
+import org.jbpm.cmmn.flow.common.impl.PlanItemInstanceFactoryNodeImpl;
+import org.jbpm.cmmn.flow.common.PlanItemTransition;
+import org.jbpm.cmmn.flow.planitem.impl.SentryImpl;
 import org.jbpm.cmmn.instance.CaseEvent;
 import org.jbpm.cmmn.instance.CaseInstance;
 import org.jbpm.cmmn.instance.ControllableItemInstance;
@@ -22,6 +16,8 @@ import org.jbpm.workflow.instance.NodeInstanceContainer;
 import org.jbpm.workflow.instance.node.JoinInstance;
 import org.kie.api.definition.process.Connection;
 import org.kie.api.runtime.process.NodeInstance;
+
+import java.util.*;
 
 public class SentryInstance extends JoinInstance {
 	private static ThreadLocal<Deque<Collection<CaseEvent>>> currentEvents = new ThreadLocal<Deque<Collection<CaseEvent>>>();
@@ -45,7 +41,7 @@ public class SentryInstance extends JoinInstance {
 				// an exit criterion
 			} else {
 				Connection next = outgoingConnections.get(0);
-				PlanItemInstanceFactoryNode to = (PlanItemInstanceFactoryNode) next.getTo();
+				PlanItemInstanceFactoryNodeImpl to = (PlanItemInstanceFactoryNodeImpl) next.getTo();
 				NodeInstance ni = ((NodeInstanceContainer) getNodeInstanceContainer()).getNodeInstance(to);
 				((PlanItemInstanceFactoryNodeInstance<?>) ni).ensureCreationIsTriggered();
 			}
@@ -57,8 +53,8 @@ public class SentryInstance extends JoinInstance {
 		Collection<CaseEvent> result = new HashSet<CaseEvent>();
 		Collection<Connection> values = getNode().getIncomingConnections(Node.CONNECTION_DEFAULT_TYPE);
 		for (Connection connection : values) {
-			if (connection.getFrom() instanceof AbstractOnPart) {
-				NodeInstance ni = findNodeInstance((NodeInstanceContainer) getNodeInstanceContainer(), (AbstractOnPart) connection.getFrom());
+			if (connection.getFrom() instanceof AbstractStandardEventNode) {
+				NodeInstance ni = findNodeInstance((NodeInstanceContainer) getNodeInstanceContainer(), (AbstractStandardEventNode) connection.getFrom());
 				OnPartInstance opi = (OnPartInstance) ni;
 				result.add(opi.getCaseEvent());
 			}
@@ -89,8 +85,8 @@ public class SentryInstance extends JoinInstance {
 				}
 				Collection<Connection> values = getNode().getIncomingConnections(Node.CONNECTION_DEFAULT_TYPE);
 				for (Connection connection : values) {
-					if (connection.getFrom() instanceof AbstractOnPart) {
-						NodeInstance ni = findNodeInstance((NodeInstanceContainer) getNodeInstanceContainer(), (AbstractOnPart) connection.getFrom());
+					if (connection.getFrom() instanceof AbstractStandardEventNode) {
+						NodeInstance ni = findNodeInstance((NodeInstanceContainer) getNodeInstanceContainer(), (AbstractStandardEventNode) connection.getFrom());
 						OnPartInstance opi = (OnPartInstance) ni;
 						if (opi != null) {
 							// coud be after process completion
@@ -99,7 +95,7 @@ public class SentryInstance extends JoinInstance {
 					}
 				}
 				for (Connection connection : values) {
-					if (!(connection.getFrom() instanceof AbstractOnPart)) {
+					if (!(connection.getFrom() instanceof AbstractStandardEventNode)) {
 						// Once activated, we keep the originating "from" active to indicate an "Available" state
 						super.getTriggers().put(connection.getFrom().getId(), 1);
 					}
@@ -138,12 +134,18 @@ public class SentryInstance extends JoinInstance {
 			NodeInstance found = findNodeInstance(nic, sentry.getPlanItemExiting());
 			// TODO refine which PlannItemInstance to exit, e.g. look at the
 			// output and see if the caseFileITem Instance associated matches
-			if (found instanceof ControllableItemInstance) {
+			if (found instanceof HumanTaskInstance) {
 				// Task planItem
-				ControllableItemInstance<?> pii = (ControllableItemInstance<?>) found;
+				HumanTaskInstance pii = (HumanTaskInstance) found;
 				pii.triggerTransitionOnTask(PlanItemTransition.EXIT);
 				hasTriggered = true;
+			}else if (found instanceof ControllableItemInstance) {
+					// Task planItem
+				ControllableItemInstance<?> pii = (ControllableItemInstance<?>) found;
+				pii.exit();
+				hasTriggered = true;
 			} else {
+
 				// TODO: SubProcessInstance? Exception?
 			}
 		}

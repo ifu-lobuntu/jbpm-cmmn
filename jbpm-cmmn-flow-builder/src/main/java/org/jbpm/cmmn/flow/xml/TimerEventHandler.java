@@ -1,7 +1,8 @@
 package org.jbpm.cmmn.flow.xml;
 
 import org.drools.core.xml.ExtensibleXmlParser;
-import org.jbpm.cmmn.flow.core.event.TimerEvent;
+import org.jbpm.cmmn.flow.definition.TimerEventListener;
+import org.jbpm.cmmn.flow.definition.impl.TimerEventListenerImpl;
 import org.jbpm.cmmn.flow.core.impl.CaseImpl;
 import org.w3c.dom.Element;
 import org.xml.sax.Attributes;
@@ -11,7 +12,7 @@ public class TimerEventHandler extends AbstractCaseElementHandler implements Pla
 
 	@Override
 	public Object start(String uri, String localName, Attributes attrs, ExtensibleXmlParser parser) throws SAXException {
-		TimerEvent node = new TimerEvent();
+		TimerEventListenerImpl node = new TimerEventListenerImpl();
 		parser.startElementBuilder(localName, attrs);
 		node.setElementId(attrs.getValue("id"));
 		CaseImpl theCase = (CaseImpl) parser.getParent(CaseImpl.class);
@@ -24,14 +25,14 @@ public class TimerEventHandler extends AbstractCaseElementHandler implements Pla
 	@Override
 	public Object end(String uri, String localName, ExtensibleXmlParser parser) throws SAXException {
 		Element el = parser.endElementBuilder();
-		TimerEvent l = (TimerEvent) parser.getCurrent();
+		TimerEventListener l = (TimerEventListener) parser.getCurrent();
 		l.setTimerExpression(ConstraintExtractor.extractExpression(el, "timerExpression"));
 		return l;
 	}
 
 	@Override
 	public Class<?> generateNodeFor() {
-		return TimerEvent.class;
+		return TimerEventListenerImpl.class;
 	}
 
 }

@@ -1,12 +1,7 @@
 package org.jbpm.cmmn.task.registration;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.jbpm.cmmn.common.WorkItemParameters;
-import org.jbpm.cmmn.task.listeners.CaseTaskLifecycleListener;
+import org.jbpm.cmmn.task.workitems.CaseTaskLifecycleListener;
 import org.jbpm.cmmn.task.workitems.CaseTaskWorkItemHandler;
 import org.jbpm.cmmn.task.workitems.UpdateTaskStatusWorkItemHandler;
 import org.jbpm.runtime.manager.impl.DefaultRegisterableItemsFactory;
@@ -19,6 +14,11 @@ import org.kie.api.task.TaskLifeCycleEventListener;
 import org.kie.internal.runtime.manager.Disposable;
 import org.kie.internal.runtime.manager.DisposeListener;
 import org.kie.internal.task.api.EventService;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class CaseRegisterableItemsFactory extends DefaultRegisterableItemsFactory {
 	private TaskLifeCycleEventListener lifecycleListener =new CaseTaskLifecycleListener();

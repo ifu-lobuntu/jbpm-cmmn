@@ -5,7 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-import org.jbpm.cmmn.flow.core.CaseFileItemTransition;
+import org.jbpm.cmmn.flow.common.CaseFileItemTransition;
 import org.jbpm.cmmn.instance.CaseInstance;
 import org.jbpm.cmmn.instance.subscription.DurableCaseFileItemSubscriptionInfo;
 import org.jbpm.cmmn.instance.subscription.DurableCaseSubscriptionInfo;

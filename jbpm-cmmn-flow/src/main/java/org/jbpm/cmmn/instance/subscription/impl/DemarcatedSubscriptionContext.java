@@ -1,15 +1,11 @@
 package org.jbpm.cmmn.instance.subscription.impl;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-
-import org.jbpm.cmmn.flow.core.CaseFileItemTransition;
+import org.jbpm.cmmn.flow.common.CaseFileItemTransition;
 import org.jbpm.cmmn.instance.impl.CaseInstanceImpl;
 import org.jbpm.cmmn.instance.subscription.OnPartInstanceSubscription;
+
+import java.util.*;
+import java.util.Map.Entry;
 
 public class DemarcatedSubscriptionContext {
 	private static ThreadLocal<Map<Long, Set<OnPartInstanceSubscription>>> demarcatedSubscriptions = new ThreadLocal<Map<Long, Set<OnPartInstanceSubscription>>>();

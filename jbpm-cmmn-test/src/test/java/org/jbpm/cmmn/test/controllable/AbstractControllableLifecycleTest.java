@@ -5,8 +5,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.jbpm.cmmn.common.WorkItemParameters;
+import org.jbpm.cmmn.flow.common.PlanItemTransition;
 import org.jbpm.cmmn.instance.CaseInstance;
 import org.jbpm.cmmn.instance.PlanElementState;
+import org.jbpm.cmmn.service.model.Plan;
+import org.jbpm.cmmn.service.model.PlannableItem;
 import org.jbpm.cmmn.task.additional.commands.ReactivateTaskCommand;
 import org.jbpm.cmmn.task.additional.commands.ReenableTaskCommand;
 import org.jbpm.cmmn.test.AbstractConstructionTestCase;
@@ -20,10 +23,6 @@ import test.cmmn.WallPlan;
 
 public abstract class AbstractControllableLifecycleTest extends AbstractConstructionTestCase {
 
-	public abstract void failTask(long taskId);
-
-	public abstract void completeTask(long taskId);
-
 	public AbstractControllableLifecycleTest() {
 		super();
 	}
@@ -35,17 +34,16 @@ public abstract class AbstractControllableLifecycleTest extends AbstractConstruc
 		// *****WHEN
 		triggerStartOfTask();
 		// *******THEN
-		List<TaskSummary> list = getTaskService().getTasksOwned(getEventGeneratingTaskUser(), "en-UK");
-		assertEquals(1, list.size());
 		assertPlanItemInState(caseInstance.getId(), "TheEventGeneratingTaskPlanItem", PlanElementState.ENABLED);
-		long taskId = list.get(0).getId();
-		getTaskService().start(taskId, getEventGeneratingTaskUser());
+		Plan plan = getCmmnService().getPlan(caseInstance.getId());
+		PlannableItem theEventGeneratingTaskPlanItem = plan.getPlannableItemsFor("TheEventGeneratingTaskPlanItem").get(0);
+		getCmmnService().transitionPlanItem(caseInstance.getId(), theEventGeneratingTaskPlanItem.getUniqueId(), PlanItemTransition.START);
 		assertPlanItemInState(caseInstance.getId(), "TheEventGeneratingTaskPlanItem", PlanElementState.ACTIVE);
-		getTaskService().suspend(taskId, getEventGeneratingTaskUser());
+		getCmmnService().transitionPlanItem(caseInstance.getId(), theEventGeneratingTaskPlanItem.getUniqueId(), PlanItemTransition.SUSPEND);
 		assertPlanItemInState(caseInstance.getId(), "TheEventGeneratingTaskPlanItem", PlanElementState.SUSPENDED);
-		getTaskService().resume(taskId, getEventGeneratingTaskUser());
+		getCmmnService().transitionPlanItem(caseInstance.getId(), theEventGeneratingTaskPlanItem.getUniqueId(), PlanItemTransition.RESUME);
 		assertPlanItemInState(caseInstance.getId(), "TheEventGeneratingTaskPlanItem", PlanElementState.ACTIVE);
-		completeTask(taskId);
+		getCmmnService().transitionPlanItem(caseInstance.getId(), theEventGeneratingTaskPlanItem.getUniqueId(), PlanItemTransition.COMPLETE);
 		assertPlanItemInState(caseInstance.getId(), "TheEventGeneratingTaskPlanItem", PlanElementState.COMPLETED);
 		// *****THEN
 		stopwatch.finish("testTaskLifecycleComplete");
@@ -59,17 +57,17 @@ public abstract class AbstractControllableLifecycleTest extends AbstractConstruc
 		givenThatTheTestCaseIsStarted();
 		// *****WHEN
 		triggerStartOfTask();
-		List<TaskSummary> list = getTaskService().getTasksOwned(getEventGeneratingTaskUser(), "en-UK");
 		// *******THEN
-		assertEquals(1, list.size());
+		Plan plan = getCmmnService().getPlan(caseInstance.getId());
+		PlannableItem theEventGeneratingTaskPlanItem = plan.getPlannableItemsFor("TheEventGeneratingTaskPlanItem").get(0);
 		assertPlanItemInState(caseInstance.getId(), "TheEventGeneratingTaskPlanItem", PlanElementState.ENABLED);
-		getTaskService().start(list.get(0).getId(), getEventGeneratingTaskUser());
+		getCmmnService().transitionPlanItem(caseInstance.getId(), theEventGeneratingTaskPlanItem.getUniqueId(), PlanItemTransition.START);
 		assertPlanItemInState(caseInstance.getId(), "TheEventGeneratingTaskPlanItem", PlanElementState.ACTIVE);
-		getTaskService().suspend(list.get(0).getId(), getEventGeneratingTaskUser());
+		getCmmnService().transitionPlanItem(caseInstance.getId(), theEventGeneratingTaskPlanItem.getUniqueId(), PlanItemTransition.SUSPEND);
 		assertPlanItemInState(caseInstance.getId(), "TheEventGeneratingTaskPlanItem", PlanElementState.SUSPENDED);
-		getTaskService().resume(list.get(0).getId(), getEventGeneratingTaskUser());
+		getCmmnService().transitionPlanItem(caseInstance.getId(), theEventGeneratingTaskPlanItem.getUniqueId(), PlanItemTransition.RESUME);
 		assertPlanItemInState(caseInstance.getId(), "TheEventGeneratingTaskPlanItem", PlanElementState.ACTIVE);
-		getTaskService().exit(list.get(0).getId(), getBusinessAdministratorUser());
+		getCmmnService().transitionPlanItem(caseInstance.getId(), theEventGeneratingTaskPlanItem.getUniqueId(), PlanItemTransition.EXIT);
 		assertPlanItemInState(caseInstance.getId(), "TheEventGeneratingTaskPlanItem", PlanElementState.TERMINATED);
 		// *****THEN
 		stopwatch.finish("testTaskLifecycleTerminate");
@@ -84,18 +82,16 @@ public abstract class AbstractControllableLifecycleTest extends AbstractConstruc
 		givenThatTheTestCaseIsStarted();
 		// *****WHEN
 		triggerStartOfTask();
-		List<TaskSummary> list = getTaskService().getTasksOwned(getEventGeneratingTaskUser(), "en-UK");
 		// *******THEN
-		assertEquals(1, list.size());
-		assertPlanItemInState(caseInstance.getId(), "TheEventGeneratingTaskPlanItem", PlanElementState.ENABLED);
-		long taskId = list.get(0).getId();
-		getTaskService().start(taskId, getEventGeneratingTaskUser());
+		Plan plan = getCmmnService().getPlan(caseInstance.getId());
+		PlannableItem theEventGeneratingTaskPlanItem = plan.getPlannableItemsFor("TheEventGeneratingTaskPlanItem").get(0);
+		getCmmnService().transitionPlanItem(caseInstance.getId(), theEventGeneratingTaskPlanItem.getUniqueId(), PlanItemTransition.START);
 		assertPlanItemInState(caseInstance.getId(), "TheEventGeneratingTaskPlanItem", PlanElementState.ACTIVE);
-		getTaskService().suspend(taskId, getEventGeneratingTaskUser());
+		getCmmnService().transitionPlanItem(caseInstance.getId(), theEventGeneratingTaskPlanItem.getUniqueId(), PlanItemTransition.SUSPEND);
 		assertPlanItemInState(caseInstance.getId(), "TheEventGeneratingTaskPlanItem", PlanElementState.SUSPENDED);
-		getTaskService().resume(taskId, getEventGeneratingTaskUser());
+		getCmmnService().transitionPlanItem(caseInstance.getId(), theEventGeneratingTaskPlanItem.getUniqueId(), PlanItemTransition.RESUME);
 		assertPlanItemInState(caseInstance.getId(), "TheEventGeneratingTaskPlanItem", PlanElementState.ACTIVE);
-		failTask(taskId);
+		getCmmnService().transitionPlanItem(caseInstance.getId(), theEventGeneratingTaskPlanItem.getUniqueId(), PlanItemTransition.FAULT);
 		assertPlanItemInState(caseInstance.getId(), "TheEventGeneratingTaskPlanItem", PlanElementState.FAILED);
 		// *****THEN
 		stopwatch.finish("testTaskLifecycleFailed");
@@ -109,15 +105,15 @@ public abstract class AbstractControllableLifecycleTest extends AbstractConstruc
 		givenThatTheTestCaseIsStarted();
 		// *****WHEN
 		triggerStartOfTask();
-		List<TaskSummary> list = getTaskService().getTasksOwned(getEventGeneratingTaskUser(), "en-UK");
 		// *******THEN
-		assertEquals(1, list.size());
+		Plan plan = getCmmnService().getPlan(caseInstance.getId());
+		PlannableItem theEventGeneratingTaskPlanItem = plan.getPlannableItemsFor("TheEventGeneratingTaskPlanItem").get(0);
 		assertPlanItemInState(caseInstance.getId(), "TheEventGeneratingTaskPlanItem", PlanElementState.ENABLED);
-		getTaskService().start(list.get(0).getId(), getEventGeneratingTaskUser());
+		getCmmnService().transitionPlanItem(caseInstance.getId(), theEventGeneratingTaskPlanItem.getUniqueId(), PlanItemTransition.START);
 		assertPlanItemInState(caseInstance.getId(), "TheEventGeneratingTaskPlanItem", PlanElementState.ACTIVE);
-		getTaskService().suspend(list.get(0).getId(), getEventGeneratingTaskUser());
+		getCmmnService().transitionPlanItem(caseInstance.getId(), theEventGeneratingTaskPlanItem.getUniqueId(), PlanItemTransition.SUSPEND);
 		assertPlanItemInState(caseInstance.getId(), "TheEventGeneratingTaskPlanItem", PlanElementState.SUSPENDED);
-		getTaskService().resume(list.get(0).getId(), getEventGeneratingTaskUser());
+		getCmmnService().transitionPlanItem(caseInstance.getId(), theEventGeneratingTaskPlanItem.getUniqueId(), PlanItemTransition.RESUME);
 		assertPlanItemInState(caseInstance.getId(), "TheEventGeneratingTaskPlanItem", PlanElementState.ACTIVE);
 		getPersistence().start();
 		getRuntimeEngine().getKieSession().signalEvent("TheUserEvent", new Object(), caseInstance.getId());
@@ -136,19 +132,15 @@ public abstract class AbstractControllableLifecycleTest extends AbstractConstruc
 		givenThatTheTestCaseIsStarted();
 		triggerStartOfTask();
 		assertNodeTriggered(caseInstance.getId(), "TheEventGeneratingTaskPlanItem");
-		List<TaskSummary> list = getTaskService().getTasksOwned(getEventGeneratingTaskUser(), "en-UK");
-		assertEquals(1, list.size());
 		// *****WHEN
-		long id = list.get(0).getId();
-		getTaskService().start(id, getEventGeneratingTaskUser());
-		completeTask(id);
+		Plan plan = getCmmnService().getPlan(caseInstance.getId());
+		PlannableItem theEventGeneratingTaskPlanItem = plan.getPlannableItemsFor("TheEventGeneratingTaskPlanItem").get(0);
+		getCmmnService().transitionPlanItem(caseInstance.getId(), theEventGeneratingTaskPlanItem.getUniqueId(), PlanItemTransition.START);
+		getCmmnService().transitionPlanItem(caseInstance.getId(), theEventGeneratingTaskPlanItem.getUniqueId(), PlanItemTransition.COMPLETE);
 		// *****THEN
 		assertNodeTriggered(caseInstance.getId(), "PlanItemEnteredWhenTaskCompleted");
 		assertPlanItemInState(caseInstance.getId(), "PlanItemEnteredWhenTaskCompleted", PlanElementState.ENABLED);
-		list = getTaskService().getTasksAssignedAsPotentialOwner("Builder", "en-UK");
-		assertEquals(2, list.size());
 		assertPlanItemInState(caseInstance.getId(), "TheEventGeneratingTaskPlanItem", PlanElementState.COMPLETED);
-		assertEquals("PlanItemEnteredWhenTaskCompleted", list.get(0).getName());
 		stopwatch.finish("testEventGeneratedOnCompletionOfTask");
 	}
 
@@ -165,7 +157,9 @@ public abstract class AbstractControllableLifecycleTest extends AbstractConstruc
 		// *****WHEN
 		long id = list.get(0).getId();
 		getTaskService().start(id, getEventGeneratingTaskUser());
-		failTask(id);
+		Plan plan = getCmmnService().getPlan(caseInstance.getId());
+		PlannableItem theEventGeneratingTaskPlanItem = plan.getPlannableItemsFor("TheEventGeneratingTaskPlanItem").get(0);
+		getCmmnService().transitionPlanItem(caseInstance.getId(), theEventGeneratingTaskPlanItem.getUniqueId(), PlanItemTransition.FAULT);
 		// *****THEN
 		assertNodeTriggered(caseInstance.getId(), "PlanItemEnteredWhenTaskFaultOccurred");
 		list = getTaskService().getTasksAssignedAsPotentialOwner("Builder", "en-UK");

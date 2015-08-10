@@ -1,20 +1,12 @@
 package org.jbpm.cmmn.instance.impl;
 
-import java.util.Collections;
-import java.util.List;
-
-import org.jbpm.cmmn.flow.core.ItemWithDefinition;
-import org.jbpm.cmmn.flow.core.PlanItemDefinition;
-import org.jbpm.cmmn.flow.core.TaskDefinition;
-import org.jbpm.cmmn.flow.core.impl.Stage;
-import org.jbpm.cmmn.flow.core.planitem.PlanItemInstanceFactoryNode;
-import org.jbpm.cmmn.flow.core.planning.DiscretionaryItemImpl;
-import org.jbpm.cmmn.instance.CaseInstance;
-import org.jbpm.cmmn.instance.ControllableItemInstance;
-import org.jbpm.cmmn.instance.Creatable;
-import org.jbpm.cmmn.instance.OccurrablePlanItemInstance;
-import org.jbpm.cmmn.instance.PlanElementState;
-import org.jbpm.cmmn.instance.PlanItemInstanceLifecycleWithHistory;
+import org.jbpm.cmmn.flow.common.ItemWithDefinition;
+import org.jbpm.cmmn.flow.common.impl.PlanItemInstanceFactoryNodeImpl;
+import org.jbpm.cmmn.flow.definition.PlanItemDefinition;
+import org.jbpm.cmmn.flow.definition.TaskDefinition;
+import org.jbpm.cmmn.flow.definition.impl.StageImpl;
+import org.jbpm.cmmn.flow.planning.impl.DiscretionaryItemImpl;
+import org.jbpm.cmmn.instance.*;
 import org.jbpm.cmmn.instance.impl.util.ExpressionUtil;
 import org.jbpm.workflow.core.impl.ConnectionImpl;
 import org.jbpm.workflow.core.impl.NodeImpl;
@@ -23,6 +15,9 @@ import org.kie.api.definition.process.Connection;
 import org.kie.api.definition.process.Node;
 import org.kie.api.runtime.process.NodeInstance;
 
+import java.util.Collections;
+import java.util.List;
+
 /**
  * This class represents the lifecycle of controllablePlanInstances prior to instantiation of the PlanItem in question
  * 
@@ -30,11 +25,11 @@ import org.kie.api.runtime.process.NodeInstance;
 public class PlanItemInstanceFactoryNodeInstance<T extends PlanItemDefinition> extends StateNodeInstance implements PlanItemInstanceLifecycleWithHistory<T>,
 		Creatable {
 
-	public static class EmulatedPlanItemInstanceFactoryNode extends PlanItemInstanceFactoryNode {
+	public static class EmulatedPlanItemInstanceFactoryNode extends PlanItemInstanceFactoryNodeImpl {
 		private static final long serialVersionUID = -7156500421241207274L;
-		private final PlanItemInstanceFactoryNode node;
+		private final PlanItemInstanceFactoryNodeImpl node;
 
-		public EmulatedPlanItemInstanceFactoryNode(PlanItemInstanceFactoryNode node) {
+		public EmulatedPlanItemInstanceFactoryNode(PlanItemInstanceFactoryNodeImpl node) {
 			this.node = node;
 		}
 
@@ -92,12 +87,12 @@ public class PlanItemInstanceFactoryNodeInstance<T extends PlanItemDefinition> e
 	@Override
 	public boolean isComplexLifecycle() {
 		PlanItemDefinition def = getItem().getDefinition();
-		return def instanceof TaskDefinition || def instanceof Stage;
+		return def instanceof TaskDefinition || def instanceof StageImpl;
 	}
 
 	@Override
-	public PlanItemInstanceFactoryNode getNode() {
-		final PlanItemInstanceFactoryNode node = (PlanItemInstanceFactoryNode) super.getNode();
+	public PlanItemInstanceFactoryNodeImpl getNode() {
+		final PlanItemInstanceFactoryNodeImpl node = (PlanItemInstanceFactoryNodeImpl) super.getNode();
 		if (beingTriggered && node.getItemToInstantiate() instanceof DiscretionaryItemImpl && isIncludedByDiscretion) {
 			// Fake an outgoing connectiong
 			return new EmulatedPlanItemInstanceFactoryNode(node);

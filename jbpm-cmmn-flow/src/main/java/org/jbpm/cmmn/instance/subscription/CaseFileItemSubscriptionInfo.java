@@ -1,6 +1,6 @@
 package org.jbpm.cmmn.instance.subscription;
 
-import org.jbpm.cmmn.flow.core.CaseFileItemTransition;
+import org.jbpm.cmmn.flow.common.CaseFileItemTransition;
 
 public interface CaseFileItemSubscriptionInfo {
 

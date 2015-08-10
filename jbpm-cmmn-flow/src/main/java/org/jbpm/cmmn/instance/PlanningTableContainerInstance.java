@@ -1,14 +1,15 @@
 package org.jbpm.cmmn.instance;
 
+import org.drools.core.process.instance.WorkItem;
+import org.jbpm.cmmn.common.ApplicableDiscretionaryItem;
+import org.jbpm.cmmn.flow.definition.PlanItemDefinition;
+import org.jbpm.cmmn.flow.planning.PlanningTable;
+import org.kie.api.runtime.process.NodeInstance;
+
 import java.util.Map;
 import java.util.Set;
 
-import org.drools.core.process.instance.WorkItem;
-import org.jbpm.cmmn.common.ApplicableDiscretionaryItem;
-import org.jbpm.cmmn.flow.core.PlanningTable;
-import org.kie.api.runtime.process.NodeInstance;
-
-public interface PlanningTableContainerInstance extends PlanElementLifecycleWithTask, org.jbpm.cmmn.common.PlanningTableContainerInstance {
+public interface PlanningTableContainerInstance<T extends PlanItemDefinition> extends  org.jbpm.cmmn.common.PlanningTableContainerInstance,PlanElementLifecycle {
 	PlanningTable getPlanningTable();
 
 	PlanItemInstanceContainer getPlanItemInstanceCreator();
@@ -19,9 +20,7 @@ public interface PlanningTableContainerInstance extends PlanElementLifecycleWith
 
 	NodeInstance getPlanningContextNodeInstance();
 
-	WorkItem executeWorkItem(WorkItem wu);
+	NodeInstance createPlannedItem(String tableItemId);
 
-	WorkItem createPlannedItem(String tableItemId);
 
-	void makeDiscretionaryItemAvailable(String discretionaryItemId);
 }

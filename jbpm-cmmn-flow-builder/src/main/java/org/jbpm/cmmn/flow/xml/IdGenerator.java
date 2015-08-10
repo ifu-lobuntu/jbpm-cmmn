@@ -6,7 +6,7 @@ import java.util.Set;
 import org.drools.core.xml.ExtensibleXmlParser;
 import org.jbpm.cmmn.flow.core.CMMNElement;
 import org.jbpm.cmmn.flow.core.impl.CaseImpl;
-import org.jbpm.cmmn.flow.core.planitem.PlanItemInfoImpl;
+import org.jbpm.cmmn.flow.planitem.impl.PlanItemInfoImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

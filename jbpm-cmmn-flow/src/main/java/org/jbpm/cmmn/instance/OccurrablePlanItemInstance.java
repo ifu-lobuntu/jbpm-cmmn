@@ -1,7 +1,7 @@
 package org.jbpm.cmmn.instance;
 
-import org.jbpm.cmmn.flow.core.PlanItem;
-import org.jbpm.cmmn.flow.core.PlanItemDefinition;
+import org.jbpm.cmmn.flow.definition.PlanItemDefinition;
+import org.jbpm.cmmn.flow.planitem.PlanItem;
 
 public interface OccurrablePlanItemInstance<T extends PlanItemDefinition> extends PlanItemInstance<T> {
 	void occur();

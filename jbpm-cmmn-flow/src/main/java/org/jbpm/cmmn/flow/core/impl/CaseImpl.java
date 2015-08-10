@@ -1,19 +1,11 @@
 package org.jbpm.cmmn.flow.core.impl;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.jbpm.cmmn.flow.core.Case;
 import org.jbpm.cmmn.flow.core.CaseParameter;
-import org.jbpm.cmmn.flow.core.CaseRole;
-import org.jbpm.cmmn.flow.core.PlanItemDefinition;
-import org.jbpm.cmmn.flow.core.PlanItemInfo;
-import org.jbpm.cmmn.flow.core.PlanningTable;
-import org.jbpm.cmmn.flow.core.planitem.PlanItemContainerUtil;
-import org.jbpm.cmmn.flow.core.task.AbstractPlanItemDefinition;
-import org.jbpm.cmmn.flow.core.task.HumanTask;
+import org.jbpm.cmmn.flow.definition.PlanItemDefinition;
+import org.jbpm.cmmn.flow.definition.impl.AbstractPlanItemDefinition;
+import org.jbpm.cmmn.flow.planitem.PlanItemInfo;
+import org.jbpm.cmmn.flow.planning.PlanningTable;
 import org.jbpm.ruleflow.core.RuleFlowProcess;
 import org.jbpm.workflow.core.node.EndNode;
 import org.jbpm.workflow.core.node.Join;
@@ -21,14 +13,19 @@ import org.jbpm.workflow.core.node.Split;
 import org.jbpm.workflow.core.node.StartNode;
 import org.kie.api.definition.process.Node;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
 public class CaseImpl extends RuleFlowProcess implements Case {
 	private static final long serialVersionUID = -2253866933695827108L;
 	public static final String WORK_ITEM = "WorkItem";
-	private Map<String, CaseParameter> inputParameters = new HashMap<String, CaseParameter>();
-	private Map<String, CaseParameter> outputParameters = new HashMap<String, CaseParameter>();
+	private Map<String, org.jbpm.cmmn.flow.core.CaseParameter> inputParameters = new HashMap<String, org.jbpm.cmmn.flow.core.CaseParameter>();
+	private Map<String, org.jbpm.cmmn.flow.core.CaseParameter> outputParameters = new HashMap<String, org.jbpm.cmmn.flow.core.CaseParameter>();
 	private Map<String, PlanItemDefinition> planItemDefinitions = new HashMap<String, PlanItemDefinition>();
 	private Collection<PlanItemInfo<?>> planItemInfo = new ArrayList<PlanItemInfo<?>>();
-	private Collection<CaseRole> roles = new ArrayList<CaseRole>();
+	private Collection<CaseRoleImpl> roles = new ArrayList<CaseRoleImpl>();
 	private StartNode defaultStart;
 	private Split defaultSplit;
 	private EndNode defaultEnd;
@@ -86,19 +83,19 @@ public class CaseImpl extends RuleFlowProcess implements Case {
 		return defaultJoin;
 	}
 
-	public void addInputParameter(CaseParameter cp) {
+	public void addInputParameter(CaseParameterImpl cp) {
 		inputParameters.put(cp.getElementId(), cp);
 	}
 
-	public Collection<CaseParameter> getInputParameters() {
+	public Collection<org.jbpm.cmmn.flow.core.CaseParameter> getInputParameters() {
 		return inputParameters.values();
 	}
 
-	public void addOutputParameter(CaseParameter cp) {
+	public void addOutputParameter(CaseParameterImpl cp) {
 		outputParameters.put(cp.getElementId(), cp);
 	}
 
-	public Collection<CaseParameter> getOutputParameters() {
+	public Collection<org.jbpm.cmmn.flow.core.CaseParameter> getOutputParameters() {
 		return outputParameters.values();
 	}
 
@@ -139,11 +136,11 @@ public class CaseImpl extends RuleFlowProcess implements Case {
 		return planItemDefinitions.values();
 	}
 
-	public Collection<CaseRole> getRoles() {
+	public Collection<CaseRoleImpl> getRoles() {
 		return roles;
 	}
 
-	public void addRole(CaseRole r) {
+	public void addRole(CaseRoleImpl r) {
 		roles.add(r);
 	}
 

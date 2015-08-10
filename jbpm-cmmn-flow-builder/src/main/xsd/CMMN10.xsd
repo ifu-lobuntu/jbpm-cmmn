@@ -14,7 +14,7 @@
   </xsd:include>
 
   <!--
-    CMMN Definitions
+    CMMN DefinitionsImpl
   -->
   <xsd:element name="definitions" type="tDefinitions">
     <xsd:annotation>

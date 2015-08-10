@@ -29,13 +29,6 @@ public class StageAsContainerTest extends AbstractPlanItemInstanceContainerLifec
 		return "StagePlanItemInstanceTests";
 	}
 
-	@Override
-	public long getWorkitemId() {
-		getPersistence().start();
-		long workItemId = getStagePlanItemInstance().getWorkItemId();
-		getPersistence().commit();
-		return workItemId;
-	}
 
 	public StageInstance getStagePlanItemInstance() {
 		StageInstance spii = null;

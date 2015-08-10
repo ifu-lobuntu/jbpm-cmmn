@@ -1,24 +1,13 @@
 package org.jbpm.cmmn.instance.impl;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
 import org.drools.core.process.instance.WorkItem;
 import org.jbpm.cmmn.common.ApplicableDiscretionaryItem;
-import org.jbpm.cmmn.flow.core.CaseParameter;
+import org.jbpm.cmmn.flow.common.ItemWithDefinition;
 import org.jbpm.cmmn.flow.core.PlanItemContainer;
-import org.jbpm.cmmn.flow.core.PlanningTable;
-import org.jbpm.cmmn.flow.core.TaskItemWithDefinition;
-import org.jbpm.cmmn.flow.core.impl.Stage;
-import org.jbpm.cmmn.instance.ControllableItemInstance;
-import org.jbpm.cmmn.instance.OnPartInstance;
-import org.jbpm.cmmn.instance.PlanElementState;
-import org.jbpm.cmmn.instance.PlanItemInstance;
-import org.jbpm.cmmn.instance.PlanItemInstanceContainer;
-import org.jbpm.cmmn.instance.PlanningTableContainerInstance;
-import org.jbpm.cmmn.instance.SubscriptionContext;
+import org.jbpm.cmmn.flow.definition.Stage;
+import org.jbpm.cmmn.flow.definition.impl.StageImpl;
+import org.jbpm.cmmn.flow.planning.PlanningTable;
+import org.jbpm.cmmn.instance.*;
 import org.jbpm.cmmn.instance.impl.util.PlanItemInstanceContainerUtil;
 import org.jbpm.cmmn.instance.impl.util.PlanningTableContainerInstanceUtil;
 import org.jbpm.cmmn.instance.subscription.OnPartInstanceSubscription;
@@ -29,7 +18,12 @@ import org.jbpm.workflow.instance.node.EventBasedNodeInstanceInterface;
 import org.jbpm.workflow.instance.node.EventNodeInstanceInterface;
 import org.kie.api.runtime.process.NodeInstance;
 
-public class StageInstance extends ControllableItemInstanceImpl<Stage, TaskItemWithDefinition<Stage>> implements PlanItemInstanceContainer,
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
+public class StageInstance extends ControllableItemInstanceImpl<Stage> implements PlanItemInstanceContainer,
 		NodeInstanceContainer, EventNodeInstanceInterface, EventBasedNodeInstanceInterface, ContextInstanceContainer {
 
 	private static final long serialVersionUID = 112341234123L;
@@ -89,7 +83,7 @@ public class StageInstance extends ControllableItemInstanceImpl<Stage, TaskItemW
 	}
 
 	@Override
-	public void addApplicableItems(Map<String, ApplicableDiscretionaryItem> result, Set<String> usersRoles) {
+	public void addApplicableItems(Map result, Set usersRoles) {
 		PlanningTableContainerInstanceUtil.addApplicableItems(this, result, usersRoles);
 	}
 
@@ -99,7 +93,7 @@ public class StageInstance extends ControllableItemInstanceImpl<Stage, TaskItemW
 	}
 
 	@Override
-	public WorkItem createPlannedItem(String tableItemId) {
+	public NodeInstance createPlannedItem(String tableItemId) {
 		return PlanningTableContainerInstanceUtil.createPlannedTask(this, tableItemId);
 	}
 
@@ -125,12 +119,12 @@ public class StageInstance extends ControllableItemInstanceImpl<Stage, TaskItemW
 	}
 
 	@Override
-	public void addSubscribingCaseParameters(Set<CaseParameter> params) {
+	public void addSubscribingCaseParameters(Set<org.jbpm.cmmn.flow.core.CaseParameter> params) {
 		PlanItemInstanceContainerUtil.addSubscribingCaseParameters(params, this);
 	}
 
 	@Override
-	public void addCaseFileItemOnPartsForParameters(Collection<CaseParameter> items, Map<OnPartInstance, OnPartInstanceSubscription> onCaseFileItemParts) {
+	public void addCaseFileItemOnPartsForParameters(Collection<org.jbpm.cmmn.flow.core.CaseParameter> items, Map<OnPartInstance, OnPartInstanceSubscription> onCaseFileItemParts) {
 		PlanItemInstanceContainerUtil.addCaseFileItemOnPartsForParameters(items, this, onCaseFileItemParts);
 	}
 

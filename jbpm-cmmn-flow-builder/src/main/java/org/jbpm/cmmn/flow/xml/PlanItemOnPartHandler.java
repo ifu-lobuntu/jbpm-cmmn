@@ -5,12 +5,19 @@ import java.util.HashSet;
 import org.drools.core.xml.BaseAbstractHandler;
 import org.drools.core.xml.ExtensibleXmlParser;
 import org.drools.core.xml.Handler;
-import org.jbpm.cmmn.flow.core.PlanItemTransition;
-import org.jbpm.cmmn.flow.core.event.PlanItemStartTrigger;
-import org.jbpm.cmmn.flow.core.event.TimerEvent;
-import org.jbpm.cmmn.flow.core.planitem.CaseFileItemOnPart;
-import org.jbpm.cmmn.flow.core.planitem.PlanItemOnPart;
-import org.jbpm.cmmn.flow.core.planitem.SentryImpl;
+import org.jbpm.cmmn.flow.common.impl.PlanItemStandardEventNode;
+import org.jbpm.cmmn.flow.common.PlanItemTransition;
+import org.jbpm.cmmn.flow.definition.StartTrigger;
+import org.jbpm.cmmn.flow.definition.TimerEventListener;
+import org.jbpm.cmmn.flow.definition.impl.PlanItemStartTriggerImpl;
+import org.jbpm.cmmn.flow.definition.impl.TimerEventListenerImpl;
+import org.jbpm.cmmn.flow.planitem.CaseFileItemOnPart;
+import org.jbpm.cmmn.flow.planitem.OnPart;
+import org.jbpm.cmmn.flow.planitem.PlanItemOnPart;
+import org.jbpm.cmmn.flow.planitem.Sentry;
+import org.jbpm.cmmn.flow.planitem.impl.CaseFileItemOnPartImpl;
+import org.jbpm.cmmn.flow.planitem.impl.PlanItemOnPartImpl;
+import org.jbpm.cmmn.flow.planitem.impl.SentryImpl;
 import org.w3c.dom.NodeList;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -18,9 +25,9 @@ import org.xml.sax.SAXException;
 public class PlanItemOnPartHandler extends BaseAbstractHandler implements Handler {
 	public PlanItemOnPartHandler() {
 		super.validParents = new HashSet<Class<?>>();
-		validParents.add(SentryImpl.class);
-		validParents.add(TimerEvent.class);
-		super.validParents.add(SentryImpl.class);
+		validParents.add(Sentry.class);
+		validParents.add(TimerEventListener.class);
+		super.validParents.add(Sentry.class);
 		super.validPeers = new HashSet<Class<?>>();
 		validPeers.add(PlanItemOnPart.class);
 		validPeers.add(CaseFileItemOnPart.class);
@@ -31,23 +38,23 @@ public class PlanItemOnPartHandler extends BaseAbstractHandler implements Handle
 	@Override
 	public Object start(String uri, String localName, Attributes attrs, ExtensibleXmlParser parser) throws SAXException {
 		parser.startElementBuilder(localName, attrs);
-		PlanItemOnPart part = localName.equals("planItemOnPart") ? new PlanItemOnPart() : new PlanItemStartTrigger();
+		PlanItemStandardEventNode part = localName.equals("planItemOnPart") ? new PlanItemOnPartImpl() : new PlanItemStartTriggerImpl();
 		part.setName(attrs.getValue("id"));
 		part.setId(IdGenerator.getIdAsUniqueAsUuid(parser, part));
 		part.setSourceRef(IdGenerator.toXmlId(attrs.getValue("sourceRef")));
 
 		Object parent = parser.getParent();
-		if (parent instanceof SentryImpl) {
-			((SentryImpl) parent).addOnPart(part);
+		if (parent instanceof Sentry) {
+			((Sentry) parent).addOnPart((OnPart) part);
 		} else {
-			((TimerEvent) parent).setStartTrigger(part);
+			((TimerEventListener) parent).setStartTrigger((StartTrigger) part);
 		}
 		return part;
 	}
 
 	@Override
 	public Object end(String uri, String localName, ExtensibleXmlParser parser) throws SAXException {
-		PlanItemOnPart part = (PlanItemOnPart) parser.getCurrent();
+		PlanItemStandardEventNode part = (PlanItemStandardEventNode) parser.getCurrent();
 		NodeList elementsByTagName = parser.endElementBuilder().getElementsByTagName("standardEvent");
 		part.setStandardEvent(PlanItemTransition.resolveByName(elementsByTagName.item(0).getFirstChild().getNodeValue()));
 		return parser.getCurrent();
@@ -55,7 +62,7 @@ public class PlanItemOnPartHandler extends BaseAbstractHandler implements Handle
 
 	@Override
 	public Class<?> generateNodeFor() {
-		return PlanItemOnPart.class;
+		return PlanItemOnPartImpl.class;
 	}
 
 }

@@ -1,54 +1,22 @@
 package org.jbpm.cmmn.flow.core;
 
-import java.io.Serializable;
 
-public class CaseParameter implements Serializable, CMMNElement {
-	private static final long serialVersionUID = -2726481569205195638L;
-	private String id;
-	private String bindingRef;
-	private String name;
-	private CaseFileItem variable;
-	private BindingRefinement bindingRefinement;
+public interface CaseParameter extends CMMNElement {
+    String getName();
 
-	@Override
-	public String getElementId() {
-		return id;
-	}
+    void setElementId(String id);
 
-	public void setElementId(String id) {
-		this.id = id;
-	}
+    String getBindingRef();
 
-	public String getBindingRef() {
-		return bindingRef;
-	}
+    void setBindingRef(String bindingRef);
 
-	public void setBindingRef(String bindingRef) {
-		this.bindingRef = bindingRef;
-	}
+    void setName(String name);
 
-	public String getName() {
-		return name;
-	}
+    CaseFileItem getBoundVariable();
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    void setBoundVariable(CaseFileItem variable);
 
-	public CaseFileItem getBoundVariable() {
-		return variable;
-	}
+    BindingRefinement getBindingRefinement();
 
-	public void setBoundVariable(CaseFileItem variable) {
-		this.variable = variable;
-	}
-
-	public BindingRefinement getBindingRefinement() {
-		return bindingRefinement;
-	}
-
-	public void setBindingRefinement(BindingRefinement bindingRefinement) {
-		this.bindingRefinement = bindingRefinement;
-	}
-
+    void setBindingRefinement(BindingRefinement bindingRefinement);
 }

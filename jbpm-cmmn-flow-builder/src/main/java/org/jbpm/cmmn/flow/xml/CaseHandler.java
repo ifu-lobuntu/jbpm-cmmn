@@ -1,12 +1,5 @@
 package org.jbpm.cmmn.flow.xml;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-
 import org.drools.core.process.core.datatype.impl.type.ObjectDataType;
 import org.drools.core.process.core.datatype.impl.type.StringDataType;
 import org.drools.core.xml.ExtensibleXmlParser;
@@ -15,24 +8,25 @@ import org.jbpm.cmmn.common.WorkItemParameters;
 import org.jbpm.cmmn.datatypes.CollectionDataType;
 import org.jbpm.cmmn.flow.core.Case;
 import org.jbpm.cmmn.flow.core.CaseFileItem;
-import org.jbpm.cmmn.flow.core.CaseFileItemDefinition;
 import org.jbpm.cmmn.flow.core.CaseParameter;
-import org.jbpm.cmmn.flow.core.CaseRole;
-import org.jbpm.cmmn.flow.core.Definitions;
-import org.jbpm.cmmn.flow.core.PlanItemDefinition;
-import org.jbpm.cmmn.flow.core.PlanningTable;
-import org.jbpm.cmmn.flow.core.PlanningTableContainer;
-import org.jbpm.cmmn.flow.core.TableItem;
-import org.jbpm.cmmn.flow.core.TaskDefinition;
+import org.jbpm.cmmn.flow.core.impl.CaseFileItemDefinitionImpl;
 import org.jbpm.cmmn.flow.core.impl.CaseImpl;
-import org.jbpm.cmmn.flow.core.impl.Stage;
-import org.jbpm.cmmn.flow.core.planitem.SentryImpl;
-import org.jbpm.cmmn.flow.core.planitem.StagePlanItem;
-import org.jbpm.cmmn.flow.core.planning.DiscretionaryItemImpl;
-import org.jbpm.cmmn.flow.core.planning.PlanningTableImpl;
-import org.jbpm.cmmn.flow.core.planning.TableItemImpl;
-import org.jbpm.cmmn.flow.core.task.CaseTask;
-import org.jbpm.cmmn.flow.core.task.HumanTask;
+import org.jbpm.cmmn.flow.core.impl.CaseRoleImpl;
+import org.jbpm.cmmn.flow.core.impl.DefinitionsImpl;
+import org.jbpm.cmmn.flow.definition.PlanItemDefinition;
+import org.jbpm.cmmn.flow.definition.Stage;
+import org.jbpm.cmmn.flow.definition.TaskDefinition;
+import org.jbpm.cmmn.flow.definition.impl.HumanTaskDefinitionImpl;
+import org.jbpm.cmmn.flow.definition.impl.StageImpl;
+import org.jbpm.cmmn.flow.definition.impl.TaskDefinitionImpl;
+import org.jbpm.cmmn.flow.planitem.PlanItem;
+import org.jbpm.cmmn.flow.planitem.impl.SentryImpl;
+import org.jbpm.cmmn.flow.planning.PlanningTable;
+import org.jbpm.cmmn.flow.planning.PlanningTableContainer;
+import org.jbpm.cmmn.flow.planning.TableItem;
+import org.jbpm.cmmn.flow.planning.impl.DiscretionaryItemImpl;
+import org.jbpm.cmmn.flow.planning.impl.PlanningTableImpl;
+import org.jbpm.cmmn.flow.planning.impl.TableItemImpl;
 import org.jbpm.cmmn.instance.CaseEvent;
 import org.jbpm.compiler.xml.ProcessBuildData;
 import org.jbpm.process.core.context.variable.Variable;
@@ -44,16 +38,19 @@ import org.w3c.dom.Element;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
+import java.util.*;
+import java.util.Map.Entry;
+
 public class CaseHandler extends PlanItemContainerHandler implements Handler {
     public static final String CURRENT_EVENT = "currentEvent";
 
     public CaseHandler() {
         if ((this.validParents == null) && (this.validPeers == null)) {
             this.validParents = new HashSet<Class<?>>();
-            this.validParents.add(Definitions.class);
+            this.validParents.add(DefinitionsImpl.class);
             this.validPeers = new HashSet<Class<?>>();
             this.validPeers.add(null);
-            this.validPeers.add(CaseFileItemDefinition.class);
+            this.validPeers.add(CaseFileItemDefinitionImpl.class);
             this.validPeers.add(RuleFlowProcess.class);
         }
     }
@@ -86,8 +83,8 @@ public class CaseHandler extends PlanItemContainerHandler implements Handler {
         var.setType(new ObjectDataType(CaseEvent.class.getName()));
         variables.add(var);
         Set<String> roleNames = new HashSet<String>();
-        Collection<CaseRole> roles = process.getRoles();
-        for (CaseRole role : roles) {
+        Collection<CaseRoleImpl> roles = process.getRoles();
+        for (CaseRoleImpl role : roles) {
             roleNames.add(role.getName());
             Variable caseRole = new Variable();
             caseRole.setName(role.getName());
@@ -136,10 +133,10 @@ public class CaseHandler extends PlanItemContainerHandler implements Handler {
         Collection<PlanItemDefinition> planItemDefinitions = process.getPlanItemDefinitions();
         for (PlanItemDefinition pi : planItemDefinitions) {
             if (pi instanceof TaskDefinition) {
-                if (pi instanceof HumanTask) {
-                    HumanTask ht = (HumanTask) pi;
-                    Collection<CaseRole> roles = process.getRoles();
-                    for (CaseRole role : roles) {
+                if (pi instanceof HumanTaskDefinitionImpl) {
+                    HumanTaskDefinitionImpl ht = (HumanTaskDefinitionImpl) pi;
+                    Collection<CaseRoleImpl> roles = process.getRoles();
+                    for (CaseRoleImpl role : roles) {
                         if (role.getElementId().equals(ht.getPerformerRef())) {
                             ht.setPerformer(role);
                         }
@@ -148,14 +145,14 @@ public class CaseHandler extends PlanItemContainerHandler implements Handler {
                 }
                 linkParametersToCaseFileItems(variableScope, ((TaskDefinition) pi).getInputs());
                 linkParametersToCaseFileItems(variableScope, ((TaskDefinition) pi).getOutputs());
-            } else if (pi instanceof Stage) {
-                doRoleAndDefinitionMapping(process.getPlanItemDefinitions(), process.getRoles(), ((Stage) pi).getPlanningTable());
+            } else if (pi instanceof StageImpl) {
+                doRoleAndDefinitionMapping(process.getPlanItemDefinitions(), process.getRoles(), ((StageImpl) pi).getPlanningTable());
             }
         }
         linkPlanItems(process, parser);
         for (PlanItemDefinition planItemDefinition : planItemDefinitions) {
-            if (planItemDefinition instanceof Stage) {
-                super.linkPlanItems((Stage) planItemDefinition, parser);
+            if (planItemDefinition instanceof StageImpl) {
+                super.linkPlanItems((StageImpl) planItemDefinition, parser);
             }
         }
         linkDiscretionaryItemCriteria(process.getPlanningTable(), process);
@@ -212,7 +209,7 @@ public class CaseHandler extends PlanItemContainerHandler implements Handler {
     private void copyDiscretionaryItemsInTable(PlanningTable pt) {
         for (TableItem ti : pt.getTableItems()) {
             if (ti instanceof DiscretionaryItemImpl
-                    && (((DiscretionaryItemImpl<?>) ti).getDefinition() instanceof Stage || ((DiscretionaryItemImpl<?>) ti).getDefinition() instanceof CaseTask)) {
+                    && (((DiscretionaryItemImpl<?>) ti).getDefinition() instanceof StageImpl || ((DiscretionaryItemImpl<?>) ti).getDefinition() instanceof TaskDefinitionImpl)) {
                 ((DiscretionaryItemImpl<?>) ti).copyFromDefinition();
             } else if (ti instanceof PlanningTableImpl) {
                 copyDiscretionaryItemsInTable((PlanningTableImpl) ti);
@@ -223,20 +220,20 @@ public class CaseHandler extends PlanItemContainerHandler implements Handler {
     private void copyStagePlanItems(NodeContainer nc) {
         Node[] nodes = nc.getNodes();
         for (Node node : nodes) {
-            if (node instanceof StagePlanItem) {
-                StagePlanItem spi = (StagePlanItem) node;
-                spi.copyFromStage();
+            if (node instanceof PlanItem && ((PlanItem) node).getDefinition() instanceof Stage) {
+                PlanItem spi = (PlanItem) node;
+                spi.copyFromDefinition();
                 copyStagePlanItems(spi);
             }
         }
     }
 
     @SuppressWarnings("unchecked")
-    protected void doRoleAndDefinitionMapping(Collection<PlanItemDefinition> defs, Collection<CaseRole> roles, TableItem pt) {
+    protected void doRoleAndDefinitionMapping(Collection<PlanItemDefinition> defs, Collection<CaseRoleImpl> roles, TableItem pt) {
         if (pt != null) {
             doRoleMapping(defs, roles, pt.getAuthorizedRoles());
             if (pt instanceof PlanningTableImpl) {
-                Collection<TableItemImpl> tableItems = ((PlanningTableImpl) pt).getTableItems();
+                Collection<TableItem> tableItems = ((PlanningTableImpl) pt).getTableItems();
                 for (TableItem tableItem : tableItems) {
                     doRoleMapping(defs, roles, tableItem.getAuthorizedRoles());
                     doRoleAndDefinitionMapping(defs, roles, tableItem);
@@ -253,10 +250,10 @@ public class CaseHandler extends PlanItemContainerHandler implements Handler {
         }
     }
 
-    protected void doRoleMapping(Collection<PlanItemDefinition> defs, Collection<CaseRole> roles, Map<String, CaseRole> authorizedRoles) {
-        Set<Entry<String, CaseRole>> entrySet = authorizedRoles.entrySet();
-        for (Entry<String, CaseRole> entry : entrySet) {
-            for (CaseRole role : roles) {
+    protected void doRoleMapping(Collection<PlanItemDefinition> defs, Collection<CaseRoleImpl> roles, Map<String, CaseRoleImpl> authorizedRoles) {
+        Set<Entry<String, CaseRoleImpl>> entrySet = authorizedRoles.entrySet();
+        for (Entry<String, CaseRoleImpl> entry : entrySet) {
+            for (CaseRoleImpl role : roles) {
                 if (entry.getValue() == null && entry.getKey().equals(role.getElementId())) {
                     entry.setValue(role);
                 }
@@ -264,7 +261,7 @@ public class CaseHandler extends PlanItemContainerHandler implements Handler {
         }
     }
 
-    private void linkParametersToCaseFileItems(VariableScope variableScope, Collection<CaseParameter> inputParameters) {
+    private void linkParametersToCaseFileItems(VariableScope variableScope, Collection<org.jbpm.cmmn.flow.core.CaseParameter> inputParameters) {
         for (CaseParameter caseParameter : inputParameters) {
             caseParameter.setBoundVariable(findCaseFileItemById(variableScope, caseParameter.getBindingRef()));
         }

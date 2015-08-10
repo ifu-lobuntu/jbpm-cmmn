@@ -1,8 +1,5 @@
 package org.jbpm.cmmn.task.additional.commands;
 
-import java.util.Map;
-
-import org.jbpm.cmmn.task.api.impl.AbstractTaskCommand;
 import org.jbpm.services.task.exception.PermissionDeniedException;
 import org.kie.api.task.model.Status;
 import org.kie.api.task.model.Task;
@@ -10,6 +7,8 @@ import org.kie.api.task.model.User;
 import org.kie.internal.task.api.TaskModelProvider;
 import org.kie.internal.task.api.model.InternalOrganizationalEntity;
 import org.kie.internal.task.api.model.InternalTaskData;
+
+import java.util.Map;
 
 /**
  * This is not the same as the 'claim' transition, as it is not initiated by a

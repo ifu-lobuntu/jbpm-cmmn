@@ -4,7 +4,7 @@ import java.util.HashSet;
 
 import org.drools.core.xml.BaseAbstractHandler;
 import org.drools.core.xml.Handler;
-import org.jbpm.cmmn.flow.core.planning.TableItemImpl;
+import org.jbpm.cmmn.flow.planning.impl.TableItemImpl;
 import org.xml.sax.Attributes;
 
 public abstract class AbstractTableItemHandler extends BaseAbstractHandler implements Handler {

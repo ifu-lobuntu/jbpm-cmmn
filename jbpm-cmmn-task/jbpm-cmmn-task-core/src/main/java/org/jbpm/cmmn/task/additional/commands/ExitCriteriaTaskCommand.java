@@ -1,6 +1,5 @@
 package org.jbpm.cmmn.task.additional.commands;
 
-import org.jbpm.cmmn.task.api.impl.AbstractTaskCommand;
 import org.jbpm.services.task.exception.PermissionDeniedException;
 import org.kie.api.task.model.Status;
 import org.kie.api.task.model.Task;

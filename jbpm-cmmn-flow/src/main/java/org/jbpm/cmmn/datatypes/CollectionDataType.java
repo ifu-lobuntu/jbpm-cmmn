@@ -1,12 +1,11 @@
 package org.jbpm.cmmn.datatypes;
 
+import com.thoughtworks.xstream.XStream;
+import org.drools.core.process.core.datatype.DataType;
+
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
-
-import org.drools.core.process.core.datatype.DataType;
-
-import com.thoughtworks.xstream.XStream;
 
 public class CollectionDataType implements DataType {
 

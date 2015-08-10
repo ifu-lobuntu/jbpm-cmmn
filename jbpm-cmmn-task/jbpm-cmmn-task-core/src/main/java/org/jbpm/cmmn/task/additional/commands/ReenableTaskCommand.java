@@ -1,8 +1,5 @@
 package org.jbpm.cmmn.task.additional.commands;
 
-import java.util.List;
-
-import org.jbpm.cmmn.task.api.impl.AbstractTaskCommand;
 import org.jbpm.services.task.commands.CommandsUtil;
 import org.jbpm.services.task.exception.PermissionDeniedException;
 import org.kie.api.task.model.OrganizationalEntity;
@@ -10,6 +7,8 @@ import org.kie.api.task.model.Status;
 import org.kie.api.task.model.Task;
 import org.kie.api.task.model.User;
 import org.kie.internal.task.api.model.InternalTaskData;
+
+import java.util.List;
 
 public class ReenableTaskCommand extends AbstractTaskCommand<Void> {
 	private static final long serialVersionUID = -8257771889718694139L;

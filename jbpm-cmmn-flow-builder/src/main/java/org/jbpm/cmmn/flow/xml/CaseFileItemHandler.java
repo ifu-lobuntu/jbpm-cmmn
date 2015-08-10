@@ -7,6 +7,7 @@ import org.drools.core.xml.BaseAbstractHandler;
 import org.drools.core.xml.ExtensibleXmlParser;
 import org.drools.core.xml.Handler;
 import org.jbpm.cmmn.flow.core.CaseFileItem;
+import org.jbpm.cmmn.flow.core.impl.CaseFileItemImpl;
 import org.jbpm.cmmn.flow.core.impl.CaseImpl;
 import org.jbpm.process.core.context.variable.Variable;
 import org.jbpm.process.core.context.variable.VariableScope;
@@ -24,7 +25,7 @@ public class CaseFileItemHandler extends BaseAbstractHandler implements Handler 
 	protected void initValidParents() {
 		this.validParents = new HashSet<Class<?>>();
 		this.validParents.add(CaseImpl.class);
-		this.validParents.add(CaseFileItem.class);
+		this.validParents.add(CaseFileItemImpl.class);
 		this.validParents.add(null);
 	}
 
@@ -41,7 +42,7 @@ public class CaseFileItemHandler extends BaseAbstractHandler implements Handler 
 
 		final String name = attrs.getValue("name");
 
-		CaseFileItem variable = new CaseFileItem();
+		CaseFileItemImpl variable = new CaseFileItemImpl();
 		variable.setMetaData("DataObject", "true");
 		variable.setElementId(attrs.getValue("id"));
 		variable.setName(name);
@@ -76,6 +77,6 @@ public class CaseFileItemHandler extends BaseAbstractHandler implements Handler 
 
 	@Override
 	public Class<?> generateNodeFor() {
-		return CaseFileItem.class;
+		return CaseFileItemImpl.class;
 	}
 }

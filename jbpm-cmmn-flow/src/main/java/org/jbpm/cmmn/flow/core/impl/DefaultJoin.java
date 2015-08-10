@@ -2,6 +2,10 @@ package org.jbpm.cmmn.flow.core.impl;
 
 import org.jbpm.workflow.core.node.EventNodeInterface;
 import org.jbpm.workflow.core.node.Join;
+@Deprecated()
+/**
+ * Refactor away
+ */
 
 public class DefaultJoin extends Join implements EventNodeInterface {
 

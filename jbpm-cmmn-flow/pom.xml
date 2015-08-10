@@ -15,6 +15,10 @@
 			<artifactId>jbpm-flow</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>${project.parent.groupId}</groupId>
+			<artifactId>jbpm-case-mgmt</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.drools</groupId>
 			<artifactId>drools-core</artifactId>
 		</dependency>

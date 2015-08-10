@@ -1,28 +1,18 @@
 package org.jbpm.cmmn.instance.subscription.impl;
 
-import java.lang.reflect.Method;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-
 import org.jbpm.cmmn.flow.core.CaseFileItem;
-import org.jbpm.cmmn.flow.core.CaseFileItemTransition;
+import org.jbpm.cmmn.flow.common.CaseFileItemTransition;
+import org.jbpm.cmmn.flow.core.impl.CaseFileItemImpl;
 import org.jbpm.cmmn.flow.core.impl.CaseImpl;
 import org.jbpm.cmmn.instance.CaseFileItemEvent;
 import org.jbpm.cmmn.instance.CaseInstance;
-import org.jbpm.cmmn.instance.subscription.CaseFileItemSubscriptionInfo;
-import org.jbpm.cmmn.instance.subscription.CaseSubscriptionKey;
-import org.jbpm.cmmn.instance.subscription.DurableCaseFileItemSubscriptionInfo;
-import org.jbpm.cmmn.instance.subscription.DurableCaseSubscriptionInfo;
-import org.jbpm.cmmn.instance.subscription.OnPartInstanceSubscription;
-import org.jbpm.cmmn.instance.subscription.SubscriptionManager;
-import org.jbpm.cmmn.instance.subscription.SubscriptionPersistenceContext;
+import org.jbpm.cmmn.instance.subscription.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.lang.reflect.Method;
+import java.util.*;
+import java.util.Map.Entry;
 
 public abstract class AbstractDurableSubscriptionManager<T extends DurableCaseSubscriptionInfo<X>, X extends DurableCaseFileItemSubscriptionInfo>
 		implements SubscriptionManager<T, X> {
@@ -205,7 +195,7 @@ public abstract class AbstractDurableSubscriptionManager<T extends DurableCaseSu
 	protected abstract CaseSubscriptionKey createCaseSubscriptionKey(Object currentInstance);
 
 	@SuppressWarnings("unchecked")
-	private void storeVariable(CaseInstance process, CaseFileItem caseFileItem, Object target) {
+	private void storeVariable(CaseInstance process, CaseFileItemImpl caseFileItem, Object target) {
 		if (caseFileItem.isCollection()) {
 			Collection<Object> variable = (Collection<Object>) process.getVariable(caseFileItem.getName());
 			if (variable == null) {

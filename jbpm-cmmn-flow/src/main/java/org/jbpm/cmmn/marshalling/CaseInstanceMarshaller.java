@@ -1,36 +1,10 @@
 package org.jbpm.cmmn.marshalling;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.drools.core.marshalling.impl.MarshallerReaderContext;
 import org.drools.core.marshalling.impl.MarshallerWriteContext;
 import org.drools.core.marshalling.impl.PersisterEnums;
-import org.jbpm.cmmn.instance.CaseInstance;
-import org.jbpm.cmmn.instance.ControllableItemInstance;
-import org.jbpm.cmmn.instance.OccurrablePlanItemInstance;
-import org.jbpm.cmmn.instance.OnPartInstance;
-import org.jbpm.cmmn.instance.PlanElementState;
-import org.jbpm.cmmn.instance.PlanItemInstanceLifecycleWithHistory;
-import org.jbpm.cmmn.instance.impl.CaseInstanceImpl;
-import org.jbpm.cmmn.instance.impl.CaseTaskInstance;
-import org.jbpm.cmmn.instance.impl.DefaultJoinInstance;
-import org.jbpm.cmmn.instance.impl.DefaultSplitInstance;
-import org.jbpm.cmmn.instance.impl.HumanTaskInstance;
-import org.jbpm.cmmn.instance.impl.MilestoneInstance;
-import org.jbpm.cmmn.instance.impl.OnPartInstanceImpl;
-import org.jbpm.cmmn.instance.impl.PlanItemInstanceFactoryNodeInstance;
-import org.jbpm.cmmn.instance.impl.SentryInstance;
-import org.jbpm.cmmn.instance.impl.StageInstance;
-import org.jbpm.cmmn.instance.impl.TimerEventInstance;
-import org.jbpm.cmmn.instance.impl.UserEventInstance;
+import org.jbpm.cmmn.instance.*;
+import org.jbpm.cmmn.instance.impl.*;
 import org.jbpm.marshalling.impl.AbstractProcessInstanceMarshaller;
 import org.jbpm.process.core.Context;
 import org.jbpm.process.core.context.variable.VariableScope;
@@ -43,6 +17,11 @@ import org.kie.api.runtime.process.NodeInstance;
 import org.kie.api.runtime.process.NodeInstanceContainer;
 import org.kie.api.runtime.process.ProcessInstance;
 import org.kie.api.runtime.process.WorkflowProcessInstance;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.*;
 
 public class CaseInstanceMarshaller extends AbstractProcessInstanceMarshaller {
 	private static final int SENTRY_INSTANCE = 176;
@@ -67,7 +46,6 @@ public class CaseInstanceMarshaller extends AbstractProcessInstanceMarshaller {
 		Object result = super.writeProcessInstance(context, processInstance);
 		if (processInstance instanceof CaseInstanceImpl) {
 			context.stream.writeInt(((CaseInstance) processInstance).getPlanElementState().ordinal());
-			context.stream.writeLong(((CaseInstance) processInstance).getWorkItemId());
 		}
 		return result;
 	}
@@ -78,7 +56,6 @@ public class CaseInstanceMarshaller extends AbstractProcessInstanceMarshaller {
 		ProcessInstance read = super.readProcessInstance(context);
 		if (read instanceof CaseInstanceImpl) {
 			((CaseInstance) read).setPlanElementState(PlanElementState.values()[stream.readInt()]);
-			((CaseInstanceImpl) read).inernalSetWorkItemId(stream.readLong());
 		}
 		return read;
 	}
@@ -158,7 +135,7 @@ public class CaseInstanceMarshaller extends AbstractProcessInstanceMarshaller {
 			nodeInstance = sentryInstance;
 			break;
 		case ON_PART_INSTANCE:
-			OnPartInstanceImpl onPartInstance = new OnPartInstanceImpl();
+			StandardEventNodeInstance onPartInstance = new StandardEventNodeInstance();
 			nodeInstance = onPartInstance;
 			break;
 		case MILESTONE_PLAN_ITEM_INSTANCE:
@@ -168,7 +145,6 @@ public class CaseInstanceMarshaller extends AbstractProcessInstanceMarshaller {
 		case CASE_TASK_PLAN_ITEM_INSTANCE:
 			nodeInstance = new CaseTaskInstance();
 			((CaseTaskInstance) nodeInstance).internalSetProcessInstanceId(stream.readLong());
-			((CaseTaskInstance) nodeInstance).internalSetWorkItemId(stream.readLong());
 			readPlanItemStates(((CaseTaskInstance) nodeInstance), stream);
 			int nbTimerInstances = stream.readInt();
 			if (nbTimerInstances > 0) {
@@ -222,7 +198,6 @@ public class CaseInstanceMarshaller extends AbstractProcessInstanceMarshaller {
 			StageInstance spii = new StageInstance();
 			nodeInstance = spii;
 			readPlanItemStates(spii, stream);
-			spii.internalSetWorkItemId(stream.readLong());
 			nbTimerInstances = stream.readInt();
 			if (nbTimerInstances > 0) {
 				List<Long> timerInstances = new ArrayList<Long>();
@@ -276,7 +251,6 @@ public class CaseInstanceMarshaller extends AbstractProcessInstanceMarshaller {
 		} else if (nodeInstance instanceof CaseTaskInstance) {
 			stream.writeShort(CASE_TASK_PLAN_ITEM_INSTANCE);
 			stream.writeLong(((CaseTaskInstance) nodeInstance).getProcessInstanceId());
-			stream.writeLong(((CaseTaskInstance) nodeInstance).getWorkItemId());
 			writePlanItemStates((CaseTaskInstance) nodeInstance, stream);
 			List<Long> timerInstances = ((CaseTaskInstance) nodeInstance).getTimerInstances();
 			if (timerInstances != null) {
@@ -312,7 +286,6 @@ public class CaseInstanceMarshaller extends AbstractProcessInstanceMarshaller {
 			stream.writeShort(STAGE_PLAN_ITEM_INSTANCE);
 			StageInstance compositeNodeInstance = (StageInstance) nodeInstance;
 			writePlanItemStates(compositeNodeInstance, stream);
-			stream.writeLong(compositeNodeInstance.getWorkItemId());
 			List<Long> timerInstances = compositeNodeInstance.getTimerInstances();
 			if (timerInstances != null) {
 				stream.writeInt(timerInstances.size());

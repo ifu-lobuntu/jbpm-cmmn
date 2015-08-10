@@ -3,16 +3,15 @@ package org.jbpm.cmmn.flow.xml;
 import org.drools.core.xml.ExtensibleXmlParser;
 import org.drools.core.xml.Handler;
 import org.jbpm.cmmn.flow.core.CaseParameter;
-import org.jbpm.cmmn.flow.core.PlanItemDefinition;
-import org.jbpm.cmmn.flow.core.event.TimerEvent;
-import org.jbpm.cmmn.flow.core.event.UserEvent;
-import org.jbpm.cmmn.flow.core.impl.Milestone;
+import org.jbpm.cmmn.flow.core.impl.CaseParameterImpl;
+import org.jbpm.cmmn.flow.definition.*;
+import org.jbpm.cmmn.flow.definition.impl.*;
 import org.jbpm.cmmn.flow.core.impl.PlanItemControlImpl;
-import org.jbpm.cmmn.flow.core.planitem.PlanItemInfoImpl;
-import org.jbpm.cmmn.flow.core.planning.DiscretionaryItemImpl;
-import org.jbpm.cmmn.flow.core.task.CaseTask;
-import org.jbpm.cmmn.flow.core.task.HumanTask;
-import org.jbpm.cmmn.flow.core.task.ParameterMapping;
+import org.jbpm.cmmn.flow.planitem.PlanItemInfo;
+import org.jbpm.cmmn.flow.planitem.impl.PlanItemInfoImpl;
+import org.jbpm.cmmn.flow.planning.DiscretionaryItem;
+import org.jbpm.cmmn.flow.planning.impl.DiscretionaryItemImpl;
+import org.jbpm.cmmn.flow.definition.impl.HumanTaskDefinitionImpl;
 import org.jbpm.workflow.core.impl.ConstraintImpl;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -22,17 +21,18 @@ import org.xml.sax.SAXException;
 public class PlanItemControlHandler extends AbstractCaseElementHandler implements Handler {
 	public PlanItemControlHandler() {
 		super();
-		super.validParents.add(PlanItemInfoImpl.class);
-		super.validParents.add(HumanTask.class);
-		super.validParents.add(CaseTask.class);
-		super.validParents.add(UserEvent.class);
-		super.validParents.add(TimerEvent.class);
-		super.validParents.add(Milestone.class);
-		super.validParents.add(DiscretionaryItemImpl.class);
+		super.validParents.add(PlanItemInfo.class);
+		super.validParents.add(HumanTaskDefinition.class);
+		super.validParents.add(CaseTaskDefinition.class);
+		super.validParents.add(ProcessTaskDefinition.class);
+		super.validParents.add(UserEventListener.class);
+		super.validParents.add(TimerEventListener.class);
+		super.validParents.add(MilestoneImpl.class);
+		super.validParents.add(DiscretionaryItem.class);
 		super.validPeers.add(null);
 		this.validPeers.add(CaseParameter.class);
 		this.validPeers.add(ParameterMapping.class);
-		this.validPeers.add(PlanItemControlImpl.class);
+		this.validPeers.add(PlanItemControl.class);
 
 	}
 

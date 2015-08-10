@@ -2,15 +2,14 @@ package org.jbpm.cmmn.flow.xml;
 
 import java.util.Deque;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Map;
 
 import org.drools.core.xml.ExtensibleXmlParser;
 import org.drools.core.xml.Handler;
-import org.jbpm.cmmn.flow.core.ApplicabilityRule;
-import org.jbpm.cmmn.flow.core.PlanningTable;
-import org.jbpm.cmmn.flow.core.TableItem;
+import org.jbpm.cmmn.flow.planning.ApplicabilityRuleImpl;
+import org.jbpm.cmmn.flow.planning.PlanningTable;
+import org.jbpm.cmmn.flow.planning.TableItem;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
@@ -26,7 +25,7 @@ public class TableItemHandler extends AbstractTableItemHandler implements Handle
         super();
         validParents.add(PlanningTable.class);
         validPeers.add(TableItem.class);
-        validPeers.add(ApplicabilityRule.class);
+        validPeers.add(ApplicabilityRuleImpl.class);
         validPeers.add(null);
     }
     @Override

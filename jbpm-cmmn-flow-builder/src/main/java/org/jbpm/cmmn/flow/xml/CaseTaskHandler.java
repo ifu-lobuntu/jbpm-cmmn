@@ -1,9 +1,10 @@
 package org.jbpm.cmmn.flow.xml;
 
 import org.drools.core.xml.ExtensibleXmlParser;
-import org.drools.core.xml.Handler;
 import org.jbpm.cmmn.flow.core.impl.CaseImpl;
-import org.jbpm.cmmn.flow.core.task.CaseTask;
+import org.jbpm.cmmn.flow.definition.CaseTaskDefinition;
+import org.jbpm.cmmn.flow.definition.impl.CaseTaskDefinitionImpl;
+import org.jbpm.cmmn.flow.definition.impl.TaskDefinitionImpl;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
@@ -14,13 +15,13 @@ public class CaseTaskHandler extends AbstractCaseElementHandler implements PlanI
 
 	@Override
 	public Class<?> generateNodeFor() {
-		return CaseTask.class;
+		return CaseTaskDefinitionImpl.class;
 	}
 
 	@Override
 	public Object start(String uri, String localName, Attributes attrs, ExtensibleXmlParser parser) throws SAXException {
 		parser.startElementBuilder(localName, attrs);
-		CaseTask node = new CaseTask();
+		CaseTaskDefinitionImpl node = new CaseTaskDefinitionImpl();
 		node.setElementId(attrs.getValue("id"));
 		node.setBlocking(!"false".equals(attrs.getValue("isBlocking")));
 		node.setName(attrs.getValue("name"));
@@ -28,9 +29,9 @@ public class CaseTaskHandler extends AbstractCaseElementHandler implements PlanI
 		if (caseRef != null) {
 			String[] split = caseRef.split("[\\#\\:]");
 			if (split.length == 1) {
-				node.setProcessId(split[0]);
+				node.setCaseId(split[0]);
 			} else {
-				node.setProcessId(split[1]);
+				node.setCaseId(split[1]);
 			}
 		}
 		((CaseImpl) parser.getParent(CaseImpl.class)).addPlanItemDefinition(node);
@@ -40,7 +41,7 @@ public class CaseTaskHandler extends AbstractCaseElementHandler implements PlanI
 	@Override
 	public Object end(String uri, String localName, ExtensibleXmlParser parser) throws SAXException {
 		parser.endElementBuilder();
-		CaseTask node = (CaseTask) parser.getCurrent();
+		TaskDefinitionImpl node = (TaskDefinitionImpl) parser.getCurrent();
 		node.mapParameters();
 		return parser.getCurrent();
 	}

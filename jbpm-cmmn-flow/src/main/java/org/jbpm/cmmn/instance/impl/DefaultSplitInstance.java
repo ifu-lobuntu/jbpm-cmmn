@@ -1,14 +1,14 @@
 package org.jbpm.cmmn.instance.impl;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.jbpm.cmmn.instance.Creatable;
 import org.jbpm.workflow.core.impl.NodeImpl;
 import org.jbpm.workflow.instance.NodeInstanceContainer;
 import org.jbpm.workflow.instance.node.SplitInstance;
 import org.kie.api.definition.process.Connection;
 import org.kie.api.runtime.process.NodeInstance;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class DefaultSplitInstance extends SplitInstance {
 

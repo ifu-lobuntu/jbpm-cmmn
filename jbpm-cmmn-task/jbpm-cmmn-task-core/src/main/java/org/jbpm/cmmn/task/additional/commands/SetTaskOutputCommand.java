@@ -1,10 +1,9 @@
 package org.jbpm.cmmn.task.additional.commands;
 
-import java.util.Map;
-
-import org.jbpm.cmmn.task.api.impl.AbstractTaskCommand;
 import org.kie.api.task.model.Task;
 import org.kie.internal.task.api.model.InternalTaskData;
+
+import java.util.Map;
 
 public class SetTaskOutputCommand extends AbstractTaskCommand<Long> {
 

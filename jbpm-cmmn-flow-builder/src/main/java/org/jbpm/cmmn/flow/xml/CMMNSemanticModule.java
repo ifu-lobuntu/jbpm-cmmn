@@ -1,7 +1,7 @@
 package org.jbpm.cmmn.flow.xml;
 
 import org.drools.core.xml.DefaultSemanticModule;
-import org.jbpm.cmmn.flow.core.planitem.SentryImpl;
+import org.jbpm.cmmn.flow.planitem.impl.SentryImpl;
 
 public class CMMNSemanticModule extends DefaultSemanticModule {
 	public static final String CMMN_URI = "http://www.omg.org/spec/CMMN/20131201/MODEL";

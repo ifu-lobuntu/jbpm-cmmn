@@ -1,6 +1,6 @@
 package org.jbpm.cmmn.instance;
 
-import org.jbpm.cmmn.flow.core.PlanItemTransition;
+import org.jbpm.cmmn.flow.common.PlanItemTransition;
 
 public class PlanItemEvent extends CaseEvent {
 	private String planItemName;

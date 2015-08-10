@@ -85,15 +85,6 @@ public class CaseTaskTest extends AbstractControllableLifecycleTest {
 		return "CaseTaskTests";
 	}
 
-	@Override
-	public void failTask(long taskId) {
-		getPersistence().start();
-		long subProccessInstanceId = getSubProcessInstanceId(taskId);
-		if (subProccessInstanceId >= 0) {
-			getRuntimeEngine().getKieSession().abortProcessInstance(subProccessInstanceId);
-		}
-		getPersistence().commit();
-	}
 
 	private long getSubProcessInstanceId(long taskId) {
 		long workItemId = getRuntimeEngine().getTaskService().getTaskById(taskId).getTaskData().getWorkItemId();
@@ -101,62 +92,12 @@ public class CaseTaskTest extends AbstractControllableLifecycleTest {
 		caseInstance = (CaseInstance) getRuntimeEngine().getKieSession().getProcessInstance(caseInstance.getId());
 		long subProccessInstanceId = -1;
 		for (NodeInstance nodeInstance : caseInstance.getNodeInstances()) {
-			if (nodeInstance instanceof CaseTaskInstance && ((CaseTaskInstance) nodeInstance).getWorkItemId() == workItemId) {
+			if (nodeInstance instanceof CaseTaskInstance) {
 				subProccessInstanceId = ((CaseTaskInstance) nodeInstance).getProcessInstanceId();
 			}
 		}
 		getPersistence().commit();
 		return subProccessInstanceId;
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public void completeTask(long taskId) {
-		getPersistence().start();
-		long subProcessInstanceId = getSubProcessInstanceId(taskId);
-		// Lets mess around with the caseFile
-		ConstructionCase otherCase = new ConstructionCase();
-		HousePlan otherHousePlan = new HousePlan(otherCase);
-		Set<WallPlan> newWallPlans = new HashSet<WallPlan>();
-		newWallPlans.add(new WallPlan(otherHousePlan));
-		newWallPlans.add(new WallPlan(otherHousePlan));
-		newWallPlans.add(new WallPlan(otherHousePlan));
-		RoofPlan newRoofPlan = new RoofPlan(otherHousePlan);
-		getPersistence().persist(otherCase);
-		CaseInstance sp = (CaseInstance) getRuntimeEngine().getKieSession().getProcessInstance(subProcessInstanceId);
-		sp.setVariable("wallPlans", newWallPlans);
-		sp.setVariable("roofPlan", newRoofPlan);
-		getPersistence().commit();
-		// Now complete the Case
-		getPersistence().start();
-		getRuntimeEngine().getKieSession().signalEvent("TheUserEvent", new Object(), subProcessInstanceId);
-		getPersistence().commit();
-		getPersistence().start();
-		sp = (CaseInstance) getRuntimeEngine().getKieSession().getProcessInstance(subProcessInstanceId);
-		assertEquals(PlanElementState.COMPLETED, sp.getPlanElementState());
-		assertEquals(Status.Completed, getTaskService().getTaskByWorkItemId(sp.getWorkItemId()).getTaskData().getStatus());
-		getPersistence().commit();
-		// now look at the result - those new WallPlans must be added to the original housePlan due to the refinement
-		getPersistence().start();
-		this.housePlan = getPersistence().find(HousePlan.class, housePlan.getId());
-		assertTrue(this.housePlan.getWallPlans().containsAll(newWallPlans));
-		assertEquals(5, this.housePlan.getWallPlans().size());
-		assertEquals(newRoofPlan, this.housePlan.getRoofPlan());
-		getPersistence().commit();
-		// Check the task's result
-		Task task = getTaskService().getTaskById(taskId);
-		Content outputContent = getTaskService().getContentById(task.getTaskData().getOutputContentId());
-		getPersistence().start();
-		Map<String, Object> outputAsMap = (Map<String, Object>) ContentMarshallerHelper.unmarshall(outputContent.getContent(), getTaskService()
-				.getMarshallerContext(task).getEnvironment());
-		Collection<WallPlan> wallPlanTaskOutput = (Collection<WallPlan>) outputAsMap.get("wallPlanTaskOutput");
-		assertEquals(3, wallPlanTaskOutput.size());
-		for (WallPlan wallPlan : wallPlanTaskOutput) {
-			assertEquals("I Am Transformed Twice", wallPlan.getShortDescription());
-		}
-		assertEquals(newRoofPlan, outputAsMap.get("roofPlanTaskOutput"));
-		getPersistence().commit();
-
 	}
 
 }

@@ -1,12 +1,8 @@
 package org.jbpm.cmmn.instance.impl;
 
-import java.util.Calendar;
-import java.util.Date;
-
 import org.drools.core.common.InternalKnowledgeRuntime;
 import org.drools.core.spi.ProcessContext;
-import org.jbpm.cmmn.flow.core.event.TimerEvent;
-import org.jbpm.cmmn.flow.core.planitem.TimerEventPlanItem;
+import org.jbpm.cmmn.flow.definition.TimerEventListener;
 import org.jbpm.cmmn.instance.Creatable;
 import org.jbpm.cmmn.instance.PlanElementState;
 import org.jbpm.process.core.timer.BusinessCalendar;
@@ -23,7 +19,10 @@ import org.kie.api.runtime.process.NodeInstance;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TimerEventInstance extends OccurrablePlanItemInstanceImpl<TimerEvent, TimerEventPlanItem> implements Creatable {
+import java.util.Calendar;
+import java.util.Date;
+
+public class TimerEventInstance extends OccurrablePlanItemInstanceImpl<TimerEventListener> implements Creatable {
 
 	private static final long serialVersionUID = 3034509023L;
 

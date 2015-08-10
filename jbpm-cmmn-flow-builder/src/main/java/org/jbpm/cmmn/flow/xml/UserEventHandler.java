@@ -1,7 +1,7 @@
 package org.jbpm.cmmn.flow.xml;
 
 import org.drools.core.xml.ExtensibleXmlParser;
-import org.jbpm.cmmn.flow.core.event.UserEvent;
+import org.jbpm.cmmn.flow.definition.impl.UserEventListenerImpl;
 import org.jbpm.cmmn.flow.core.impl.CaseImpl;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -10,7 +10,7 @@ public class UserEventHandler extends AbstractCaseElementHandler implements Plan
 
 	@Override
 	public Object start(String uri, String localName, Attributes attrs, ExtensibleXmlParser parser) throws SAXException {
-		UserEvent node = new UserEvent();
+		UserEventListenerImpl node = new UserEventListenerImpl();
 		parser.startElementBuilder(localName, attrs);
 
 		node.setElementId(attrs.getValue("id"));
@@ -29,7 +29,7 @@ public class UserEventHandler extends AbstractCaseElementHandler implements Plan
 
 	@Override
 	public Class<?> generateNodeFor() {
-		return UserEvent.class;
+		return UserEventListenerImpl.class;
 	}
 
 }

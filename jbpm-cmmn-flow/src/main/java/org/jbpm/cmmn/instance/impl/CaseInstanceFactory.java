@@ -16,15 +16,6 @@
 
 package org.jbpm.cmmn.instance.impl;
 
-import java.io.Externalizable;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectOutput;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
 import org.drools.core.common.InternalKnowledgeRuntime;
 import org.drools.core.process.instance.WorkItem;
 import org.jbpm.cmmn.common.WorkItemParameters;
@@ -38,6 +29,15 @@ import org.jbpm.process.instance.ProcessInstance;
 import org.jbpm.process.instance.context.variable.VariableScopeInstance;
 import org.kie.api.definition.process.Process;
 import org.kie.internal.process.CorrelationKey;
+
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 public class CaseInstanceFactory extends AbstractProcessInstanceFactory implements Externalizable {
 	private static final long serialVersionUID = 510L;
@@ -89,7 +89,7 @@ public class CaseInstanceFactory extends AbstractProcessInstanceFactory implemen
 		}
 		WorkItem workItem = (WorkItem) parameters.get(CaseImpl.WORK_ITEM);
 		if (workItem != null) {
-			processInstance.setWorkItem(workItem);
+			processInstance.setVariable("workItemId",workItem.getId());
 		}
 		String initiator = (String) parameters.get(WorkItemParameters.INITIATOR);
 		if (initiator != null) {

@@ -1,55 +1,54 @@
 package org.jbpm.cmmn.flow.xml;
 
-import java.util.Collection;
-import java.util.Map.Entry;
-
 import org.drools.core.xml.ExtensibleXmlParser;
 import org.drools.core.xml.Handler;
-import org.jbpm.cmmn.flow.core.ApplicabilityRule;
+import org.jbpm.cmmn.flow.core.Case;
 import org.jbpm.cmmn.flow.core.CaseParameter;
 import org.jbpm.cmmn.flow.core.CaseRole;
-import org.jbpm.cmmn.flow.core.PlanItem;
-import org.jbpm.cmmn.flow.core.PlanItemContainer;
-import org.jbpm.cmmn.flow.core.event.TimerEvent;
-import org.jbpm.cmmn.flow.core.event.UserEvent;
 import org.jbpm.cmmn.flow.core.impl.CaseImpl;
-import org.jbpm.cmmn.flow.core.impl.Milestone;
-import org.jbpm.cmmn.flow.core.impl.Stage;
-import org.jbpm.cmmn.flow.core.planitem.PlanItemInfoImpl;
-import org.jbpm.cmmn.flow.core.planitem.SentryImpl;
-import org.jbpm.cmmn.flow.core.planning.DiscretionaryItemImpl;
-import org.jbpm.cmmn.flow.core.planning.PlanningTableImpl;
-import org.jbpm.cmmn.flow.core.planning.TableItemImpl;
-import org.jbpm.cmmn.flow.core.task.CaseTask;
-import org.jbpm.cmmn.flow.core.task.HumanTask;
+import org.jbpm.cmmn.flow.definition.*;
+import org.jbpm.cmmn.flow.definition.impl.HumanTaskDefinitionImpl;
+import org.jbpm.cmmn.flow.definition.impl.StageImpl;
+import org.jbpm.cmmn.flow.planitem.PlanItem;
+import org.jbpm.cmmn.flow.planitem.PlanItemInfo;
+import org.jbpm.cmmn.flow.planitem.Sentry;
+import org.jbpm.cmmn.flow.planning.ApplicabilityRule;
+import org.jbpm.cmmn.flow.planning.DiscretionaryItem;
+import org.jbpm.cmmn.flow.planning.PlanningTable;
+import org.jbpm.cmmn.flow.planning.TableItem;
+import org.jbpm.cmmn.flow.planning.impl.PlanningTableImpl;
+import org.jbpm.cmmn.flow.planning.impl.TableItemImpl;
 import org.jbpm.process.core.context.variable.Variable;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
+
+import java.util.Collection;
+import java.util.Map.Entry;
 
 public class PlanningTableHandler extends AbstractTableItemHandler implements Handler {
 	public PlanningTableHandler() {
 		super();
 		this.validParents.add(null);
-		this.validParents.add(CaseImpl.class);
-		this.validParents.add(HumanTask.class);
-		this.validParents.add(PlanningTableImpl.class);
+		this.validParents.add(Case.class);
+		this.validParents.add(HumanTaskDefinition.class);
+		this.validParents.add(PlanningTable.class);
 		this.validParents.add(Stage.class);
 		this.validPeers.add(null);
-		this.validPeers.add(PlanningTableImpl.class);
-		this.validPeers.add(DiscretionaryItemImpl.class);
+		this.validPeers.add(PlanningTable.class);
+		this.validPeers.add(DiscretionaryItem.class);
 		this.validPeers.add(ApplicabilityRule.class);
-		this.validPeers.add(SentryImpl.class);
+		this.validPeers.add(Sentry.class);
 		this.validPeers.add(PlanItem.class);
-		this.validPeers.add(HumanTask.class);
-		this.validPeers.add(CaseTask.class);
+		this.validPeers.add(HumanTaskDefinition.class);
+		this.validPeers.add(CaseTaskDefinition.class);
 		this.validPeers.add(Variable.class);
 		this.validPeers.add(CaseRole.class);
 		this.validPeers.add(Stage.class);
 		this.validPeers.add(Milestone.class);
 		this.validPeers.add(CaseParameter.class);
-		this.validPeers.add(UserEvent.class);
-		this.validPeers.add(TimerEvent.class);
-		this.validPeers.add(PlanItemInfoImpl.class);
+		this.validPeers.add(UserEventListener.class);
+		this.validPeers.add(TimerEventListener.class);
+		this.validPeers.add(PlanItemInfo.class);
 		this.validPeers.add(PlanItem.class);
 	}
 
@@ -63,15 +62,15 @@ public class PlanningTableHandler extends AbstractTableItemHandler implements Ha
 		if (parent instanceof PlanningTableImpl) {
 			((PlanningTableImpl) parent).addTableItem(table);
 		} else {
-			if (parent instanceof Stage) {
-				((Stage) parent).setPlanningTable(table);
-	            table.setPlanningTableContainer((Stage) parent);
+			if (parent instanceof StageImpl) {
+				((StageImpl) parent).setPlanningTable(table);
+	            table.setPlanningTableContainer((StageImpl) parent);
 			} else if (parent instanceof CaseImpl) {
 				((CaseImpl) parent).setPlanningTable(table);
 	            table.setPlanningTableContainer((CaseImpl) parent);
-			} else if (parent instanceof HumanTask) {
-				((HumanTask) parent).setPlanningTable(table);
-				table.setPlanningTableContainer(((HumanTask) parent));
+			} else if (parent instanceof HumanTaskDefinitionImpl) {
+				((HumanTaskDefinitionImpl) parent).setPlanningTable(table);
+				table.setPlanningTableContainer(((HumanTaskDefinitionImpl) parent));
 			}
 		}
 		return table;
@@ -82,7 +81,7 @@ public class PlanningTableHandler extends AbstractTableItemHandler implements Ha
 		parser.endElementBuilder();
 		PlanningTableImpl table = (PlanningTableImpl) parser.getCurrent();
 		Collection<ApplicabilityRule> applicabilityRules = table.getOwnedApplicabilityRules();
-		for (TableItemImpl ti : table.getTableItems()) {
+		for (TableItem ti : table.getTableItems()) {
 			// TODO recursively? Check with OMG
 			for (Entry<String, ApplicabilityRule> entry : ti.getApplicabilityRules().entrySet()) {
 				for (ApplicabilityRule rule : applicabilityRules) {
@@ -98,7 +97,7 @@ public class PlanningTableHandler extends AbstractTableItemHandler implements Ha
 
 	@Override
 	public Class<?> generateNodeFor() {
-		return PlanningTableImpl.class;
+		return PlanningTable.class;
 	}
 
 }

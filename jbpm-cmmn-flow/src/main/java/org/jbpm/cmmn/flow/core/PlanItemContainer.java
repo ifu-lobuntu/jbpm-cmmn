@@ -1,7 +1,8 @@
 package org.jbpm.cmmn.flow.core;
 
-import java.util.Collection;
-
+import org.jbpm.cmmn.flow.planitem.PlanItemInfo;
+import org.jbpm.cmmn.flow.planning.PlanningTable;
+import org.jbpm.cmmn.flow.planning.PlanningTableContainer;
 import org.jbpm.workflow.core.NodeContainer;
 import org.jbpm.workflow.core.node.EndNode;
 import org.jbpm.workflow.core.node.Join;
@@ -9,35 +10,35 @@ import org.jbpm.workflow.core.node.Split;
 import org.jbpm.workflow.core.node.StartNode;
 import org.kie.api.definition.process.Node;
 
+import java.util.Collection;
+
 public interface PlanItemContainer extends NodeContainer, PlanningTableContainer {
 
-	public void addPlanItemInfo(PlanItemInfo<?> d);
+    void addPlanItemInfo(PlanItemInfo<?> d);
 
-	public Collection<PlanItemInfo<?>> getPlanItemInfo();
+    Collection<PlanItemInfo<?>> getPlanItemInfo();
 
-	void setDefaultStart(StartNode n);
+    void setDefaultStart(StartNode n);
 
-	StartNode getDefaultStart();
+    StartNode getDefaultStart();
 
-	void setDefaultSplit(Split n);
+    void setDefaultSplit(Split n);
 
-	Split getDefaultSplit();
+    Split getDefaultSplit();
 
-	void setDefaultEnd(EndNode n);
+    void setDefaultEnd(EndNode n);
 
-	EndNode getDefaultEnd();
+    EndNode getDefaultEnd();
 
-	void setDefaultJoin(Join n);
+    void setDefaultJoin(Join n);
 
-	Join getDefaultJoin();
+    Join getDefaultJoin();
 
-	Case getCase();
+    Case getCase();
 
-	boolean isAutoComplete();
+    boolean isAutoComplete();
 
-	void setPlanningTable(PlanningTable planningTable);
+    void setPlanningTable(PlanningTable planningTable);
 
-	PlanningTable getPlanningTable();
-
-	Node superGetNode(long id);
+    Node superGetNode(long id);
 }

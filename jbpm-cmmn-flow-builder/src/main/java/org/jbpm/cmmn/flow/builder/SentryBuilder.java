@@ -1,7 +1,7 @@
 package org.jbpm.cmmn.flow.builder;
 
 import org.drools.compiler.lang.descr.ProcessDescr;
-import org.jbpm.cmmn.flow.core.planitem.SentryImpl;
+import org.jbpm.cmmn.flow.planitem.impl.SentryImpl;
 import org.jbpm.process.builder.ProcessBuildContext;
 import org.jbpm.process.builder.ProcessNodeBuilder;
 import org.kie.api.definition.process.Node;

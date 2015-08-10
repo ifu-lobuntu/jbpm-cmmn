@@ -4,9 +4,10 @@ import java.util.Collection;
 
 import org.drools.core.xml.ExtensibleXmlParser;
 import org.drools.core.xml.Handler;
-import org.jbpm.cmmn.flow.core.impl.Stage;
-import org.jbpm.cmmn.flow.core.planitem.AbstractOnPart;
-import org.jbpm.cmmn.flow.core.planitem.SentryImpl;
+import org.jbpm.cmmn.flow.definition.impl.StageImpl;
+import org.jbpm.cmmn.flow.common.impl.AbstractStandardEventNode;
+import org.jbpm.cmmn.flow.planitem.OnPart;
+import org.jbpm.cmmn.flow.planitem.impl.SentryImpl;
 import org.jbpm.workflow.core.Node;
 import org.jbpm.workflow.core.NodeContainer;
 import org.jbpm.workflow.core.impl.ConnectionImpl;
@@ -21,7 +22,7 @@ public class SentryHandler extends AbstractCaseElementHandler implements Handler
 
 	public SentryHandler() {
 		super.validPeers.add(SentryImpl.class);
-		super.validParents.add(Stage.class);
+		super.validParents.add(StageImpl.class);
 	}
 
 	@Override
@@ -43,13 +44,13 @@ public class SentryHandler extends AbstractCaseElementHandler implements Handler
 	@Override
 	public Object end(String uri, String localName, ExtensibleXmlParser parser) throws SAXException {
 		SentryImpl node = (SentryImpl) parser.getCurrent();
-		Collection<? extends AbstractOnPart> onParts = node.getOnParts();
+		Collection<OnPart> onParts = node.getOnParts();
 		Element el = parser.endElementBuilder();
 		ConstraintImpl constraint = maybeCreateConstraint(node, el);
 		node.setCondition(constraint);
 		NodeContainer parent = (NodeContainer) parser.getParent();
 		parent.addNode(node);
-		for (AbstractOnPart onPart : onParts) {
+		for (OnPart onPart : onParts) {
 			new ConnectionImpl(onPart, DEFAULT, node, DEFAULT);
 			parent.addNode(onPart);
 		}

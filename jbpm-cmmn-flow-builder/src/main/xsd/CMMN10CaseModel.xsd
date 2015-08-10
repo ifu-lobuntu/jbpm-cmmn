@@ -878,7 +878,7 @@
   </xsd:simpleType>
   
   <!--
-    Stage and Plan Fragment
+    StageImpl and Plan Fragment
   -->
   <xsd:element name="planFragment" type="tPlanFragment" substitutionGroup="planItemDefinition">
     <xsd:annotation>

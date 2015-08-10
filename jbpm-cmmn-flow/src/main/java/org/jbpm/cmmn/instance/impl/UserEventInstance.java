@@ -1,13 +1,12 @@
 package org.jbpm.cmmn.instance.impl;
 
-import org.jbpm.cmmn.flow.core.event.UserEvent;
-import org.jbpm.cmmn.flow.core.planitem.UserEventPlanItem;
+import org.jbpm.cmmn.flow.definition.UserEventListener;
 import org.jbpm.cmmn.instance.Creatable;
 import org.jbpm.cmmn.instance.PlanElementState;
 import org.jbpm.cmmn.instance.PlanItemEvent;
 import org.jbpm.workflow.instance.node.EventNodeInstanceInterface;
 
-public class UserEventInstance extends OccurrablePlanItemInstanceImpl<UserEvent, UserEventPlanItem> implements EventNodeInstanceInterface, Creatable {
+public class UserEventInstance extends OccurrablePlanItemInstanceImpl<UserEventListener> implements EventNodeInstanceInterface, Creatable {
 
 	private static final long serialVersionUID = 3069593690659509023L;
 

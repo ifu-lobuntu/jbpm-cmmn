@@ -1,32 +1,23 @@
 package org.jbpm.cmmn.instance.impl.util;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Deque;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.Stack;
-
 import org.drools.core.process.core.Work;
 import org.drools.core.spi.ProcessContext;
-import org.jbpm.cmmn.flow.core.ApplicabilityRule;
+import org.jbpm.cmmn.flow.common.ItemWithDefinition;
 import org.jbpm.cmmn.flow.core.BindingRefinement;
 import org.jbpm.cmmn.flow.core.CaseFileItem;
 import org.jbpm.cmmn.flow.core.CaseParameter;
-import org.jbpm.cmmn.flow.core.ItemWithDefinition;
-import org.jbpm.cmmn.flow.core.PlanItemControl;
-import org.jbpm.cmmn.flow.core.TableItem;
-import org.jbpm.cmmn.flow.core.TaskDefinition;
-import org.jbpm.cmmn.flow.core.task.ParameterMapping;
+import org.jbpm.cmmn.flow.core.impl.CaseFileItemImpl;
+import org.jbpm.cmmn.flow.core.impl.CaseParameterImpl;
+import org.jbpm.cmmn.flow.definition.ParameterMapping;
+import org.jbpm.cmmn.flow.definition.PlanItemControl;
+import org.jbpm.cmmn.flow.definition.TaskDefinition;
+import org.jbpm.cmmn.flow.planning.ApplicabilityRule;
+import org.jbpm.cmmn.flow.planning.TableItem;
 import org.jbpm.cmmn.instance.CaseInstance;
+import org.jbpm.cmmn.instance.PlanItemInstance;
 import org.jbpm.cmmn.instance.SubscriptionContext;
+import org.jbpm.cmmn.instance.impl.AbstractCallingTaskInstance;
 import org.jbpm.cmmn.instance.impl.CaseTaskInstance;
-import org.jbpm.cmmn.instance.impl.TaskPlanItemInstance;
 import org.jbpm.process.core.context.variable.VariableScope;
 import org.jbpm.process.instance.context.variable.VariableScopeInstance;
 import org.jbpm.process.instance.impl.Action;
@@ -35,6 +26,9 @@ import org.jbpm.process.instance.impl.ProcessInstanceImpl;
 import org.kie.api.runtime.KieRuntime;
 import org.kie.api.runtime.process.NodeInstance;
 import org.kie.api.runtime.process.WorkflowProcessInstance;
+
+import java.lang.reflect.InvocationTargetException;
+import java.util.*;
 
 public class ExpressionUtil {
 	public static class CustomContext extends ProcessContext {
@@ -88,9 +82,16 @@ public class ExpressionUtil {
 		return isPlanItemInstanceRequired;
 	}
 
-	/** CaseParameter **/
+	/** CaseParameterImpl **/
 	public static HashMap<String, Object> buildInputParameters(Work work, NodeInstance contextNodeInstance, TaskDefinition taskDefinition) {
 		HashMap<String, Object> parameters = new HashMap<String, Object>(work.getParameters());
+		return buildInputParameters(contextNodeInstance, taskDefinition, parameters);
+	}
+	public static HashMap<String, Object> buildInputParameters(NodeInstance contextNodeInstance, TaskDefinition taskDefinition) {
+		return buildInputParameters(contextNodeInstance, taskDefinition, new HashMap<String, Object>());
+	}
+
+	private static HashMap<String, Object> buildInputParameters(NodeInstance contextNodeInstance, TaskDefinition taskDefinition, HashMap<String, Object> parameters) {
 		for (CaseParameter cp : taskDefinition.getInputs()) {
 			BindingRefinement br = cp.getBindingRefinement();
 			if (br != null && br.isValid()) {
@@ -125,8 +126,8 @@ public class ExpressionUtil {
 	}
 
 	@SuppressWarnings("unchecked")
-	public static void writeToBindingRefinement(TaskPlanItemInstance<?, ?> tpi, CaseParameter cp, Object val) {
-		Object refinedTarget = readFromBindingRefinement(cp, tpi.getCaseInstance(), tpi);
+	public static void writeToBindingRefinement(PlanItemInstance<?> tpi, CaseParameter cp, Object val) {
+		Object refinedTarget = readFromBindingRefinement(cp, tpi.getCaseInstance(), (NodeInstance) tpi);
 		if (refinedTarget instanceof Collection) {
 			if (val instanceof Collection) {
 				// With writing of collections, to be on the safe side, merge rather than replace
@@ -149,7 +150,7 @@ public class ExpressionUtil {
 		}
 	}
 
-	/* ApplicabilityRule */
+	/* ApplicabilityRuleImpl */
 	public static boolean isApplicable(TableItem ti, org.kie.api.runtime.process.NodeInstance ni) {
 		if (ti.getApplicabilityRules().isEmpty()) {
 			return true;
@@ -195,7 +196,7 @@ public class ExpressionUtil {
 		}
 	}
 
-	public static void populateSubscriptionsActivatedByParameters(SubscriptionContext sc, Collection<CaseParameter> subscribingParameters) {
+	public static void populateSubscriptionsActivatedByParameters(SubscriptionContext sc, Collection<org.jbpm.cmmn.flow.core.CaseParameter> subscribingParameters) {
 		for (CaseParameter caseParameter : subscribingParameters) {
 			populateSubscriptionsActivatedByParameter(sc, caseParameter);
 		}
@@ -226,9 +227,9 @@ public class ExpressionUtil {
 
 	@SuppressWarnings("unchecked")
 	public static Map<String, Object> transformParameters(List<ParameterMapping> parameterMappings, Map<String, Object> fromParameters,
-			CaseTaskInstance nodeInstance) {
+			AbstractCallingTaskInstance nodeInstance) {
 		Map<String, Object> inputParameters = new HashMap<String, Object>(fromParameters);
-		CustomContext ctx = buildCustomContext(nodeInstance);
+		CustomContext ctx = buildCustomContext((PlanItemInstance<?>) nodeInstance);
 		for (ParameterMapping pm : parameterMappings) {
 			Object sourceValue = fromParameters.get(pm.getSourceParameterName());
 			if (pm.getTransformer() != null) {
@@ -254,10 +255,10 @@ public class ExpressionUtil {
 		return inputParameters;
 	}
 
-	private static CustomContext buildCustomContext(TaskPlanItemInstance<?, ?> nodeInstance) {
-		CustomContext ctx = new CustomContext(nodeInstance.getProcessInstance().getKnowledgeRuntime());
-		ctx.setNodeInstance(nodeInstance);
-		ctx.setProcessInstance(nodeInstance.getProcessInstance());
+	private static CustomContext buildCustomContext(PlanItemInstance<?> nodeInstance) {
+		CustomContext ctx = new CustomContext(nodeInstance.getCaseInstance().getKnowledgeRuntime());
+		ctx.setNodeInstance((NodeInstance) nodeInstance);
+		ctx.setProcessInstance(nodeInstance.getCaseInstance());
 		return ctx;
 	}
 

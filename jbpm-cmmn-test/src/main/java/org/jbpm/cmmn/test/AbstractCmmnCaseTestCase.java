@@ -14,14 +14,17 @@ import org.jbpm.cmmn.casefile.jpa.JpaCollectionPlaceHolderResolverStrategy;
 import org.jbpm.cmmn.casefile.jpa.JpaPlaceHolderResolverStrategy;
 import org.jbpm.cmmn.flow.builder.PlanItemBuilder;
 import org.jbpm.cmmn.flow.builder.SentryBuilder;
+import org.jbpm.cmmn.flow.common.impl.PlanItemInstanceFactoryNodeImpl;
 import org.jbpm.cmmn.flow.core.CaseFileItemDefinitionType;
-import org.jbpm.cmmn.flow.core.event.CaseFileItemStartTrigger;
-import org.jbpm.cmmn.flow.core.event.PlanItemStartTrigger;
-import org.jbpm.cmmn.flow.core.impl.CaseImpl;
-import org.jbpm.cmmn.flow.core.impl.DefaultJoin;
-import org.jbpm.cmmn.flow.core.impl.DefaultSplit;
-import org.jbpm.cmmn.flow.core.planitem.*;
-import org.jbpm.cmmn.flow.core.planning.DiscretionaryItemImpl;
+import org.jbpm.cmmn.flow.definition.impl.CaseFileItemStartTriggerImpl;
+import org.jbpm.cmmn.flow.definition.impl.PlanItemStartTriggerImpl;
+import org.jbpm.cmmn.flow.core.impl.*;
+import org.jbpm.cmmn.flow.common.impl.AbstractStandardEventNode;
+import org.jbpm.cmmn.flow.planitem.impl.CaseFileItemOnPartImpl;
+import org.jbpm.cmmn.flow.planitem.impl.PlanItemImpl;
+import org.jbpm.cmmn.flow.planitem.impl.PlanItemOnPartImpl;
+import org.jbpm.cmmn.flow.planitem.impl.SentryImpl;
+import org.jbpm.cmmn.flow.planning.impl.DiscretionaryItemImpl;
 import org.jbpm.cmmn.flow.xml.CMMNBuilder;
 import org.jbpm.cmmn.flow.xml.DefaultTypeMap;
 import org.jbpm.cmmn.flow.xml.DefinitionsHandler;
@@ -34,7 +37,9 @@ import org.jbpm.cmmn.instance.impl.*;
 import org.jbpm.cmmn.instance.subscription.SubscriptionManager;
 import org.jbpm.cmmn.instance.subscription.impl.AbstractDurableSubscriptionManager;
 import org.jbpm.cmmn.marshalling.CaseInstanceMarshaller;
-import org.jbpm.cmmn.task.listeners.CaseTaskLifecycleListener;
+import org.jbpm.cmmn.service.api.CMMNService;
+import org.jbpm.cmmn.service.api.impl.CMMNServiceImpl;
+import org.jbpm.cmmn.task.workitems.CaseTaskLifecycleListener;
 import org.jbpm.cmmn.task.registration.CaseRegisterableItemsFactory;
 import org.jbpm.marshalling.impl.ProcessInstanceResolverStrategy;
 import org.jbpm.marshalling.impl.ProcessMarshallerRegistry;
@@ -119,6 +124,7 @@ public abstract class AbstractCmmnCaseTestCase extends JbpmJUnitBaseTestCase {
 	private RuntimeEngine runtimeEngine;
 	private UserTransaction transaction;
 	private RuntimeManager runtimeManager;
+	private CMMNService cmmnService;
 	private static EntityManagerFactory emf;
 	private static PoolingDataSource ds;
 	private String persistenceUnitName;
@@ -138,6 +144,10 @@ public abstract class AbstractCmmnCaseTestCase extends JbpmJUnitBaseTestCase {
 
 	public AbstractCmmnCaseTestCase(boolean setupDataSource, boolean sessionPersistence) {
 		super(setupDataSource, sessionPersistence);
+	}
+
+	public CMMNService getCmmnService() {
+		return cmmnService;
 	}
 
 	@Before
@@ -252,7 +262,7 @@ public abstract class AbstractCmmnCaseTestCase extends JbpmJUnitBaseTestCase {
 	public void countItemInState(String planItemName, PlanElementState s, NodeInstanceContainer ci, StateResult sr) {
 		for (NodeInstance ni : ci.getNodeInstances()) {
 			if (ni instanceof PlanItemInstanceFactoryNodeInstance) {
-				PlanItemInstanceFactoryNode node = (PlanItemInstanceFactoryNode) ni.getNode();
+				PlanItemInstanceFactoryNodeImpl node = (PlanItemInstanceFactoryNodeImpl) ni.getNode();
 				if (node.getItemToInstantiate().getName().equals(planItemName)) {
 					PlanItemInstanceFactoryNodeInstance<?> piil = (PlanItemInstanceFactoryNodeInstance<?>) ni;
 					if (piil.isPlanItemInstanceStillRequired() && s == PlanElementState.AVAILABLE) {
@@ -546,12 +556,7 @@ public abstract class AbstractCmmnCaseTestCase extends JbpmJUnitBaseTestCase {
 		DefinitionsHandler.registerTypeMap(CaseFileItemDefinitionType.CMIS_DOCUMENT, new JcrTypeMap());
 		DefinitionsHandler.registerTypeMap(CaseFileItemDefinitionType.CMIS_FOLDER, new JcrTypeMap());
 		DefinitionsHandler.registerTypeMap(CaseFileItemDefinitionType.CMIS_RELATIONSHIP, new JcrTypeMap());
-		ProcessNodeBuilderRegistry.INSTANCE.register(UserEventPlanItem.class, new PlanItemBuilder());
-		ProcessNodeBuilderRegistry.INSTANCE.register(TimerEventPlanItem.class, new PlanItemBuilder());
-		ProcessNodeBuilderRegistry.INSTANCE.register(StagePlanItem.class, new PlanItemBuilder());
-		ProcessNodeBuilderRegistry.INSTANCE.register(CaseTaskPlanItem.class, new PlanItemBuilder());
-		ProcessNodeBuilderRegistry.INSTANCE.register(MilestonePlanItem.class, new PlanItemBuilder());
-		ProcessNodeBuilderRegistry.INSTANCE.register(HumanTaskPlanItem.class, new PlanItemBuilder());
+		ProcessNodeBuilderRegistry.INSTANCE.register(PlanItemImpl.class, new PlanItemBuilder());
 		ProcessNodeBuilderRegistry.INSTANCE.register(SentryImpl.class, new SentryBuilder());
 		ProcessInstanceFactoryRegistry.INSTANCE.register(CaseImpl.class, new CaseInstanceFactory());
 		CaseInstanceMarshaller m = new CaseInstanceMarshaller();
@@ -566,20 +571,15 @@ public abstract class AbstractCmmnCaseTestCase extends JbpmJUnitBaseTestCase {
 		nodeInstanceFactoryRegistry.register(DefaultJoin.class, new ReuseNodeFactory(DefaultJoinInstance.class));
 		nodeInstanceFactoryRegistry.register(SentryImpl.class, new ReuseNodeFactory(SentryInstance.class));
 		nodeInstanceFactoryRegistry
-				.register(PlanItemInstanceFactoryNode.class, new ReuseNodeFactory(PlanItemInstanceFactoryNodeInstance.class));
-		nodeInstanceFactoryRegistry.register(AbstractOnPart.class, new ReuseNodeFactory(OnPartInstanceImpl.class));
-		nodeInstanceFactoryRegistry.register(CaseFileItemOnPart.class, new ReuseNodeFactory(OnPartInstanceImpl.class));
-		nodeInstanceFactoryRegistry.register(CaseFileItemStartTrigger.class, new ReuseNodeFactory(OnPartInstanceImpl.class));
-		nodeInstanceFactoryRegistry.register(PlanItemStartTrigger.class, new ReuseNodeFactory(OnPartInstanceImpl.class));
-		nodeInstanceFactoryRegistry.register(PlanItemOnPart.class, new ReuseNodeFactory(OnPartInstanceImpl.class));
-		nodeInstanceFactoryRegistry.register(StagePlanItem.class, new DelegatingNodeInstanceFactory());
+				.register(PlanItemInstanceFactoryNodeImpl.class, new ReuseNodeFactory(PlanItemInstanceFactoryNodeInstance.class));
+		nodeInstanceFactoryRegistry.register(AbstractStandardEventNode.class, new ReuseNodeFactory(StandardEventNodeInstance.class));
+		nodeInstanceFactoryRegistry.register(CaseFileItemOnPartImpl.class, new ReuseNodeFactory(StandardEventNodeInstance.class));
+		nodeInstanceFactoryRegistry.register(CaseFileItemStartTriggerImpl.class, new ReuseNodeFactory(StandardEventNodeInstance.class));
+		nodeInstanceFactoryRegistry.register(PlanItemStartTriggerImpl.class, new ReuseNodeFactory(StandardEventNodeInstance.class));
+		nodeInstanceFactoryRegistry.register(PlanItemOnPartImpl.class, new ReuseNodeFactory(StandardEventNodeInstance.class));
+		nodeInstanceFactoryRegistry.register(PlanItemImpl.class, new DelegatingNodeInstanceFactory());
 		nodeInstanceFactoryRegistry.register(DefaultSplit.class, new CreateNewNodeFactory(DefaultSplitInstance.class));
-		nodeInstanceFactoryRegistry.register(HumanTaskPlanItem.class, new DelegatingNodeInstanceFactory());
-		nodeInstanceFactoryRegistry.register(CaseTaskPlanItem.class, new DelegatingNodeInstanceFactory());
 		nodeInstanceFactoryRegistry.register(DiscretionaryItemImpl.class, new DelegatingNodeInstanceFactory());
-		nodeInstanceFactoryRegistry.register(UserEventPlanItem.class, new DelegatingNodeInstanceFactory());
-		nodeInstanceFactoryRegistry.register(TimerEventPlanItem.class, new DelegatingNodeInstanceFactory());
-		nodeInstanceFactoryRegistry.register(MilestonePlanItem.class, new DelegatingNodeInstanceFactory());
 		TaskService ts = runtimeEngine.getTaskService();
 		if (ts instanceof InternalTaskService) {
 			InternalTaskService its = (InternalTaskService) ts;
@@ -597,6 +597,7 @@ public abstract class AbstractCmmnCaseTestCase extends JbpmJUnitBaseTestCase {
 				}
 			}
 		}
+		this.cmmnService=new CMMNServiceImpl(runtimeEngine);
 		// for some reason the task service does not persist the users and
 		// groups ???
 		populateUsers();

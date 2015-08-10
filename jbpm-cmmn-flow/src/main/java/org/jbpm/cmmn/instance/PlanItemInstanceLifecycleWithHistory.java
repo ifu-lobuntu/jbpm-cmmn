@@ -1,6 +1,6 @@
 package org.jbpm.cmmn.instance;
 
-import org.jbpm.cmmn.flow.core.PlanItemDefinition;
+import org.jbpm.cmmn.flow.definition.PlanItemDefinition;
 import org.jbpm.cmmn.instance.impl.PlanItemInstanceFactoryNodeInstance;
 
 /**

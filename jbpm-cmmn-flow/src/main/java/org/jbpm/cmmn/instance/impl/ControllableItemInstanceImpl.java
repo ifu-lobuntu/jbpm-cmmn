@@ -1,26 +1,23 @@
 package org.jbpm.cmmn.instance.impl;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.drools.core.WorkItemHandlerNotFoundException;
-import org.drools.core.process.core.Work;
 import org.drools.core.process.instance.WorkItem;
 import org.drools.core.process.instance.WorkItemManager;
 import org.drools.core.process.instance.impl.WorkItemImpl;
 import org.jbpm.cmmn.common.WorkItemParameters;
-import org.jbpm.cmmn.flow.core.PlanItem;
-import org.jbpm.cmmn.flow.core.PlanItemDefinition;
-import org.jbpm.cmmn.flow.core.PlanItemTransition;
-import org.jbpm.cmmn.flow.core.TaskDefinition;
-import org.jbpm.cmmn.flow.core.TaskItemWithDefinition;
-import org.jbpm.cmmn.flow.core.impl.PlannerRoleCalculator;
-import org.jbpm.cmmn.flow.core.planning.DiscretionaryItemImpl;
+import org.jbpm.cmmn.flow.common.ItemWithDefinition;
+import org.jbpm.cmmn.flow.common.PlanItemTransition;
+import org.jbpm.cmmn.flow.core.CaseParameter;
+import org.jbpm.cmmn.flow.core.impl.CaseParameterImpl;
+import org.jbpm.cmmn.flow.definition.PlanItemDefinition;
+import org.jbpm.cmmn.flow.definition.TaskDefinition;
+import org.jbpm.cmmn.flow.planitem.PlanItem;
+import org.jbpm.cmmn.flow.planning.impl.DiscretionaryItemImpl;
+import org.jbpm.cmmn.flow.planning.impl.PlannerRoleCalculator;
 import org.jbpm.cmmn.instance.CaseInstance;
 import org.jbpm.cmmn.instance.ControllableItemInstance;
-import org.jbpm.cmmn.instance.PlanElementLifecycleWithTask;
 import org.jbpm.cmmn.instance.PlanElementState;
+import org.jbpm.cmmn.instance.TransitionSignal;
 import org.jbpm.cmmn.instance.impl.util.ExpressionUtil;
 import org.jbpm.cmmn.instance.subscription.impl.EventQueues;
 import org.jbpm.process.core.context.exception.ExceptionScope;
@@ -30,17 +27,19 @@ import org.jbpm.process.instance.ProcessInstance;
 import org.jbpm.process.instance.context.exception.ExceptionScopeInstance;
 import org.jbpm.workflow.instance.WorkflowRuntimeException;
 import org.jbpm.workflow.instance.node.CompositeContextNodeInstance;
-import org.kie.api.runtime.EnvironmentName;
 import org.kie.api.runtime.process.NodeInstance;
 
-public abstract class ControllableItemInstanceImpl<T extends PlanItemDefinition, X extends TaskItemWithDefinition<T>> extends CompositeContextNodeInstance
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+
+public abstract class ControllableItemInstanceImpl<T extends PlanItemDefinition> extends CompositeContextNodeInstance
 		implements ControllableItemInstance<T> {
 
 	private static final long serialVersionUID = 3200294767777991641L;
 
 	private PlanElementState lastBusyState = PlanElementState.NONE;
-	protected WorkItem workItem;
-	private long workItemId;
 	protected PlanElementState planElementState = PlanElementState.AVAILABLE;
 	protected Boolean isCompletionRequired;
 
@@ -59,15 +58,19 @@ public abstract class ControllableItemInstanceImpl<T extends PlanItemDefinition,
 		}
 		return null;
 	}
+	@Override
+	protected final boolean isLinkedIncomingNodeRequired() {
+		return false;
+	}
 
 	protected String getIdealOwner() {
 		if (isActivatedManually()) {
 			return null;
 		} else {
 			if(getIdealRoles()!=null){
-				Collection<String> roleAssignments = getCaseInstance().getRoleAssignments(getIdealRoles());
-				if(roleAssignments!=null && roleAssignments.size()==1){
-					return roleAssignments.iterator().next();
+				String[] roleAssignmentNames = getCaseInstance().getRoleInstance(getIdealRoles()).getRoleAssignmentNames();
+				if(roleAssignmentNames.length==1){
+					return roleAssignmentNames[0];
 				}else{
 					return null;
 				}
@@ -85,34 +88,9 @@ public abstract class ControllableItemInstanceImpl<T extends PlanItemDefinition,
 		return getCaseInstance().getCaseOwner();
 	}
 
-	public final WorkItemImpl createWorkItem(Work work) {
-		PlanItemDefinition definition = this.getItem().getDefinition();
-		WorkItemImpl workItem = new WorkItemImpl();
-		workItem.setName(work.getName());
-		workItem.setProcessInstanceId(this.getProcessInstance().getId());
-		workItem.setParameters(new HashMap<String, Object>(work.getParameters()));
-		if (definition instanceof TaskDefinition) {
-			workItem.getParameters().putAll(ExpressionUtil.buildInputParameters(work, this, (TaskDefinition) definition));
-		}
-		workItem.setParameter(WorkItemParameters.INITIATOR, getInitiator());
-		workItem.setParameter(WorkItemParameters.ACTOR_ID, getIdealOwner());
-		workItem.setParameter(WorkItemParameters.GROUP_ID, getIdealRoles());
-		workItem.setParameter(WorkItemParameters.BUSINESSADMINISTRATOR_ID, getBusinessAdministrators());
-		String deploymentId = (String) getProcessInstance().getKnowledgeRuntime().getEnvironment().get("deploymentId");
-		workItem.setDeploymentId(deploymentId);
-		workItem.setParameter(WorkItemParameters.COMMENT, definition.getDescription());
-		if (this.getNodeInstanceContainer() instanceof PlanElementLifecycleWithTask) {
-			long parentWorkItemId = ((PlanElementLifecycleWithTask) this.getNodeInstanceContainer()).getWorkItemId();
-			if (parentWorkItemId >= 0) {
-				workItem.setParameter(WorkItemParameters.PARENT_WORK_ITEM_ID, parentWorkItemId);
-			}
-		}
-		workItem.setParameter(WorkItemParameters.CLAIM_IMMEDIATELY, false);
-		return workItem;
-	}
 
 	protected String getBusinessAdministrators() {
-		TaskItemWithDefinition<T> item = getItem();
+		ItemWithDefinition<T> item = getItem();
 		if (item instanceof PlanItem) {
 			return PlannerRoleCalculator.getPlannerRoles((PlanItem<?>) item);
 		} else {
@@ -134,48 +112,18 @@ public abstract class ControllableItemInstanceImpl<T extends PlanItemDefinition,
 		throw new IllegalStateException("Complex planItemInstances do not support to parentTerminate");
 	}
 
-	@Override
-	public final void triggerTransitionOnTask(PlanItemTransition transition) {
-		WorkItemImpl wi = new WorkItemImpl();
-		wi.setProcessInstanceId(this.getProcessInstance().getId());
-		String deploymentId = (String) getProcessInstance().getKnowledgeRuntime().getEnvironment().get("deploymentId");
-		wi.setDeploymentId(deploymentId);
-		wi.setName(WorkItemParameters.UPDATE_TASK_STATUS);
-		wi.setParameter(WorkItemParameters.TASK_TRANSITION, transition);
-		wi.setParameter(WorkItemParameters.WORK_ITEM_ID, getWorkItemId());
-		if(getItem().getName().equals("TheAutoActivatedTaskPlanItem")){
-			System.out.println();
-		}
-
-		wi.setParameter(WorkItemParameters.ACTOR_ID, getIdealOwner());
-		wi.setParameter(WorkItemParameters.USERS_IN_ROLE, getCaseInstance().getRoleAssignments(getIdealRoles()));
-		wi.setParameter(WorkItemParameters.GROUP_ID, getIdealRoles());
-		wi.setParameter(WorkItemParameters.BUSINESSADMINISTRATOR_ID, getBusinessAdministrators());
-		wi.getParameters().putAll(buildParametersFor(transition));
-		//TODO this is not reliable
-		EventQueues.queueWorkItem(wi);
-//		executeWorkItem(wi);
-	}
 
 	protected Map<String, Object> buildParametersFor(PlanItemTransition transition) {
 		return new HashMap<String, Object>();
 	}
 
 	public void internalTriggerWithoutInstantiation(NodeInstance from, String type, WorkItem wi) {
-		this.workItem = wi;
-		this.workItemId = wi.getId();
 		this.planElementState = PlanElementState.INITIAL;
 	}
 
 	@Override
 	public void internalTrigger(NodeInstance from, String type) {
 		super.internalTrigger(from, type);
-		workItem = createWorkItem(getItem().getWork());
-		if (isBlocking()) {
-			addWorkItemUpdatedListener();
-		}
-		executeWorkItem(workItem);
-		this.workItemId = workItem.getId();
 		noteInstantiation();
 		if (!isBlocking()) {
 			triggerCompleted();
@@ -187,43 +135,33 @@ public abstract class ControllableItemInstanceImpl<T extends PlanItemDefinition,
 			isCompletionRequired = ExpressionUtil.isRequired(getItem(), this);
 		}
 		if (isActivatedManually()) {
-			triggerTransitionOnTask(PlanItemTransition.ENABLE);
+			enable();
 		} else {
-			triggerTransitionOnTask(PlanItemTransition.START);
+			start();
 		}
 	}
 
-	public WorkItem executeWorkItem(WorkItem wi) {
-		if (isInversionOfControl()) {
-			((ProcessInstance) getProcessInstance()).getKnowledgeRuntime().update(
-					((ProcessInstance) getProcessInstance()).getKnowledgeRuntime().getFactHandle(this), this);
+	@SuppressWarnings("unchecked")
+	protected void writeToBinding(CaseParameter cp, Object val) {
+		if (cp.getBindingRefinement().isValid()) {
+			ExpressionUtil.writeToBindingRefinement(this, cp, val);
 		} else {
-			try {
-				((WorkItemManager) ((ProcessInstance) getProcessInstance()).getKnowledgeRuntime().getWorkItemManager()).internalExecuteWorkItem(wi);
-			} catch (WorkItemHandlerNotFoundException wihnfe) {
-				getProcessInstance().setState(org.kie.api.runtime.process.ProcessInstance.STATE_ABORTED);
-				throw wihnfe;
-			} catch (Exception e) {
-				e.printStackTrace();
-				String exceptionName = e.getClass().getName();
-				ExceptionScopeInstance exceptionScopeInstance = (ExceptionScopeInstance) resolveContextInstance(ExceptionScope.EXCEPTION_SCOPE, exceptionName);
-				if (exceptionScopeInstance == null) {
-					throw new WorkflowRuntimeException(this, getProcessInstance(), "Unable to execute Action: " + e.getMessage(), e);
+			if (cp.getBoundVariable().isCollection()) {
+				Collection<Object> coll = (Collection<Object>) getCaseInstance().getVariable(cp.getBoundVariable().getName());
+				if (coll == null) {
+					getCaseInstance().setVariable(cp.getBoundVariable().getName(), coll = new HashSet<Object>());
 				}
-				this.workItemId = wi.getId();
-				exceptionScopeInstance.handleException(exceptionName, e);
+				if (val instanceof Collection) {
+					coll.addAll((Collection<Object>) val);
+				} else {
+					coll.add(val);
+				}
+			} else {
+				getCaseInstance().setVariable(cp.getBoundVariable().getName(), val);
 			}
 		}
-		return wi;
 	}
 
-	@Override
-	public long getWorkItemId() {
-		if (this.workItem != null) {
-			return workItem.getId();
-		}
-		return workItemId;
-	}
 
 	@Override
 	public ContextInstance resolveContextInstance(String contextId, Object param) {
@@ -235,29 +173,7 @@ public abstract class ControllableItemInstanceImpl<T extends PlanItemDefinition,
 		return result;
 	}
 
-	@Override
-	public void addEventListeners() {
-		super.addEventListeners();
-		addWorkItemUpdatedListener();
-	}
 
-	private void addWorkItemUpdatedListener() {
-		getProcessInstance().addEventListener(WorkItemParameters.WORK_ITEM_UPDATED, this, false);
-	}
-
-	@Override
-	public void removeEventListeners() {
-		super.removeEventListeners();
-		getProcessInstance().removeEventListener(WorkItemParameters.WORK_ITEM_UPDATED, this, false);
-	}
-
-	@Override
-	public WorkItem getWorkItem() {
-		if (this.workItem == null) {
-			workItem = ((WorkItemManager) ((ProcessInstance) getProcessInstance()).getKnowledgeRuntime().getWorkItemManager()).getWorkItem(workItemId);
-		}
-		return this.workItem;
-	}
 
 	@Override
 	public String[] getEventTypes() {
@@ -266,21 +182,14 @@ public abstract class ControllableItemInstanceImpl<T extends PlanItemDefinition,
 
 	@Override
 	public void signalEvent(String type, Object event) {
-		if (type.equals(WorkItemParameters.WORK_ITEM_UPDATED) && isMyWorkItem((WorkItem) event)) {
-			this.workItem = (WorkItem) event;
-			PlanItemTransition transition = (PlanItemTransition) workItem.getResult(WorkItemParameters.TRANSITION);
-			if(transition==PlanItemTransition.START){
-				System.out.println();
-			}
+		if (event instanceof TransitionSignal) {
+			PlanItemTransition transition = ((TransitionSignal) event).getTransition();
 			transition.invokeOn(this);
 		} else {
 			super.signalEvent(type, event);
 		}
 	}
 
-	protected boolean isMyWorkItem(WorkItem event) {
-		return event.getId() == getWorkItemId() || (getWorkItemId() == -1 && getWorkItem().getId() == (event.getId()));
-	}
 
 	@Override
 	public void setLastBusyState(PlanElementState s) {
@@ -352,21 +261,11 @@ public abstract class ControllableItemInstanceImpl<T extends PlanItemDefinition,
 		planElementState.start(this);
 	}
 
-	@Override
-	public Object getTask() {
-		if (getWorkItem() != null) {
-			return (Object) getWorkItem().getResult(WorkItemParameters.TASK);
-		}
-		return null;
-	}
 
-	public void internalSetWorkItemId(long readLong) {
-		this.workItemId = readLong;
-	}
 
 	@SuppressWarnings("unchecked")
-	public X getItem() {
-		return (X) getNode();
+	public ItemWithDefinition<T> getItem() {
+		return (ItemWithDefinition<T>) getNode();
 	}
 
 	@Override

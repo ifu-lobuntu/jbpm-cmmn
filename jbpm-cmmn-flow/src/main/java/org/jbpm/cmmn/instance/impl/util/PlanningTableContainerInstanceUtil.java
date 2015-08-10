@@ -1,30 +1,28 @@
 package org.jbpm.cmmn.instance.impl.util;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-
 import org.drools.core.process.core.Work;
 import org.drools.core.process.instance.WorkItem;
 import org.drools.core.process.instance.impl.WorkItemImpl;
 import org.jbpm.cmmn.common.ApplicableDiscretionaryItem;
 import org.jbpm.cmmn.common.WorkItemParameters;
-import org.jbpm.cmmn.flow.core.CaseRole;
-import org.jbpm.cmmn.flow.core.DiscretionaryItem;
-import org.jbpm.cmmn.flow.core.PlanItemDefinition;
-import org.jbpm.cmmn.flow.core.PlanningTable;
-import org.jbpm.cmmn.flow.core.TableItem;
-import org.jbpm.cmmn.flow.core.TaskDefinition;
-import org.jbpm.cmmn.flow.core.planning.DiscretionaryItemImpl;
-import org.jbpm.cmmn.flow.core.planning.PlanningTableImpl;
-import org.jbpm.cmmn.instance.CaseInstance;
-import org.jbpm.cmmn.instance.ControllableItemInstance;
-import org.jbpm.cmmn.instance.PlanElementState;
-import org.jbpm.cmmn.instance.PlanItemInstanceContainer;
-import org.jbpm.cmmn.instance.PlanningTableContainerInstance;
+import org.jbpm.cmmn.flow.core.impl.CaseRoleImpl;
+import org.jbpm.cmmn.flow.definition.HumanTaskDefinition;
+import org.jbpm.cmmn.flow.definition.PlanItemDefinition;
+import org.jbpm.cmmn.flow.definition.TaskDefinition;
+import org.jbpm.cmmn.flow.planning.DiscretionaryItem;
+import org.jbpm.cmmn.flow.planning.PlanningTable;
+import org.jbpm.cmmn.flow.planning.TableItem;
+import org.jbpm.cmmn.flow.planning.impl.DiscretionaryItemImpl;
+import org.jbpm.cmmn.flow.planning.impl.PlanningTableImpl;
+import org.jbpm.cmmn.instance.*;
+import org.jbpm.cmmn.instance.impl.HumanTaskInstance;
 import org.jbpm.cmmn.instance.impl.PlanItemInstanceFactoryNodeInstance;
 import org.jbpm.workflow.core.impl.NodeImpl;
 import org.kie.api.runtime.process.NodeInstance;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 public class PlanningTableContainerInstanceUtil {
 	public static void makeDiscretionaryItemAvailable(PlanningTableContainerInstance ptc, String discretionaryItemId) {
@@ -34,27 +32,30 @@ public class PlanningTableContainerInstanceUtil {
 		ni.setIncludedByDiscretion(true);
 	}
 
-	public static WorkItem createPlannedTask(PlanningTableContainerInstance ptc, String discretionaryItemId) {
+	public static NodeInstance createPlannedTask(PlanningTableContainerInstance ptc, String discretionaryItemId) {
 		if (ptc != null && ptc.getPlanningTable() != null) {
 			NodeInstance contextNodeInstance = ptc.getPlanningContextNodeInstance();
 			DiscretionaryItem<? extends PlanItemDefinition> di = ptc.getPlanningTable().getDiscretionaryItemById(discretionaryItemId);
-			Work work = di.getWork();
 			PlanItemDefinition definition = di.getDefinition();
-			WorkItemImpl workItem = new WorkItemImpl();
-			workItem.setName(work.getName());
-			workItem.setProcessInstanceId(contextNodeInstance.getProcessInstance().getId());
-			workItem.setParameters(new HashMap<String, Object>(work.getParameters()));
-			if (definition instanceof TaskDefinition) {
+			if (ptc instanceof HumanTaskInstance) {
+				Work work = ((HumanTaskInstance)ptc).getWork();
+				WorkItemImpl workItem = new WorkItemImpl();
+				workItem.setName(work.getName());
+				workItem.setProcessInstanceId(contextNodeInstance.getProcessInstance().getId());
+				workItem.setParameters(new HashMap<String, Object>(work.getParameters()));
 				workItem.getParameters().putAll(ExpressionUtil.buildInputParameters(work, contextNodeInstance, (TaskDefinition) definition));
+				CaseInstance caseInstance = (CaseInstance) contextNodeInstance.getProcessInstance();
+				String deploymentId = (String) caseInstance.getKnowledgeRuntime().getEnvironment().get("deploymentId");
+				workItem.setDeploymentId(deploymentId);
+				workItem.setParameter(WorkItemParameters.COMMENT, definition.getDescription());
+				//TODO figure out what to do here.
+//				workItem.setParameter(WorkItemParameters.PARENT_WORK_ITEM_ID, ptc.getWorkItemId());
+//				workItem.setParameter(WorkItemParameters.PLANNED, Boolean.TRUE);
+//				workItem.setParameter(WorkItemParameters.DISCRETIONARY_ITEM_ID, discretionaryItemId);
+//				ptc.executeWorkItem(workItem);
 			}
-			CaseInstance caseInstance = (CaseInstance) contextNodeInstance.getProcessInstance();
-			String deploymentId = (String) caseInstance.getKnowledgeRuntime().getEnvironment().get("deploymentId");
-			workItem.setDeploymentId(deploymentId);
-			workItem.setParameter(WorkItemParameters.COMMENT, definition.getDescription());
-			workItem.setParameter(WorkItemParameters.PARENT_WORK_ITEM_ID, ptc.getWorkItemId());
-			workItem.setParameter(WorkItemParameters.PLANNED, Boolean.TRUE);
-			workItem.setParameter(WorkItemParameters.DISCRETIONARY_ITEM_ID, discretionaryItemId);
-			return ptc.executeWorkItem(workItem);
+			return ptc.createPlannedItem(discretionaryItemId);
+
 		} else {
 			return null;
 		}
@@ -103,9 +104,9 @@ public class PlanningTableContainerInstanceUtil {
 		}
 	}
 
-	private static boolean isAuthorized(Set<String> usersRoles, Map<String, CaseRole> authorizedRoles) {
+	private static boolean isAuthorized(Set<String> usersRoles, Map<String, CaseRoleImpl> authorizedRoles) {
 		boolean authorized = authorizedRoles.isEmpty();
-		for (CaseRole role : authorizedRoles.values()) {
+		for (CaseRoleImpl role : authorizedRoles.values()) {
 			if (usersRoles.contains(role.getName())) {
 				authorized = true;
 			}

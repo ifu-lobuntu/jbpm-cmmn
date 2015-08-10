@@ -69,11 +69,7 @@ public class CaseInstanceTest extends AbstractPlanItemInstanceContainerLifecycle
 			ci.signalEvent(DefaultJoin.CLOSE, new Object());
 			assertEquals(PlanElementState.CLOSED, ci.getPlanElementState());
 			assertNull(getRuntimeEngine().getKieSession().getProcessInstance(caseInstance.getId()));
-			Task task = getTaskService().getTaskByWorkItemId(caseInstance.getWorkItemId());
-			Content output = getTaskService().getContentById(task.getTaskData().getOutputContentId());
-			ContentMarshallerContext mc = getTaskService().getMarshallerContext(task);
-			Map<String, Object> result = (Map<String, Object>) ContentMarshallerHelper
-					.unmarshall(output.getContent(), mc.getEnvironment(), mc.getClassloader());
+			Map<String, Object> result = reloadCaseInstance().getResult();
 			assertTrue(result.get("theResultingWallPlan") instanceof WallPlan);
 			getPersistence().commit();
 		}

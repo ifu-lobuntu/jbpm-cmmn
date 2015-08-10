@@ -1,36 +1,12 @@
 package org.jbpm.cmmn.flow.core;
 
-import java.io.Serializable;
 
-public class CaseFileItemDefinition implements Serializable, CMMNElement {
+public interface CaseFileItemDefinition extends CMMNElement {
+    CaseFileItemDefinitionType getDefinitionType();
 
-	private static final long serialVersionUID = -4667585177916762919L;
-	private CaseFileItemDefinitionType definitionType;
-	private String structureRef;
-	private String id;
+    void setDefinitionType(CaseFileItemDefinitionType definitionType);
 
-	public CaseFileItemDefinition(String id) {
-		this.id = id;
-	}
+    String getStructureRef();
 
-	public CaseFileItemDefinitionType getDefinitionType() {
-		return definitionType;
-	}
-
-	public void setDefinitionType(CaseFileItemDefinitionType definitionType) {
-		this.definitionType = definitionType;
-	}
-
-	public String getStructureRef() {
-		return structureRef;
-	}
-
-	public void setStructureRef(String structureRef) {
-		this.structureRef = structureRef;
-	}
-
-	@Override
-	public String getElementId() {
-		return id;
-	}
+    void setStructureRef(String structureRef);
 }

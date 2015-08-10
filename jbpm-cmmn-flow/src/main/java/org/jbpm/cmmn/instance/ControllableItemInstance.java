@@ -1,7 +1,7 @@
 package org.jbpm.cmmn.instance;
 
 import org.drools.core.process.instance.WorkItem;
-import org.jbpm.cmmn.flow.core.PlanItemDefinition;
+import org.jbpm.cmmn.flow.definition.PlanItemDefinition;
 import org.kie.api.runtime.process.NodeInstance;
 
 /**
@@ -10,9 +10,15 @@ import org.kie.api.runtime.process.NodeInstance;
  * least, by the task's owner
  * 
  */
-public interface ControllableItemInstance<T extends PlanItemDefinition> extends PlanItemInstanceLifecycleWithHistory<T>, PlanElementLifecycleWithTask {
+public interface ControllableItemInstance<T extends PlanItemDefinition> extends PlanItemInstanceLifecycleWithHistory<T>, PlanElementLifecycle {
 
 	void enable();
+
+	void reactivate();
+
+	void complete();
+
+	void fault();
 
 	void disable();
 

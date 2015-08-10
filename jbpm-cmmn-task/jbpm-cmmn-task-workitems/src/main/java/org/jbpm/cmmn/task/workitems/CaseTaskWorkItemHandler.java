@@ -1,16 +1,9 @@
 package org.jbpm.cmmn.task.workitems;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-
 import org.drools.core.process.instance.impl.WorkItemImpl;
 import org.jbpm.cmmn.common.WorkItemParameters;
 import org.jbpm.cmmn.task.additional.commands.AddPlannedTaskCommand;
 import org.jbpm.cmmn.task.additional.commands.CreateTaskCommand;
-import org.jbpm.cmmn.task.internal.model.InternalPlannableTask;
-import org.jbpm.cmmn.task.jpa.model.PlannableTaskImpl;
 import org.jbpm.services.task.impl.model.GroupImpl;
 import org.jbpm.services.task.impl.model.I18NTextImpl;
 import org.jbpm.services.task.impl.model.TaskDataImpl;
@@ -29,18 +22,24 @@ import org.kie.api.task.model.PeopleAssignments;
 import org.kie.api.task.model.Task;
 import org.kie.internal.runtime.manager.context.ProcessInstanceIdContext;
 import org.kie.internal.task.api.InternalTaskService;
+import org.kie.internal.task.api.TaskModelProvider;
 import org.kie.internal.task.api.model.InternalPeopleAssignments;
 import org.kie.internal.task.api.model.InternalTask;
 import org.kie.internal.task.api.model.InternalTaskData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
 public class CaseTaskWorkItemHandler extends LocalHTWorkItemHandler {
 	private Logger logger = LoggerFactory.getLogger(CaseTaskWorkItemHandler.class);
 
 	@Override
 	protected Task createTaskBasedOnWorkItemParams(KieSession session, WorkItem workItem) {
-		InternalPlannableTask task = new PlannableTaskImpl();
+		InternalTask task = (InternalTask) TaskModelProvider.getFactory().newTask();
 		String taskName = (String) workItem.getParameter(WorkItemParameters.TASK_NODE_NAME);
 		
 		if (taskName != null) {
@@ -48,10 +47,6 @@ public class CaseTaskWorkItemHandler extends LocalHTWorkItemHandler {
 			names.add(new I18NTextImpl("en-UK", taskName));
 			task.setNames(names);
 			task.setName(taskName);
-		}
-		String planItemName = (String) workItem.getParameter(WorkItemParameters.TASK_PLAN_ITEM_NAME);
-		if(planItemName!=null){
-			task.setPlanItemName(planItemName);
 		}
 		// this should be replaced by FormName filled by designer
 		// TaskName shouldn't be trimmed if we are planning to use that for the task lists
@@ -145,7 +140,7 @@ public class CaseTaskWorkItemHandler extends LocalHTWorkItemHandler {
 				// Bypass assignment/claim. Keep in created state
 				String discretionaryItemId = (String) workItem.getParameter(WorkItemParameters.DISCRETIONARY_ITEM_ID);
 				String planItemName = (String) workItem.getParameter(WorkItemParameters.TASK_PLAN_ITEM_NAME);
-				its.execute(new AddPlannedTaskCommand(content, (InternalPlannableTask) task, discretionaryItemId,planItemName));
+				its.execute(new AddPlannedTaskCommand(content, task, discretionaryItemId,planItemName));
 			} else {
 				Boolean claimImmediately = (Boolean) workItem.getParameter(WorkItemParameters.CLAIM_IMMEDIATELY);
 				if (claimImmediately != null) {

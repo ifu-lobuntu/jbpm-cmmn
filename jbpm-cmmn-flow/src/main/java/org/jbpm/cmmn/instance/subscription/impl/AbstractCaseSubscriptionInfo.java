@@ -1,6 +1,6 @@
 package org.jbpm.cmmn.instance.subscription.impl;
 
-import org.jbpm.cmmn.flow.core.CaseFileItemTransition;
+import org.jbpm.cmmn.flow.common.CaseFileItemTransition;
 import org.jbpm.cmmn.instance.subscription.DurableCaseFileItemSubscriptionInfo;
 import org.jbpm.cmmn.instance.subscription.DurableCaseSubscriptionInfo;
 public abstract class AbstractCaseSubscriptionInfo<X extends DurableCaseFileItemSubscriptionInfo> implements DurableCaseSubscriptionInfo<X> {

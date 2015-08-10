@@ -1,30 +1,27 @@
 package org.jbpm.cmmn.flow.xml;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
-
-import org.drools.core.process.core.datatype.impl.type.ObjectDataType;
 import org.drools.core.xml.BaseAbstractHandler;
 import org.drools.core.xml.ExtensibleXmlParser;
 import org.jbpm.cmmn.datatypes.CollectionDataType;
+import org.jbpm.cmmn.flow.common.impl.AbstractStandardEventNode;
+import org.jbpm.cmmn.flow.common.impl.CaseFileItemStandardEventNodeImpl;
+import org.jbpm.cmmn.flow.common.impl.PlanItemStandardEventNode;
 import org.jbpm.cmmn.flow.core.CaseFileItem;
-import org.jbpm.cmmn.flow.core.PlanItem;
 import org.jbpm.cmmn.flow.core.PlanItemContainer;
-import org.jbpm.cmmn.flow.core.PlanItemInfo;
-import org.jbpm.cmmn.flow.core.event.CaseFileItemStartTrigger;
-import org.jbpm.cmmn.flow.core.event.PlanItemStartTrigger;
-import org.jbpm.cmmn.flow.core.event.TimerEvent;
+import org.jbpm.cmmn.flow.core.impl.CaseFileItemImpl;
 import org.jbpm.cmmn.flow.core.impl.CaseImpl;
 import org.jbpm.cmmn.flow.core.impl.DefaultJoin;
 import org.jbpm.cmmn.flow.core.impl.DefaultSplit;
-import org.jbpm.cmmn.flow.core.planitem.AbstractOnPart;
-import org.jbpm.cmmn.flow.core.planitem.CaseFileItemOnPart;
-import org.jbpm.cmmn.flow.core.planitem.MultiInstancePlanItem;
-import org.jbpm.cmmn.flow.core.planitem.PlanItemInfoImpl;
-import org.jbpm.cmmn.flow.core.planitem.PlanItemOnPart;
-import org.jbpm.cmmn.flow.core.planitem.SentryImpl;
-import org.jbpm.cmmn.flow.core.planning.DiscretionaryItemImpl;
+import org.jbpm.cmmn.flow.definition.RepeatablePlanItemDefinition;
+import org.jbpm.cmmn.flow.definition.TimerEventListener;
+import org.jbpm.cmmn.flow.definition.impl.CaseFileItemStartTriggerImpl;
+import org.jbpm.cmmn.flow.definition.impl.PlanItemStartTriggerImpl;
+import org.jbpm.cmmn.flow.planitem.OnPart;
+import org.jbpm.cmmn.flow.planitem.PlanItem;
+import org.jbpm.cmmn.flow.planitem.PlanItemInfo;
+import org.jbpm.cmmn.flow.planitem.impl.PlanItemInfoImpl;
+import org.jbpm.cmmn.flow.planitem.impl.SentryImpl;
+import org.jbpm.cmmn.flow.planning.impl.DiscretionaryItemImpl;
 import org.jbpm.process.core.context.variable.Variable;
 import org.jbpm.process.core.context.variable.VariableScope;
 import org.jbpm.workflow.core.impl.ConnectionImpl;
@@ -33,6 +30,10 @@ import org.jbpm.workflow.core.node.Join;
 import org.jbpm.workflow.core.node.Split;
 import org.jbpm.workflow.core.node.StartNode;
 import org.kie.api.definition.process.Node;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
 
 public abstract class PlanItemContainerHandler extends BaseAbstractHandler {
 
@@ -105,19 +106,19 @@ public abstract class PlanItemContainerHandler extends BaseAbstractHandler {
 		}
 		((PlanItemInfoImpl<?>) node.getPlanInfo()).linkPlanItem();
 		if (node.getPlanInfo().getEntryCriteria().isEmpty()) {
-			if (node instanceof MultiInstancePlanItem) {
-				new ConnectionImpl(process.getDefaultSplit(), DEFAULT, ((MultiInstancePlanItem) node).getFactoryNode(), DEFAULT);
-			} else if (node.getDefinition() instanceof TimerEvent) {
-				TimerEvent tel = (TimerEvent) node.getDefinition();
+			if (node.getDefinition() instanceof RepeatablePlanItemDefinition) {
+				new ConnectionImpl(process.getDefaultSplit(), DEFAULT, node.getFactoryNode(), DEFAULT);
+			} else if (node.getDefinition() instanceof TimerEventListener) {
+				TimerEventListener tel = (TimerEventListener) node.getDefinition();
 				if (tel.getStartTrigger() != null) {
-					if (tel.getStartTrigger() instanceof CaseFileItemStartTrigger) {
-						CaseFileItemStartTrigger startTrigger = (CaseFileItemStartTrigger) tel.getStartTrigger();
+					if (tel.getStartTrigger() instanceof CaseFileItemStartTriggerImpl) {
+						CaseFileItemStartTriggerImpl startTrigger = (CaseFileItemStartTriggerImpl) tel.getStartTrigger();
 						startTrigger.setSourceCaseFileItem(findCaseFileItemById(process.getCase().getVariableScope(), startTrigger.getSourceRef()));
-					} else if (tel.getStartTrigger() instanceof PlanItemStartTrigger) {
-						PlanItemStartTrigger startTrigger = (PlanItemStartTrigger) tel.getStartTrigger();
+					} else if (tel.getStartTrigger() instanceof PlanItemStartTriggerImpl) {
+						PlanItemStartTriggerImpl startTrigger = (PlanItemStartTriggerImpl) tel.getStartTrigger();
 						startTrigger.setSourcePlanItem(findPlanItem(process, startTrigger.getSourceRef()));
 					}
-					AbstractOnPart copy = ((AbstractOnPart) tel.getStartTrigger()).copy();
+					AbstractStandardEventNode copy = ((AbstractStandardEventNode) tel.getStartTrigger()).copy();
 					process.addNode(copy);
 					new ConnectionImpl(process.getDefaultSplit(), DEFAULT, copy, DEFAULT);
 					new ConnectionImpl(copy, DEFAULT, node, DEFAULT);
@@ -131,13 +132,13 @@ public abstract class PlanItemContainerHandler extends BaseAbstractHandler {
 	}
 
 	private void linkSentryOnPart(PlanItemContainer process, VariableScope variableScope, SentryImpl sentry) {
-		for (AbstractOnPart onPart : sentry.getOnParts()) {
+		for (OnPart onPart : sentry.getOnParts()) {
 			new ConnectionImpl(process.getDefaultSplit(), DEFAULT, onPart, DEFAULT);
-			if (onPart instanceof PlanItemOnPart) {
-				PlanItemOnPart apip = (PlanItemOnPart) onPart;
+			if (onPart instanceof PlanItemStandardEventNode) {
+				PlanItemStandardEventNode apip = (PlanItemStandardEventNode) onPart;
 				apip.setSourcePlanItem(findPlanItem(process, apip.getSourceRef()));
 			} else {
-				CaseFileItemOnPart ocfip = (CaseFileItemOnPart) onPart;
+				CaseFileItemStandardEventNodeImpl ocfip = (CaseFileItemStandardEventNodeImpl) onPart;
 				ocfip.setSourceCaseFileItem(findCaseFileItemById(variableScope, ocfip.getSourceRef()));
 				ocfip.setRelatedCaseFileItem(findCaseFileItemById(variableScope, ocfip.getRelationRef()));
 			}
@@ -151,14 +152,14 @@ public abstract class PlanItemContainerHandler extends BaseAbstractHandler {
 		}
 	}
 
-	protected CaseFileItem findCaseFileItemById(VariableScope variableScope, String caseFileItemId) {
-		CaseFileItem binding = null;
+	protected CaseFileItemImpl findCaseFileItemById(VariableScope variableScope, String caseFileItemId) {
+		CaseFileItemImpl binding = null;
 		if (caseFileItemId != null) {
 			List<Variable> variables = variableScope.getVariables();
 			for (Variable variable : variables) {
 				if (variable instanceof CaseFileItem) {
 					if (((CaseFileItem) variable).getElementId().equals(caseFileItemId)) {
-						binding = (CaseFileItem) variable;
+						binding = (CaseFileItemImpl) variable;
 						break;
 					}
 				}

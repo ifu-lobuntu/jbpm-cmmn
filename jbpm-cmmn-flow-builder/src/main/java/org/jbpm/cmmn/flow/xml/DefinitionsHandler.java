@@ -16,13 +16,16 @@ import org.drools.core.xml.BaseAbstractHandler;
 import org.drools.core.xml.ExtensibleXmlParser;
 import org.drools.core.xml.Handler;
 import org.jbpm.cmmn.datatypes.CollectionDataType;
+import org.jbpm.cmmn.flow.common.impl.CaseFileItemStandardEventNodeImpl;
+import org.jbpm.cmmn.flow.common.impl.PlanItemStandardEventNode;
 import org.jbpm.cmmn.flow.core.CaseFileItem;
 import org.jbpm.cmmn.flow.core.CaseFileItemDefinition;
-import org.jbpm.cmmn.flow.core.CaseFileItemDefinitionType;
 import org.jbpm.cmmn.flow.core.Definitions;
+import org.jbpm.cmmn.flow.core.impl.CaseFileItemDefinitionImpl;
+import org.jbpm.cmmn.flow.core.impl.CaseFileItemImpl;
+import org.jbpm.cmmn.flow.core.CaseFileItemDefinitionType;
+import org.jbpm.cmmn.flow.core.impl.DefinitionsImpl;
 import org.jbpm.cmmn.flow.core.impl.CaseImpl;
-import org.jbpm.cmmn.flow.core.planitem.CaseFileItemOnPart;
-import org.jbpm.cmmn.flow.core.planitem.PlanItemOnPart;
 import org.jbpm.compiler.xml.ProcessBuildData;
 import org.jbpm.process.core.context.variable.Variable;
 import org.jbpm.process.core.context.variable.VariableScope;
@@ -34,7 +37,7 @@ import org.xml.sax.SAXException;
 
 public class DefinitionsHandler extends BaseAbstractHandler implements Handler {
     private static final Map<CaseFileItemDefinitionType, TypeMap> TYPE_MAP_REGISTRY = new HashMap<CaseFileItemDefinitionType, TypeMap>();
-    public static final String CASE_FILE_ITEM_DEFINITIONS = "CaseFileItemDefinition";
+    public static final String CASE_FILE_ITEM_DEFINITIONS = "CaseFileItemDefinitionImpl";
 
     public static void registerTypeMap(CaseFileItemDefinitionType typeSystem, TypeMap map) {
         TYPE_MAP_REGISTRY.put(typeSystem, map);
@@ -55,8 +58,8 @@ public class DefinitionsHandler extends BaseAbstractHandler implements Handler {
     @Override
     public Object start(final String uri, final String localName, final Attributes attrs, final ExtensibleXmlParser parser) throws SAXException {
         parser.startElementBuilder(localName, attrs);
-        ((ProcessBuildData) parser.getData()).setMetaData(CASE_FILE_ITEM_DEFINITIONS, new HashMap<String, CaseFileItemDefinition>());
-        return new Definitions();
+        ((ProcessBuildData) parser.getData()).setMetaData(CASE_FILE_ITEM_DEFINITIONS, new HashMap<String, CaseFileItemDefinitionImpl>());
+        return new DefinitionsImpl();
     }
 
     @Override
@@ -79,7 +82,7 @@ public class DefinitionsHandler extends BaseAbstractHandler implements Handler {
 
     @Override
     public Class<?> generateNodeFor() {
-        return Definitions.class;
+        return DefinitionsImpl.class;
     }
 
     private void setVariablesDataType(CaseImpl container, Map<String, CaseFileItemDefinition> itemDefinitions) {
@@ -87,23 +90,23 @@ public class DefinitionsHandler extends BaseAbstractHandler implements Handler {
         if (variableScope != null) {
             for (Variable variable : variableScope.getVariables()) {
                 if (variable instanceof CaseFileItem) {
-                    setVariableDataType((CaseFileItem) variable, itemDefinitions);
+                    setVariableDataType((CaseFileItemImpl) variable, itemDefinitions);
                 }
             }
         }
         for (Node node : container.getNodes()) {
-            if (node instanceof CaseFileItemOnPart) {
-                CaseFileItemOnPart i = (CaseFileItemOnPart) node;
+            if (node instanceof CaseFileItemStandardEventNodeImpl) {
+                CaseFileItemStandardEventNodeImpl i = (CaseFileItemStandardEventNodeImpl) node;
                 i.getVariable().setType(i.getSourceCaseFileItem().getType());
-            } else if (node instanceof PlanItemOnPart) {
-                ((PlanItemOnPart) node).getVariable().setType(new ObjectDataType("org.jbpm.services.task.impl.model.TaskImpl"));
+            } else if (node instanceof PlanItemStandardEventNode) {
+                ((PlanItemStandardEventNode) node).getVariable().setType(new ObjectDataType("org.jbpm.services.task.impl.model.TaskImpl"));
 
             }
         }
     }
 
-    private void setVariableDataType(CaseFileItem variable, Map<String, CaseFileItemDefinition> itemDefinitions) {
-        // retrieve type from item definition
+    private void setVariableDataType(CaseFileItemImpl variable, Map<String, CaseFileItemDefinition> itemDefinitions) {
+        // retrieve type from item impl
         String definitionRef = variable.getDefinitionRef();
         if (UndefinedDataType.getInstance().equals(variable.getType()) && itemDefinitions != null && definitionRef != null) {
             DataType dataType = new ObjectDataType();

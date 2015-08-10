@@ -1,28 +1,14 @@
 package org.jbpm.cmmn.task.workitems;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
-
 import org.drools.core.process.instance.WorkItemHandler;
-import org.drools.persistence.PersistenceContext;
 import org.drools.persistence.PersistenceContextManager;
-import org.drools.persistence.jpa.JpaPersistenceContext;
 import org.drools.persistence.jpa.JpaPersistenceContextManager;
 import org.jbpm.cmmn.common.WorkItemParameters;
-import org.jbpm.cmmn.flow.core.PlanItemTransition;
+import org.jbpm.cmmn.flow.common.PlanItemTransition;
 import org.jbpm.cmmn.instance.PlanElementState;
-import org.jbpm.cmmn.task.additional.commands.AutomaticallyStartTaskCommand;
+import org.jbpm.cmmn.task.additional.commands.*;
 import org.jbpm.cmmn.task.additional.commands.CompleteTaskCommand;
-import org.jbpm.cmmn.task.additional.commands.ExitCriteriaTaskCommand;
-import org.jbpm.cmmn.task.additional.commands.ResumeTaskFromParentCommand;
-import org.jbpm.cmmn.task.additional.commands.SetTaskOutputCommand;
-import org.jbpm.cmmn.task.additional.commands.SuspendTaskFromParentCommand;
-import org.jbpm.services.task.commands.ActivateTaskCommand;
-import org.jbpm.services.task.commands.ClaimTaskCommand;
-import org.jbpm.services.task.commands.FailTaskCommand;
-import org.jbpm.services.task.commands.SuspendTaskCommand;
-import org.jbpm.services.task.commands.TaskCommand;
+import org.jbpm.services.task.commands.*;
 import org.jbpm.services.task.impl.model.GroupImpl;
 import org.jbpm.services.task.wih.util.PeopleAssignmentHelper;
 import org.kie.api.runtime.EnvironmentName;
@@ -35,6 +21,10 @@ import org.kie.api.task.model.Status;
 import org.kie.api.task.model.Task;
 import org.kie.internal.runtime.manager.context.ProcessInstanceIdContext;
 import org.kie.internal.task.api.InternalTaskService;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Iterator;
 
 public class UpdateTaskStatusWorkItemHandler implements WorkItemHandler {
 	private RuntimeManager runtimeManager;

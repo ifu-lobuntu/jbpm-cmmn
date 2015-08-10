@@ -2,32 +2,29 @@ package org.jbpm.cmmn.flow.xml;
 
 import org.drools.core.xml.ExtensibleXmlParser;
 import org.drools.core.xml.Handler;
-import org.jbpm.cmmn.flow.core.BindingRefinement;
 import org.jbpm.cmmn.flow.core.CaseParameter;
-import org.jbpm.cmmn.flow.core.TaskDefinition;
+import org.jbpm.cmmn.flow.core.impl.BindingRefinementImpl;
 import org.jbpm.cmmn.flow.core.impl.CaseImpl;
-import org.jbpm.cmmn.flow.core.impl.PlanItemControlImpl;
-import org.jbpm.cmmn.flow.core.task.CaseTask;
-import org.jbpm.cmmn.flow.core.task.HumanTask;
-import org.jbpm.cmmn.flow.core.task.ParameterMapping;
+import org.jbpm.cmmn.flow.core.impl.CaseParameterImpl;
+import org.jbpm.cmmn.flow.definition.*;
 import org.w3c.dom.Element;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
 public class CaseParameterHandler extends AbstractCaseElementHandler implements Handler {
 	public CaseParameterHandler() {
-		this.validParents.add(HumanTask.class);
-		this.validParents.add(CaseTask.class);
+		this.validParents.add(HumanTaskDefinition.class);
+		this.validParents.add(CaseTaskDefinition.class);
 		this.validPeers.add(null);
 		this.validPeers.add(CaseParameter.class);
 		this.validPeers.add(ParameterMapping.class);
-		this.validPeers.add(PlanItemControlImpl.class);
+		this.validPeers.add(PlanItemControl.class);
 	}
 
 	@Override
 	public Object start(String uri, String localName, Attributes attrs, ExtensibleXmlParser parser) throws SAXException {
 		parser.startElementBuilder(localName, attrs);
-		CaseParameter cp = new CaseParameter();
+		CaseParameterImpl cp = new CaseParameterImpl();
 		cp.setBindingRef(IdGenerator.toXmlId(attrs.getValue("bindingRef")));
 		cp.setElementId(attrs.getValue("id"));
 		cp.setName(attrs.getValue("name"));
@@ -52,14 +49,14 @@ public class CaseParameterHandler extends AbstractCaseElementHandler implements 
 	@Override
 	public Object end(String uri, String localName, ExtensibleXmlParser parser) throws SAXException {
 		Element el = parser.endElementBuilder();
-		CaseParameter caseParameter = (CaseParameter) parser.getCurrent();
-		caseParameter.setBindingRefinement(new BindingRefinement(ConstraintExtractor.extractExpression(el, "bindingRefinement")));
+		CaseParameterImpl caseParameter = (CaseParameterImpl) parser.getCurrent();
+		caseParameter.setBindingRefinement(new BindingRefinementImpl(ConstraintExtractor.extractExpression(el, "bindingRefinement")));
 		return caseParameter;
 	}
 
 	@Override
 	public Class<?> generateNodeFor() {
-		return CaseParameter.class;
+		return CaseParameterImpl.class;
 	}
 
 }

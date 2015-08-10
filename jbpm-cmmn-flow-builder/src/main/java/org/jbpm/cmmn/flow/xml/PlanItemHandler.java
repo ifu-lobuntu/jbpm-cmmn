@@ -3,15 +3,15 @@ package org.jbpm.cmmn.flow.xml;
 import org.drools.core.xml.ExtensibleXmlParser;
 import org.drools.core.xml.Handler;
 import org.jbpm.cmmn.flow.core.PlanItemContainer;
-import org.jbpm.cmmn.flow.core.impl.Stage;
-import org.jbpm.cmmn.flow.core.planitem.PlanItemInfoImpl;
+import org.jbpm.cmmn.flow.definition.impl.StageImpl;
+import org.jbpm.cmmn.flow.planitem.impl.PlanItemInfoImpl;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
 public class PlanItemHandler extends AbstractCaseElementHandler implements Handler {
 	public PlanItemHandler() {
 		super();
-		super.validParents.add(Stage.class);
+		super.validParents.add(StageImpl.class);
 	}
 
 	@Override

@@ -2,7 +2,7 @@ package org.jbpm.cmmn.flow.xml;
 
 import org.drools.core.xml.ExtensibleXmlParser;
 import org.jbpm.cmmn.flow.core.impl.CaseImpl;
-import org.jbpm.cmmn.flow.core.impl.Milestone;
+import org.jbpm.cmmn.flow.definition.impl.MilestoneImpl;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
@@ -11,7 +11,7 @@ public class MilestoneHandler extends AbstractCaseElementHandler implements Plan
 	@Override
 	public Object start(String uri, String localName, Attributes attrs, ExtensibleXmlParser parser) throws SAXException {
 		parser.startElementBuilder(localName, attrs);
-		Milestone node = new Milestone();
+		MilestoneImpl node = new MilestoneImpl();
 		node.setElementId(attrs.getValue("id"));
 		node.setName(attrs.getValue("name"));
 		node.setId(IdGenerator.getIdAsUniqueAsUuid(parser, node));
@@ -21,7 +21,7 @@ public class MilestoneHandler extends AbstractCaseElementHandler implements Plan
 
 	@Override
 	public Class<?> generateNodeFor() {
-		return Milestone.class;
+		return MilestoneImpl.class;
 	}
 
 	@Override

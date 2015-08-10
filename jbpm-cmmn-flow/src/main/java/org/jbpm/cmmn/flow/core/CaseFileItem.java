@@ -1,89 +1,42 @@
 package org.jbpm.cmmn.flow.core;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import org.drools.core.process.core.TypeObject;
+import org.jbpm.process.core.ValueObject;
+
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-import org.jbpm.process.core.context.variable.Variable;
+public interface CaseFileItem extends CMMNElement,TypeObject, ValueObject, Serializable {
+    boolean isUnique();
 
-public class CaseFileItem extends Variable implements CMMNElement {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 8248796967737773161L;
-	private String id;
-	private String definitionRef;
-	private CaseFileItemDefinition definition;
-	private boolean isCollection;
-	private List<CaseFileItem> children = new ArrayList<CaseFileItem>();
-	private Map<String, CaseFileItem> targets = new HashMap<String, CaseFileItem>();
-	private boolean isUnique = true;
-	private boolean isOrdered = false;
+    void setUnique(boolean isUnique);
 
-	public boolean isUnique() {
-		return isUnique;
-	}
+    boolean isOrdered();
 
-	public void setUnique(boolean isUnique) {
-		this.isUnique = isUnique;
-	}
+    void setOrdered(boolean isOrdered);
 
-	public boolean isOrdered() {
-		return isOrdered;
-	}
+    List<CaseFileItem> getChildren();
 
-	public void setOrdered(boolean isOrdered) {
-		this.isOrdered = isOrdered;
-	}
+    Map<String, CaseFileItem> getTargets();
 
-	@Override
-	public String getElementId() {
-		return id;
-	}
+    void putTarget(String id, CaseFileItem t);
 
-	public List<CaseFileItem> getChildren() {
-		return children;
-	}
+    void addChild(CaseFileItem c);
 
-	public Map<String, CaseFileItem> getTargets() {
-		return targets;
-	}
+    void setElementId(String id);
 
-	public void putTarget(String id, CaseFileItem t) {
-		targets.put(id, t);
-	}
+    void setDefinitionRef(String value);
 
-	public void addChild(CaseFileItem c) {
-		children.add(c);
-	}
+    String getDefinitionRef();
 
-	public void setElementId(String id) {
-		this.id = id;
-	}
+    CaseFileItemDefinition getDefinition();
 
-	public void setDefinitionRef(String value) {
-		this.definitionRef = value;
-	}
+    void setDefinition(CaseFileItemDefinition definition);
 
-	public String getDefinitionRef() {
-		return definitionRef;
-	}
+    boolean isCollection();
 
-	public CaseFileItemDefinition getDefinition() {
-		return definition;
-	}
+    void setCollection(boolean isCollection);
 
-	public void setDefinition(CaseFileItemDefinition definition) {
-		this.definition = definition;
-	}
-
-	public boolean isCollection() {
-		return isCollection;
-	}
-
-	public void setCollection(boolean isCollection) {
-		this.isCollection = isCollection;
-	}
-
+    String getName();
 }

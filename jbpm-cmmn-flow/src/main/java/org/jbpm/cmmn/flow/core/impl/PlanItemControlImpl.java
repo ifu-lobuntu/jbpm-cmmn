@@ -1,9 +1,9 @@
 package org.jbpm.cmmn.flow.core.impl;
 
-import java.io.Serializable;
-
-import org.jbpm.cmmn.flow.core.PlanItemControl;
+import org.jbpm.cmmn.flow.definition.PlanItemControl;
 import org.jbpm.workflow.core.Constraint;
+
+import java.io.Serializable;
 
 public class PlanItemControlImpl implements Serializable, PlanItemControl {
 
@@ -11,7 +11,7 @@ public class PlanItemControlImpl implements Serializable, PlanItemControl {
 	private String elementId;
 	private Constraint manualActivationRule;
 	private Constraint requiredRule;
-	private Constraint repetionRule;
+	private Constraint repetionrule;
 
 	public String getElementId() {
 		return elementId;
@@ -41,11 +41,11 @@ public class PlanItemControlImpl implements Serializable, PlanItemControl {
 
 	@Override
 	public Constraint getRepetitionRule() {
-		return repetionRule;
+		return repetionrule;
 	}
 
 	public void setRepetitionRule(Constraint repetionRule) {
-		this.repetionRule = repetionRule;
+		this.repetionrule = repetionRule;
 	}
 
 }

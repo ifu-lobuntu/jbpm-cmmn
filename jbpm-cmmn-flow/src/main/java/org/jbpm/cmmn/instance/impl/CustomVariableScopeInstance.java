@@ -1,13 +1,13 @@
 package org.jbpm.cmmn.instance.impl;
 
-import java.util.Map;
-
 import org.jbpm.process.core.Context;
 import org.jbpm.process.core.context.variable.VariableScope;
 import org.jbpm.process.instance.ContextInstanceContainer;
 import org.jbpm.process.instance.ContextableInstance;
 import org.jbpm.process.instance.ProcessInstance;
 import org.jbpm.process.instance.context.variable.VariableScopeInstance;
+
+import java.util.Map;
 
 /**
  * The purpose of this class is to make "special" variables available from the environment TODO find a better way of
@@ -18,9 +18,9 @@ import org.jbpm.process.instance.context.variable.VariableScopeInstance;
  */
 public final class CustomVariableScopeInstance extends VariableScopeInstance {
 	private static final long serialVersionUID = 6026168560982471308L;
-	private ControllableItemInstanceImpl<?, ?> node;
+	private ControllableItemInstanceImpl<?> node;
 
-	public CustomVariableScopeInstance(ControllableItemInstanceImpl<?, ?> nodeImpl) {
+	public CustomVariableScopeInstance(ControllableItemInstanceImpl<?> nodeImpl) {
 		this.node = nodeImpl;
 	}
 

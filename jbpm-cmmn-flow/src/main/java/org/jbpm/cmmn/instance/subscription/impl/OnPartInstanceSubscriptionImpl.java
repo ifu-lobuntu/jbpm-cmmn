@@ -1,18 +1,12 @@
 package org.jbpm.cmmn.instance.subscription.impl;
 
-import static org.jbpm.cmmn.flow.core.CaseFileItemTransition.CREATE;
-import static org.jbpm.cmmn.flow.core.CaseFileItemTransition.DELETE;
-
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
-
 import org.drools.core.common.InternalKnowledgeRuntime;
 import org.jbpm.cmmn.datatypes.CollectionDataType;
-import org.jbpm.cmmn.flow.core.CaseFileItem;
-import org.jbpm.cmmn.flow.core.CaseFileItemTransition;
+import org.jbpm.cmmn.flow.common.impl.CaseFileItemStandardEventNodeImpl;
+import org.jbpm.cmmn.flow.common.CaseFileItemTransition;
 import org.jbpm.cmmn.flow.core.CaseParameter;
-import org.jbpm.cmmn.flow.core.planitem.CaseFileItemOnPart;
+import org.jbpm.cmmn.flow.core.impl.CaseFileItemImpl;
+import org.jbpm.cmmn.flow.core.impl.CaseParameterImpl;
 import org.jbpm.cmmn.instance.CaseInstance;
 import org.jbpm.cmmn.instance.OnPartInstance;
 import org.jbpm.cmmn.instance.impl.util.ExpressionUtil;
@@ -20,26 +14,33 @@ import org.jbpm.cmmn.instance.subscription.CaseFileItemSubscriptionInfo;
 import org.jbpm.cmmn.instance.subscription.OnPartInstanceSubscription;
 import org.kie.internal.runtime.KnowledgeRuntime;
 
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+
+import static org.jbpm.cmmn.flow.common.CaseFileItemTransition.CREATE;
+import static org.jbpm.cmmn.flow.common.CaseFileItemTransition.DELETE;
+
 public class OnPartInstanceSubscriptionImpl extends AbstractCaseFileItemSubscriptionInfo implements CaseFileItemSubscriptionInfo, OnPartInstanceSubscription {
-	CaseFileItemOnPart source;
-	private Set<CaseParameter> subscribingParameters = new HashSet<CaseParameter>();
+	CaseFileItemStandardEventNodeImpl source;
+	private Set<org.jbpm.cmmn.flow.core.CaseParameter> subscribingParameters = new HashSet<org.jbpm.cmmn.flow.core.CaseParameter>();
 	private InternalKnowledgeRuntime kr;
 	private String caseKey;
 	private long processInstanceId;
 
-	public OnPartInstanceSubscriptionImpl(OnPartInstance source, CaseParameter caseParameter) {
+	public OnPartInstanceSubscriptionImpl(OnPartInstance source, org.jbpm.cmmn.flow.core.CaseParameter caseParameter) {
 		super();
 		// InternalRuntimeManager manager = (InternalRuntimeManager)
 		// source.getCaseInstance().getKnowledgeRuntime().getEnvironment().get("RuntimeManager");
 		this.subscribingParameters.add(caseParameter);
 		kr = source.getCaseInstance().getKnowledgeRuntime();
-		this.source = (CaseFileItemOnPart) source.getOnPart();
+		this.source = (CaseFileItemStandardEventNodeImpl) source.getOnPart();
 		this.caseKey = source.getCaseInstance().getCase().getCaseKey();
 		this.processInstanceId = source.getCaseInstance().getId();
 	}
 
-	public CaseFileItemOnPart getSource() {
-		return (CaseFileItemOnPart) source;
+	public CaseFileItemStandardEventNodeImpl getSource() {
+		return source;
 	}
 
 	@Override
@@ -58,7 +59,7 @@ public class OnPartInstanceSubscriptionImpl extends AbstractCaseFileItemSubscrip
 	}
 
 	public boolean meetsBindingRefinementCriteria(Object o, CaseInstance caseInstance) {
-		Set<CaseParameter> subscribingParameters2 = this.subscribingParameters;
+		Set<org.jbpm.cmmn.flow.core.CaseParameter> subscribingParameters2 = this.subscribingParameters;
 		if (getSource().getStandardEvent() == CREATE || getSource().getStandardEvent() == DELETE) {
 			return true; // TODO Can't make assumptions about whether the process state contains the new/old
 							// object
@@ -81,11 +82,11 @@ public class OnPartInstanceSubscriptionImpl extends AbstractCaseFileItemSubscrip
 		return false;
 	}
 
-	public void addParameter(CaseParameter parameter) {
+	public void addParameter(org.jbpm.cmmn.flow.core.CaseParameter parameter) {
 		this.subscribingParameters.add(parameter);
 	}
 
-	public CaseFileItem getVariable() {
+	public CaseFileItemImpl getVariable() {
 		return getSource().getSourceCaseFileItem();
 	}
 
