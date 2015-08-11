@@ -1,14 +1,10 @@
 package org.jbpm.cmmn.instance.impl;
 
-import org.drools.core.WorkItemHandlerNotFoundException;
 import org.drools.core.process.instance.WorkItem;
-import org.drools.core.process.instance.WorkItemManager;
-import org.drools.core.process.instance.impl.WorkItemImpl;
 import org.jbpm.cmmn.common.WorkItemParameters;
 import org.jbpm.cmmn.flow.common.ItemWithDefinition;
 import org.jbpm.cmmn.flow.common.PlanItemTransition;
 import org.jbpm.cmmn.flow.core.CaseParameter;
-import org.jbpm.cmmn.flow.core.impl.CaseParameterImpl;
 import org.jbpm.cmmn.flow.definition.PlanItemDefinition;
 import org.jbpm.cmmn.flow.definition.TaskDefinition;
 import org.jbpm.cmmn.flow.planitem.PlanItem;
@@ -17,15 +13,9 @@ import org.jbpm.cmmn.flow.planning.impl.PlannerRoleCalculator;
 import org.jbpm.cmmn.instance.CaseInstance;
 import org.jbpm.cmmn.instance.ControllableItemInstance;
 import org.jbpm.cmmn.instance.PlanElementState;
-import org.jbpm.cmmn.instance.TransitionSignal;
 import org.jbpm.cmmn.instance.impl.util.ExpressionUtil;
-import org.jbpm.cmmn.instance.subscription.impl.EventQueues;
-import org.jbpm.process.core.context.exception.ExceptionScope;
 import org.jbpm.process.core.context.variable.VariableScope;
 import org.jbpm.process.instance.ContextInstance;
-import org.jbpm.process.instance.ProcessInstance;
-import org.jbpm.process.instance.context.exception.ExceptionScopeInstance;
-import org.jbpm.workflow.instance.WorkflowRuntimeException;
 import org.jbpm.workflow.instance.node.CompositeContextNodeInstance;
 import org.kie.api.runtime.process.NodeInstance;
 
@@ -47,7 +37,6 @@ public abstract class ControllableItemInstanceImpl<T extends PlanItemDefinition>
 		super();
 	}
 
-	protected abstract String getIdealRoles();
 
 	public org.jbpm.workflow.instance.NodeInstance getFirstNodeInstance(final long nodeId) {
 		// level logic not relevant.
@@ -63,44 +52,12 @@ public abstract class ControllableItemInstanceImpl<T extends PlanItemDefinition>
 		return false;
 	}
 
-	protected String getIdealOwner() {
-		if (isActivatedManually()) {
-			return null;
-		} else {
-			if(getIdealRoles()!=null){
-				String[] roleAssignmentNames = getCaseInstance().getRoleInstance(getIdealRoles()).getRoleAssignmentNames();
-				if(roleAssignmentNames.length==1){
-					return roleAssignmentNames[0];
-				}else{
-					return null;
-				}
-			}
-			return getCaseInstance().getCaseOwner();
-		}
-	}
 
 	public boolean isActivatedManually() {
 		return ExpressionUtil.isActivatedManually(this, this.getItem());
 	}
 
-	protected String getInitiator() {
-		// by this time a case MUST have an owner
-		return getCaseInstance().getCaseOwner();
-	}
 
-
-	protected String getBusinessAdministrators() {
-		ItemWithDefinition<T> item = getItem();
-		if (item instanceof PlanItem) {
-			return PlannerRoleCalculator.getPlannerRoles((PlanItem<?>) item);
-		} else {
-			return PlannerRoleCalculator.getPlannerRoles((DiscretionaryItemImpl<?>) item);
-		}
-	}
-
-	protected boolean isBlocking() {
-		return true;
-	}
 
 	@Override
 	public boolean isComplexLifecycle() {
@@ -121,14 +78,7 @@ public abstract class ControllableItemInstanceImpl<T extends PlanItemDefinition>
 		this.planElementState = PlanElementState.INITIAL;
 	}
 
-	@Override
-	public void internalTrigger(NodeInstance from, String type) {
-		super.internalTrigger(from, type);
-		noteInstantiation();
-		if (!isBlocking()) {
-			triggerCompleted();
-		}
-	}
+
 
 	public void noteInstantiation() {
 		if (isCompletionRequired == null) {
@@ -177,13 +127,13 @@ public abstract class ControllableItemInstanceImpl<T extends PlanItemDefinition>
 
 	@Override
 	public String[] getEventTypes() {
-		return new String[] { WorkItemParameters.WORK_ITEM_UPDATED };
+		return new String[] {};
 	}
 
 	@Override
 	public void signalEvent(String type, Object event) {
-		if (event instanceof TransitionSignal) {
-			PlanItemTransition transition = ((TransitionSignal) event).getTransition();
+		if (event instanceof PlanItemTransition) {
+			PlanItemTransition transition = (PlanItemTransition) event;
 			transition.invokeOn(this);
 		} else {
 			super.signalEvent(type, event);

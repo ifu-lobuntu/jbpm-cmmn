@@ -35,7 +35,11 @@ public abstract class AbstractCallingTaskInstance <T extends TaskDefinition> ext
 	private static final long serialVersionUID = -2144001908752174712L;
 	private long processInstanceId = -1;
 	transient private ProcessInstance processInstance;
-
+	@Override
+	public void internalTrigger(NodeInstance from, String type) {
+		super.internalTrigger(from, type);
+		noteInstantiation();
+	}
 	public abstract String getCalledProcessId();
 	@Override
 	public void start() {
@@ -96,7 +100,7 @@ public abstract class AbstractCallingTaskInstance <T extends TaskDefinition> ext
 			((ProcessInstanceImpl) processInstance).setMetaData("ParentProcessInstanceId", getProcessInstance().getId());
 			((ProcessInstanceImpl) processInstance).setParentProcessInstanceId(getProcessInstance().getId());
 			kruntime.startProcessInstance(processInstance.getId());
-			if (!isBlocking()) {
+			if (!getItem().getDefinition().isBlocking()) {
 				triggerCompleted();
 			} else if (processInstance.getState() == ProcessInstance.STATE_COMPLETED || processInstance.getState() == ProcessInstance.STATE_ABORTED) {
 				processInstanceCompleted(processInstance);
@@ -198,7 +202,7 @@ public abstract class AbstractCallingTaskInstance <T extends TaskDefinition> ext
 	}
 
 	public String[] getEventTypes() {
-		return new String[] { "processInstanceCompleted:" + processInstanceId, WorkItemParameters.WORK_ITEM_UPDATED };
+		return new String[] { "processInstanceCompleted:" + processInstanceId};
 	}
 
 	public void processInstanceCompleted(ProcessInstance processInstance) {
@@ -260,20 +264,4 @@ public abstract class AbstractCallingTaskInstance <T extends TaskDefinition> ext
 		return result;
 	}
 
-	public String getNodeName() {
-		Node node = getNode();
-		if (node == null) {
-			return "[Dynamic] Sub Process";
-		}
-		return super.getNodeName();
-	}
-
-	@Override
-	protected String getIdealRoles() {
-		String bas = getBusinessAdministrators();
-		if (bas.equals("Administrators") ) {
-			return null;
-		}
-		return bas;
-	}
 }

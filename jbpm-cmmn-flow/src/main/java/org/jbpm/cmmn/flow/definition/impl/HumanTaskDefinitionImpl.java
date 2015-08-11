@@ -6,6 +6,7 @@ import org.drools.core.process.core.datatype.impl.type.StringDataType;
 import org.drools.core.process.core.impl.ParameterDefinitionImpl;
 import org.drools.core.process.core.impl.WorkImpl;
 import org.jbpm.cmmn.common.WorkItemParameters;
+import org.jbpm.cmmn.flow.core.CaseRole;
 import org.jbpm.cmmn.flow.core.impl.CaseRoleImpl;
 import org.jbpm.cmmn.flow.definition.HumanTaskDefinition;
 import org.jbpm.cmmn.flow.planning.PlanningTable;
@@ -15,7 +16,7 @@ import java.util.Set;
 
 public class HumanTaskDefinitionImpl extends TaskDefinitionImpl implements HumanTaskDefinition {
 	private String performerRef;
-	private CaseRoleImpl performer;
+	private CaseRole performer;
 
 	private static final long serialVersionUID = 2502972573721493216L;
 	private PlanningTable planningTable;
@@ -50,11 +51,11 @@ public class HumanTaskDefinitionImpl extends TaskDefinitionImpl implements Human
 		this.performerRef = performerRef;
 	}
 
-	public CaseRoleImpl getPerformer() {
+	public CaseRole getPerformer() {
 		return performer;
 	}
 
-	public void setPerformer(CaseRoleImpl performer) {
+	public void setPerformer(CaseRole performer) {
 		this.performer = performer;
 	}
 

@@ -13,8 +13,7 @@
     <mapping-file>META-INF/JBPMorm.xml</mapping-file>
     <mapping-file>META-INF/Taskorm.xml</mapping-file>
     <mapping-file>META-INF/TaskAuditorm.xml</mapping-file>
-    <mapping-file>META-INF/PlannableTaskorm.xml</mapping-file>
-    
+
     <class>org.jbpm.persistence.processinstance.ProcessInstanceInfo</class>
     <class>org.drools.persistence.info.SessionInfo</class>
     <class>org.drools.persistence.info.WorkItemInfo</class>
@@ -60,7 +59,6 @@
         <!-- CMMN Event managment -->
         <class>org.jbpm.cmmn.casefile.jpa.JpaCaseFileItemSubscriptionInfo</class>
         <class>org.jbpm.cmmn.casefile.jpa.JpaCaseSubscriptionInfo</class>
-        <class>org.jbpm.cmmn.task.jpa.model.PlannableTaskImpl</class>
         <!-- Customer entities -->
         <class>test.cmmn.HousePlan</class>
         <class>test.cmmn.RoomPlan</class>

@@ -71,6 +71,7 @@ import org.kie.api.marshalling.ObjectMarshallingStrategy;
 import org.kie.api.runtime.Environment;
 import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.conf.ClockTypeOption;
+import org.kie.api.runtime.manager.Context;
 import org.kie.api.runtime.manager.RuntimeEngine;
 import org.kie.api.runtime.manager.RuntimeEnvironmentBuilder;
 import org.kie.api.runtime.manager.RuntimeManager;
@@ -105,14 +106,6 @@ import java.sql.ResultSet;
 import java.util.*;
 
 import static org.kie.api.runtime.EnvironmentName.OBJECT_MARSHALLING_STRATEGIES;
-
-//import test.ConstructionCase;
-//import test.House;
-//import test.HousePlan;
-//import test.RoofPlan;
-//import test.RoomPlan;
-//import test.Wall;
-//import test.WallPlan;
 
 public abstract class AbstractCmmnCaseTestCase extends JbpmJUnitBaseTestCase {
 	static {
@@ -345,6 +338,11 @@ public abstract class AbstractCmmnCaseTestCase extends JbpmJUnitBaseTestCase {
 		stopwatch.lap("tearDown");
 	}
 
+	@Override
+	protected RuntimeEngine getRuntimeEngine(Context<?> context) {
+		return super.getRuntimeEngine(context);
+	}
+
 	protected void assertTaskTypeCreated(List<TaskSummary> list, String expected, int... numberOfTimes) {
 		int count = 0;
 		for (TaskSummary taskSummary : list) {
@@ -362,7 +360,7 @@ public abstract class AbstractCmmnCaseTestCase extends JbpmJUnitBaseTestCase {
 	public CaseFilePersistence getPersistence() {
 		try {
 			if (persistence == null) {
-				persistence = new JpaCaseFilePersistence(emf, runtimeManager);
+				persistence = new JpaCaseFilePersistence(emf, runtimeEngine);
 			}
 			return persistence;
 		} catch (RuntimeException e) {

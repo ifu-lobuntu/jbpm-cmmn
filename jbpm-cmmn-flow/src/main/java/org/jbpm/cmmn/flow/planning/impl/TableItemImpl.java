@@ -2,6 +2,7 @@ package org.jbpm.cmmn.flow.planning.impl;
 
 import org.jbpm.cmmn.flow.common.impl.AbstractItem;
 import org.jbpm.cmmn.flow.core.Case;
+import org.jbpm.cmmn.flow.core.CaseRole;
 import org.jbpm.cmmn.flow.core.impl.CaseRoleImpl;
 import org.jbpm.cmmn.flow.planning.ApplicabilityRule;
 import org.jbpm.cmmn.flow.planning.PlanningTable;
@@ -12,7 +13,7 @@ import java.util.Map;
 
 public class TableItemImpl extends AbstractItem implements TableItem{
 	private static final long serialVersionUID = 6743815602437868413L;
-	private Map<String, CaseRoleImpl> authorizedRoles = new HashMap<String, CaseRoleImpl>();
+	private Map<String, CaseRole> authorizedRoles = new HashMap<String, CaseRole>();
 
 	private PlanningTable planningTable;
 	private String description;
@@ -26,12 +27,12 @@ public class TableItemImpl extends AbstractItem implements TableItem{
 		return applicabilityRules;
 	}
 
-	public void putAuthorizedRole(String id, CaseRoleImpl role) {
+	public void putAuthorizedRole(String id, CaseRole role) {
 		authorizedRoles.put(id, role);
 	}
 
 	@Override
-	public Map<String, CaseRoleImpl> getAuthorizedRoles() {
+	public Map<String, CaseRole> getAuthorizedRoles() {
 		return authorizedRoles;
 	}
 

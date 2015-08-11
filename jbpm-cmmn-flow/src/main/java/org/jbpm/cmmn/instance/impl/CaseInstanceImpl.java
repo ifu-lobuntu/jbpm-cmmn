@@ -3,11 +3,11 @@ package org.jbpm.cmmn.instance.impl;
 import org.drools.core.process.instance.WorkItem;
 import org.jbpm.casemgmt.role.RoleInstance;
 import org.jbpm.casemgmt.role.impl.RoleInstanceImpl;
-import org.jbpm.cmmn.common.ApplicableDiscretionaryItem;
 import org.jbpm.cmmn.common.WorkItemParameters;
 import org.jbpm.cmmn.flow.common.PlanItemTransition;
 import org.jbpm.cmmn.flow.core.CaseFileItem;
 import org.jbpm.cmmn.flow.core.CaseParameter;
+import org.jbpm.cmmn.flow.core.CaseRole;
 import org.jbpm.cmmn.flow.core.PlanItemContainer;
 import org.jbpm.cmmn.flow.core.impl.CaseImpl;
 import org.jbpm.cmmn.flow.core.impl.CaseRoleImpl;
@@ -20,8 +20,6 @@ import org.jbpm.cmmn.instance.subscription.OnPartInstanceSubscription;
 import org.jbpm.cmmn.instance.subscription.SubscriptionManager;
 import org.jbpm.cmmn.instance.subscription.SubscriptionPersistenceContext;
 import org.jbpm.ruleflow.instance.RuleFlowProcessInstance;
-import org.jbpm.workflow.instance.NodeInstanceContainer;
-import org.jbpm.workflow.instance.node.EventNodeInstanceInterface;
 import org.kie.api.runtime.process.NodeInstance;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,15 +66,6 @@ public class CaseInstanceImpl extends RuleFlowProcessInstance implements CaseIns
         return roleInstance;
     }
 
-    public NodeInstance createPlannedItem(long containerWorkItemId, String tableItemId) {
-        PlanningTableContainerInstance ptc = findPlanningTableContainerInstance(containerWorkItemId);
-        if (ptc != null) {
-            return ptc.createPlannedItem(tableItemId);
-        } else {
-            return null;
-        }
-    }
-
     public void markSubscriptionsForUpdate() {
         this.shouldUpdateSubscriptions = true;
     }
@@ -84,13 +73,9 @@ public class CaseInstanceImpl extends RuleFlowProcessInstance implements CaseIns
     @Override
     public void signalEvent(String type, Object event) {
         signalCount++;
-        if (event instanceof TransitionSignal) {
-            TransitionSignal ts = (TransitionSignal) event;
-            PlanItemTransition transition = ts.getTransition();
+        if (event instanceof PlanItemTransition) {
+            PlanItemTransition transition = (PlanItemTransition) event;
             if (transition != null) {
-                if(ts.getTargetUniqueId()!=null){
-
-                }
                 if (getPlanElementState().isTerminalState() && transition == PlanItemTransition.TERMINATE) {
                     logger.info("ignore - called from task service: " + WorkItemParameters.TRANSITION);
                 } else if (transition == PlanItemTransition.COMPLETE) {
@@ -108,6 +93,7 @@ public class CaseInstanceImpl extends RuleFlowProcessInstance implements CaseIns
         }
         signalCount--;
         if (shouldUpdateSubscriptions && signalCount == 0) {
+            //only update subscriptions when initial signalEvent call has completed
             updateSubscriptions();
         }
     }
@@ -174,26 +160,7 @@ public class CaseInstanceImpl extends RuleFlowProcessInstance implements CaseIns
         }
     }
 
-    public ControllableItemInstance<?> ensurePlanItemCreated(long parentWorkItemId, String discretionaryItemId, WorkItem wi) {
-        ControllableItemInstance<?> found = findNodeForWorkItem(wi.getId());
-        if (found != null) {
-            return found;
-        } else {
-            PlanningTableContainerInstance e = findPlanningTableContainerInstance(parentWorkItemId);
-            return e.ensurePlanItemCreated(discretionaryItemId, wi);
-        }
-    }
-
-    public Set<ApplicableDiscretionaryItem> getApplicableDiscretionaryItems(long wi, Set<String> roles) {
-        PlanningTableContainerInstance pewt = findPlanningTableContainerInstance(wi);
-        Map<String, ApplicableDiscretionaryItem> result = new HashMap<String, ApplicableDiscretionaryItem>();
-        if (pewt != null) {
-            pewt.addApplicableItems(result, roles);
-        }
-        return new HashSet<ApplicableDiscretionaryItem>(result.values());
-    }
-
-    // ****PlanItemInstanceContainerLifecycle implementation*****//
+       // ****PlanItemInstanceContainerLifecycle implementation*****//
     @Override
     public void addCaseFileItemOnPartsForParameters(Collection<org.jbpm.cmmn.flow.core.CaseParameter> items,
                                                     Map<OnPartInstance, OnPartInstanceSubscription> onCaseFileItemParts) {
@@ -248,20 +215,13 @@ public class CaseInstanceImpl extends RuleFlowProcessInstance implements CaseIns
         return planningContextNodeInstance;
     }
 
-    @Override
-    public ControllableItemInstance<?> ensurePlanItemCreated(String discretionaryItemId, WorkItem wi) {
-        return PlanningTableContainerInstanceUtil.ensurePlanItemCreated(this, discretionaryItemId, wi);
-    }
 
     @Override
     public PlanItemInstanceContainer getPlanItemInstanceCreator() {
         return this;
     }
 
-    @Override
-    public void addApplicableItems(Map result, Set usersRoles) {
-        PlanningTableContainerInstanceUtil.addApplicableItems(this, result, usersRoles);
-    }
+
 
     // ***********CaseInstanceLifecyle implementation***********//
     @Override
@@ -319,24 +279,13 @@ public class CaseInstanceImpl extends RuleFlowProcessInstance implements CaseIns
     public NodeInstance createPlannedItem(String tableItemId) {
         return PlanningTableContainerInstanceUtil.createPlannedTask(this, tableItemId);
     }
-
-    @Override
-    public void makeDiscretionaryItemAvailable(String discretionaryItemId) {
-        PlanningTableContainerInstanceUtil.makeDiscretionaryItemAvailable(this, discretionaryItemId);
-    }
-
     @Override
     public Collection<String> getCaseRoleNames() {
         Set<String> result = new HashSet<String>();
-        for (CaseRoleImpl caseRole : this.getCase().getRoles()) {
+        for (CaseRole caseRole : this.getCase().getRoles()) {
             result.add(caseRole.getName());
         }
         return result;
-    }
-
-    @Override
-    public void ensurePlanItemCreated(long workItemId, String discretionaryItemId, org.kie.api.runtime.process.WorkItem wi) {
-        ensurePlanItemCreated(workItemId, discretionaryItemId, (WorkItem) wi);
     }
 
     @Override

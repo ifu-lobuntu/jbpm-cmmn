@@ -3,6 +3,7 @@ package org.jbpm.cmmn.instance.impl.util;
 import org.drools.core.process.core.Work;
 import org.drools.core.process.instance.WorkItem;
 import org.drools.core.process.instance.impl.WorkItemImpl;
+import org.jbpm.casemgmt.role.Role;
 import org.jbpm.cmmn.common.ApplicableDiscretionaryItem;
 import org.jbpm.cmmn.common.WorkItemParameters;
 import org.jbpm.cmmn.flow.core.impl.CaseRoleImpl;
@@ -104,9 +105,9 @@ public class PlanningTableContainerInstanceUtil {
 		}
 	}
 
-	private static boolean isAuthorized(Set<String> usersRoles, Map<String, CaseRoleImpl> authorizedRoles) {
+	private static boolean isAuthorized(Set<String> usersRoles, Map<String, ? extends Role> authorizedRoles) {
 		boolean authorized = authorizedRoles.isEmpty();
-		for (CaseRoleImpl role : authorizedRoles.values()) {
+		for (Role role : authorizedRoles.values()) {
 			if (usersRoles.contains(role.getName())) {
 				authorized = true;
 			}

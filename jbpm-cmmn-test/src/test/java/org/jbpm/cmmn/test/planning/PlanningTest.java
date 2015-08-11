@@ -1,18 +1,29 @@
 package org.jbpm.cmmn.test.planning;
 
-import org.jbpm.cmmn.task.model.PlannableTask;
-import org.jbpm.cmmn.task.model.PlannableTaskSummary;
-import org.jbpm.cmmn.task.model.PlanningTableInstance;
+import org.jbpm.cmmn.common.ApplicableDiscretionaryItem;
+import org.jbpm.cmmn.service.api.impl.CMMNServiceImpl;
+import org.jbpm.cmmn.service.model.PlannableItem;
 import org.jbpm.cmmn.test.container.AbstractPlanItemInstanceContainerTest;
+import org.junit.Test;
+import org.kie.api.runtime.manager.RuntimeManager;
+
+import java.util.Collection;
 
 public class PlanningTest extends AbstractPlanItemInstanceContainerTest {
-//	PlanningServiceImpl planningService = new PlanningServiceImpl();
-//	{
-//		isJpa = true;
-//	}
-//
-//	@Test
-//	public void testStartPlanning() throws Exception {
+	CMMNServiceImpl planningService;
+	{
+		isJpa = true;
+	}
+
+	@Override
+	protected RuntimeManager createRuntimeManager(Strategy strategy, String identifier, String... process) {
+		RuntimeManager runtimeManager = super.createRuntimeManager(strategy, identifier, process);
+		this.planningService=new CMMNServiceImpl(getRuntimeEngine());
+		return runtimeManager;
+	}
+
+	@Test
+	public void testStartPlanning() throws Exception {
 //		givenThatTheTestCaseIsStarted();
 //		triggerInitialActivity();
 //		getPersistence().start();
@@ -42,10 +53,10 @@ public class PlanningTest extends AbstractPlanItemInstanceContainerTest {
 //				fail();
 //			}
 //		}
-//	}
-//
-//	@Test
-//	public void testPreparePlannableTask() throws Exception {
+	}
+
+	@Test
+	public void testPreparePlannableTask() throws Exception {
 //		givenThatTheTestCaseIsStarted();
 //		triggerInitialActivity();
 //		PlannableTask plannedCaseTask = getPlanningService().preparePlannableTask(
@@ -66,10 +77,10 @@ public class PlanningTest extends AbstractPlanItemInstanceContainerTest {
 //		assertNull(ci.findNodeForWorkItem(plannedHumanTask.getTaskData().getWorkItemId()));
 //		assertNull(ci.findNodeForWorkItem(plannedStage.getTaskData().getWorkItemId()));
 //		getPersistence().commit();
-//	}
-//
-//	@Test
-//	public void testActivateDiscretionaryItem() throws Exception {
+	}
+
+	@Test
+	public void testActivateDiscretionaryItem() throws Exception {
 //		givenThatTheTestCaseIsStarted();
 //		triggerInitialActivity();
 //		getPlanningService().makeDiscretionaryItemAvailable(getTaskService().getTaskByWorkItemId(caseInstance.getWorkItemId()).getId(),
@@ -86,10 +97,10 @@ public class PlanningTest extends AbstractPlanItemInstanceContainerTest {
 //		assertTaskInState(tasksAssignedAsPotentialOwner, "TheHumanTask", Status.Ready);
 //		getPersistence().commit();
 //		assertPlanItemInState(caseInstance.getId(), "TheHumanTask", PlanElementState.ENABLED);
-//	}
-//
-//	@Test
-//	public void testSubmitPlanWithContainerAlreadyActive() throws Exception {
+	}
+
+	@Test
+	public void testSubmitPlanWithContainerAlreadyActive() throws Exception {
 //		givenThatTheTestCaseIsStarted();
 //		triggerInitialActivity();
 //		getPersistence().start();
@@ -159,10 +170,10 @@ public class PlanningTest extends AbstractPlanItemInstanceContainerTest {
 //		caseInstance = reloadCaseInstance(caseInstance);
 //		assertTrue(caseInstance.canComplete());
 //		getPersistence().commit();
-//	}
-//
-//	@Test
-//	public void testSubmitPlanWithContainerNotActive() throws Exception {
+	}
+
+	@Test
+	public void testSubmitPlanWithContainerNotActive() throws Exception {
 //		givenThatTheTestCaseIsStarted();
 //		triggerInitialActivity();
 //		Long parentTaskId = getTaskService().getTaskByWorkItemId(caseInstance.getWorkItemId()).getId();
@@ -215,46 +226,34 @@ public class PlanningTest extends AbstractPlanItemInstanceContainerTest {
 //		assertEquals(PlanElementState.ACTIVE, caseInstance.findNodeForWorkItem(plannedStage.getTaskData().getWorkItemId())
 //				.getPlanElementState());
 //		getPersistence().commit();
-//	}
-//
-//	private void assertPlanItemDefinitionPresent(Collection<ApplicableDiscretionaryItem> pts, String itemName) {
-//		for (ApplicableDiscretionaryItem pt : pts) {
-//			if (itemName.equals(pt.getPlanItemName())) {
-//				return;
-//			}
-//		}
-//		fail("Item with name '" + itemName + "' not found");
-//	}
-//
-//	public void assertItemPresent(Collection<PlannableTaskSummary> pts, String itemName) {
-//		for (PlannableTaskSummary pt : pts) {
-//			if (itemName.equals(pt.getPlanItemName())) {
-//				return;
-//			}
-//		}
-//		fail("Item with name '" + itemName + "' not found");
-//	}
-//	public void assertPlannableTaskPresent(Collection<PlannableTask> pts, String itemName) {
-//		for (PlannableTask pt : pts) {
-//			if (itemName.equals(pt.getPlanItemName())) {
-//				return;
-//			}
-//		}
-//		fail("Item with name '" + itemName + "' not found");
-//	}
-//
-//	public PlanningService getPlanningService() {
-//		planningService.setTaskService(getTaskService());
-//		return planningService;
-//	}
-//
-//	@Override
-//	protected RuntimeManager createRuntimeManager(String... processFile) {
-//		RuntimeManager rm = super.createRuntimeManager(processFile);
-//		planningService.setRuntimeManager(rm);
-//		return rm;
-//	}
-//
+	}
+
+	private void assertPlanItemDefinitionPresent(Collection<ApplicableDiscretionaryItem> pts, String itemName) {
+		for (ApplicableDiscretionaryItem pt : pts) {
+			if (itemName.equals(pt.getPlanItemName())) {
+				return;
+			}
+		}
+		fail("Item with name '" + itemName + "' not found");
+	}
+
+	public void assertItemPresent(Collection<PlannableItem> pts, String itemName) {
+		for (PlannableItem pt : pts) {
+			if (itemName.equals(pt.getName())) {
+				return;
+			}
+		}
+		fail("Item with name '" + itemName + "' not found");
+	}
+	public void assertPlannableTaskPresent(Collection<PlannableItem> pts, String itemName) {
+		for (PlannableItem pt : pts) {
+			if (itemName.equals(pt.getName())) {
+				return;
+			}
+		}
+		fail("Item with name '" + itemName + "' not found");
+	}
+
 	@Override
 	public String getProcessFile() {
 		return "test/planning/PlanningTests.cmmn";

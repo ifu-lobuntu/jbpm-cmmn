@@ -5,18 +5,21 @@ import org.drools.core.process.core.Work;
 import org.drools.core.process.instance.WorkItem;
 import org.drools.core.process.instance.WorkItemManager;
 import org.drools.core.process.instance.impl.WorkItemImpl;
-import org.jbpm.cmmn.common.ApplicableDiscretionaryItem;
 import org.jbpm.cmmn.common.WorkItemParameters;
 import org.jbpm.cmmn.flow.common.ItemWithDefinition;
 import org.jbpm.cmmn.flow.common.PlanItemTransition;
 import org.jbpm.cmmn.flow.core.CaseParameter;
-import org.jbpm.cmmn.flow.core.impl.CaseParameterImpl;
 import org.jbpm.cmmn.flow.definition.HumanTaskDefinition;
 import org.jbpm.cmmn.flow.definition.PlanItemDefinition;
 import org.jbpm.cmmn.flow.definition.TaskDefinition;
-import org.jbpm.cmmn.flow.definition.impl.HumanTaskDefinitionImpl;
+import org.jbpm.cmmn.flow.planitem.PlanItem;
+import org.jbpm.cmmn.flow.planning.DiscretionaryItem;
 import org.jbpm.cmmn.flow.planning.PlanningTable;
-import org.jbpm.cmmn.instance.*;
+import org.jbpm.cmmn.flow.planning.impl.PlannerRoleCalculator;
+import org.jbpm.cmmn.instance.HumanTaskLifecycle;
+import org.jbpm.cmmn.instance.PlanElementState;
+import org.jbpm.cmmn.instance.PlanItemInstanceContainer;
+import org.jbpm.cmmn.instance.PlanningTableContainerInstance;
 import org.jbpm.cmmn.instance.impl.util.ExpressionUtil;
 import org.jbpm.cmmn.instance.impl.util.PlanningTableContainerInstanceUtil;
 import org.jbpm.cmmn.instance.subscription.impl.EventQueues;
@@ -27,38 +30,25 @@ import org.jbpm.workflow.instance.WorkflowRuntimeException;
 import org.kie.api.runtime.process.NodeInstance;
 
 import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
 
 public class HumanTaskInstance extends ControllableItemInstanceImpl<HumanTaskDefinition> implements PlanningTableContainerInstance, HumanTaskLifecycle {
 
     private static final long serialVersionUID = 8452936237272366757L;
     protected WorkItem workItem;
-    private long workItemId;
+    private long workItemId=-1;
     private Work work;
-
-    protected boolean isWaitForCompletion() {
-        return super.getItem().getDefinition().isBlocking();
-    }
-
-    @Override
-    protected String getIdealRoles() {
-        ItemWithDefinition<HumanTaskDefinition> item = getItem();
-        return item.getDefinition().getPerformer().getName();
-    }
-
 
     @Override
     public void internalTrigger(NodeInstance from, String type) {
         super.internalTrigger(from, type);
         workItem = createWorkItem(getItem().getDefinition().getWork());
-        if (isBlocking()) {
+        if (getItem().getDefinition().isBlocking()) {
             addWorkItemUpdatedListener();
         }
         executeWorkItem(workItem);
         this.workItemId = workItem.getId();
         noteInstantiation();
-        if (!isBlocking()) {
+        if (!getItem().getDefinition().isBlocking()) {
             triggerCompleted();
         }
     }
@@ -67,6 +57,11 @@ public class HumanTaskInstance extends ControllableItemInstanceImpl<HumanTaskDef
     public void addEventListeners() {
         super.addEventListeners();
         addWorkItemUpdatedListener();
+    }
+
+    @Override
+    public String[] getEventTypes() {
+        return new String[]{WorkItemParameters.WORK_ITEM_UPDATED};
     }
 
     private void addWorkItemUpdatedListener() {
@@ -86,7 +81,7 @@ public class HumanTaskInstance extends ControllableItemInstanceImpl<HumanTaskDef
     @Override
     public WorkItem getWorkItem() {
         if (this.workItem == null) {
-            workItem = ((WorkItemManager) ((ProcessInstance) getProcessInstance()).getKnowledgeRuntime().getWorkItemManager()).getWorkItem(workItemId);
+            workItem = ((WorkItemManager) getProcessInstance().getKnowledgeRuntime().getWorkItemManager()).getWorkItem(workItemId);
         }
         return this.workItem;
     }
@@ -111,18 +106,14 @@ public class HumanTaskInstance extends ControllableItemInstanceImpl<HumanTaskDef
         wi.setName(WorkItemParameters.UPDATE_TASK_STATUS);
         wi.setParameter(WorkItemParameters.TASK_TRANSITION, transition);
         wi.setParameter(WorkItemParameters.WORK_ITEM_ID, getWorkItemId());
-        if (getItem().getName().equals("TheAutoActivatedTaskPlanItem")) {
-            System.out.println();
-        }
-
         wi.setParameter(WorkItemParameters.ACTOR_ID, getIdealOwner());
-        wi.setParameter(WorkItemParameters.USERS_IN_ROLE, getCaseInstance().getRoleInstance(getIdealRoles()).getRoleAssignmentNames());
-        wi.setParameter(WorkItemParameters.GROUP_ID, getIdealRoles());
+        wi.setParameter(WorkItemParameters.USERS_IN_ROLE, getCaseInstance().getRoleInstance(getItem().getDefinition().getPerformer().getName()).getRoleAssignmentNames());
+        wi.setParameter(WorkItemParameters.GROUP_ID, getItem().getDefinition().getPerformer().getName());
         wi.setParameter(WorkItemParameters.BUSINESSADMINISTRATOR_ID, getBusinessAdministrators());
         wi.getParameters().putAll(buildParametersFor(transition));
-        //TODO this is not reliable
-        EventQueues.queueWorkItem(wi);
-//		executeWorkItem(wi);
+        //TODO test if this is OK
+		executeWorkItem(wi);
+//        EventQueues.queueWorkItem(wi);
     }
 
     public final WorkItemImpl createWorkItem(Work work) {
@@ -134,9 +125,9 @@ public class HumanTaskInstance extends ControllableItemInstanceImpl<HumanTaskDef
         if (definition instanceof TaskDefinition) {
             workItem.getParameters().putAll(ExpressionUtil.buildInputParameters(work, this, (TaskDefinition) definition));
         }
-        workItem.setParameter(WorkItemParameters.INITIATOR, getInitiator());
+        workItem.setParameter(WorkItemParameters.INITIATOR, getCaseInstance().getCaseOwner());
         workItem.setParameter(WorkItemParameters.ACTOR_ID, getIdealOwner());
-        workItem.setParameter(WorkItemParameters.GROUP_ID, getIdealRoles());
+        workItem.setParameter(WorkItemParameters.GROUP_ID, getItem().getDefinition().getPerformer().getName());
         workItem.setParameter(WorkItemParameters.BUSINESSADMINISTRATOR_ID, getBusinessAdministrators());
         String deploymentId = (String) getProcessInstance().getKnowledgeRuntime().getEnvironment().get("deploymentId");
         workItem.setDeploymentId(deploymentId);
@@ -147,6 +138,14 @@ public class HumanTaskInstance extends ControllableItemInstanceImpl<HumanTaskDef
         workItem.setParameter(WorkItemParameters.CLAIM_IMMEDIATELY, false);
         return workItem;
     }
+    protected String getBusinessAdministrators() {
+        ItemWithDefinition<?> item = getItem();
+        if (item instanceof PlanItem) {
+            return PlannerRoleCalculator.getPlannerRoles((PlanItem<?>) item);
+        } else {
+            return PlannerRoleCalculator.getPlannerRoles((DiscretionaryItem<?>) item);
+        }
+    }
 
     @Override
     public long getWorkItemId() {
@@ -156,15 +155,14 @@ public class HumanTaskInstance extends ControllableItemInstanceImpl<HumanTaskDef
         return workItemId;
     }
 
-    @Override
-    protected String getIdealOwner() {
+    private String getIdealOwner() {
         if (isActivatedManually()) {
             // Let the role do the assignment
             return null;
         } else {
             // need to find someone
             // TODO think this through - should be done in the WorkItemHandler rather
-            String[] roleAssignments = getCaseInstance().getRoleInstance(getIdealRoles()).getRoleAssignmentNames();
+            String[] roleAssignments = getCaseInstance().getRoleInstance(getItem().getDefinition().getPerformer().getName()).getRoleAssignmentNames();
             if (roleAssignments.length == 1) {
                 return roleAssignments[0];
             } else {
@@ -235,15 +233,7 @@ public class HumanTaskInstance extends ControllableItemInstanceImpl<HumanTaskDef
         return (PlanItemInstanceContainer) getNodeInstanceContainer();
     }
 
-    @Override
-    public ControllableItemInstance<?> ensurePlanItemCreated(String discretionaryItemId, WorkItem wi) {
-        return PlanningTableContainerInstanceUtil.ensurePlanItemCreated(this, discretionaryItemId, wi);
-    }
 
-    @Override
-    public void addApplicableItems(Map result, Set usersRoles) {
-        PlanningTableContainerInstanceUtil.addApplicableItems(this, result, usersRoles);
-    }
 
     @Override
     public NodeInstance getPlanningContextNodeInstance() {
@@ -255,10 +245,6 @@ public class HumanTaskInstance extends ControllableItemInstanceImpl<HumanTaskDef
         return PlanningTableContainerInstanceUtil.createPlannedTask(this, tableItemId);
     }
 
-    @Override
-    public void makeDiscretionaryItemAvailable(String discretionaryItemId) {
-        PlanningTableContainerInstanceUtil.makeDiscretionaryItemAvailable(this, discretionaryItemId);
-    }
 
     @Override
     public void resumeAfterPlanning() {

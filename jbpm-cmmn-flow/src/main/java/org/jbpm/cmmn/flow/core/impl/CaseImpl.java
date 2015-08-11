@@ -2,6 +2,7 @@ package org.jbpm.cmmn.flow.core.impl;
 
 import org.jbpm.cmmn.flow.core.Case;
 import org.jbpm.cmmn.flow.core.CaseParameter;
+import org.jbpm.cmmn.flow.core.CaseRole;
 import org.jbpm.cmmn.flow.definition.PlanItemDefinition;
 import org.jbpm.cmmn.flow.definition.impl.AbstractPlanItemDefinition;
 import org.jbpm.cmmn.flow.planitem.PlanItemInfo;
@@ -25,7 +26,7 @@ public class CaseImpl extends RuleFlowProcess implements Case {
 	private Map<String, org.jbpm.cmmn.flow.core.CaseParameter> outputParameters = new HashMap<String, org.jbpm.cmmn.flow.core.CaseParameter>();
 	private Map<String, PlanItemDefinition> planItemDefinitions = new HashMap<String, PlanItemDefinition>();
 	private Collection<PlanItemInfo<?>> planItemInfo = new ArrayList<PlanItemInfo<?>>();
-	private Collection<CaseRoleImpl> roles = new ArrayList<CaseRoleImpl>();
+	private Collection<CaseRole> roles = new ArrayList<CaseRole>();
 	private StartNode defaultStart;
 	private Split defaultSplit;
 	private EndNode defaultEnd;
@@ -136,11 +137,11 @@ public class CaseImpl extends RuleFlowProcess implements Case {
 		return planItemDefinitions.values();
 	}
 
-	public Collection<CaseRoleImpl> getRoles() {
+	public Collection<CaseRole> getRoles() {
 		return roles;
 	}
 
-	public void addRole(CaseRoleImpl r) {
+	public void addRole(CaseRole r) {
 		roles.add(r);
 	}
 

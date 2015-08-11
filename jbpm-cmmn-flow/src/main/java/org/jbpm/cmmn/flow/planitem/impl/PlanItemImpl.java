@@ -6,8 +6,10 @@ import org.jbpm.cmmn.flow.core.PlanItemContainer;
 import org.jbpm.cmmn.flow.definition.PlanItemControl;
 import org.jbpm.cmmn.flow.definition.PlanItemDefinition;
 import org.jbpm.cmmn.flow.definition.RepeatablePlanItemDefinition;
+import org.jbpm.cmmn.flow.definition.UserEventListener;
 import org.jbpm.cmmn.flow.planitem.PlanItem;
 import org.jbpm.cmmn.flow.planitem.PlanItemInfo;
+import org.jbpm.workflow.core.node.EventNodeInterface;
 import org.kie.api.definition.process.Connection;
 
 import java.util.HashMap;
@@ -32,6 +34,11 @@ public class PlanItemImpl<T extends PlanItemDefinition> extends AbstractItem imp
 		this.planInfo=info;
 		this.factoryNode=factoryNode;
 	}
+	@Override
+	public boolean acceptsEvent(String type, Object event) {
+		return  (getDefinition() instanceof EventNodeInterface && ((EventNodeInterface)getDefinition()).acceptsEvent(type,event)) || super.acceptsEvent(type, event);
+	}
+
 	public void copyFromDefinition() {
 		HashMap<Object, Object> copiedState = new HashMap<Object, Object>();
 		T def = getDefinition();

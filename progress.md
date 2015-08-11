@@ -127,8 +127,16 @@ XPath processDialect on JCR
 
 # 4. To implement
 
-Planning Service - HumanTask, Stage AND CasePlanModel
+Drive planning from ProcessEngine rather than TaskService
+ - interpret UpdateTaskStatusHandler as one-way sync
+ - ensure UpdateTAskSTatusHandler does not call back to the ProcessEngine ( remove the CMMNTaskLifeCycleHandler from listerenrList)
+ - store TaskInputs that have not been consumed yet in the NodeInstance's VariableContext
 
+Only store Outputs that write to root CaseFileItems
+
+
+Planning Service - HumanTask, Stage AND CasePlanModel
+- calculate task startDates during plan submission
 - startPlanning (include applicabilityRule) *
 - prepareDiscretionaryItem *
 -- recheck applicabilityRule*
@@ -145,6 +153,11 @@ DiscretionaryItem - need input from OMG
 
 - exitCriteria
 - itemControl.repititionRule
+
+CFA
+ Consolidate all tasks for a participant
+ Include VDML PropositionExchange info
+ The CMMN Planner Role needs to be mapped to a Role in VDML (or maybe not), the CFA exchange takes place between the Planner and the target participant
 
 # 5. Current potential problems
  

@@ -56,7 +56,7 @@ public class PlanItemInfoImpl<T extends PlanItemDefinition> implements PlanItemI
 	}
 
 	private PlanItemInstanceFactoryNodeImpl createFactoryNodeIfRequired() {
-		if (planItem.getDefinition() instanceof RepeatablePlanItemDefinition) {
+		if (getDefinition() instanceof RepeatablePlanItemDefinition) {
 			PlanItemInstanceFactoryNodeImpl result = new PlanItemInstanceFactoryNodeImpl();
 			result.setId(id / 34123);
 			result.setName(getName() + "Factory");

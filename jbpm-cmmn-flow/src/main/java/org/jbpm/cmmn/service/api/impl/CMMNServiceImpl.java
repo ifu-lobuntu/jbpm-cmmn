@@ -5,12 +5,16 @@ import org.jbpm.cmmn.flow.common.PlanItemTransition;
 import org.jbpm.cmmn.service.api.CMMNService;
 import org.jbpm.cmmn.service.api.commands.AbstractPlanningCommand;
 import org.jbpm.cmmn.service.api.commands.GetPlanCommand;
+import org.jbpm.cmmn.service.api.commands.SubmitPlanCommand;
 import org.jbpm.cmmn.service.model.Plan;
+import org.jbpm.cmmn.service.model.PlannableItem;
 import org.jbpm.workflow.instance.node.EventNodeInstanceInterface;
 import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.manager.RuntimeEngine;
 import org.kie.api.runtime.manager.audit.AuditService;
 import org.kie.api.task.TaskService;
+
+import java.util.Collection;
 
 public class CMMNServiceImpl implements CMMNService {
     private KieSession ksession;
@@ -25,8 +29,8 @@ public class CMMNServiceImpl implements CMMNService {
 
 
     @Override
-    public void transitionPlanItem(final long processId, final String uniqueId, final PlanItemTransition t) {
-        ksession.execute(new AbstractPlanningCommand<Void>(processId) {
+    public void transitionPlanItem(final long processInstanceId, final String uniqueId, final PlanItemTransition t) {
+        ksession.execute(new AbstractPlanningCommand<Void>(processInstanceId, null) {
             private static final long serialVersionUID = 630L;
 
             public Void execute() {
@@ -37,16 +41,49 @@ public class CMMNServiceImpl implements CMMNService {
     }
 
     @Override
-    public void transitionCase(long processId, PlanItemTransition t) {
-        ksession.signalEvent("Transition", t, processId);
+    public void transitionCase(long processInstanceId, PlanItemTransition t) {
+        ksession.signalEvent("Transition", t, processInstanceId);
     }
 
     @Override
-    public Plan getPlan(long processId) {
-        return ksession.execute(new GetPlanCommand(processId,null));
+    public Plan getPlan(long processInstanceId) {
+        return ksession.execute(new GetPlanCommand(processInstanceId,null,null));
     }
-    public Plan getPlan(long processId, String planningTableContainerInstanceId) {
-        return ksession.execute(new GetPlanCommand(processId,planningTableContainerInstanceId));
+
+    @Override
+    public Plan getPlan(long processInstanceId, String planningTableContainerInstanceId) {
+        return ksession.execute(new GetPlanCommand(processInstanceId,planningTableContainerInstanceId,null));
+    }
+
+    @Override
+    public Plan startPlanning(long processInstanceId, String user, boolean suspend) {
+        if(suspend){
+            transitionCase(processInstanceId, PlanItemTransition.SUSPEND);
+        }
+        return ksession.execute(new GetPlanCommand(processInstanceId, null, user));
+    }
+
+    @Override
+    public Plan startPlanning(long processInstanceId, String planningTableContainerId, String user, boolean suspend) {
+        if(suspend){
+         transitionPlanItem(processInstanceId,planningTableContainerId,PlanItemTransition.SUSPEND);
+        }
+        return ksession.execute(new GetPlanCommand(processInstanceId,planningTableContainerId,user));
+    }
+
+    @Override
+    public void submitPlan(long processInstanceId, String planningTableContainerId, Collection<PlannableItem> plannedTasks, boolean resume) {
+        ksession.execute(new SubmitPlanCommand(plannedTasks, processInstanceId,planningTableContainerId,resume));
+    }
+
+    @Override
+    public Plan preparePlannableItem(long processInstanceId, String planningTableContainerId, String discretionaryItemId) {
+        return null;
+    }
+
+    @Override
+    public void makeDiscretionaryItemAvailable(long processInstanceId, String planningTableContainerId, String discretionaryItemId) {
+
     }
 
 }

@@ -14,6 +14,11 @@ public class UserEventListenerImpl extends AbstractPlanItemDefinition implements
 	private Map<String, CaseRole> authorizedRoles = new HashMap<String, CaseRole>();
 
 	@Override
+	public boolean acceptsEvent(String type, Object event) {
+		return type.equals(getEventName()) || super.acceptsEvent(type, event);
+	}
+
+	@Override
 	public void putAuthorizedRole(String id, CaseRoleImpl role) {
 		authorizedRoles.put(id, role);
 	}

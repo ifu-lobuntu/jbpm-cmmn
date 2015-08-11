@@ -9,9 +9,9 @@ import org.jbpm.cmmn.datatypes.CollectionDataType;
 import org.jbpm.cmmn.flow.core.Case;
 import org.jbpm.cmmn.flow.core.CaseFileItem;
 import org.jbpm.cmmn.flow.core.CaseParameter;
+import org.jbpm.cmmn.flow.core.CaseRole;
 import org.jbpm.cmmn.flow.core.impl.CaseFileItemDefinitionImpl;
 import org.jbpm.cmmn.flow.core.impl.CaseImpl;
-import org.jbpm.cmmn.flow.core.impl.CaseRoleImpl;
 import org.jbpm.cmmn.flow.core.impl.DefinitionsImpl;
 import org.jbpm.cmmn.flow.definition.PlanItemDefinition;
 import org.jbpm.cmmn.flow.definition.Stage;
@@ -26,7 +26,6 @@ import org.jbpm.cmmn.flow.planning.PlanningTableContainer;
 import org.jbpm.cmmn.flow.planning.TableItem;
 import org.jbpm.cmmn.flow.planning.impl.DiscretionaryItemImpl;
 import org.jbpm.cmmn.flow.planning.impl.PlanningTableImpl;
-import org.jbpm.cmmn.flow.planning.impl.TableItemImpl;
 import org.jbpm.cmmn.instance.CaseEvent;
 import org.jbpm.compiler.xml.ProcessBuildData;
 import org.jbpm.process.core.context.variable.Variable;
@@ -83,8 +82,8 @@ public class CaseHandler extends PlanItemContainerHandler implements Handler {
         var.setType(new ObjectDataType(CaseEvent.class.getName()));
         variables.add(var);
         Set<String> roleNames = new HashSet<String>();
-        Collection<CaseRoleImpl> roles = process.getRoles();
-        for (CaseRoleImpl role : roles) {
+        Collection<CaseRole> roles = process.getRoles();
+        for (CaseRole role : roles) {
             roleNames.add(role.getName());
             Variable caseRole = new Variable();
             caseRole.setName(role.getName());
@@ -135,8 +134,8 @@ public class CaseHandler extends PlanItemContainerHandler implements Handler {
             if (pi instanceof TaskDefinition) {
                 if (pi instanceof HumanTaskDefinitionImpl) {
                     HumanTaskDefinitionImpl ht = (HumanTaskDefinitionImpl) pi;
-                    Collection<CaseRoleImpl> roles = process.getRoles();
-                    for (CaseRoleImpl role : roles) {
+                    Collection<CaseRole> roles = process.getRoles();
+                    for (CaseRole role : roles) {
                         if (role.getElementId().equals(ht.getPerformerRef())) {
                             ht.setPerformer(role);
                         }
@@ -229,7 +228,7 @@ public class CaseHandler extends PlanItemContainerHandler implements Handler {
     }
 
     @SuppressWarnings("unchecked")
-    protected void doRoleAndDefinitionMapping(Collection<PlanItemDefinition> defs, Collection<CaseRoleImpl> roles, TableItem pt) {
+    protected void doRoleAndDefinitionMapping(Collection<PlanItemDefinition> defs, Collection<CaseRole> roles, TableItem pt) {
         if (pt != null) {
             doRoleMapping(defs, roles, pt.getAuthorizedRoles());
             if (pt instanceof PlanningTableImpl) {
@@ -250,10 +249,10 @@ public class CaseHandler extends PlanItemContainerHandler implements Handler {
         }
     }
 
-    protected void doRoleMapping(Collection<PlanItemDefinition> defs, Collection<CaseRoleImpl> roles, Map<String, CaseRoleImpl> authorizedRoles) {
-        Set<Entry<String, CaseRoleImpl>> entrySet = authorizedRoles.entrySet();
-        for (Entry<String, CaseRoleImpl> entry : entrySet) {
-            for (CaseRoleImpl role : roles) {
+    protected void doRoleMapping(Collection<PlanItemDefinition> defs, Collection<CaseRole> roles, Map<String, CaseRole> authorizedRoles) {
+        Set<Entry<String, CaseRole>> entrySet = authorizedRoles.entrySet();
+        for (Entry<String, CaseRole> entry : entrySet) {
+            for (CaseRole role : roles) {
                 if (entry.getValue() == null && entry.getKey().equals(role.getElementId())) {
                     entry.setValue(role);
                 }

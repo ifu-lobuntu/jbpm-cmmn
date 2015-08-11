@@ -1,11 +1,7 @@
 package org.jbpm.cmmn.instance.impl;
 
-import org.drools.core.process.instance.WorkItem;
-import org.jbpm.cmmn.common.ApplicableDiscretionaryItem;
-import org.jbpm.cmmn.flow.common.ItemWithDefinition;
 import org.jbpm.cmmn.flow.core.PlanItemContainer;
 import org.jbpm.cmmn.flow.definition.Stage;
-import org.jbpm.cmmn.flow.definition.impl.StageImpl;
 import org.jbpm.cmmn.flow.planning.PlanningTable;
 import org.jbpm.cmmn.instance.*;
 import org.jbpm.cmmn.instance.impl.util.PlanItemInstanceContainerUtil;
@@ -27,6 +23,12 @@ public class StageInstance extends ControllableItemInstanceImpl<Stage> implement
 		NodeInstanceContainer, EventNodeInstanceInterface, EventBasedNodeInstanceInterface, ContextInstanceContainer {
 
 	private static final long serialVersionUID = 112341234123L;
+
+	@Override
+	public void internalTrigger(NodeInstance from, String type) {
+		super.internalTrigger(from, type);
+		noteInstantiation();
+	}
 
 	@Override
 	public void start() {
@@ -62,14 +64,6 @@ public class StageInstance extends ControllableItemInstanceImpl<Stage> implement
 		return result;
 	}
 
-	@Override
-	protected String getIdealRoles() {
-		String bas = getBusinessAdministrators();
-		if (bas.equals("Administrators")) {
-			return null;
-		}
-		return bas;
-	}
 
 	/*** PlanningTableContainer implementation **/
 	@Override
@@ -77,15 +71,7 @@ public class StageInstance extends ControllableItemInstanceImpl<Stage> implement
 		return this;
 	}
 
-	@Override
-	public ControllableItemInstance<?> ensurePlanItemCreated(String discretionaryItemId, WorkItem wi) {
-		return PlanningTableContainerInstanceUtil.ensurePlanItemCreated(this, discretionaryItemId, wi);
-	}
 
-	@Override
-	public void addApplicableItems(Map result, Set usersRoles) {
-		PlanningTableContainerInstanceUtil.addApplicableItems(this, result, usersRoles);
-	}
 
 	@Override
 	public NodeInstance getPlanningContextNodeInstance() {
@@ -138,10 +124,6 @@ public class StageInstance extends ControllableItemInstanceImpl<Stage> implement
 		return PlanItemInstanceContainerUtil.findPlanElementWithPlanningTable(this, containerWorkItemId);
 	}
 
-	@Override
-	public void makeDiscretionaryItemAvailable(String discretionaryItemId) {
-		PlanningTableContainerInstanceUtil.makeDiscretionaryItemAvailable(this, discretionaryItemId);
-	}
 
 	@Override
 	public void resumeAfterPlanning() {
