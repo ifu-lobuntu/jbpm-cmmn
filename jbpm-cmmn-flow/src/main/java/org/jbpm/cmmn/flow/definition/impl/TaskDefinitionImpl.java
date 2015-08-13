@@ -27,11 +27,11 @@ public class TaskDefinitionImpl extends AbstractPlanItemDefinition implements Ta
 	}
 
 	public void addOutputParameter(CaseParameter cp) {
-		this.outputs.put(cp.getElementId(), cp);
+		this.outputs.put(cp.getElementId()==null?cp.getName():cp.getElementId(), cp);
 	}
 
 	public void addInputParameter(CaseParameter cp) {
-		this.inputs.put(cp.getElementId(), cp);
+		this.inputs.put(cp.getElementId()==null?cp.getName():cp.getElementId(), cp);
 
 	}
 

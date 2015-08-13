@@ -39,12 +39,12 @@
 						</cmmn:condition>
 					</cmmn:manualActivationRule>
 				</cmmn:defaultControl>
-				<cmmn:outputs name="roofPlan" bindingRef="roofPlanFileItemId">
+				<cmmn:outputs name="roofPlan" bindingRef="roofPlanFileItemId" id="theTask_roofPlan">
 					<cmmn:bindingRefinement language="http://www.java.com/java">
 						<cmmn:body>return housePlan.getRoofPlan();</cmmn:body>
 					</cmmn:bindingRefinement>
 				</cmmn:outputs>
-				<cmmn:outputs name="wallPlans" bindingRef="wallPlanFileItemId">
+				<cmmn:outputs name="wallPlans" bindingRef="wallPlanFileItemId" id="theTask_wallPlans">
 					<cmmn:bindingRefinement language="http://www.java.com/java">
 						<cmmn:body>return housePlan.getWallPlans();</cmmn:body>
 					</cmmn:bindingRefinement>
