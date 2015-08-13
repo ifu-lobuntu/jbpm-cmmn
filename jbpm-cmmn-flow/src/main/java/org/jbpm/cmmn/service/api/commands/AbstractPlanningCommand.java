@@ -2,6 +2,7 @@ package org.jbpm.cmmn.service.api.commands;
 
 
 import org.drools.core.command.impl.GenericCommand;
+import org.drools.core.command.impl.KnowledgeCommandContext;
 import org.drools.core.spi.ProcessContext;
 import org.jbpm.casemgmt.CaseMgmtService;
 import org.jbpm.casemgmt.CaseMgmtUtil;
@@ -24,35 +25,31 @@ public abstract class AbstractPlanningCommand<T> implements GenericCommand<T> {
     protected CaseMgmtService caseMgmtService;
     protected ProcessContext processContext;
 
-    public AbstractPlanningCommand(long processInstanceId,String planningTableContainerInstanceId) {
+    public AbstractPlanningCommand(long processInstanceId, String planningTableContainerInstanceId) {
         super();
         this.processInstanceId = processInstanceId;
-        this.planningTableContainerInstanceId=planningTableContainerInstanceId;
+        this.planningTableContainerInstanceId = planningTableContainerInstanceId;
     }
 
     @Override
     public T execute(Context context) {
-        if (context instanceof KnowledgeContext) {
-            KieRuntime kieRuntime = ((KnowledgeContext) context).getKieRuntime();
-            if (kieRuntime instanceof KieSession) {
-                this.kieSession = (KieSession) kieRuntime;
-                this.processContext= new ProcessContext(this.kieSession);
-                processContext.setProcessInstance(this.kieSession.getProcessInstance(processInstanceId));
-                this.caseMgmtService= new CaseMgmtUtil(processContext);
-                return execute();
-            } else {
-                throw new IllegalStateException("No KieSession Found");
-            }
+        if (context instanceof KnowledgeCommandContext) {
+            this.kieSession = ((KnowledgeCommandContext) context).getKieSession();
+            this.processContext = new ProcessContext(this.kieSession);
+            processContext.setProcessInstance(this.kieSession.getProcessInstance(processInstanceId));
+            this.caseMgmtService = new CaseMgmtUtil(processContext);
+            return execute();
         } else {
             throw new IllegalStateException("No KnowledgeContextFound");
         }
     }
+
     protected NodeInstanceContainer getPlanningScope() {
         NodeInstanceContainer nic;
         if (planningTableContainerInstanceId == null) {
             nic = (NodeInstanceContainer) this.processContext.getProcessInstance();
         } else {
-            nic= getPlanningTableContainerInstance(planningTableContainerInstanceId).getPlanItemInstanceCreator();
+            nic = getPlanningTableContainerInstance(planningTableContainerInstanceId).getPlanItemInstanceCreator();
         }
         return nic;
     }
@@ -60,7 +57,8 @@ public abstract class AbstractPlanningCommand<T> implements GenericCommand<T> {
     protected PlanningTableContainerInstance getPlanningTableContainerInstance() {
         PlanningTableContainerInstance ptci;
         if (planningTableContainerInstanceId == null) {
-            ptci = (PlanningTableContainerInstance) this.processContext.getProcessInstance();;
+            ptci = (PlanningTableContainerInstance) this.processContext.getProcessInstance();
+            ;
         } else {
             ptci = getPlanningTableContainerInstance(planningTableContainerInstanceId);
         }
@@ -71,6 +69,7 @@ public abstract class AbstractPlanningCommand<T> implements GenericCommand<T> {
         NodeInstance ni = getNodeInstance(uniqueId);
         return (PlanningTableContainerInstance<?>) ni;
     }
+
     protected PlanItemInstance<?> getPlanItem(String uniqueId) {
         NodeInstance ni = getNodeInstance(uniqueId);
         return (PlanItemInstance<?>) ni;

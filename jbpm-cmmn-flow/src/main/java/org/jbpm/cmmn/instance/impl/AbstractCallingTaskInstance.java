@@ -89,6 +89,12 @@ public abstract class AbstractCallingTaskInstance <T extends TaskDefinition> ext
 			HashMap<String, Object> fromParameters = ExpressionUtil.buildInputParameters(this, getItem().getDefinition());
 			Map<String, Object> parametersToMap = ExpressionUtil.transformParameters(parameterMappings, fromParameters, this);
 			Map<String, Object> inputParamaters = mapParameters(parameterMappings, parametersToMap);
+			String caseOwner = getCaseInstance().getCaseOwner();
+			if(caseOwner==null) {
+				inputParamaters.put(WorkItemParameters.INITIATOR, getCaseInstance().getVariable(WorkItemParameters.INITIATOR));
+			}else{
+				inputParamaters.put(WorkItemParameters.INITIATOR, caseOwner);
+			}
 			KnowledgeRuntime kruntime = ((ProcessInstance) getProcessInstance()).getKnowledgeRuntime();
 			RuntimeManager manager = (RuntimeManager) kruntime.getEnvironment().get("RuntimeManager");
 			if (manager != null) {

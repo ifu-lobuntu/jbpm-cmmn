@@ -11,6 +11,7 @@ import org.jbpm.cmmn.instance.CaseInstance;
 import org.jbpm.cmmn.instance.PlanElementState;
 import org.jbpm.cmmn.instance.PlanItemInstance;
 import org.jbpm.cmmn.instance.PlanItemInstanceContainer;
+import org.jbpm.cmmn.instance.impl.AbstractCallingTaskInstance;
 import org.jbpm.cmmn.instance.impl.CaseTaskInstance;
 import org.jbpm.cmmn.service.model.Plan;
 import org.jbpm.cmmn.test.AbstractConstructionTestCase;
@@ -58,11 +59,16 @@ public abstract class AbstractPlanItemInstanceContainerTest extends AbstractCons
 		assertPlanItemInState(caseInstance.getId(), "TheStagePlanItem", PlanElementState.AVAILABLE);
 		assertPlanItemInState(caseInstance.getId(), "TheCaseTaskPlanItem", PlanElementState.ENABLED);
 		assertEquals(PlanElementState.ACTIVE, ci1.getPlanElementState()); // Because autoComplete defaults to false
-		getCmmnService().transitionPlanItem(caseInstance.getId(), plan.getPlannableItemsFor("TheCaseTaskPlanItem").get(0).getUniqueId(), PlanItemTransition.START);
+		getCmmnService().transitionPlanItem(caseInstance.getId(), plan.getPlannableItemsFor("TheCaseTaskPlanItem").get(0).getUniqueId(), PlanItemTransition.MANUAL_START);
 		assertPlanItemInState(caseInstance.getId(), "TheCaseTaskPlanItem", PlanElementState.ACTIVE);
-		return null;
+		String uid=plan.getPlannableItemsFor("TheCaseTaskPlanItem").get(0).getUniqueId();
+		for (org.jbpm.workflow.instance.NodeInstance nodeInstance : reloadCaseInstance(caseInstance).getNodeInstances(true)) {
+			if(nodeInstance instanceof AbstractCallingTaskInstance &&  ((AbstractCallingTaskInstance)nodeInstance).getUniqueId().equals(uid)){
+				return (CaseInstance) getRuntimeEngine().getKieSession().getProcessInstance(((AbstractCallingTaskInstance) nodeInstance).getProcessInstanceId());
+			}
+		}
+		throw new IllegalStateException();
 	}
-
 
 	protected CaseInstance reloadCaseInstance() {
 		return reloadCaseInstance(caseInstance);

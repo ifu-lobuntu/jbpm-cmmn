@@ -24,7 +24,9 @@ public class PlanItemImpl<T extends PlanItemDefinition> extends AbstractItem imp
 	private String description;
 	private PlanItemInstanceFactoryNode factoryNode;
 
-
+	public PlanItemImpl() {
+		super();
+	}
 	public PlanItemImpl(PlanItemInfoImpl<T> planInfo) {
 		super();
 		this.planInfo = planInfo;

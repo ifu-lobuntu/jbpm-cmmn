@@ -6,9 +6,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.jbpm.cmmn.flow.common.PlanItemTransition;
 import org.jbpm.cmmn.instance.CaseInstance;
 import org.jbpm.cmmn.instance.PlanElementState;
+import org.jbpm.cmmn.instance.impl.AbstractCallingTaskInstance;
 import org.jbpm.cmmn.instance.impl.CaseTaskInstance;
+import org.jbpm.cmmn.service.model.Plan;
+import org.jbpm.cmmn.service.model.PlannableItem;
 import org.jbpm.services.task.utils.ContentMarshallerHelper;
 import org.junit.Test;
 import org.kie.api.runtime.process.NodeInstance;
@@ -50,18 +54,12 @@ public class CaseTaskTest extends AbstractControllableLifecycleTest {
 		givenThatTheTestCaseIsStarted();
 		// *****WHEN
 		triggerStartOfTask(); // Creates a second wallPlan
-		List<TaskSummary> list = getTaskService().getTasksAssignedAsPotentialOwner("ConstructionProjectManager", "en-UK");
-		assertTaskTypeCreated(list, "TheEventGeneratingTaskPlanItem", 1);
-		long subTaskId = -1;
-		for (TaskSummary taskSummary : list) {
-			if (taskSummary.getName().equals("TheEventGeneratingTaskPlanItem")) {
-				subTaskId = taskSummary.getId();
-			}
-		}
-		getRuntimeEngine().getTaskService().start(subTaskId, "ConstructionProjectManager");
+		Plan plan = getCmmnService().getPlan(caseInstance.getId());
+		PlannableItem theEventGeneratingTaskPlanItem = plan.getPlannableItemsFor("TheEventGeneratingTaskPlanItem").get(0);
+		getCmmnService().transitionPlanItem(caseInstance.getId(), theEventGeneratingTaskPlanItem.getUniqueId(), PlanItemTransition.MANUAL_START);
 		// *******THEN
 		getPersistence().start();
-		long id = getSubProcessInstanceId(subTaskId);
+		long id = getSubProcessInstanceId(theEventGeneratingTaskPlanItem.getUniqueId());
 		CaseInstance pi = (CaseInstance) getRuntimeEngine().getKieSession().getProcessInstance(id);
 		HousePlan housePlan = (HousePlan) pi.getVariable("housePlan");
 		@SuppressWarnings("unchecked")
@@ -86,18 +84,13 @@ public class CaseTaskTest extends AbstractControllableLifecycleTest {
 	}
 
 
-	private long getSubProcessInstanceId(long taskId) {
-		long workItemId = getRuntimeEngine().getTaskService().getTaskById(taskId).getTaskData().getWorkItemId();
-		getPersistence().start();
-		caseInstance = (CaseInstance) getRuntimeEngine().getKieSession().getProcessInstance(caseInstance.getId());
-		long subProccessInstanceId = -1;
-		for (NodeInstance nodeInstance : caseInstance.getNodeInstances()) {
-			if (nodeInstance instanceof CaseTaskInstance) {
-				subProccessInstanceId = ((CaseTaskInstance) nodeInstance).getProcessInstanceId();
+	private long getSubProcessInstanceId(String uid) {
+		for (org.jbpm.workflow.instance.NodeInstance nodeInstance : reloadCaseInstance(caseInstance).getNodeInstances(true)) {
+			if(nodeInstance instanceof AbstractCallingTaskInstance &&  ((AbstractCallingTaskInstance)nodeInstance).getUniqueId().equals(uid)){
+				return ((AbstractCallingTaskInstance) nodeInstance).getProcessInstanceId();
 			}
 		}
-		getPersistence().commit();
-		return subProccessInstanceId;
+		throw new IllegalStateException();
 	}
 
 }

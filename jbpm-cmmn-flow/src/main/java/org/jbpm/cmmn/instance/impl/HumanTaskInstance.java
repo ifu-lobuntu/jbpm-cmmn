@@ -35,7 +35,7 @@ public class HumanTaskInstance extends ControllableItemInstanceImpl<HumanTaskDef
 
     private static final long serialVersionUID = 8452936237272366757L;
     protected WorkItem workItem;
-    private long workItemId=-1;
+    private long workItemId = -1;
     private Work work;
 
     @Override
@@ -112,19 +112,20 @@ public class HumanTaskInstance extends ControllableItemInstanceImpl<HumanTaskDef
         wi.setParameter(WorkItemParameters.BUSINESSADMINISTRATOR_ID, getBusinessAdministrators());
         wi.getParameters().putAll(buildParametersFor(transition));
         //TODO test if this is OK
-		executeWorkItem(wi);
+        executeWorkItem(wi);
 //        EventQueues.queueWorkItem(wi);
     }
 
     public final WorkItemImpl createWorkItem(Work work) {
-        PlanItemDefinition definition = this.getItem().getDefinition();
+        HumanTaskDefinition definition = this.getItem().getDefinition();
         WorkItemImpl workItem = new WorkItemImpl();
         workItem.setName(work.getName());
         workItem.setProcessInstanceId(this.getProcessInstance().getId());
         workItem.setParameters(new HashMap<String, Object>(work.getParameters()));
-        if (definition instanceof TaskDefinition) {
-            workItem.getParameters().putAll(ExpressionUtil.buildInputParameters(work, this, (TaskDefinition) definition));
-        }
+        workItem.getParameters().putAll(ExpressionUtil.buildInputParameters(work, this, definition));
+        workItem.setParameter(WorkItemParameters.TASK_NODE_NAME, getItem().getName());
+        workItem.setParameter(WorkItemParameters.TASK_PLAN_ITEM_NAME, getItem().getName());
+        workItem.setParameter(WorkItemParameters.BUSINESSADMINISTRATOR_ID, getBusinessAdministrators());
         workItem.setParameter(WorkItemParameters.INITIATOR, getCaseInstance().getCaseOwner());
         workItem.setParameter(WorkItemParameters.ACTOR_ID, getIdealOwner());
         workItem.setParameter(WorkItemParameters.GROUP_ID, getItem().getDefinition().getPerformer().getName());
@@ -132,12 +133,13 @@ public class HumanTaskInstance extends ControllableItemInstanceImpl<HumanTaskDef
         String deploymentId = (String) getProcessInstance().getKnowledgeRuntime().getEnvironment().get("deploymentId");
         workItem.setDeploymentId(deploymentId);
         workItem.setParameter(WorkItemParameters.COMMENT, definition.getDescription());
-        if (this.getCaseInstance().getVariable("workItemId")!=null) {
+        if (this.getCaseInstance().getVariable("workItemId") != null) {
             workItem.setParameter(WorkItemParameters.PARENT_WORK_ITEM_ID, this.getCaseInstance().getVariable("workItemId"));
         }
         workItem.setParameter(WorkItemParameters.CLAIM_IMMEDIATELY, false);
         return workItem;
     }
+
     protected String getBusinessAdministrators() {
         ItemWithDefinition<?> item = getItem();
         if (item instanceof PlanItem) {
@@ -232,7 +234,6 @@ public class HumanTaskInstance extends ControllableItemInstanceImpl<HumanTaskDef
     public PlanItemInstanceContainer getPlanItemInstanceCreator() {
         return (PlanItemInstanceContainer) getNodeInstanceContainer();
     }
-
 
 
     @Override
