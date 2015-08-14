@@ -10,8 +10,6 @@ import org.jbpm.cmmn.flow.common.ItemWithDefinition;
 import org.jbpm.cmmn.flow.common.PlanItemTransition;
 import org.jbpm.cmmn.flow.core.CaseParameter;
 import org.jbpm.cmmn.flow.definition.HumanTaskDefinition;
-import org.jbpm.cmmn.flow.definition.PlanItemDefinition;
-import org.jbpm.cmmn.flow.definition.TaskDefinition;
 import org.jbpm.cmmn.flow.planitem.PlanItem;
 import org.jbpm.cmmn.flow.planning.DiscretionaryItem;
 import org.jbpm.cmmn.flow.planning.PlanningTable;
@@ -22,7 +20,6 @@ import org.jbpm.cmmn.instance.PlanItemInstanceContainer;
 import org.jbpm.cmmn.instance.PlanningTableContainerInstance;
 import org.jbpm.cmmn.instance.impl.util.ExpressionUtil;
 import org.jbpm.cmmn.instance.impl.util.PlanningTableContainerInstanceUtil;
-import org.jbpm.cmmn.instance.subscription.impl.EventQueues;
 import org.jbpm.process.core.context.exception.ExceptionScope;
 import org.jbpm.process.instance.ProcessInstance;
 import org.jbpm.process.instance.context.exception.ExceptionScopeInstance;
@@ -37,6 +34,7 @@ public class HumanTaskInstance extends ControllableItemInstanceImpl<HumanTaskDef
     protected WorkItem workItem;
     private long workItemId = -1;
     private Work work;
+    private transient boolean signalFromTask = false;
 
     @Override
     public void internalTrigger(NodeInstance from, String type) {
@@ -91,29 +89,118 @@ public class HumanTaskInstance extends ControllableItemInstanceImpl<HumanTaskDef
             isCompletionRequired = ExpressionUtil.isRequired(getItem(), this);
         }
         if (isActivatedManually()) {
-            triggerTransitionOnTask(PlanItemTransition.ENABLE);
+            enable();
         } else {
-            triggerTransitionOnTask(PlanItemTransition.START);
+            start();
         }
     }
 
     @Override
-    public final void triggerTransitionOnTask(PlanItemTransition transition) {
-        WorkItemImpl wi = new WorkItemImpl();
-        wi.setProcessInstanceId(this.getProcessInstance().getId());
-        String deploymentId = (String) getProcessInstance().getKnowledgeRuntime().getEnvironment().get("deploymentId");
-        wi.setDeploymentId(deploymentId);
-        wi.setName(WorkItemParameters.UPDATE_TASK_STATUS);
-        wi.setParameter(WorkItemParameters.TASK_TRANSITION, transition);
-        wi.setParameter(WorkItemParameters.WORK_ITEM_ID, getWorkItemId());
-        wi.setParameter(WorkItemParameters.ACTOR_ID, getIdealOwner());
-        wi.setParameter(WorkItemParameters.USERS_IN_ROLE, getCaseInstance().getRoleInstance(getItem().getDefinition().getPerformer().getName()).getRoleAssignmentNames());
-        wi.setParameter(WorkItemParameters.GROUP_ID, getItem().getDefinition().getPerformer().getName());
-        wi.setParameter(WorkItemParameters.BUSINESSADMINISTRATOR_ID, getBusinessAdministrators());
-        wi.getParameters().putAll(buildParametersFor(transition));
-        //TODO test if this is OK
-        executeWorkItem(wi);
-//        EventQueues.queueWorkItem(wi);
+    public void enable() {
+        super.enable();
+        triggerTransitionOnTask(PlanItemTransition.ENABLE);
+    }
+
+    @Override
+    public void start() {
+        super.start();
+        triggerTransitionOnTask(PlanItemTransition.START);
+    }
+
+    @Override
+    public void manualStart() {
+        super.manualStart();
+        triggerTransitionOnTask(PlanItemTransition.MANUAL_START);
+    }
+
+    @Override
+    public void reactivate() {
+        super.reactivate();
+        triggerTransitionOnTask(PlanItemTransition.REACTIVATE);
+    }
+
+    @Override
+    public void fault() {
+        super.fault();
+        triggerTransitionOnTask(PlanItemTransition.FAULT);
+    }
+
+    @Override
+    public void exit() {
+        super.exit();
+        triggerTransitionOnTask(PlanItemTransition.EXIT);
+    }
+
+    @Override
+    public void disable() {
+        super.disable();
+        triggerTransitionOnTask(PlanItemTransition.DISABLE);
+    }
+
+    @Override
+    public void reenable() {
+        super.reenable();
+        triggerTransitionOnTask(PlanItemTransition.REENABLE);
+    }
+
+    @Override
+    public void complete() {
+        super.complete();
+        triggerTransitionOnTask(PlanItemTransition.EXIT);
+    }
+
+    @Override
+    public void parentSuspend() {
+        super.parentSuspend();
+        triggerTransitionOnTask(PlanItemTransition.PARENT_SUSPEND);
+    }
+
+    @Override
+    public void parentResume() {
+        super.parentResume();
+        triggerTransitionOnTask(PlanItemTransition.PARENT_RESUME);
+    }
+
+    @Override
+    public void create() {
+        super.create();
+        triggerTransitionOnTask(PlanItemTransition.CREATE);
+    }
+
+    @Override
+    public void suspend() {
+        super.suspend();
+        triggerTransitionOnTask(PlanItemTransition.SUSPEND);
+    }
+
+    @Override
+    public void resume() {
+        super.resume();
+        triggerTransitionOnTask(PlanItemTransition.RESUME);
+    }
+
+    @Override
+    public void terminate() {
+        super.terminate();
+        triggerTransitionOnTask(PlanItemTransition.TERMINATE);
+    }
+
+    private final void triggerTransitionOnTask(PlanItemTransition transition) {
+        if (!signalFromTask) {
+            WorkItemImpl wi = new WorkItemImpl();
+            wi.setProcessInstanceId(this.getProcessInstance().getId());
+            String deploymentId = (String) getProcessInstance().getKnowledgeRuntime().getEnvironment().get("deploymentId");
+            wi.setDeploymentId(deploymentId);
+            wi.setName(WorkItemParameters.UPDATE_TASK_STATUS);
+            wi.setParameter(WorkItemParameters.TASK_TRANSITION, transition);
+            wi.setParameter(WorkItemParameters.WORK_ITEM_ID, getWorkItemId());
+            wi.setParameter(WorkItemParameters.ACTOR_ID, getIdealOwner());
+            wi.setParameter(WorkItemParameters.USERS_IN_ROLE, getCaseInstance().getRoleInstance(getItem().getDefinition().getPerformer().getName()).getRoleAssignmentNames());
+            wi.setParameter(WorkItemParameters.GROUP_ID, getItem().getDefinition().getPerformer().getName());
+            wi.setParameter(WorkItemParameters.BUSINESSADMINISTRATOR_ID, getBusinessAdministrators());
+            wi.getParameters().putAll(buildParametersFor(transition));
+            executeWorkItem(wi);
+        }
     }
 
     public final WorkItemImpl createWorkItem(Work work) {
@@ -193,13 +280,16 @@ public class HumanTaskInstance extends ControllableItemInstanceImpl<HumanTaskDef
                     }
                 }
             }
+            signalFromTask=true;
             transition.invokeOn(this);
+            signalFromTask=false;
             String owner = (String) wi.getResult(WorkItemParameters.ACTUAL_OWNER);
             if (owner != null) {
                 getCaseInstance().addRoleAssignment(getItem().getDefinition().getPerformer().getName(), owner);
             }
+        } else {
+            super.signalEvent(type, event);
         }
-        super.signalEvent(type, event);
     }
 
     private boolean isCompletionTransition(PlanItemTransition transition) {

@@ -2,35 +2,35 @@ package org.jbpm.cmmn.task.additional.commands;
 
 import org.jbpm.services.task.lifecycle.listeners.TaskLifeCycleEventListener;
 import org.kie.api.task.model.Task;
-
+import org.kie.api.task.TaskEvent;
 public interface CmmnTaskLifecycleEventListener extends TaskLifeCycleEventListener {
 
-	void beforeTaskCompletedEvent(Task task);
+	void beforeTaskCompletedEvent(TaskEvent  task);
 
-	void beforeTaskAddedEvent(Task t);
+	void beforeTaskAddedEvent(TaskEvent  t);
 
-	void afterTaskReactivatedEvent(Task task);
+	void afterTaskReactivatedEvent(TaskEvent  task);
 
-	void afterTaskReenabledEvent(Task task);
+	void afterTaskReenabledEvent(TaskEvent  task);
 
-	void afterTaskParentSuspendedEvent(Task task);
+	void afterTaskParentSuspendedEvent(TaskEvent  task);
 
-	void afterTaskParentResumedEvent(Task task);
+	void afterTaskParentResumedEvent(TaskEvent  task);
 
-	void afterTaskExitCriteriaEvent(Task task);
+	void afterTaskExitCriteriaEvent(TaskEvent  task);
 
-	void afterTaskStartedAutomaticallyEvent(Task task);
+	void afterTaskStartedAutomaticallyEvent(TaskEvent  task);
 
-	void beforeTaskReactivatedEvent(Task task);
+	void beforeTaskReactivatedEvent(TaskEvent  task);
 
-	void beforeTaskReenabledEvent(Task task);
+	void beforeTaskReenabledEvent(TaskEvent  task);
 
-	void beforeTaskParentSuspendedEvent(Task task);
+	void beforeTaskParentSuspendedEvent(TaskEvent  task);
 
-	void beforeTaskParentResumedEvent(Task task);
+	void beforeTaskParentResumedEvent(TaskEvent  task);
 
-	void beforeTaskExitCriteriaEvent(Task task);
+	void beforeTaskExitCriteriaEvent(TaskEvent  task);
 
-	void beforeTaskStartedAutomaticallyEvent(Task task);
+	void beforeTaskStartedAutomaticallyEvent(TaskEvent  task);
 
 }

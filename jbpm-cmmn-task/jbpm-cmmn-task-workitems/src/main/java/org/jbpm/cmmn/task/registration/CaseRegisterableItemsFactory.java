@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 public class CaseRegisterableItemsFactory extends DefaultRegisterableItemsFactory {
-	private TaskLifeCycleEventListener lifecycleListener =new CaseTaskLifecycleListener();
+	private CaseTaskLifecycleListener lifecycleListener =new CaseTaskLifecycleListener();
 	@SuppressWarnings({ "rawtypes" })
 	@Override
 	protected WorkItemHandler getHTWorkItemHandler(RuntimeEngine runtime) {
@@ -45,7 +45,7 @@ public class CaseRegisterableItemsFactory extends DefaultRegisterableItemsFactor
 	public Map<String, WorkItemHandler> getWorkItemHandlers(RuntimeEngine runtime) {
 		Map<String, WorkItemHandler> defaultHandlers = new HashMap<String, WorkItemHandler>();
 		defaultHandlers.putAll(super.getWorkItemHandlers(runtime));
-		UpdateTaskStatusWorkItemHandler stwih = new UpdateTaskStatusWorkItemHandler();
+		UpdateTaskStatusWorkItemHandler stwih = new UpdateTaskStatusWorkItemHandler(lifecycleListener);
 		stwih.setRuntimeManager(((RuntimeEngineImpl) runtime).getManager());
 		defaultHandlers.put(WorkItemParameters.UPDATE_TASK_STATUS, stwih);
 		return defaultHandlers;
@@ -55,11 +55,11 @@ public class CaseRegisterableItemsFactory extends DefaultRegisterableItemsFactor
 		List<TaskLifeCycleEventListener> result = new ArrayList<TaskLifeCycleEventListener>();
 		for (TaskLifeCycleEventListener listener : super.getTaskListeners()) {
 			if(listener instanceof ExternalTaskEventListener){
-				result.add(lifecycleListener);
 			}else{
 				result.add(listener);
 			}
 		}
+		result.add(lifecycleListener);
 		return result;
 	}
 

@@ -16,7 +16,7 @@ public class StageAsPlanItemTest extends AbstractControllableLifecycleTest {
 	// public void testStageTriggered() throws Exception {
 	// // *****GIVEN
 	// givenThatTheTestCaseIsStarted();
-	// triggerStartOfTask();
+	// triggerTaskCreation();
 	// assertNodeTriggered(caseInstance.getId(), "TopLevelTask");
 	// List<TaskSummary> list = getTaskService().getTasksAssignedAsPotentialOwner("Builder", "en-UK");
 	// assertEquals(1, list.size());

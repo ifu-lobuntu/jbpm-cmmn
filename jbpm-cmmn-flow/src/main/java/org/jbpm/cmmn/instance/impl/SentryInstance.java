@@ -134,12 +134,7 @@ public class SentryInstance extends JoinInstance {
 			NodeInstance found = findNodeInstance(nic, sentry.getPlanItemExiting());
 			// TODO refine which PlannItemInstance to exit, e.g. look at the
 			// output and see if the caseFileITem Instance associated matches
-			if (found instanceof HumanTaskInstance) {
-				// Task planItem
-				HumanTaskInstance pii = (HumanTaskInstance) found;
-				pii.triggerTransitionOnTask(PlanItemTransition.EXIT);
-				hasTriggered = true;
-			}else if (found instanceof ControllableItemInstance) {
+			if (found instanceof ControllableItemInstance) {
 					// Task planItem
 				ControllableItemInstance<?> pii = (ControllableItemInstance<?>) found;
 				pii.exit();

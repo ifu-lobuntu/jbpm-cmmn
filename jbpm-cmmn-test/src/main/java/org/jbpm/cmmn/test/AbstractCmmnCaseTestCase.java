@@ -585,16 +585,16 @@ public abstract class AbstractCmmnCaseTestCase extends JbpmJUnitBaseTestCase {
 			its.addMarshallerContext(rm.getIdentifier(), new ContentMarshallerContext(env, getClass().getClassLoader()));
 			// its.setUserInfo(new PropertyUserInfoImpl(new Properties()));
 		}
-		if (ts instanceof EventService<?>) {
-			EventService<TaskLifeCycleEventListener> es = (EventService<TaskLifeCycleEventListener>) ts;
-			for (TaskLifeCycleEventListener object : es.getTaskEventListeners()) {
-				if (object instanceof ExternalTaskEventListener) {
-					es.removeTaskEventListener(object);
-					es.registerTaskEventListener(new CaseTaskLifecycleListener());
-					break;
-				}
-			}
-		}
+//		if (ts instanceof EventService<?>) {
+//			EventService<TaskLifeCycleEventListener> es = (EventService<TaskLifeCycleEventListener>) ts;
+//			for (TaskLifeCycleEventListener object : es.getTaskEventListeners()) {
+//				if (object instanceof ExternalTaskEventListener) {
+//					es.removeTaskEventListener(object);
+//					es.registerTaskEventListener(new CaseTaskLifecycleListener());
+//					break;
+//				}
+//			}
+//		}
 		this.cmmnService=new CMMNServiceImpl(runtimeEngine);
 		// for some reason the task service does not persist the users and
 		// groups ???

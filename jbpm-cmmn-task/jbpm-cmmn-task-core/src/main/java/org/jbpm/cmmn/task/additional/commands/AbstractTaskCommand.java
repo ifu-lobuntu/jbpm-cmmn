@@ -169,25 +169,25 @@ public abstract class AbstractTaskCommand<T> extends TaskCommand<T> {
 
 	protected void fireBeforeTaskStartedAutomaticallyEvent(Task t) {
 		for (CmmnTaskLifecycleEventListener l : getCmmnEventListeners()) {
-			l.beforeTaskStartedAutomaticallyEvent(t);
+			l.beforeTaskStartedAutomaticallyEvent(new TaskEventImpl(t, taskContext));
 		}
 	}
 
 	protected void fireAfterTaskStartedAutomaticallyEvent(Task t) {
 		for (CmmnTaskLifecycleEventListener l : getCmmnEventListeners()) {
-			l.afterTaskStartedAutomaticallyEvent(t);
+			l.afterTaskStartedAutomaticallyEvent(new TaskEventImpl(t, taskContext));
 		}
 	}
 
 	protected void fireBeforeTaskExitCriteriaEvent(Task t) {
 		for (CmmnTaskLifecycleEventListener l : getCmmnEventListeners()) {
-			l.beforeTaskExitCriteriaEvent(t);
+			l.beforeTaskExitCriteriaEvent(new TaskEventImpl(t, taskContext));
 		}
 	}
 
 	protected void fireAfterTaskExitCriteriaEvent(Task t) {
 		for (CmmnTaskLifecycleEventListener l : getCmmnEventListeners()) {
-			l.afterTaskExitCriteriaEvent(t);
+			l.afterTaskExitCriteriaEvent(new TaskEventImpl(t, taskContext));
 		}
 	}
 
@@ -217,49 +217,49 @@ public abstract class AbstractTaskCommand<T> extends TaskCommand<T> {
 
 	protected void fireBeforeTaskReactivatedEvent(Task t) {
 		for (CmmnTaskLifecycleEventListener l : getCmmnEventListeners()) {
-			l.beforeTaskReactivatedEvent(t);
+			l.beforeTaskReactivatedEvent(new TaskEventImpl(t, taskContext));
 		}
 	}
 
 	protected void fireAfterTaskReactivatedEvent(Task t) {
 		for (CmmnTaskLifecycleEventListener l : getCmmnEventListeners()) {
-			l.afterTaskReactivatedEvent(t);
+			l.afterTaskReactivatedEvent(new TaskEventImpl(t, taskContext));
 		}
 	}
 
 	protected void fireBeforeTaskReenabledEvent(Task t) {
 		for (CmmnTaskLifecycleEventListener l : getCmmnEventListeners()) {
-			l.beforeTaskReenabledEvent(t);
+			l.beforeTaskReenabledEvent(new TaskEventImpl(t, taskContext));
 		}
 	}
 
 	protected void fireAfterTaskReenabledEvent(Task t) {
 		for (CmmnTaskLifecycleEventListener l : getCmmnEventListeners()) {
-			l.afterTaskReenabledEvent(t);
+			l.afterTaskReenabledEvent(new TaskEventImpl(t, taskContext));
 		}
 	}
 
 	protected void fireBeforeTaskResumedFromParentEvent(Task t) {
 		for (CmmnTaskLifecycleEventListener l : getCmmnEventListeners()) {
-			l.beforeTaskParentResumedEvent(t);
+			l.beforeTaskParentResumedEvent(new TaskEventImpl(t, taskContext));
 		}
 	}
 
 	protected void fireAfterTaskResumedFromParentEvent(Task t) {
 		for (CmmnTaskLifecycleEventListener l : getCmmnEventListeners()) {
-			l.afterTaskParentResumedEvent(t);
+			l.afterTaskParentResumedEvent(new TaskEventImpl(t, taskContext));
 		}
 	}
 
 	protected void fireBeforeTaskSuspendedFromParentEvent(Task t) {
 		for (CmmnTaskLifecycleEventListener l : getCmmnEventListeners()) {
-			l.beforeTaskParentSuspendedEvent(t);
+			l.beforeTaskParentSuspendedEvent(new TaskEventImpl(t, taskContext));
 		}
 	}
 
 	protected void fireAfterTaskSuspendedFromParentEvent(Task t) {
 		for (CmmnTaskLifecycleEventListener l : getCmmnEventListeners()) {
-			l.afterTaskParentSuspendedEvent(t);
+			l.afterTaskParentSuspendedEvent(new TaskEventImpl(t, taskContext));
 		}
 	}
 }

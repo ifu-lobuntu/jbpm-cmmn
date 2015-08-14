@@ -13,6 +13,7 @@ import org.jbpm.cmmn.instance.PlanItemInstance;
 import org.jbpm.cmmn.instance.PlanItemInstanceContainer;
 import org.jbpm.cmmn.instance.impl.AbstractCallingTaskInstance;
 import org.jbpm.cmmn.instance.impl.CaseTaskInstance;
+import org.jbpm.cmmn.instance.impl.util.PlanItemInstanceContainerUtil;
 import org.jbpm.cmmn.service.model.Plan;
 import org.jbpm.cmmn.test.AbstractConstructionTestCase;
 import org.kie.api.task.model.Status;
@@ -84,7 +85,7 @@ public abstract class AbstractPlanItemInstanceContainerTest extends AbstractCons
 				getPersistence().start();
 				CaseInstance ci3 = reloadCaseInstance();
 				long workItemId = getTaskService().getTaskById(taskSummary.getId()).getTaskData().getWorkItemId();
-				CaseTaskInstance ctpi = (CaseTaskInstance) ci3.findNodeForWorkItem(workItemId);
+				CaseTaskInstance ctpi = (CaseTaskInstance) PlanItemInstanceContainerUtil.findNodeForWorkItem(ci3,workItemId);
 				getRuntimeEngine().getKieSession().getProcessInstance(ctpi.getProcessInstanceId()).signalEvent("TheUserEvent", new Object());
 				printState(" ", ci3);
 				getPersistence().commit();

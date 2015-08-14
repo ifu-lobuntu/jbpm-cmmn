@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum PlanItemTransition {
-	CLOSE, COMPLETE, CREATE, DISABLE, ENABLE, EXIT, PARENT_TERMINATE, FAULT, MANUAL_START, OCCUR, PARENT_RESUME, PARENT_SUSPEND, REACTIVATE, REENABLE, RESUME, START, SUSPEND, TERMINATE;
+	CLOSE, COMPLETE, CREATE, DISABLE, ENABLE, EXIT,  FAULT, MANUAL_START, OCCUR, PARENT_RESUME, PARENT_SUSPEND,PARENT_TERMINATE, REACTIVATE, REENABLE, RESUME, START, SUSPEND, TERMINATE;
 	private static Map<String, PlanItemTransition> BY_NAME = new HashMap<String, PlanItemTransition>();
 
 	public static PlanItemTransition resolveByName(String name) {

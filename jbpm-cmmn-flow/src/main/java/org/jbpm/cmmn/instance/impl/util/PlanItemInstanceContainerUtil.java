@@ -110,7 +110,7 @@ public class PlanItemInstanceContainerUtil {
             if (ni instanceof HumanTaskInstance && ((HumanTaskInstance) ni).getWorkItemId() == id) {
                 return (HumanTaskInstance) ni;
             } else if (ni instanceof PlanItemInstanceContainer) {
-                ControllableItemInstance<?> found = ((PlanItemInstanceContainer) ni).findNodeForWorkItem(id);
+                ControllableItemInstance<?> found = findNodeForWorkItem((PlanItemInstanceContainer) ni, id);
                 if (found != null) {
                     return found;
                 }

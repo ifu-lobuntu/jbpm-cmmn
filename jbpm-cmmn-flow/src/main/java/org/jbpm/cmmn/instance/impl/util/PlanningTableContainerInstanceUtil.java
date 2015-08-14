@@ -67,7 +67,7 @@ public class PlanningTableContainerInstanceUtil {
 		DiscretionaryItem<?> item = e.getPlanningTable().getDiscretionaryItemById(discretionaryItemId);
 		PlanItemInstanceContainer piic = e.getPlanItemInstanceCreator();
 		// TODO we may want to work through the factory node here
-		ControllableItemInstance<?> found = piic.findNodeForWorkItem(wi.getId());
+		ControllableItemInstance<?> found = PlanItemInstanceContainerUtil.findNodeForWorkItem(piic, wi.getId());
 		if (found == null) {
 			found = (ControllableItemInstance<?>) piic.getNodeInstance(item);
 			found.internalTriggerWithoutInstantiation(piic.getNodeInstance(piic.getPlanItemContainer().getDefaultSplit()), NodeImpl.CONNECTION_DEFAULT_TYPE, wi);
