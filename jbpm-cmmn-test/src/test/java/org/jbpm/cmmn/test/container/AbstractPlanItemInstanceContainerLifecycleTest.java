@@ -49,7 +49,7 @@ public abstract class AbstractPlanItemInstanceContainerLifecycleTest extends Abs
 //		triggerInitialActivity();
 //		// *****WHEN
 //		// complete some pending tasks
-//		completeTasks(getTaskService().getSubTasksByParent(getTaskService().getTaskByWorkItemId(getWorkitemId()).getId()));
+//		completeTasks(getCmmnService().getPlan(caseInstance.getId()));
 //
 //		// *****THEN
 //		// Now we can complete it
@@ -77,8 +77,8 @@ public abstract class AbstractPlanItemInstanceContainerLifecycleTest extends Abs
 //		testCloseAndOutput(piic);
 //	}
 //
-//	protected void testCloseAndOutput(PlanItemInstanceContainer piic) {
-//	}
+	protected void testCloseAndOutput(PlanItemInstanceContainer piic) {
+	}
 //
 //	@Test
 //	public void testTaskLifecycleSuspendAndReactivate() throws Exception {

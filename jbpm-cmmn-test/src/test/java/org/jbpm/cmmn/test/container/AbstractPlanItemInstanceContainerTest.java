@@ -15,6 +15,7 @@ import org.jbpm.cmmn.instance.impl.AbstractCallingTaskInstance;
 import org.jbpm.cmmn.instance.impl.CaseTaskInstance;
 import org.jbpm.cmmn.instance.impl.util.PlanItemInstanceContainerUtil;
 import org.jbpm.cmmn.service.model.Plan;
+import org.jbpm.cmmn.service.model.PlannableItem;
 import org.jbpm.cmmn.test.AbstractConstructionTestCase;
 import org.kie.api.task.model.Status;
 import org.kie.api.task.model.TaskSummary;
@@ -75,32 +76,34 @@ public abstract class AbstractPlanItemInstanceContainerTest extends AbstractCons
 		return reloadCaseInstance(caseInstance);
 	}
 
-	protected void completeTasks(List<TaskSummary> subTasksByParent) {
-		for (TaskSummary taskSummary : subTasksByParent) {
-			if (taskSummary.getName().equals("TheHumanTaskPlanItem")) {
-				String id = taskSummary.getActualOwner()!=null?taskSummary.getActualOwner().getId():"Builder";
-				getTaskService().start(taskSummary.getId(), id);
-				getTaskService().complete(taskSummary.getId(), id, new HashMap<String, Object>());
-			} else if (taskSummary.getName().equals("TheCaseTaskPlanItem")) {
-				getPersistence().start();
-				CaseInstance ci3 = reloadCaseInstance();
-				long workItemId = getTaskService().getTaskById(taskSummary.getId()).getTaskData().getWorkItemId();
-				CaseTaskInstance ctpi = (CaseTaskInstance) PlanItemInstanceContainerUtil.findNodeForWorkItem(ci3,workItemId);
-				getRuntimeEngine().getKieSession().getProcessInstance(ctpi.getProcessInstanceId()).signalEvent("TheUserEvent", new Object());
-				printState(" ", ci3);
-				getPersistence().commit();
-				assertEquals(PlanElementState.COMPLETED,
-						((CaseInstance) getRuntimeEngine().getKieSession().getProcessInstance(ctpi.getProcessInstanceId())).getPlanElementState());
-				getPersistence().start();
-				getRuntimeEngine().getKieSession().getProcessInstance(ctpi.getProcessInstanceId()).signalEvent(DefaultJoin.CLOSE, new Object());
-				getPersistence().commit();
-				assertNull(getRuntimeEngine().getKieSession().getProcessInstance(ctpi.getProcessInstanceId()));
-			} else if (taskSummary.getName().equals("TheStagePlanItem")) {
-				getPersistence().start();
-				getRuntimeEngine().getKieSession().signalEvent("StageCompletingEvent", new Object(), caseInstance.getId());
-				getPersistence().commit();
-				assertPlanItemInState(caseInstance.getId(), "TheMilestonePlanItemInTheStage", PlanElementState.COMPLETED);
-			}
+	protected void completeTasks(Plan plan) {
+		for (PlannableItem item : plan.getPlannableItems()) {
+//			if (item.getName().equals("TheHumanTaskPlanItem")) {
+//				caseInstance.getNodeInstance()
+//				getTaskService().getTaskByWorkItemId(workItemId);
+//				String id = item.getActualOwner()!=null?item.getActualOwner().getId():"Builder";
+//				getTaskService().start(item.getId(), id);
+//				getTaskService().complete(item.getId(), id, new HashMap<String, Object>());
+//			} else if (item.getName().equals("TheCaseTaskPlanItem")) {
+//				getPersistence().start();
+//				CaseInstance ci3 = reloadCaseInstance();
+//				long workItemId = getTaskService().getTaskById(item.getId()).getTaskData().getWorkItemId();
+//				CaseTaskInstance ctpi = (CaseTaskInstance) PlanItemInstanceContainerUtil.findNodeForWorkItem(ci3,workItemId);
+//				getRuntimeEngine().getKieSession().getProcessInstance(ctpi.getProcessInstanceId()).signalEvent("TheUserEvent", new Object());
+//				printState(" ", ci3);
+//				getPersistence().commit();
+//				assertEquals(PlanElementState.COMPLETED,
+//						((CaseInstance) getRuntimeEngine().getKieSession().getProcessInstance(ctpi.getProcessInstanceId())).getPlanElementState());
+//				getPersistence().start();
+//				getRuntimeEngine().getKieSession().getProcessInstance(ctpi.getProcessInstanceId()).signalEvent(DefaultJoin.CLOSE, new Object());
+//				getPersistence().commit();
+//				assertNull(getRuntimeEngine().getKieSession().getProcessInstance(ctpi.getProcessInstanceId()));
+//			} else if (item.getName().equals("TheStagePlanItem")) {
+//				getPersistence().start();
+//				getRuntimeEngine().getKieSession().signalEvent("StageCompletingEvent", new Object(), caseInstance.getId());
+//				getPersistence().commit();
+//				assertPlanItemInState(caseInstance.getId(), "TheMilestonePlanItemInTheStage", PlanElementState.COMPLETED);
+//			}
 		}
 		assertPlanItemInState(caseInstance.getId(), "TheMilestonePlanItem", PlanElementState.COMPLETED);
 		assertPlanItemInState(caseInstance.getId(), "TheTimerEventPlanItem", PlanElementState.AVAILABLE);
