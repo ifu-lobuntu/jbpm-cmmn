@@ -1,8 +1,10 @@
 package org.jbpm.cmmn.test.container;
 
+import org.jbpm.cmmn.flow.common.PlanItemTransition;
 import org.jbpm.cmmn.instance.PlanElementState;
 import org.jbpm.cmmn.instance.PlanItemInstanceContainer;
 import org.jbpm.cmmn.instance.impl.StageInstance;
+import org.jbpm.cmmn.service.model.Plan;
 import org.kie.api.runtime.process.NodeInstance;
 
 public class StageAsContainerTest extends AbstractPlanItemInstanceContainerLifecycleTest {
@@ -18,6 +20,13 @@ public class StageAsContainerTest extends AbstractPlanItemInstanceContainerLifec
 	protected void ensurePlanItemContainerIsStarted() {
 		assertPlanItemInState(caseInstance.getId(), "TheTopLevelStagePlanItem", PlanElementState.ACTIVE);
 	}
+	protected void completePlanItemInstanceContainer() {
+		getCmmnService().transitionPlanItem(caseInstance.getId(), getStagePlanItemInstance().getId(), PlanItemTransition.COMPLETE);
+	}
+	@Override
+	protected Plan getPlan() {
+		return getCmmnService().getPlan(caseInstance.getId(),getStagePlanItemInstance().getId());
+	}
 
 	@Override
 	protected PlanItemInstanceContainer getPlanItemInstanceContainer() {
@@ -29,7 +38,22 @@ public class StageAsContainerTest extends AbstractPlanItemInstanceContainerLifec
 		return "StagePlanItemInstanceTests";
 	}
 
+	protected void continuePlanItemInstanceContainer() {
+		getPersistence().start();
+		getCmmnService().transitionPlanItem(caseInstance.getId(), getStagePlanItemInstance().getId(), PlanItemTransition.RESUME);
+		getPersistence().commit();
+	}
 
+	protected void suspedPlanItemInstanceContainer() {
+		getPersistence().start();
+		getCmmnService().transitionPlanItem(caseInstance.getId(), getStagePlanItemInstance().getId(), PlanItemTransition.SUSPEND);
+		getPersistence().commit();
+	}
+	protected void terminatePlanItemInstanceContainer() {
+		getPersistence().start();
+		getCmmnService().transitionPlanItem(caseInstance.getId(), getStagePlanItemInstance().getId(), PlanItemTransition.TERMINATE);
+		getPersistence().commit();
+	}
 	public StageInstance getStagePlanItemInstance() {
 		StageInstance spii = null;
 		for (NodeInstance ni : reloadCaseInstance(caseInstance).getNodeInstances()) {
@@ -38,6 +62,11 @@ public class StageAsContainerTest extends AbstractPlanItemInstanceContainerLifec
 			}
 		}
 		return spii;
+	}
+	protected void failPlanItemInstanceContainer() {
+		getPersistence().start();
+		getCmmnService().transitionPlanItem(caseInstance.getId(), getStagePlanItemInstance().getId(), PlanItemTransition.FAULT);
+		getPersistence().commit();
 	}
 
 	@Override

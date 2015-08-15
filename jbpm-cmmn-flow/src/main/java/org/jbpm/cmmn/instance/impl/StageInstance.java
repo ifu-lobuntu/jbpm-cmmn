@@ -10,6 +10,8 @@ import org.jbpm.cmmn.instance.subscription.OnPartInstanceSubscription;
 import org.jbpm.process.instance.ContextInstanceContainer;
 import org.jbpm.workflow.core.node.StartNode;
 import org.jbpm.workflow.instance.NodeInstanceContainer;
+import org.jbpm.workflow.instance.WorkflowProcessInstance;
+import org.jbpm.workflow.instance.impl.WorkflowProcessInstanceImpl;
 import org.jbpm.workflow.instance.node.EventBasedNodeInstanceInterface;
 import org.jbpm.workflow.instance.node.EventNodeInstanceInterface;
 import org.kie.api.runtime.process.NodeInstance;
@@ -18,16 +20,27 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicLong;
 
-public class StageInstance extends ControllableItemInstanceImpl<Stage> implements PlanItemInstanceContainer,
-		NodeInstanceContainer, EventNodeInstanceInterface, EventBasedNodeInstanceInterface, ContextInstanceContainer {
+public class StageInstance extends ControllableItemInstanceImpl<Stage> implements PlanItemInstanceContainer, EventNodeInstanceInterface, EventBasedNodeInstanceInterface, ContextInstanceContainer {
 
 	private static final long serialVersionUID = 112341234123L;
+	private AtomicLong counter;
 
 	@Override
 	public void internalTrigger(NodeInstance from, String type) {
 		super.internalTrigger(from, type);
 		noteInstantiation();
+	}
+
+	public AtomicLong getCounter() {
+		return counter;
+	}
+
+	@Override
+	public void setProcessInstance(WorkflowProcessInstance processInstance) {
+		super.setProcessInstance(processInstance);
+		this.counter=((WorkflowProcessInstanceImpl) processInstance).internalGetNodeInstanceCounter();
 	}
 
 	@Override
@@ -125,4 +138,5 @@ public class StageInstance extends ControllableItemInstanceImpl<Stage> implement
 			reactivate();
 		}
 	}
+
 }

@@ -6,7 +6,7 @@ public class MakeDiscretionaryItemAvailableCommand extends AbstractPlanningComma
 	private final String discretionaryItemId;
 	private static final long serialVersionUID = -8445378L;
 
-	public MakeDiscretionaryItemAvailableCommand(long processInstanceId, String planningTableContainerInstanceId,  String discretionaryItemId) {
+	public MakeDiscretionaryItemAvailableCommand(long processInstanceId, Long planningTableContainerInstanceId,  String discretionaryItemId) {
 		super(processInstanceId,planningTableContainerInstanceId);
 		this.discretionaryItemId = discretionaryItemId;
 	}

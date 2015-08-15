@@ -27,9 +27,6 @@ public abstract class CaseFileItemStandardEventNodeImpl extends AbstractStandard
 	}
 
 	public void setSourceCaseFileItem(CaseFileItemImpl caseFileItem) {
-		if(caseFileItem==null){
-			System.out.println();
-		}
 		this.sourceCaseFileItem = caseFileItem;
 	}
 

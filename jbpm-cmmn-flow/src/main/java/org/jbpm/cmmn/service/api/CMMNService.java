@@ -8,22 +8,22 @@ import org.jbpm.cmmn.service.model.PlannableItem;
 import java.util.Collection;
 
 public interface CMMNService {
-    void transitionPlanItem(long processId, String planItemUniqueId, PlanItemTransition t);
+    void transitionPlanItem(long processId, long planItemUniqueId, PlanItemTransition t);
 
     void transitionCase(long processId, PlanItemTransition t);
 
     Plan getPlan(long processId);
 
-    Plan getPlan(long processId, String planningTableContainerId);
+    Plan getPlan(long processId, long planningTableContainerId);
 
-    void submitPlan(long processId, String planningTableContainerId, Collection<PlannableItem> plannedTasks, boolean resume);
+    void submitPlan(long processId, long planningTableContainerId, Collection<PlannableItem> plannedTasks, boolean resume);
 
     Plan startPlanning(long processId, String user, boolean suspend);
 
-    Plan startPlanning(long processId, String planningTableContainerId, String user, boolean suspend);
+    Plan startPlanning(long processId, long planningTableContainerId, String user, boolean suspend);
 
-    Plan preparePlannableItem(long processId, String planningTableContainerId, String discretionaryItemId);
+    Plan preparePlannableItem(long processId, long planningTableContainerId, String discretionaryItemId);
 
-    void makeDiscretionaryItemAvailable(long processId, String planningTableContainerId, String discretionaryItemId);
+    void makeDiscretionaryItemAvailable(long processId, long planningTableContainerId, String discretionaryItemId);
 
 }

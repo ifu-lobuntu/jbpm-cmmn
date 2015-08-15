@@ -12,6 +12,7 @@ import org.jbpm.process.instance.context.variable.VariableScopeInstance;
 import org.jbpm.workflow.instance.impl.NodeInstanceImpl;
 import org.jbpm.workflow.instance.impl.WorkflowProcessInstanceImpl;
 import org.jbpm.workflow.instance.node.CompositeContextNodeInstance;
+import org.jbpm.workflow.instance.node.CompositeNodeInstance;
 import org.jbpm.workflow.instance.node.JoinInstance;
 import org.kie.api.runtime.process.NodeInstance;
 import org.kie.api.runtime.process.NodeInstanceContainer;
@@ -21,6 +22,7 @@ import org.kie.api.runtime.process.WorkflowProcessInstance;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.lang.reflect.Field;
 import java.util.*;
 
 public class CaseInstanceMarshaller extends AbstractProcessInstanceMarshaller {
@@ -55,7 +57,19 @@ public class CaseInstanceMarshaller extends AbstractProcessInstanceMarshaller {
 		ObjectInputStream stream = context.stream;
 		ProcessInstance read = super.readProcessInstance(context);
 		if (read instanceof CaseInstanceImpl) {
-			((CaseInstance) read).setPlanElementState(PlanElementState.values()[stream.readInt()]);
+			CaseInstanceImpl ci = (CaseInstanceImpl) read;
+			ci.setPlanElementState(PlanElementState.values()[stream.readInt()]);
+			for (NodeInstance ni: ci.getNodeInstances()) {
+				if(ni instanceof CompositeNodeInstance){
+					try {
+						Field field = CompositeNodeInstance.class.getDeclaredField("singleNodeInstanceCounter");
+						field.setAccessible(true);
+						field.set(ni,ci.internalGetNodeInstanceCounter());
+					} catch (NoSuchFieldException e) {
+					} catch (IllegalAccessException e) {
+					}
+				}
+			}
 		}
 		return read;
 	}
@@ -82,9 +96,10 @@ public class CaseInstanceMarshaller extends AbstractProcessInstanceMarshaller {
 		NodeInstance ni = super.readNodeInstance(context, nodeInstanceContainer, processInstance);
 		MarshallerReaderContext stream = context.stream;
 		if (ni instanceof StageInstance) {
+			StageInstance si = (StageInstance) ni;
 			int nbVariables = stream.readInt();
 			if (nbVariables > 0) {
-				Context variableScope = ((org.jbpm.process.core.Process) ((org.jbpm.process.instance.ProcessInstance) processInstance).getProcess())
+				Context variableScope = ((org.jbpm.process.core.Process) processInstance.getProcess())
 						.getDefaultContext(VariableScope.VARIABLE_SCOPE);
 				VariableScopeInstance variableScopeInstance = (VariableScopeInstance) ((CompositeContextNodeInstance) ni).getContextInstance(variableScope);
 				for (int i = 0; i < nbVariables; i++) {
@@ -98,7 +113,7 @@ public class CaseInstanceMarshaller extends AbstractProcessInstanceMarshaller {
 				}
 			}
 			while (stream.readShort() == PersisterEnums.NODE_INSTANCE) {
-				readNodeInstance(context, (StageInstance) ni, processInstance);
+				readNodeInstance(context, si, processInstance);
 			}
 
 		}
@@ -284,9 +299,9 @@ public class CaseInstanceMarshaller extends AbstractProcessInstanceMarshaller {
 			}
 		} else if (nodeInstance instanceof StageInstance) {
 			stream.writeShort(STAGE_PLAN_ITEM_INSTANCE);
-			StageInstance compositeNodeInstance = (StageInstance) nodeInstance;
-			writePlanItemStates(compositeNodeInstance, stream);
-			List<Long> timerInstances = compositeNodeInstance.getTimerInstances();
+			StageInstance stageInstance = (StageInstance) nodeInstance;
+			writePlanItemStates(stageInstance, stream);
+			List<Long> timerInstances = stageInstance.getTimerInstances();
 			if (timerInstances != null) {
 				stream.writeInt(timerInstances.size());
 				for (Long id : timerInstances) {
@@ -295,7 +310,7 @@ public class CaseInstanceMarshaller extends AbstractProcessInstanceMarshaller {
 			} else {
 				stream.writeInt(0);
 			}
-			VariableScopeInstance variableScopeInstance = (VariableScopeInstance) compositeNodeInstance.getContextInstance(VariableScope.VARIABLE_SCOPE);
+			VariableScopeInstance variableScopeInstance = (VariableScopeInstance) stageInstance.getContextInstance(VariableScope.VARIABLE_SCOPE);
 			if (variableScopeInstance == null) {
 				stream.writeInt(0);
 			} else {
@@ -312,7 +327,7 @@ public class CaseInstanceMarshaller extends AbstractProcessInstanceMarshaller {
 					stream.writeObject(variables.get(key));
 				}
 			}
-			List<NodeInstance> nodeInstances = new ArrayList<NodeInstance>(compositeNodeInstance.getNodeInstances());
+			List<NodeInstance> nodeInstances = new ArrayList<NodeInstance>(stageInstance.getNodeInstances());
 			Collections.sort(nodeInstances, new Comparator<NodeInstance>() {
 
 				@Override

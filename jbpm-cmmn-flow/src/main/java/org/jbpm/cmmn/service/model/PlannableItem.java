@@ -8,12 +8,12 @@ import java.io.Serializable;
 
 public class PlannableItem implements Serializable{
     private String name;
-    private String uniqueId;
+    private long nodeInstanceId;
     private PlanElementState state;
     private PlanItemTransition[] supportedTransitions;
-    public PlannableItem(String name, String uniqueId, PlanElementState state, PlanItemTransition[] supportedTransitions) {
+    public PlannableItem(String name, long nodeInstanceId, PlanElementState state, PlanItemTransition[] supportedTransitions) {
         this.name = name;
-        this.uniqueId = uniqueId;
+        this.nodeInstanceId = nodeInstanceId;
         this.state = state;
         this.supportedTransitions=supportedTransitions;
     }
@@ -29,8 +29,8 @@ public class PlannableItem implements Serializable{
         return name;
     }
 
-    public String getUniqueId() {
-        return uniqueId;
+    public long getNodeInstanceId() {
+        return nodeInstanceId;
     }
 
     public PlanElementState getState() {

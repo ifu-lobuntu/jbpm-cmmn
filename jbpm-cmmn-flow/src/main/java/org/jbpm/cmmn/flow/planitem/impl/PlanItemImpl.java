@@ -11,6 +11,7 @@ import org.jbpm.cmmn.flow.planitem.PlanItem;
 import org.jbpm.cmmn.flow.planitem.PlanItemInfo;
 import org.jbpm.workflow.core.node.EventNodeInterface;
 import org.kie.api.definition.process.Connection;
+import org.kie.api.definition.process.Node;
 
 import java.util.HashMap;
 import java.util.List;
@@ -46,6 +47,12 @@ public class PlanItemImpl<T extends PlanItemDefinition> extends AbstractItem imp
 		T def = getDefinition();
 		copiedState.put(def, this);
 		copy(copiedState, def, this);
+		Node[] nodes = this.getNodes();
+		for (Node node : nodes) {
+			if(node instanceof PlanItem){
+				((PlanItem) node).setPlanItemContainer(planItemContainer);
+			}
+		}
 	}
 	public PlanItemInstanceFactoryNode getFactoryNode() {
 		if(getDefinition() instanceof RepeatablePlanItemDefinition) {

@@ -110,6 +110,10 @@ Output ParameterMapping, bindingRefinement and scoped subscriptions
 
 Recursive subscriptions, parameterizable
 
+Drive planning from ProcessEngine rather than TaskService
+ - interpret UpdateTaskStatusHandler as one-way sync
+ - ensure UpdateTAskSTatusHandler does not call back to the ProcessEngine ( remove the CMMNTaskLifeCycleHandler from listerenrList)
+
 
 # 2. To test more directly
 
@@ -127,9 +131,8 @@ XPath processDialect on JCR
 
 # 4. To implement
 
+
 Drive planning from ProcessEngine rather than TaskService
- - interpret UpdateTaskStatusHandler as one-way sync
- - ensure UpdateTAskSTatusHandler does not call back to the ProcessEngine ( remove the CMMNTaskLifeCycleHandler from listerenrList)
  - store TaskInputs that have not been consumed yet in the NodeInstance's VariableContext
 
 Only store Outputs that write to root CaseFileItems

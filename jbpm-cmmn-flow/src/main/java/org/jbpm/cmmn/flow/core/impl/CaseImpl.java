@@ -33,6 +33,15 @@ public class CaseImpl extends RuleFlowProcess implements Case {
 	private Join defaultJoin;
 	private PlanningTable planningTable;
 	private boolean isBuilt;
+	public CaseImpl(){
+		super();
+		setType(CASE_TYPE);
+	}
+
+	@Override
+	public String getType() {
+		return CASE_TYPE;
+	}
 
 	@Override
 	public StartNode getDefaultStart() {

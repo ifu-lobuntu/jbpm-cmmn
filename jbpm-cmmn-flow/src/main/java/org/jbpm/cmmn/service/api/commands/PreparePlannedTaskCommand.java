@@ -13,7 +13,7 @@ public class PreparePlannedTaskCommand extends AbstractPlanningCommand<Plannable
 
 	private static final long serialVersionUID = -8445378L;
 
-	public PreparePlannedTaskCommand(long processId, String planningTableContainerInstanceId, String discretionaryItemId) {
+	public PreparePlannedTaskCommand(long processId, Long planningTableContainerInstanceId, String discretionaryItemId) {
 		super(processId,planningTableContainerInstanceId);
 		this.discretionaryItemId = discretionaryItemId;
 	}

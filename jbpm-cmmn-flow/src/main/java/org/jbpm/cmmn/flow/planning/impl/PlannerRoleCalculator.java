@@ -1,6 +1,7 @@
 package org.jbpm.cmmn.flow.planning.impl;
 
 import org.jbpm.cmmn.flow.core.CaseRole;
+import org.jbpm.cmmn.flow.core.PlanItemContainer;
 import org.jbpm.cmmn.flow.core.impl.CaseRoleImpl;
 import org.jbpm.cmmn.flow.planitem.PlanItem;
 import org.jbpm.cmmn.flow.planning.DiscretionaryItem;
@@ -33,7 +34,10 @@ public class PlannerRoleCalculator {
 	public static String getPlannerRoles(PlanItem<?> pi) {
 		if (pi.getDefinition() instanceof PlanningTableContainer) {
 			PlanningTableContainer ptc = (PlanningTableContainer) pi.getDefinition();
-			return PlannerRoleCalculator.getPlannerRoles(ptc.getPlanningTable(), pi.getPlanItemContainer().getPlanningTable());
+			PlanningTable planningTable = ptc.getPlanningTable();
+			PlanItemContainer planItemContainer = pi.getPlanItemContainer();
+			PlanningTable planningTable1 = planItemContainer.getPlanningTable();
+			return PlannerRoleCalculator.getPlannerRoles(planningTable, planningTable1);
 		}
 		return PlannerRoleCalculator.getPlannerRoles(pi.getPlanItemContainer().getPlanningTable());
 	}

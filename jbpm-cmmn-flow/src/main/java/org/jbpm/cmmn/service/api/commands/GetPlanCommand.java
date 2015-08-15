@@ -21,7 +21,7 @@ public class GetPlanCommand extends AbstractPlanningCommand<Plan> {
     private static final long serialVersionUID = 630L;
     private final String userId;
 
-    public GetPlanCommand(long processId, String planningTableContainerInstanceId, String userId) {
+    public GetPlanCommand(long processId, Long planningTableContainerInstanceId, String userId) {
         super(processId, planningTableContainerInstanceId);
         this.userId = userId;
     }
@@ -43,7 +43,7 @@ public class GetPlanCommand extends AbstractPlanningCommand<Plan> {
         for (NodeInstance nodeInstance : nodeInstances) {
             if (nodeInstance instanceof PlanItemInstance) {
                 PlanItemInstance pii = (PlanItemInstance) nodeInstance;
-                plannableItems.add(new PlannableItem(pii.getNodeName(), pii.getUniqueId(), pii.getPlanElementState(), pii.getPlanElementState().getSupportedTransitions(pii)));
+                plannableItems.add(new PlannableItem(pii.getNodeName(), pii.getId(), pii.getPlanElementState(), pii.getPlanElementState().getSupportedTransitions(pii)));
             }
         }
         return plannableItems;

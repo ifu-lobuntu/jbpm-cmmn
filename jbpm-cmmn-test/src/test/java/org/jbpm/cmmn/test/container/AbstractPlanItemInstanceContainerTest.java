@@ -1,5 +1,6 @@
 package org.jbpm.cmmn.test.container;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,11 +14,13 @@ import org.jbpm.cmmn.instance.PlanItemInstance;
 import org.jbpm.cmmn.instance.PlanItemInstanceContainer;
 import org.jbpm.cmmn.instance.impl.AbstractCallingTaskInstance;
 import org.jbpm.cmmn.instance.impl.CaseTaskInstance;
-import org.jbpm.cmmn.instance.impl.util.PlanItemInstanceContainerUtil;
+import org.jbpm.cmmn.instance.impl.HumanTaskInstance;
 import org.jbpm.cmmn.service.model.Plan;
 import org.jbpm.cmmn.service.model.PlannableItem;
 import org.jbpm.cmmn.test.AbstractConstructionTestCase;
+import org.kie.api.runtime.process.ProcessInstance;
 import org.kie.api.task.model.Status;
+import org.kie.api.task.model.Task;
 import org.kie.api.task.model.TaskSummary;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,11 +49,9 @@ public abstract class AbstractPlanItemInstanceContainerTest extends AbstractCons
 
 	protected CaseInstance triggerInitialActivity() {
 		getPersistence().start();
-		CaseInstance ci1 = reloadCaseInstance();
-		ci1.signalEvent("StartUserEvent", new Object());
-		printState(" ", ci1);
+		super.getRuntimeEngine().getKieSession().signalEvent("StartUserEvent", new Object(), caseInstance.getId());
 		getPersistence().commit();
-		Plan plan = getCmmnService().getPlan(caseInstance.getId());
+		Plan plan = getPlan();
 
 		assertPlanItemInState(caseInstance.getId(), "TheMilestonePlanItem", PlanElementState.COMPLETED);
 		assertPlanItemInState(caseInstance.getId(), "TheTimerEventPlanItem", PlanElementState.AVAILABLE);
@@ -60,16 +61,28 @@ public abstract class AbstractPlanItemInstanceContainerTest extends AbstractCons
 		assertPlanItemInState(caseInstance.getId(), "StartUserEventPlanItem", PlanElementState.COMPLETED);
 		assertPlanItemInState(caseInstance.getId(), "TheStagePlanItem", PlanElementState.AVAILABLE);
 		assertPlanItemInState(caseInstance.getId(), "TheCaseTaskPlanItem", PlanElementState.ENABLED);
-		assertEquals(PlanElementState.ACTIVE, ci1.getPlanElementState()); // Because autoComplete defaults to false
-		getCmmnService().transitionPlanItem(caseInstance.getId(), plan.getPlannableItemsFor("TheCaseTaskPlanItem").get(0).getUniqueId(), PlanItemTransition.MANUAL_START);
+		assertEquals(PlanElementState.ACTIVE, reloadCaseInstance().getPlanElementState()); // Because autoComplete defaults to false
+		PlannableItem theCaseTaskPlanItem = plan.getPlannableItemsFor("TheCaseTaskPlanItem").get(0);
+		Collection<ProcessInstance> processInstances = getRuntimeEngine().getKieSession().getProcessInstances();
+		for (ProcessInstance processInstance : processInstances) {
+			System.out.println(processInstance.getId());
+		}
+		getCmmnService().transitionPlanItem(caseInstance.getId(), theCaseTaskPlanItem.getNodeInstanceId(), PlanItemTransition.MANUAL_START);
 		assertPlanItemInState(caseInstance.getId(), "TheCaseTaskPlanItem", PlanElementState.ACTIVE);
-		String uid=plan.getPlannableItemsFor("TheCaseTaskPlanItem").get(0).getUniqueId();
+		long uid=plan.getPlannableItemsFor("TheCaseTaskPlanItem").get(0).getNodeInstanceId();
 		for (org.jbpm.workflow.instance.NodeInstance nodeInstance : reloadCaseInstance(caseInstance).getNodeInstances(true)) {
-			if(nodeInstance instanceof AbstractCallingTaskInstance &&  ((AbstractCallingTaskInstance)nodeInstance).getUniqueId().equals(uid)){
+			if(nodeInstance instanceof AbstractCallingTaskInstance && nodeInstance.getId() == uid){
 				return (CaseInstance) getRuntimeEngine().getKieSession().getProcessInstance(((AbstractCallingTaskInstance) nodeInstance).getProcessInstanceId());
 			}
 		}
 		throw new IllegalStateException();
+	}
+
+	protected Plan getPlan() {
+		getPersistence().start();
+		Plan result = getCmmnService().getPlan(caseInstance.getId());
+		getPersistence().commit();
+		return result;
 	}
 
 	protected CaseInstance reloadCaseInstance() {
@@ -78,32 +91,32 @@ public abstract class AbstractPlanItemInstanceContainerTest extends AbstractCons
 
 	protected void completeTasks(Plan plan) {
 		for (PlannableItem item : plan.getPlannableItems()) {
-//			if (item.getName().equals("TheHumanTaskPlanItem")) {
-//				caseInstance.getNodeInstance()
-//				getTaskService().getTaskByWorkItemId(workItemId);
-//				String id = item.getActualOwner()!=null?item.getActualOwner().getId():"Builder";
-//				getTaskService().start(item.getId(), id);
-//				getTaskService().complete(item.getId(), id, new HashMap<String, Object>());
-//			} else if (item.getName().equals("TheCaseTaskPlanItem")) {
-//				getPersistence().start();
-//				CaseInstance ci3 = reloadCaseInstance();
-//				long workItemId = getTaskService().getTaskById(item.getId()).getTaskData().getWorkItemId();
-//				CaseTaskInstance ctpi = (CaseTaskInstance) PlanItemInstanceContainerUtil.findNodeForWorkItem(ci3,workItemId);
-//				getRuntimeEngine().getKieSession().getProcessInstance(ctpi.getProcessInstanceId()).signalEvent("TheUserEvent", new Object());
-//				printState(" ", ci3);
-//				getPersistence().commit();
-//				assertEquals(PlanElementState.COMPLETED,
-//						((CaseInstance) getRuntimeEngine().getKieSession().getProcessInstance(ctpi.getProcessInstanceId())).getPlanElementState());
-//				getPersistence().start();
-//				getRuntimeEngine().getKieSession().getProcessInstance(ctpi.getProcessInstanceId()).signalEvent(DefaultJoin.CLOSE, new Object());
-//				getPersistence().commit();
-//				assertNull(getRuntimeEngine().getKieSession().getProcessInstance(ctpi.getProcessInstanceId()));
-//			} else if (item.getName().equals("TheStagePlanItem")) {
-//				getPersistence().start();
-//				getRuntimeEngine().getKieSession().signalEvent("StageCompletingEvent", new Object(), caseInstance.getId());
-//				getPersistence().commit();
-//				assertPlanItemInState(caseInstance.getId(), "TheMilestonePlanItemInTheStage", PlanElementState.COMPLETED);
-//			}
+			if (item.getName().equals("TheHumanTaskPlanItem")) {
+				caseInstance=reloadCaseInstance();
+				HumanTaskInstance hti= (HumanTaskInstance) caseInstance.getNodeInstance(item.getNodeInstanceId(), true);
+				Task task = getTaskService().getTaskByWorkItemId(hti.getWorkItemId());
+				String id = task.getTaskData().getActualOwner()!=null?task.getTaskData().getActualOwner().getId():"Builder";
+				getTaskService().start(task.getId(), id);
+				getTaskService().complete(task.getId(), id, new HashMap<String, Object>());
+			} else if (item.getName().equals("TheCaseTaskPlanItem")) {
+				getPersistence().start();
+				caseInstance = reloadCaseInstance();
+				CaseTaskInstance ctpi = (CaseTaskInstance) caseInstance.getNodeInstance(item.getNodeInstanceId(), true);
+				getRuntimeEngine().getKieSession().getProcessInstance(ctpi.getProcessInstanceId()).signalEvent("TheUserEvent", new Object());
+				printState(" ", caseInstance);
+				getPersistence().commit();
+				assertEquals(PlanElementState.COMPLETED,
+						((CaseInstance) getRuntimeEngine().getKieSession().getProcessInstance(ctpi.getProcessInstanceId())).getPlanElementState());
+				getPersistence().start();
+				getRuntimeEngine().getKieSession().getProcessInstance(ctpi.getProcessInstanceId()).signalEvent(DefaultJoin.CLOSE, new Object());
+				getPersistence().commit();
+				assertNull(getRuntimeEngine().getKieSession().getProcessInstance(ctpi.getProcessInstanceId()));
+			} else if (item.getName().equals("TheStagePlanItem")) {
+				getPersistence().start();
+				getRuntimeEngine().getKieSession().signalEvent("StageCompletingEvent", new Object(), caseInstance.getId());
+				getPersistence().commit();
+				assertPlanItemInState(caseInstance.getId(), "TheMilestonePlanItemInTheStage", PlanElementState.COMPLETED);
+			}
 		}
 		assertPlanItemInState(caseInstance.getId(), "TheMilestonePlanItem", PlanElementState.COMPLETED);
 		assertPlanItemInState(caseInstance.getId(), "TheTimerEventPlanItem", PlanElementState.AVAILABLE);
@@ -149,8 +162,6 @@ public abstract class AbstractPlanItemInstanceContainerTest extends AbstractCons
 		getPersistence().commit();
 		assertProcessInstanceActive(caseInstance.getId(), getRuntimeEngine().getKieSession());
 		assertNodeTriggered(caseInstance.getId(), "defaultSplit");
-		getPersistence().start();
-		getPersistence().commit();
 		assertPlanItemInState(caseInstance.getId(), "TheMilestonePlanItem", PlanElementState.AVAILABLE);
 		assertPlanItemInState(caseInstance.getId(), "TheTimerEventPlanItem", PlanElementState.AVAILABLE);
 		assertPlanItemInState(caseInstance.getId(), "TheUserEventPlanItem", PlanElementState.AVAILABLE);

@@ -5,6 +5,7 @@ import org.drools.compiler.builder.impl.KnowledgeBuilderImpl;
 import org.jbpm.cmmn.flow.builder.PlanItemBuilder;
 import org.jbpm.cmmn.flow.builder.SentryBuilder;
 import org.jbpm.cmmn.flow.common.impl.PlanItemInstanceFactoryNodeImpl;
+import org.jbpm.cmmn.flow.core.Case;
 import org.jbpm.cmmn.flow.core.CaseFileItemDefinitionType;
 import org.jbpm.cmmn.flow.definition.impl.CaseFileItemStartTriggerImpl;
 import org.jbpm.cmmn.flow.definition.impl.PlanItemStartTriggerImpl;
@@ -46,7 +47,7 @@ public class CMMNBuilder implements KieAssemblerService {
 		ProcessNodeBuilderRegistry.INSTANCE.register(SentryImpl.class, new SentryBuilder());
 		ProcessInstanceFactoryRegistry.INSTANCE.register(CaseImpl.class, new CaseInstanceFactory());
 		CaseInstanceMarshaller m = new CaseInstanceMarshaller();
-		ProcessMarshallerRegistry.INSTANCE.register(RuleFlowProcess.RULEFLOW_TYPE, m);
+		ProcessMarshallerRegistry.INSTANCE.register(Case.CASE_TYPE, m);
 		NodeInstanceFactoryRegistry nodeInstanceFactoryRegistry = NodeInstanceFactoryRegistry.getInstance(null);
 		nodeInstanceFactoryRegistry.register(DefaultJoin.class, new ReuseNodeFactory(DefaultJoinInstance.class));
 		nodeInstanceFactoryRegistry.register(SentryImpl.class, new ReuseNodeFactory(SentryInstance.class));

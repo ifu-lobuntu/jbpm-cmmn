@@ -15,6 +15,7 @@ import org.jbpm.cmmn.casefile.jpa.JpaPlaceHolderResolverStrategy;
 import org.jbpm.cmmn.flow.builder.PlanItemBuilder;
 import org.jbpm.cmmn.flow.builder.SentryBuilder;
 import org.jbpm.cmmn.flow.common.impl.PlanItemInstanceFactoryNodeImpl;
+import org.jbpm.cmmn.flow.core.Case;
 import org.jbpm.cmmn.flow.core.CaseFileItemDefinitionType;
 import org.jbpm.cmmn.flow.definition.impl.CaseFileItemStartTriggerImpl;
 import org.jbpm.cmmn.flow.definition.impl.PlanItemStartTriggerImpl;
@@ -46,10 +47,14 @@ import org.jbpm.marshalling.impl.ProcessMarshallerRegistry;
 import org.jbpm.process.audit.JPAAuditLogService;
 import org.jbpm.process.audit.strategy.PersistenceStrategy;
 import org.jbpm.process.builder.ProcessNodeBuilderRegistry;
+import org.jbpm.process.core.validation.ProcessValidationError;
+import org.jbpm.process.core.validation.ProcessValidator;
+import org.jbpm.process.core.validation.ProcessValidatorRegistry;
 import org.jbpm.process.instance.ProcessInstanceFactoryRegistry;
 import org.jbpm.process.instance.event.DefaultSignalManagerFactory;
 import org.jbpm.process.instance.impl.DefaultProcessInstanceManagerFactory;
 import org.jbpm.ruleflow.core.RuleFlowProcess;
+import org.jbpm.ruleflow.core.validation.RuleFlowProcessValidator;
 import org.jbpm.runtime.manager.impl.SimpleRegisterableItemsFactory;
 import org.jbpm.runtime.manager.impl.factory.LocalTaskServiceFactory;
 import org.jbpm.services.task.identity.JBossUserGroupCallbackImpl;
@@ -64,8 +69,11 @@ import org.jbpm.workflow.instance.impl.factory.ReuseNodeFactory;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
+import org.kie.api.definition.process.*;
+import org.kie.api.definition.process.Process;
 import org.kie.api.event.process.ProcessEventListener;
 import org.kie.api.event.rule.AgendaEventListener;
+import org.kie.api.io.Resource;
 import org.kie.api.io.ResourceType;
 import org.kie.api.marshalling.ObjectMarshallingStrategy;
 import org.kie.api.runtime.Environment;
@@ -557,8 +565,23 @@ public abstract class AbstractCmmnCaseTestCase extends JbpmJUnitBaseTestCase {
 		ProcessNodeBuilderRegistry.INSTANCE.register(PlanItemImpl.class, new PlanItemBuilder());
 		ProcessNodeBuilderRegistry.INSTANCE.register(SentryImpl.class, new SentryBuilder());
 		ProcessInstanceFactoryRegistry.INSTANCE.register(CaseImpl.class, new CaseInstanceFactory());
-		CaseInstanceMarshaller m = new CaseInstanceMarshaller();
-		ProcessMarshallerRegistry.INSTANCE.register(RuleFlowProcess.RULEFLOW_TYPE, m);
+		ProcessMarshallerRegistry.INSTANCE.register(Case.CASE_TYPE, new CaseInstanceMarshaller());
+		ProcessValidatorRegistry.getInstance().registerAdditonalValidator(new ProcessValidator() {
+			@Override
+			public ProcessValidationError[] validateProcess(org.kie.api.definition.process.Process process) {
+				return RuleFlowProcessValidator.getInstance().validateProcess(process);
+			}
+
+			@Override
+			public boolean accept(Process process, Resource resource) {
+				return process instanceof Case;
+			}
+
+			@Override
+			public boolean compilationSupported() {
+				return true;
+			}
+		});
 		RuntimeManager rm = super.createRuntimeManager(processFile);
 		this.runtimeManager = rm;
 		RuntimeEngine runtimeEngine = getRuntimeEngine();

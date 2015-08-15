@@ -69,7 +69,7 @@ public class CaseInstanceTest extends AbstractPlanItemInstanceContainerLifecycle
 			ci.signalEvent(DefaultJoin.CLOSE, new Object());
 			assertEquals(PlanElementState.CLOSED, ci.getPlanElementState());
 			assertNull(getRuntimeEngine().getKieSession().getProcessInstance(caseInstance.getId()));
-			Map<String, Object> result = reloadCaseInstance().getResult();
+			Map<String, Object> result = ci.getResult();
 			assertTrue(result.get("theResultingWallPlan") instanceof WallPlan);
 			getPersistence().commit();
 		}

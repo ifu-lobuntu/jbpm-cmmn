@@ -9,9 +9,9 @@ public class SubmitPlanCommand extends AbstractPlanningCommand<Void> {
 	private static final long serialVersionUID = 7907971723514784829L;
 	private final Collection<PlannableItem> plannedTasks;
 	private boolean resume;
-	private String planningTableContainerInstanceId;
+	private Long planningTableContainerInstanceId;
 
-	public SubmitPlanCommand(Collection<PlannableItem> plannedTasks, long processInstanceId, String planningTableContainerInstanceId, boolean resume) {
+	public SubmitPlanCommand(Collection<PlannableItem> plannedTasks, long processInstanceId, Long planningTableContainerInstanceId, boolean resume) {
 		super(processInstanceId,planningTableContainerInstanceId);
 		this.plannedTasks = plannedTasks;
 		this.resume = resume;
