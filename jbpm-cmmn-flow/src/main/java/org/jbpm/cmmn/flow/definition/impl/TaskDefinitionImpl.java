@@ -68,29 +68,4 @@ public class TaskDefinitionImpl extends AbstractPlanItemDefinition implements Ta
 	}
 
 
-	@Override
-	public List<ParameterMapping> prepareInputMappings(org.kie.api.definition.process.Process process) {
-		if (process instanceof Case) {
-			for (ParameterMapping pm : inputMappings) {
-				CaseParameter cp = ((Case) process).getInputParameter(pm.getTargetParameterId());
-				if (cp != null) {
-					pm.setTargetParameterName(cp.getName());
-				}
-			}
-		}
-		return inputMappings;
-	}
-
-	@Override
-	public List<ParameterMapping> prepareOutputMappings(Process process) {
-		if (process instanceof Case) {
-			for (ParameterMapping pm : outputMappings) {
-				CaseParameter cp = ((Case) process).getOutputParameter(pm.getSourceParameterId());
-				if (cp != null) {
-					pm.setSourceParameterName(cp.getName());
-				}
-			}
-		}
-		return outputMappings;
-	}
 }

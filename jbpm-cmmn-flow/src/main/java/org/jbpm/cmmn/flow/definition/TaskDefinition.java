@@ -17,7 +17,4 @@ public interface TaskDefinition extends RepeatablePlanItemDefinition {
 
     boolean isBlocking();
 
-	List<ParameterMapping> prepareInputMappings(org.kie.api.definition.process.Process process);
-
-	List<ParameterMapping> prepareOutputMappings(org.kie.api.definition.process.Process process);
 }

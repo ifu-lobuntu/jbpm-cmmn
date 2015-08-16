@@ -7,11 +7,11 @@ import org.jbpm.workflow.instance.node.EventNodeInstanceInterface;
 
 public interface OnPartInstance extends EventNodeInstanceInterface, EventBasedNodeInstanceInterface, NodeInstance {
 
-	public abstract AbstractStandardEventNode getOnPart();
+	AbstractStandardEventNode getOnPart();
 
-	public CaseEvent getCaseEvent();
+	CaseEvent getCaseEvent();
 
-	public CaseInstance getCaseInstance();
+	CaseInstance getCaseInstance();
 
 	Object popEvent();
 

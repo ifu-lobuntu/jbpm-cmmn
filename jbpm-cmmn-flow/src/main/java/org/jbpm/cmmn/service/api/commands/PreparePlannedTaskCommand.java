@@ -1,14 +1,9 @@
 package org.jbpm.cmmn.service.api.commands;
 
-import org.drools.core.process.instance.WorkItem;
-import org.jbpm.cmmn.common.CaseInstance;
-import org.jbpm.cmmn.service.api.commands.AbstractPlanningCommand;
-import org.jbpm.cmmn.service.model.PlannableItem;
-import org.kie.api.runtime.manager.RuntimeEngine;
-import org.kie.api.runtime.manager.RuntimeManager;
-import org.kie.internal.runtime.manager.context.ProcessInstanceIdContext;
+import org.jbpm.cmmn.instance.impl.util.PlanningTableContainerInstanceUtil;
+import org.jbpm.cmmn.service.model.PlannedItem;
 
-public class PreparePlannedTaskCommand extends AbstractPlanningCommand<PlannableItem> {
+public class PreparePlannedTaskCommand extends AbstractPlanningCommand<PlannedItem> {
 	private final String discretionaryItemId;
 
 	private static final long serialVersionUID = -8445378L;
@@ -19,7 +14,7 @@ public class PreparePlannedTaskCommand extends AbstractPlanningCommand<Plannable
 	}
 
 	@Override
-	public PlannableItem execute() {
-		return null;
+	public PlannedItem execute() {
+		return  createPlannableItem(PlanningTableContainerInstanceUtil.createPlannedTask(getPlanningTableContainerInstance(), discretionaryItemId));
 	}
 }

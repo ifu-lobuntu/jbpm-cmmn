@@ -6,7 +6,7 @@ import org.jbpm.cmmn.flow.common.PlanItemTransition;
 import org.jbpm.cmmn.instance.CaseInstance;
 import org.jbpm.cmmn.instance.impl.AbstractCallingTaskInstance;
 import org.jbpm.cmmn.service.model.Plan;
-import org.jbpm.cmmn.service.model.PlannableItem;
+import org.jbpm.cmmn.service.model.PlannedItem;
 import org.junit.Test;
 
 import test.cmmn.HousePlan;
@@ -41,7 +41,7 @@ public class CaseTaskTest extends AbstractControllableLifecycleTest {
 		// *****WHEN
 		triggerStartOfTask(); // Creates a second wallPlan
 		Plan plan = getCmmnService().getPlan(caseInstance.getId());
-		PlannableItem theEventGeneratingTaskPlanItem = plan.getPlannableItemsFor("TheEventGeneratingTaskPlanItem").get(0);
+		PlannedItem theEventGeneratingTaskPlanItem = plan.getPlannableItemsFor("TheEventGeneratingTaskPlanItem").get(0);
 		getCmmnService().transitionPlanItem(caseInstance.getId(), theEventGeneratingTaskPlanItem.getNodeInstanceId(), PlanItemTransition.MANUAL_START);
 		// *******THEN
 		getPersistence().start();

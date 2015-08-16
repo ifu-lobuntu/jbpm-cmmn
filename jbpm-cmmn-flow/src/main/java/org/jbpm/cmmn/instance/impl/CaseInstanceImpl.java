@@ -73,24 +73,7 @@ public class CaseInstanceImpl extends RuleFlowProcessInstance implements CaseIns
     @Override
     public void signalEvent(String type, Object event) {
         signalCount++;
-        if (event instanceof PlanItemTransition) {
-            PlanItemTransition transition = (PlanItemTransition) event;
-            if (transition != null) {
-                if (getPlanElementState().isTerminalState() && transition == PlanItemTransition.TERMINATE) {
-                    logger.info("ignore - called from task service: " + WorkItemParameters.TRANSITION);
-                } else if (transition == PlanItemTransition.COMPLETE) {
-                    if (canComplete()) {
-                        transition.invokeOn(this);
-                    } else {
-                        // TODO what now?
-                    }
-                } else {
-                    transition.invokeOn(this);
-                }
-            }
-        } else {
-            super.signalEvent(type, event);
-        }
+        super.signalEvent(type, event);
         signalCount--;
         if (shouldUpdateSubscriptions && signalCount == 0) {
             //only update subscriptions when initial signalEvent call has completed
@@ -187,12 +170,7 @@ public class CaseInstanceImpl extends RuleFlowProcessInstance implements CaseIns
         return PlanItemInstanceContainerUtil.getChildren(this);
     }
 
-    @Override
-    public boolean canComplete() {
-        return PlanItemInstanceContainerUtil.canComplete(this);
-    }
-
-    @Override
+        @Override
     public PlanItemContainer getPlanItemContainer() {
         return getCase();
     }
@@ -268,11 +246,6 @@ public class CaseInstanceImpl extends RuleFlowProcessInstance implements CaseIns
     @Override
     public void complete() {
         planElementState.complete(this);
-    }
-
-    @Override
-    public NodeInstance createPlannedItem(String tableItemId) {
-        return PlanningTableContainerInstanceUtil.createPlannedTask(this, tableItemId);
     }
     @Override
     public Collection<String> getCaseRoleNames() {

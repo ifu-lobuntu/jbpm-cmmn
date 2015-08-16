@@ -12,6 +12,4 @@ public interface PlanItemInstance<T extends PlanItemDefinition> extends PlanElem
 
 	ItemWithDefinition<T> getItem();
 
-	String getUniqueId();
-
 }

@@ -19,7 +19,6 @@ import org.jbpm.cmmn.instance.PlanElementState;
 import org.jbpm.cmmn.instance.PlanItemInstanceContainer;
 import org.jbpm.cmmn.instance.PlanningTableContainerInstance;
 import org.jbpm.cmmn.instance.impl.util.ExpressionUtil;
-import org.jbpm.cmmn.instance.impl.util.PlanningTableContainerInstanceUtil;
 import org.jbpm.process.core.context.exception.ExceptionScope;
 import org.jbpm.process.instance.ProcessInstance;
 import org.jbpm.process.instance.context.exception.ExceptionScopeInstance;
@@ -329,11 +328,6 @@ public class HumanTaskInstance extends ControllableItemInstanceImpl<HumanTaskDef
     @Override
     public NodeInstance getPlanningContextNodeInstance() {
         return this;
-    }
-
-    @Override
-    public NodeInstance createPlannedItem(String tableItemId) {
-        return PlanningTableContainerInstanceUtil.createPlannedTask(this, tableItemId);
     }
 
 

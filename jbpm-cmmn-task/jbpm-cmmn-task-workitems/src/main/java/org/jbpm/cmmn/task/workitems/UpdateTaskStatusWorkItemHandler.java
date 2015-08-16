@@ -72,6 +72,8 @@ public class UpdateTaskStatusWorkItemHandler implements WorkItemHandler {
             if (transition == null) {
                 if (Boolean.TRUE.equals(workItem.getParameter(WorkItemParameters.SET_OUTPUT))) {
                     cmd = new SetTaskOutputCommand(task.getId(), workItem.getParameters());
+                }else if(Boolean.TRUE.equals(workItem.getParameter(WorkItemParameters.SET_INPUT))){
+                    cmd = new SetTaskInputCommand(task.getId(), workItem.getParameters());
                 }
             } else {
                 switch (transition) {

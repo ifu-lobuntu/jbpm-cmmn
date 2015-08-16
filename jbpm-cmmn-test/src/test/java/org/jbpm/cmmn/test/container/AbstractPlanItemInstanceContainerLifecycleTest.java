@@ -4,6 +4,7 @@ import org.jbpm.cmmn.flow.common.PlanItemTransition;
 import org.jbpm.cmmn.instance.CaseInstance;
 import org.jbpm.cmmn.instance.PlanElementState;
 import org.jbpm.cmmn.instance.PlanItemInstanceContainer;
+import org.jbpm.cmmn.instance.impl.util.PlanItemInstanceContainerUtil;
 import org.junit.Test;
 
 public abstract class AbstractPlanItemInstanceContainerLifecycleTest extends AbstractPlanItemInstanceContainerTest {
@@ -12,30 +13,25 @@ public abstract class AbstractPlanItemInstanceContainerLifecycleTest extends Abs
         super();
     }
 
-    //	@Test
-//	public void testCaseLifecycleCannotComplete() throws Exception {
-//		// *****GIVEN
-//		givenThatTheTestCaseIsStarted();
-//		// *****WHEN
-//		triggerInitialActivity();
-//		// *****THEN
-//		getPersistence().start();
-//		// Cannot complete it
-//		assertFalse(getPlanItemInstanceContainer().canComplete());
-//		getPersistence().commit();
-//		try {
-//			getTaskService().complete(getTaskService().getTaskByWorkItemId(getWorkitemId()).getId(), "ConstructionProjectManager",
-//					new HashMap<String, Object>());
-//			fail("The stage/case instance cannot be completed yet");
-//		} catch (RuntimeException e) {
-//			getPersistence().close();
-//			Status currentStatus = getTaskService().getTaskByWorkItemId(getWorkitemId()).getTaskData().getStatus();
+    	@Test
+	public void testCaseLifecycleCannotComplete() throws Exception {
+		// *****GIVEN
+		givenThatTheTestCaseIsStarted();
+		// *****WHEN
+		triggerInitialActivity();
+		// *****THEN
+		getPersistence().start();
+		// Cannot complete it
+			assertFalse(PlanItemInstanceContainerUtil.canComplete(getPlanItemInstanceContainer()));
+		getPersistence().commit();
+		try {
+			completePlanItemInstanceContainer();
+			fail();
+		} catch (RuntimeException e) {
+			getPersistence().close();
 //			assertEquals(org.kie.api.task.model.Status.InProgress, currentStatus);
-//		}
-//		getPersistence().start();
-//		printState(" ", getPlanItemInstanceContainer());
-//		getPersistence().commit();
-//	}
+		}
+	}
 
 
 
@@ -52,7 +48,7 @@ public abstract class AbstractPlanItemInstanceContainerLifecycleTest extends Abs
         // Now we can complete it
         getPersistence().start();
         PlanItemInstanceContainer piic = getPlanItemInstanceContainer();
-        assertTrue(piic.canComplete());
+        assertTrue(PlanItemInstanceContainerUtil.canComplete( piic));
         assertEquals(PlanElementState.ACTIVE, piic.getPlanElementState());
         printState(" ", piic);
         getPersistence().commit();

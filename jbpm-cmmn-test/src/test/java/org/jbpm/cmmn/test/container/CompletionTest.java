@@ -4,32 +4,24 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicLong;
 
 import org.drools.core.process.core.datatype.impl.type.StringDataType;
 import org.jbpm.bpmn2.xml.XmlBPMNProcessDumper;
 import org.jbpm.cmmn.common.WorkItemParameters;
 import org.jbpm.cmmn.instance.CaseInstance;
+import org.jbpm.cmmn.instance.impl.util.PlanItemInstanceContainerUtil;
 import org.jbpm.cmmn.test.AbstractConstructionTestCase;
-import org.jbpm.process.core.context.exception.ExceptionHandler;
 import org.jbpm.ruleflow.core.RuleFlowProcess;
 import org.jbpm.ruleflow.core.RuleFlowProcessFactory;
 import org.jbpm.ruleflow.instance.RuleFlowProcessInstance;
-import org.jbpm.services.task.wih.LocalHTWorkItemHandler;
 import org.jbpm.workflow.core.node.Join;
 import org.jbpm.workflow.instance.NodeInstanceContainer;
 import org.jbpm.workflow.instance.node.CompositeNodeInstance;
 import org.junit.Test;
-import org.kie.api.io.ResourceType;
 import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.process.NodeInstance;
 import org.kie.api.task.model.TaskSummary;
 
-import org.kie.internal.KnowledgeBase;
-import org.kie.internal.builder.KnowledgeBuilder;
-import org.kie.internal.builder.KnowledgeBuilderFactory;
-import org.kie.internal.io.ResourceFactory;
-import org.kie.internal.runtime.StatefulKnowledgeSession;
 import test.cmmn.ConstructionCase;
 import test.cmmn.House;
 import test.cmmn.HousePlan;
@@ -114,7 +106,7 @@ public class CompletionTest extends AbstractConstructionTestCase {
 		assertNodeTriggered(caseInstance.getId(), "TheTask");
 		getPersistence().start();
 		caseInstance = (CaseInstance) getRuntimeEngine().getKieSession().getProcessInstance(caseInstance.getId());
-		assertFalse(caseInstance.canComplete());
+		assertFalse(PlanItemInstanceContainerUtil.canComplete( caseInstance));
 		getPersistence().commit();
 	}
 
@@ -131,7 +123,7 @@ public class CompletionTest extends AbstractConstructionTestCase {
 		// *****THEN
 		getPersistence().start();
 		caseInstance = (CaseInstance) getRuntimeEngine().getKieSession().getProcessInstance(caseInstance.getId());
-		assertTrue(caseInstance.canComplete());
+		assertTrue(PlanItemInstanceContainerUtil.canComplete(caseInstance));
 		getPersistence().commit();
 	}
 
@@ -143,7 +135,7 @@ public class CompletionTest extends AbstractConstructionTestCase {
 
 		getPersistence().start();
 		caseInstance = (CaseInstance) getRuntimeEngine().getKieSession().getProcessInstance(caseInstance.getId());
-		assertFalse(caseInstance.canComplete());
+		assertFalse(PlanItemInstanceContainerUtil.canComplete( caseInstance));
 		getPersistence().commit();
 		// *****THEN
 

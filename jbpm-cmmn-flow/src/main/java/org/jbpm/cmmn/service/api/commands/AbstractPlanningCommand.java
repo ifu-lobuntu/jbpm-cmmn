@@ -6,18 +6,15 @@ import org.drools.core.command.impl.KnowledgeCommandContext;
 import org.drools.core.spi.ProcessContext;
 import org.jbpm.casemgmt.CaseMgmtService;
 import org.jbpm.casemgmt.CaseMgmtUtil;
+import org.jbpm.cmmn.instance.CaseInstance;
 import org.jbpm.cmmn.instance.PlanItemInstance;
 import org.jbpm.cmmn.instance.PlanningTableContainerInstance;
+import org.jbpm.cmmn.instance.impl.PlanItemInstanceFactoryNodeInstance;
+import org.jbpm.cmmn.service.model.PlannedItem;
 import org.jbpm.workflow.instance.NodeInstanceContainer;
-import org.jbpm.workflow.instance.WorkflowProcessInstance;
-import org.jbpm.workflow.instance.impl.WorkflowProcessInstanceImpl;
-import org.kie.api.runtime.KieRuntime;
 import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.process.NodeInstance;
 import org.kie.internal.command.Context;
-import org.kie.internal.runtime.KnowledgeContext;
-
-import java.util.Collection;
 
 public abstract class AbstractPlanningCommand<T> implements GenericCommand<T> {
 
@@ -26,12 +23,20 @@ public abstract class AbstractPlanningCommand<T> implements GenericCommand<T> {
     private KieSession kieSession;
     private Long planningTableContainerInstanceId;
     protected CaseMgmtService caseMgmtService;
-    protected ProcessContext processContext;
+    private ProcessContext processContext;
 
     public AbstractPlanningCommand(long processInstanceId, Long planningTableContainerInstanceId) {
         super();
         this.processInstanceId = processInstanceId;
         this.planningTableContainerInstanceId = planningTableContainerInstanceId;
+    }
+
+    protected PlannedItem createPlannableItem(PlanItemInstance pii) {
+        String nodeName = pii.getNodeName();
+        if(pii instanceof PlanItemInstanceFactoryNodeInstance){
+            nodeName=pii.getItem().getEffectiveName();
+        }
+        return new PlannedItem(nodeName, pii.getId(), pii.getPlanElementState(), pii.getPlanElementState().getSupportedTransitions(pii));
     }
 
     @Override
@@ -46,7 +51,9 @@ public abstract class AbstractPlanningCommand<T> implements GenericCommand<T> {
             throw new IllegalStateException("No KnowledgeContextFound");
         }
     }
-
+    protected CaseInstance getCaseInstance(){
+        return (CaseInstance) processContext.getProcessInstance();
+    }
     protected NodeInstanceContainer getPlanningScope() {
         NodeInstanceContainer nic;
         if (planningTableContainerInstanceId == null) {

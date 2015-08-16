@@ -3,27 +3,34 @@ package org.jbpm.cmmn.service.api;
 
 import org.jbpm.cmmn.flow.common.PlanItemTransition;
 import org.jbpm.cmmn.service.model.Plan;
-import org.jbpm.cmmn.service.model.PlannableItem;
+import org.jbpm.cmmn.service.model.PlannedItem;
 
 import java.util.Collection;
+import java.util.Map;
 
 public interface CMMNService {
-    void transitionPlanItem(long processId, long planItemUniqueId, PlanItemTransition t);
+    void transitionPlanItem(long processInstanceId, long planItemUniqueId, PlanItemTransition t);
 
-    void transitionCase(long processId, PlanItemTransition t);
+    void transitionCase(long processInstanceId, PlanItemTransition t);
 
-    Plan getPlan(long processId);
+    Plan getPlan(long processInstanceId);
 
-    Plan getPlan(long processId, long planningTableContainerId);
+    Plan getPlan(long processInstanceId, long planningTableContainerId);
 
-    void submitPlan(long processId, long planningTableContainerId, Collection<PlannableItem> plannedTasks, boolean resume);
+    void submitPlan(long processInstanceId);
 
-    Plan startPlanning(long processId, String user, boolean suspend);
+    void submitPlan(long processInstanceId, long planningTableContainerId);
 
-    Plan startPlanning(long processId, long planningTableContainerId, String user, boolean suspend);
+    Plan startPlanning(long processInstanceId, String user, boolean suspend);
 
-    Plan preparePlannableItem(long processId, long planningTableContainerId, String discretionaryItemId);
+    Plan startPlanning(long processInstanceId, long planningTableContainerId, String user, boolean suspend);
 
-    void makeDiscretionaryItemAvailable(long processId, long planningTableContainerId, String discretionaryItemId);
+    PlannedItem preparePlannedItem(long processInstanceId, String discretionaryItemId);
+
+    PlannedItem preparePlannedItem(long processInstanceId, long planningTableContainerId, String discretionaryItemId);
+
+    void overrideInputTo(long processInstanceId, long planItemUniqueId, Map<String, Object> input);
+
+    Map<String, Object> getInputTo(long processInstanceId, long planItemUniqueId);
 
 }

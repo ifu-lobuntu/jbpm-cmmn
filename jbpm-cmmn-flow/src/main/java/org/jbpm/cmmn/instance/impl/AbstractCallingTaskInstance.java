@@ -3,6 +3,7 @@ package org.jbpm.cmmn.instance.impl;
 import org.jbpm.cmmn.common.WorkItemParameters;
 import org.jbpm.cmmn.flow.common.PlanItemTransition;
 import org.jbpm.cmmn.flow.core.CaseParameter;
+import org.jbpm.cmmn.flow.definition.CallingTaskDefinition;
 import org.jbpm.cmmn.flow.definition.CaseTaskDefinition;
 import org.jbpm.cmmn.flow.definition.ParameterMapping;
 import org.jbpm.cmmn.flow.definition.TaskDefinition;
@@ -30,7 +31,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
-public abstract class AbstractCallingTaskInstance <T extends TaskDefinition> extends ControllableItemInstanceImpl<T> implements EventListener, ContextInstanceContainer {
+public abstract class AbstractCallingTaskInstance <T extends CallingTaskDefinition> extends ControllableItemInstanceImpl<T> implements EventListener, ContextInstanceContainer {
 	static final Logger logger = LoggerFactory.getLogger(CaseTaskInstance.class);
 	private static final long serialVersionUID = -2144001908752174712L;
 	private long processInstanceId = -1;
@@ -67,7 +68,7 @@ public abstract class AbstractCallingTaskInstance <T extends TaskDefinition> ext
 
 	private void startProcess() {
 		String processId = getCalledProcessId();
-		KieBase kbase = ((ProcessInstance) getProcessInstance()).getKnowledgeRuntime().getKieBase();
+		KieBase kbase =  getProcessInstance().getKnowledgeRuntime().getKieBase();
 		// start process instance
 		org.kie.api.definition.process.Process process = kbase.getProcess(processId);
 		if (process == null) {
@@ -104,7 +105,7 @@ public abstract class AbstractCallingTaskInstance <T extends TaskDefinition> ext
 			ProcessInstance processInstance = (ProcessInstance) kruntime.createProcessInstance(processId, inputParamaters);
 			this.processInstanceId = processInstance.getId();
 			((ProcessInstanceImpl) processInstance).setMetaData("ParentProcessInstanceId", getProcessInstance().getId());
-			((ProcessInstanceImpl) processInstance).setParentProcessInstanceId(getProcessInstance().getId());
+			processInstance.setParentProcessInstanceId(getProcessInstance().getId());
 			kruntime.startProcessInstance(processInstance.getId());
 			if (!getItem().getDefinition().isBlocking()) {
 				triggerCompleted();

@@ -10,11 +10,6 @@ import org.jbpm.workflow.core.NodeContainer;
 import java.util.Map;
 
 public interface PlanItem<T extends PlanItemDefinition> extends NodeContainer,Node, ItemWithDefinition<T> {
-	VariableScope getVariableScope();
-
-	Map<String, Sentry> getExitCriteria();
-
-	Map<String, Sentry> getEntryCriteria();
 
 	void setPlanItemContainer(PlanItemContainer pic);
 

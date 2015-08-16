@@ -1,15 +1,14 @@
 package org.jbpm.cmmn.service.api.commands;
 
-import org.jbpm.casemgmt.CaseMgmtUtil;
 import org.jbpm.casemgmt.role.RoleAssignment;
 import org.jbpm.casemgmt.role.RoleInstance;
 import org.jbpm.cmmn.common.ApplicableDiscretionaryItem;
-import org.jbpm.cmmn.flow.planning.PlanningTable;
 import org.jbpm.cmmn.instance.PlanItemInstance;
 import org.jbpm.cmmn.instance.PlanningTableContainerInstance;
+import org.jbpm.cmmn.instance.impl.PlanItemInstanceFactoryNodeInstance;
 import org.jbpm.cmmn.instance.impl.util.PlanningTableContainerInstanceUtil;
 import org.jbpm.cmmn.service.model.Plan;
-import org.jbpm.cmmn.service.model.PlannableItem;
+import org.jbpm.cmmn.service.model.PlannedItem;
 import org.jbpm.workflow.instance.NodeInstanceContainer;
 import org.jbpm.workflow.instance.WorkflowProcessInstance;
 import org.kie.api.runtime.process.NodeInstance;
@@ -29,24 +28,34 @@ public class GetPlanCommand extends AbstractPlanningCommand<Plan> {
     public Plan execute() {
         PlanningTableContainerInstance ptci = getPlanningTableContainerInstance();
         NodeInstanceContainer nic = getPlanningScope();
-        List<PlannableItem> plannableItems = getPlannableItems(nic);
+        List<PlannedItem> plannedItems = getPlannableItems(nic);
         Set<String> usersRoles = getUserRolesInCase();
         Map<String, ApplicableDiscretionaryItem> applicableDiscretionaryItemHashMap = getApplicableDiscretionaryItems(ptci, usersRoles);
         List<ApplicableDiscretionaryItem> applicableItems = new ArrayList<ApplicableDiscretionaryItem>(applicableDiscretionaryItemHashMap.values());
-        return new Plan(plannableItems, applicableItems);
+        return new Plan(plannedItems, applicableItems);
     }
 
 
-    private List<PlannableItem> getPlannableItems(NodeInstanceContainer nic) {
-        List<PlannableItem> plannableItems = new ArrayList<PlannableItem>();
+    private List<PlannedItem> getPlannableItems(NodeInstanceContainer nic) {
+        List<PlannedItem> plannedItems = new ArrayList<PlannedItem>();
         Collection<NodeInstance> nodeInstances = nic.getNodeInstances();
+        Collection<PlanItemInstanceFactoryNodeInstance> factories = new HashSet<PlanItemInstanceFactoryNodeInstance>();
+        Set<String> activePlanItems = new HashSet<String>();
         for (NodeInstance nodeInstance : nodeInstances) {
-            if (nodeInstance instanceof PlanItemInstance) {
+            if(nodeInstance instanceof PlanItemInstanceFactoryNodeInstance) {
+                factories.add((PlanItemInstanceFactoryNodeInstance) nodeInstance);
+            }else if (nodeInstance instanceof PlanItemInstance) {
                 PlanItemInstance pii = (PlanItemInstance) nodeInstance;
-                plannableItems.add(new PlannableItem(pii.getNodeName(), pii.getId(), pii.getPlanElementState(), pii.getPlanElementState().getSupportedTransitions(pii)));
+                plannedItems.add(createPlannableItem(pii));
+                activePlanItems.add(pii.getItem().getEffectiveName());
             }
         }
-        return plannableItems;
+        for (PlanItemInstanceFactoryNodeInstance factory : factories) {
+            if(!activePlanItems.contains(factory.getItem().getEffectiveName())){
+                plannedItems.add(createPlannableItem(factory));
+            }
+        }
+        return plannedItems;
     }
 
     private Map<String, ApplicableDiscretionaryItem> getApplicableDiscretionaryItems(PlanningTableContainerInstance ptci, Set<String> usersRoles) {
@@ -57,7 +66,7 @@ public class GetPlanCommand extends AbstractPlanningCommand<Plan> {
 
     private Set<String> getUserRolesInCase() {
         Set<String> usersRoles = new HashSet<String>();
-        WorkflowProcessInstance wfp = (WorkflowProcessInstance) super.processContext.getProcessInstance();
+        WorkflowProcessInstance wfp = getCaseInstance();
         Map<String, RoleInstance> roleInstanceMap = (Map<String, RoleInstance>) wfp.getVariable("CaseRoles");
         Collection<RoleInstance> roleInstances = roleInstanceMap.values();
         for (RoleInstance roleInstance : roleInstances) {

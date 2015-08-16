@@ -6,19 +6,19 @@ import org.jbpm.cmmn.instance.PlanElementState;
 
 import java.io.Serializable;
 
-public class PlannableItem implements Serializable{
+public class PlannedItem implements Serializable{
     private String name;
     private long nodeInstanceId;
     private PlanElementState state;
     private PlanItemTransition[] supportedTransitions;
-    public PlannableItem(String name, long nodeInstanceId, PlanElementState state, PlanItemTransition[] supportedTransitions) {
+    public PlannedItem(String name, long nodeInstanceId, PlanElementState state, PlanItemTransition[] supportedTransitions) {
         this.name = name;
         this.nodeInstanceId = nodeInstanceId;
         this.state = state;
         this.supportedTransitions=supportedTransitions;
     }
 
-    public PlannableItem() {
+    public PlannedItem() {
     }
 
     public PlanItemTransition[] getSupportedTransitions() {

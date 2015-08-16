@@ -1,25 +1,4 @@
 # 1. Done and Tested
-
-JCR/OCM persistent subscriptions
-
-- scope of subscriptions
-- bindingRefined
-- throwing CREATE,DELETE,ADD_CHILD,REMOVE_CHILD,ADD_REFERENCE,REMOVE_REFERENCE and UPDATE events
-
-JCR/OCM demarcated subscriptions
-
-- throwing CREATE,DELETE,ADD_CHILD,REMOVE_CHILD,ADD_REFERENCE,REMOVE_REFERENCE and UPDATE events
-
-Pure JCR persistent subscriptions
-
-- scope of subscriptions
-- bindingRefined
-- throwing CREATE,DELETE,ADD_CHILD,REMOVE_CHILD,ADD_REFERENCE,REMOVE_REFERENCE and UPDATE events
-
-Pure JCR demarcated subscriptions
-
-- throwing CREATE,DELETE,ADD_CHILD,REMOVE_CHILD,ADD_REFERENCE,REMOVE_REFERENCE and UPDATE events
-
 JPA/Hibernate persistent subscriptions
 
 - scope of subscriptions 
@@ -127,10 +106,18 @@ Drive planning from ProcessEngine rather than TaskService
 
 # 3. In Progress
 
-XPath processDialect on JCR
-
 # 4. To implement
 
+XPath processDialect on JCR
+
+OnCaseFileItem events - if it is an entryCriterion for a Task and there is a matching CaseParameter (same CaseFileItem)
+ - if repititionRule=false, or it is the only CaseFileItem entry criterion, then set it on the variables of the task
+ - if repititionRule=true and there are multiple CaseFileItem entry criteria, then
+ -- if it is the primary input, set i on the variables of the task
+ -- if it is the secondary input, find the appropriate task to set it on using a correlation expression that relates it to the primaryInput
+ - But remember, the task and its node may not exist yet so we may need to build all of this up on the FactorynodeInstance
+ - get rid of the eventStack in StandardEventNodeInstance
+ - make
 
 Drive planning from ProcessEngine rather than TaskService
  - store TaskInputs that have not been consumed yet in the NodeInstance's VariableContext
@@ -202,4 +189,26 @@ Internationalization
 
 CaseModel:
 
-- REACTIVATE (from Failed,Terminated, Completed? need input from OMG) 
+- REACTIVATE (from Failed,Terminated, Completed? need input from OMG)
+
+
+JCR/OCM persistent subscriptions
+
+- scope of subscriptions
+- bindingRefined
+- throwing CREATE,DELETE,ADD_CHILD,REMOVE_CHILD,ADD_REFERENCE,REMOVE_REFERENCE and UPDATE events
+
+JCR/OCM demarcated subscriptions
+
+- throwing CREATE,DELETE,ADD_CHILD,REMOVE_CHILD,ADD_REFERENCE,REMOVE_REFERENCE and UPDATE events
+
+Pure JCR persistent subscriptions
+
+- scope of subscriptions
+- bindingRefined
+- throwing CREATE,DELETE,ADD_CHILD,REMOVE_CHILD,ADD_REFERENCE,REMOVE_REFERENCE and UPDATE events
+
+Pure JCR demarcated subscriptions
+
+- throwing CREATE,DELETE,ADD_CHILD,REMOVE_CHILD,ADD_REFERENCE,REMOVE_REFERENCE and UPDATE events
+

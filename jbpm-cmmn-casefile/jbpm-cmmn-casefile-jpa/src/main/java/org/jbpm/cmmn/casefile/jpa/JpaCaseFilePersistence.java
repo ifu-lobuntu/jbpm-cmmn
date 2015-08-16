@@ -162,17 +162,17 @@ public class JpaCaseFilePersistence implements SubscriptionPersistenceContext<Jp
             if (runtimeEngine != null) {
                 if (startedTransaction) {
                     getTransaction().commit();
-                    boolean workItemsProcessed = false;
-                    do {
-                        this.startedTransaction = false;
-                        startOrJoinTransaction();
-                        workItemsProcessed = EventQueues.dispatchWorkItemQueue(runtimeEngine);
-                        if (workItemsProcessed) {
-                            doCaseFileItemEvents();
-                        }
-                        getTransaction().commit();
-                    } while (workItemsProcessed);
-                    this.startedTransaction = false;
+//                    boolean workItemsProcessed = false;
+//                    do {
+//                        this.startedTransaction = false;
+//                        startOrJoinTransaction();
+//                        workItemsProcessed = EventQueues.dispatchWorkItemQueue(runtimeEngine);
+//                        if (workItemsProcessed) {
+//                            doCaseFileItemEvents();
+//                        }
+//                        getTransaction().commit();
+//                    } while (workItemsProcessed);
+//                    this.startedTransaction = false;
                 }
             }
             close();

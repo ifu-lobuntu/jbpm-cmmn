@@ -34,7 +34,7 @@ public class PlanItemInstanceContainerUtil {
         Collection<? extends PlanItemInstance<?>> nodeInstances = container.getChildren();
         for (PlanItemInstance<?> nodeInstance : nodeInstances) {
             if (nodeInstance instanceof PlanItemInstanceFactoryNodeInstance
-                    && ((PlanItemInstanceFactoryNodeInstance<?>) nodeInstance).isPlanItemInstanceStillRequired()) {
+                    && ((PlanItemInstanceFactoryNodeInstance<?>) nodeInstance).isPlanItemInstanceStillRequired()  && !nodeInstance.getPlanElementState().isTerminalState()) {
                 return false;
             } else if (nodeInstance instanceof MilestoneInstance && ((MilestoneInstance) nodeInstance).isCompletionStillRequired()) {
                 return false;
@@ -103,20 +103,6 @@ public class PlanItemInstanceContainerUtil {
                 }
             }
         }
-    }
-
-    public static ControllableItemInstance<?> findNodeForWorkItem(PlanItemInstanceContainer container, long id) {
-        for (NodeInstance ni : container.getNodeInstances()) {
-            if (ni instanceof HumanTaskInstance && ((HumanTaskInstance) ni).getWorkItemId() == id) {
-                return (HumanTaskInstance) ni;
-            } else if (ni instanceof PlanItemInstanceContainer) {
-                ControllableItemInstance<?> found = findNodeForWorkItem((PlanItemInstanceContainer) ni, id);
-                if (found != null) {
-                    return found;
-                }
-            }
-        }
-        return null;
     }
 
     public static PlanningTableContainerInstance findPlanElementWithPlanningTable(PlanItemInstanceContainer container, long containerWorkItemId) {

@@ -1,7 +1,7 @@
 package org.jbpm.cmmn.test.controllable;
 
 import org.jbpm.cmmn.flow.common.PlanItemTransition;
-import org.jbpm.cmmn.service.model.PlannableItem;
+import org.jbpm.cmmn.service.model.PlannedItem;
 import org.jbpm.services.task.utils.ContentMarshallerHelper;
 import org.kie.api.task.model.Content;
 import org.kie.api.task.model.Task;
@@ -62,40 +62,40 @@ public class HumanTaskDrivenFromProcessTest extends AbstractControllableLifecycl
 		getPersistence().commit();
 	}
 	protected void reenableTask(String taskName) {
-		PlannableItem item = getCmmnService().getPlan(caseInstance.getId()).getPlannableItemsFor(taskName).get(0);
+		PlannedItem item = getCmmnService().getPlan(caseInstance.getId()).getPlannableItemsFor(taskName).get(0);
 		getCmmnService().transitionPlanItem(caseInstance.getId(), item.getNodeInstanceId(), PlanItemTransition.REENABLE);
 	}
 
 	protected void startTaskManually(String taskName) {
-		PlannableItem item = getCmmnService().getPlan(caseInstance.getId()).getPlannableItemsFor(taskName).get(0);
+		PlannedItem item = getCmmnService().getPlan(caseInstance.getId()).getPlannableItemsFor(taskName).get(0);
 		getCmmnService().transitionPlanItem(caseInstance.getId(),item.getNodeInstanceId(), PlanItemTransition.MANUAL_START);
 	}
 	protected void terminateTask(String taskName) {
-		PlannableItem item = getCmmnService().getPlan(caseInstance.getId()).getPlannableItemsFor(taskName).get(0);
+		PlannedItem item = getCmmnService().getPlan(caseInstance.getId()).getPlannableItemsFor(taskName).get(0);
 		getCmmnService().transitionPlanItem(caseInstance.getId(),item.getNodeInstanceId(), PlanItemTransition.TERMINATE);
 	}
 	protected void failTask(String taskName) {
-		PlannableItem item = getCmmnService().getPlan(caseInstance.getId()).getPlannableItemsFor(taskName).get(0);
+		PlannedItem item = getCmmnService().getPlan(caseInstance.getId()).getPlannableItemsFor(taskName).get(0);
 		getCmmnService().transitionPlanItem(caseInstance.getId(),item.getNodeInstanceId(), PlanItemTransition.FAULT);
 	}
 
 	@Override
 	protected void disableTask(String taskName) {
-		PlannableItem item = getCmmnService().getPlan(caseInstance.getId()).getPlannableItemsFor(taskName).get(0);
+		PlannedItem item = getCmmnService().getPlan(caseInstance.getId()).getPlannableItemsFor(taskName).get(0);
 		getCmmnService().transitionPlanItem(caseInstance.getId(),item.getNodeInstanceId(), PlanItemTransition.DISABLE);
 	}
 
 	protected void reactivateTask(String taskName) {
-		PlannableItem item = getCmmnService().getPlan(caseInstance.getId()).getPlannableItemsFor(taskName).get(0);
+		PlannedItem item = getCmmnService().getPlan(caseInstance.getId()).getPlannableItemsFor(taskName).get(0);
 		getCmmnService().transitionPlanItem(caseInstance.getId(),item.getNodeInstanceId(), PlanItemTransition.REACTIVATE);
 	}
 	protected void resumeTask(String taskName) {
-		PlannableItem item = getCmmnService().getPlan(caseInstance.getId()).getPlannableItemsFor(taskName).get(0);
+		PlannedItem item = getCmmnService().getPlan(caseInstance.getId()).getPlannableItemsFor(taskName).get(0);
 		getCmmnService().transitionPlanItem(caseInstance.getId(), item.getNodeInstanceId(), PlanItemTransition.RESUME);
 	}
 
 	protected void suspendTask(String taskName) {
-		PlannableItem item = getCmmnService().getPlan(caseInstance.getId()).getPlannableItemsFor(taskName).get(0);
+		PlannedItem item = getCmmnService().getPlan(caseInstance.getId()).getPlannableItemsFor(taskName).get(0);
 		getCmmnService().transitionPlanItem(caseInstance.getId(), item.getNodeInstanceId(), PlanItemTransition.SUSPEND);
 	}
 	@Override

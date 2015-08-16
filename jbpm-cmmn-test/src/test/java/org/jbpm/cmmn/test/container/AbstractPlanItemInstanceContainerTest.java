@@ -1,6 +1,5 @@
 package org.jbpm.cmmn.test.container;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,9 +15,8 @@ import org.jbpm.cmmn.instance.impl.AbstractCallingTaskInstance;
 import org.jbpm.cmmn.instance.impl.CaseTaskInstance;
 import org.jbpm.cmmn.instance.impl.HumanTaskInstance;
 import org.jbpm.cmmn.service.model.Plan;
-import org.jbpm.cmmn.service.model.PlannableItem;
+import org.jbpm.cmmn.service.model.PlannedItem;
 import org.jbpm.cmmn.test.AbstractConstructionTestCase;
-import org.kie.api.runtime.process.ProcessInstance;
 import org.kie.api.task.model.Status;
 import org.kie.api.task.model.Task;
 import org.kie.api.task.model.TaskSummary;
@@ -62,11 +60,7 @@ public abstract class AbstractPlanItemInstanceContainerTest extends AbstractCons
 		assertPlanItemInState(caseInstance.getId(), "TheStagePlanItem", PlanElementState.AVAILABLE);
 		assertPlanItemInState(caseInstance.getId(), "TheCaseTaskPlanItem", PlanElementState.ENABLED);
 		assertEquals(PlanElementState.ACTIVE, reloadCaseInstance().getPlanElementState()); // Because autoComplete defaults to false
-		PlannableItem theCaseTaskPlanItem = plan.getPlannableItemsFor("TheCaseTaskPlanItem").get(0);
-		Collection<ProcessInstance> processInstances = getRuntimeEngine().getKieSession().getProcessInstances();
-		for (ProcessInstance processInstance : processInstances) {
-			System.out.println(processInstance.getId());
-		}
+		PlannedItem theCaseTaskPlanItem = plan.getPlannableItemsFor("TheCaseTaskPlanItem").get(0);
 		getCmmnService().transitionPlanItem(caseInstance.getId(), theCaseTaskPlanItem.getNodeInstanceId(), PlanItemTransition.MANUAL_START);
 		assertPlanItemInState(caseInstance.getId(), "TheCaseTaskPlanItem", PlanElementState.ACTIVE);
 		long uid=plan.getPlannableItemsFor("TheCaseTaskPlanItem").get(0).getNodeInstanceId();
@@ -90,7 +84,7 @@ public abstract class AbstractPlanItemInstanceContainerTest extends AbstractCons
 	}
 
 	protected void completeTasks(Plan plan) {
-		for (PlannableItem item : plan.getPlannableItems()) {
+		for (PlannedItem item : plan.getPlannedItems()) {
 			if (item.getName().equals("TheHumanTaskPlanItem")) {
 				caseInstance=reloadCaseInstance();
 				HumanTaskInstance hti= (HumanTaskInstance) caseInstance.getNodeInstance(item.getNodeInstanceId(), true);

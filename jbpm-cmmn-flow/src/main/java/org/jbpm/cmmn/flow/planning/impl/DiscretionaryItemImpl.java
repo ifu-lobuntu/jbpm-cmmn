@@ -12,6 +12,7 @@ import org.jbpm.cmmn.flow.definition.HumanTaskDefinition;
 import org.jbpm.cmmn.flow.definition.PlanItemControl;
 import org.jbpm.cmmn.flow.definition.PlanItemDefinition;
 import org.jbpm.cmmn.flow.definition.RepeatablePlanItemDefinition;
+import org.jbpm.cmmn.flow.planitem.PlanItem;
 import org.jbpm.cmmn.flow.planitem.Sentry;
 import org.jbpm.cmmn.flow.planitem.impl.SentryImpl;
 import org.jbpm.cmmn.flow.planning.DiscretionaryItem;
@@ -161,7 +162,6 @@ public class DiscretionaryItemImpl<T extends PlanItemDefinition> extends TableIt
 		for (Entry<String, Sentry> entry : exitSet) {
 			((Sentry) entry.getValue()).setPlanItemExiting(this);
 		}
-		// new ConnectionImpl(getFactoryNode(), Node.CONNECTION_DEFAULT_TYPE, this, Node.CONNECTION_DEFAULT_TYPE);
 	}
 
 	public PlanItemInstanceFactoryNodeImpl getFactoryNode() {
@@ -175,5 +175,12 @@ public class DiscretionaryItemImpl<T extends PlanItemDefinition> extends TableIt
 		T def = getDefinition();
 		copiedState.put(def, this);
 		copy(copiedState, def, this);
+		org.kie.api.definition.process.Node[] nodes = this.getNodes();
+		for (org.kie.api.definition.process.Node node : nodes) {
+			if (node instanceof PlanItem) {
+				((PlanItem) node).setPlanItemContainer(getPlanItemContainer());
+			}
+		}
+		setNodeContainer(getPlanItemContainer());
 	}
 }

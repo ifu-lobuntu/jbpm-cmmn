@@ -41,12 +41,7 @@ public class PlanItemImpl<T extends PlanItemDefinition> extends AbstractItem imp
         return (getDefinition() instanceof EventNodeInterface && ((EventNodeInterface) getDefinition()).acceptsEvent(type, event)) || super.acceptsEvent(type, event);
     }
 
-    @Override
-    public VariableScope getVariableScope() {
-        return (VariableScope) getDefaultContext(VariableScope.VARIABLE_SCOPE);
-    }
-
-    @Override
+        @Override
     public Map<String, Sentry> getEntryCriteria() {
         return Collections.unmodifiableMap(entryCriteria);
     }
@@ -134,6 +129,7 @@ public class PlanItemImpl<T extends PlanItemDefinition> extends AbstractItem imp
 
     public final void setPlanItemContainer(PlanItemContainer planItemContainer) {
         this.planItemContainer = planItemContainer;
+        super.setNodeContainer(planItemContainer);
     }
 
     public void linkPlanItem() {

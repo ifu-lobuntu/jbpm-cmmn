@@ -11,7 +11,5 @@ public interface PlanningTableContainerInstance<T extends PlanItemDefinition> ex
 
 	NodeInstance getPlanningContextNodeInstance();
 
-	NodeInstance createPlannedItem(String tableItemId);
-
 
 }

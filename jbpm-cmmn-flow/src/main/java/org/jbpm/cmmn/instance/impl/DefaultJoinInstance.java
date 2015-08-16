@@ -3,6 +3,7 @@ package org.jbpm.cmmn.instance.impl;
 import org.jbpm.cmmn.flow.core.impl.DefaultJoin;
 import org.jbpm.cmmn.instance.CaseInstance;
 import org.jbpm.cmmn.instance.PlanItemInstanceContainer;
+import org.jbpm.cmmn.instance.impl.util.PlanItemInstanceContainerUtil;
 import org.jbpm.workflow.core.impl.NodeImpl;
 import org.jbpm.workflow.instance.node.EventNodeInstanceInterface;
 import org.jbpm.workflow.instance.node.JoinInstance;
@@ -20,7 +21,7 @@ public class DefaultJoinInstance extends JoinInstance implements EventNodeInstan
 		super.internalTrigger(from, type);
 		if (!isInitializing && getNodeInstanceContainer() instanceof PlanItemInstanceContainer) {
 			PlanItemInstanceContainer piic = (PlanItemInstanceContainer) getNodeInstanceContainer();
-			if (piic.canComplete() && piic.getPlanItemContainer().isAutoComplete()) {
+			if (PlanItemInstanceContainerUtil.canComplete(piic) && piic.getPlanItemContainer().isAutoComplete()) {
 				piic.complete();
 			}
 		}

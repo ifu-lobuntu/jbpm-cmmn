@@ -12,8 +12,8 @@ public interface PlanItemInstanceContainer extends PlanningTableContainerInstanc
 
 	Collection<? extends PlanItemInstance<?>> getChildren();
 
-	boolean canComplete();
     void complete();
+
 	PlanItemContainer getPlanItemContainer();
 
 	void populateSubscriptionsActivatedByParameters(SubscriptionContext sc);
