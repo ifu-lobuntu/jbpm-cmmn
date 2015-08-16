@@ -1,8 +1,9 @@
 package org.jbpm.cmmn.flow.core;
 
-import org.jbpm.cmmn.flow.planitem.PlanItemInfo;
+import org.jbpm.cmmn.flow.planitem.PlanItem;
 import org.jbpm.cmmn.flow.planning.PlanningTable;
 import org.jbpm.cmmn.flow.planning.PlanningTableContainer;
+import org.jbpm.process.core.context.variable.VariableScope;
 import org.jbpm.workflow.core.NodeContainer;
 import org.jbpm.workflow.core.node.EndNode;
 import org.jbpm.workflow.core.node.Join;
@@ -14,9 +15,9 @@ import java.util.Collection;
 
 public interface PlanItemContainer extends NodeContainer, PlanningTableContainer {
 
-    void addPlanItemInfo(PlanItemInfo<?> d);
+    VariableScope getVariableScope();
 
-    Collection<PlanItemInfo<?>> getPlanItemInfo();
+    Collection<PlanItem<?>> getPlanItems();
 
     void setDefaultStart(StartNode n);
 

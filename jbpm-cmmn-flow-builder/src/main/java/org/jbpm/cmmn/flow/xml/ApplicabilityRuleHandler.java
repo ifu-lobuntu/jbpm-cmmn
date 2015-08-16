@@ -1,18 +1,17 @@
 package org.jbpm.cmmn.flow.xml;
 
-import java.util.HashSet;
-
 import org.drools.core.xml.ExtensibleXmlParser;
 import org.drools.core.xml.Handler;
 import org.jbpm.cmmn.flow.planning.ApplicabilityRule;
 import org.jbpm.cmmn.flow.planning.ApplicabilityRuleImpl;
 import org.jbpm.cmmn.flow.planning.DiscretionaryItem;
 import org.jbpm.cmmn.flow.planning.PlanningTable;
-import org.jbpm.cmmn.flow.planning.impl.DiscretionaryItemImpl;
 import org.jbpm.cmmn.flow.planning.impl.PlanningTableImpl;
 import org.w3c.dom.Element;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
+
+import java.util.HashSet;
 
 public class ApplicabilityRuleHandler extends AbstractTableItemHandler implements Handler {
 	public ApplicabilityRuleHandler() {

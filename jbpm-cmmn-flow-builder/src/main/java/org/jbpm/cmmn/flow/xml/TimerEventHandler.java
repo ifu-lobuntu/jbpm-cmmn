@@ -1,9 +1,9 @@
 package org.jbpm.cmmn.flow.xml;
 
 import org.drools.core.xml.ExtensibleXmlParser;
+import org.jbpm.cmmn.flow.core.impl.CaseImpl;
 import org.jbpm.cmmn.flow.definition.TimerEventListener;
 import org.jbpm.cmmn.flow.definition.impl.TimerEventListenerImpl;
-import org.jbpm.cmmn.flow.core.impl.CaseImpl;
 import org.w3c.dom.Element;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;

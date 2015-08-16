@@ -5,7 +5,7 @@ import org.jbpm.cmmn.flow.core.CaseParameter;
 import org.jbpm.cmmn.flow.core.CaseRole;
 import org.jbpm.cmmn.flow.definition.PlanItemDefinition;
 import org.jbpm.cmmn.flow.definition.impl.AbstractPlanItemDefinition;
-import org.jbpm.cmmn.flow.planitem.PlanItemInfo;
+import org.jbpm.cmmn.flow.planitem.PlanItem;
 import org.jbpm.cmmn.flow.planning.PlanningTable;
 import org.jbpm.ruleflow.core.RuleFlowProcess;
 import org.jbpm.workflow.core.node.EndNode;
@@ -14,10 +14,7 @@ import org.jbpm.workflow.core.node.Split;
 import org.jbpm.workflow.core.node.StartNode;
 import org.kie.api.definition.process.Node;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class CaseImpl extends RuleFlowProcess implements Case {
 	private static final long serialVersionUID = -2253866933695827108L;
@@ -25,7 +22,6 @@ public class CaseImpl extends RuleFlowProcess implements Case {
 	private Map<String, org.jbpm.cmmn.flow.core.CaseParameter> inputParameters = new HashMap<String, org.jbpm.cmmn.flow.core.CaseParameter>();
 	private Map<String, org.jbpm.cmmn.flow.core.CaseParameter> outputParameters = new HashMap<String, org.jbpm.cmmn.flow.core.CaseParameter>();
 	private Map<String, PlanItemDefinition> planItemDefinitions = new HashMap<String, PlanItemDefinition>();
-	private Collection<PlanItemInfo<?>> planItemInfo = new ArrayList<PlanItemInfo<?>>();
 	private Collection<CaseRole> roles = new ArrayList<CaseRole>();
 	private StartNode defaultStart;
 	private Split defaultSplit;
@@ -133,10 +129,6 @@ public class CaseImpl extends RuleFlowProcess implements Case {
 		}
 	}
 
-	@Override
-	public void addPlanItemInfo(PlanItemInfo<?> d) {
-		planItemInfo.add(d);
-	}
 
 	public PlanItemDefinition getPlanItemDefinition(String elementId) {
 		return planItemDefinitions.get(elementId);
@@ -153,11 +145,17 @@ public class CaseImpl extends RuleFlowProcess implements Case {
 	public void addRole(CaseRole r) {
 		roles.add(r);
 	}
-
 	@Override
-	public Collection<PlanItemInfo<?>> getPlanItemInfo() {
-		return this.planItemInfo;
+	public Collection<PlanItem<?>> getPlanItems() {
+		Collection<PlanItem<?>> result = new HashSet<PlanItem<?>>();
+		for (Node node : getNodes()) {
+			if(node instanceof PlanItem){
+				result.add((PlanItem)node);
+			}
+		}
+		return result;
 	}
+
 
 	@Override
 	public PlanningTable getPlanningTable() {

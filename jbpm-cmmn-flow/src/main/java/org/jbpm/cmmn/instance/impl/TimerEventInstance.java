@@ -77,7 +77,7 @@ public class TimerEventInstance extends OccurrablePlanItemInstanceImpl<TimerEven
 	}
 
 	protected TimerInstance createTimerInstance(InternalKnowledgeRuntime kruntime) {
-		Constraint te = getPlanItem().getPlanInfo().getDefinition().getTimerExpression();
+		Constraint te = getPlanItem().getDefinition().getTimerExpression();
 		String expression = te.getConstraint();
 		TimerInstance timerInstance = new TimerInstance();
 		timerInstance.setPeriod(0);

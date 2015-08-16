@@ -1,17 +1,7 @@
 package org.jbpm.cmmn.flow.xml;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-
 import org.drools.core.process.core.datatype.DataType;
-import org.drools.core.process.core.datatype.impl.type.BooleanDataType;
-import org.drools.core.process.core.datatype.impl.type.FloatDataType;
-import org.drools.core.process.core.datatype.impl.type.IntegerDataType;
-import org.drools.core.process.core.datatype.impl.type.ObjectDataType;
-import org.drools.core.process.core.datatype.impl.type.StringDataType;
-import org.drools.core.process.core.datatype.impl.type.UndefinedDataType;
+import org.drools.core.process.core.datatype.impl.type.*;
 import org.drools.core.xml.BaseAbstractHandler;
 import org.drools.core.xml.ExtensibleXmlParser;
 import org.drools.core.xml.Handler;
@@ -20,12 +10,12 @@ import org.jbpm.cmmn.flow.common.impl.CaseFileItemStandardEventNodeImpl;
 import org.jbpm.cmmn.flow.common.impl.PlanItemStandardEventNode;
 import org.jbpm.cmmn.flow.core.CaseFileItem;
 import org.jbpm.cmmn.flow.core.CaseFileItemDefinition;
+import org.jbpm.cmmn.flow.core.CaseFileItemDefinitionType;
 import org.jbpm.cmmn.flow.core.Definitions;
 import org.jbpm.cmmn.flow.core.impl.CaseFileItemDefinitionImpl;
 import org.jbpm.cmmn.flow.core.impl.CaseFileItemImpl;
-import org.jbpm.cmmn.flow.core.CaseFileItemDefinitionType;
-import org.jbpm.cmmn.flow.core.impl.DefinitionsImpl;
 import org.jbpm.cmmn.flow.core.impl.CaseImpl;
+import org.jbpm.cmmn.flow.core.impl.DefinitionsImpl;
 import org.jbpm.compiler.xml.ProcessBuildData;
 import org.jbpm.process.core.context.variable.Variable;
 import org.jbpm.process.core.context.variable.VariableScope;
@@ -34,6 +24,11 @@ import org.kie.api.definition.process.Process;
 import org.w3c.dom.Element;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 
 public class DefinitionsHandler extends BaseAbstractHandler implements Handler {
     private static final Map<CaseFileItemDefinitionType, TypeMap> TYPE_MAP_REGISTRY = new HashMap<CaseFileItemDefinitionType, TypeMap>();

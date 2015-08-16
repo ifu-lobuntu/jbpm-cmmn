@@ -2,8 +2,6 @@ package org.jbpm.cmmn.flow.xml;
 
 import org.drools.core.xml.ExtensibleXmlParser;
 import org.jbpm.cmmn.flow.core.impl.CaseImpl;
-import org.jbpm.cmmn.flow.definition.ProcessTaskDefinition;
-import org.jbpm.cmmn.flow.definition.impl.CaseTaskDefinitionImpl;
 import org.jbpm.cmmn.flow.definition.impl.ProcessTaskDefinitionImpl;
 import org.jbpm.cmmn.flow.definition.impl.TaskDefinitionImpl;
 import org.xml.sax.Attributes;

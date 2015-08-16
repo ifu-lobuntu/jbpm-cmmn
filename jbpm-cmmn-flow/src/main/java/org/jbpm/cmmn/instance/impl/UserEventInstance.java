@@ -17,7 +17,7 @@ public class UserEventInstance extends OccurrablePlanItemInstanceImpl<UserEventL
 
 	public void signalEvent(String type, Object event) {
 		super.signalEvent(type, event);
-		String name = getPlanItem().getPlanInfo().getDefinition().getName();
+		String name = getPlanItem().getDefinition().getName();
 		if (type.equals(name) && !(event instanceof PlanItemEvent) && canOccur()) {
 			setPlanElementState(PlanElementState.AVAILABLE);
 			occur();

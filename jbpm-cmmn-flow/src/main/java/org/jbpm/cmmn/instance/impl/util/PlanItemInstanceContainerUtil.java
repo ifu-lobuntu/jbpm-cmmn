@@ -71,7 +71,7 @@ public class PlanItemInstanceContainerUtil {
         for (NodeInstance ni : caseInstance.getNodeInstances()) {
             if (ni.getNode() instanceof PlanItem) {
                 PlanItem<?> pi = (PlanItem<?>) ni.getNode();
-                PlanItemDefinition def = pi.getPlanInfo().getDefinition();
+                PlanItemDefinition def = pi.getDefinition();
                 if (def instanceof TaskDefinition) {
                     params.addAll(((TaskDefinition) def).getOutputs());
                 }

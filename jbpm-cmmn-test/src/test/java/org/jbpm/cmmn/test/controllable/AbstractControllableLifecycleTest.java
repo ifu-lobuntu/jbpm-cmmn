@@ -308,28 +308,6 @@ public abstract class AbstractControllableLifecycleTest extends AbstractConstruc
 		stopwatch.finish("testEventGeneratedOnManualStartOfTask");
 
 	}
-
-	private long findTask(List<TaskSummary> list, String taskName) {
-		long eventGeneratingTaskId = -1;
-		// ******WHEN
-		for (TaskSummary ts : list) {
-			if (ts.getName().equals(taskName)) {
-				eventGeneratingTaskId = ts.getId();
-			}
-		}
-		return eventGeneratingTaskId;
-	}
-
-	protected TaskSummary findTaskSummary(List<TaskSummary> list, String taskName) {
-		// ******WHEN
-		for (TaskSummary ts : list) {
-			if (ts.getName().equals(taskName)) {
-				return ts;
-			}
-		}
-		throw new IllegalArgumentException("Task '" + taskName + "' not found");
-	}
-
 	@Test
 	public void testEventGeneratedOnAutomaticStartOfTask() throws Exception {
 		stopwatch.start();
@@ -363,7 +341,6 @@ public abstract class AbstractControllableLifecycleTest extends AbstractConstruc
 		assertNodeTriggered(caseInstance.getId(), "PlanItemEnteredWhenTaskReactivated");
 		assertPlanItemInState(caseInstance.getId(), "TheEventGeneratingTaskPlanItem", PlanElementState.ACTIVE);
 		stopwatch.finish("testEventGeneratedOnReactivateOfTask");
-
 	}
 
 	@Test
@@ -390,8 +367,6 @@ public abstract class AbstractControllableLifecycleTest extends AbstractConstruc
 		givenThatTheTestCaseIsStarted();
 		// *****WHEN
 		triggerStartOfTask();
-		Plan plan = getCmmnService().getPlan(caseInstance.getId());
-		PlannableItem theEventGeneratingTaskPlanItem = plan.getPlannableItemsFor("TheEventGeneratingTaskPlanItem").get(0);
 		// *****THEN
 		assertNodeTriggered(caseInstance.getId(), "PlanItemEnteredWhenTaskCreated");
 		assertPlanItemInState(caseInstance.getId(), "TheEventGeneratingTaskPlanItem", PlanElementState.ENABLED);

@@ -2,7 +2,7 @@ package org.jbpm.cmmn.flow.core.impl;
 
 import org.jbpm.cmmn.flow.core.PlanItemContainer;
 import org.jbpm.cmmn.flow.definition.impl.HumanTaskDefinitionImpl;
-import org.jbpm.cmmn.flow.planitem.PlanItemInfo;
+import org.jbpm.cmmn.flow.planitem.PlanItem;
 import org.jbpm.workflow.core.Node;
 
 public class PlanItemContainerUtil {
@@ -16,7 +16,7 @@ public class PlanItemContainerUtil {
 			result = (Node) pic.getPlanningTable().getNode(nodeId);
 		}
 		if (result == null) {
-			for (PlanItemInfo<?> pi : pic.getPlanItemInfo()) {
+			for (PlanItem<?> pi : pic.getPlanItems()) {
 				if (pi.getDefinition() instanceof HumanTaskDefinitionImpl) {
 					HumanTaskDefinitionImpl ht = (HumanTaskDefinitionImpl) pi.getDefinition();
 					if (ht.getPlanningTable() != null) {

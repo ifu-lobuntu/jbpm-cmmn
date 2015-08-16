@@ -1,11 +1,8 @@
 package org.jbpm.cmmn.flow.xml;
 
-import java.util.Collection;
-
 import org.drools.core.xml.ExtensibleXmlParser;
 import org.drools.core.xml.Handler;
 import org.jbpm.cmmn.flow.definition.impl.StageImpl;
-import org.jbpm.cmmn.flow.common.impl.AbstractStandardEventNode;
 import org.jbpm.cmmn.flow.planitem.OnPart;
 import org.jbpm.cmmn.flow.planitem.impl.SentryImpl;
 import org.jbpm.workflow.core.Node;
@@ -16,6 +13,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
+
+import java.util.Collection;
 
 public class SentryHandler extends AbstractCaseElementHandler implements Handler {
 	private static final String DEFAULT = Node.CONNECTION_DEFAULT_TYPE;

@@ -1,12 +1,10 @@
 package org.jbpm.cmmn.flow.xml;
 
-import java.util.HashSet;
-
 import org.drools.core.xml.BaseAbstractHandler;
 import org.drools.core.xml.ExtensibleXmlParser;
 import org.drools.core.xml.Handler;
-import org.jbpm.cmmn.flow.common.impl.CaseFileItemStandardEventNodeImpl;
 import org.jbpm.cmmn.flow.common.CaseFileItemTransition;
+import org.jbpm.cmmn.flow.common.impl.CaseFileItemStandardEventNodeImpl;
 import org.jbpm.cmmn.flow.definition.CaseFileItemStartTrigger;
 import org.jbpm.cmmn.flow.definition.StartTrigger;
 import org.jbpm.cmmn.flow.definition.TimerEventListener;
@@ -18,6 +16,8 @@ import org.jbpm.cmmn.flow.planitem.impl.CaseFileItemOnPartImpl;
 import org.w3c.dom.NodeList;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
+
+import java.util.HashSet;
 
 public class CaseFileItemOnPartHandler extends BaseAbstractHandler implements Handler {
 	public CaseFileItemOnPartHandler() {

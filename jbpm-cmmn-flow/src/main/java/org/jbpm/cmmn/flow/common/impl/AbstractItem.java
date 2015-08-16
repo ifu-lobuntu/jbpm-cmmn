@@ -1,6 +1,7 @@
 package org.jbpm.cmmn.flow.common.impl;
 
 import org.jbpm.cmmn.flow.definition.PlanItemDefinition;
+import org.jbpm.process.core.context.variable.VariableScope;
 import org.jbpm.workflow.core.impl.NodeImpl;
 import org.jbpm.workflow.core.node.StateNode;
 

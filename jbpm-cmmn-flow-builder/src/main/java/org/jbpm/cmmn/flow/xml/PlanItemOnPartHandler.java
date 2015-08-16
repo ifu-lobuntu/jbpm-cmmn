@@ -1,26 +1,23 @@
 package org.jbpm.cmmn.flow.xml;
 
-import java.util.HashSet;
-
 import org.drools.core.xml.BaseAbstractHandler;
 import org.drools.core.xml.ExtensibleXmlParser;
 import org.drools.core.xml.Handler;
-import org.jbpm.cmmn.flow.common.impl.PlanItemStandardEventNode;
 import org.jbpm.cmmn.flow.common.PlanItemTransition;
+import org.jbpm.cmmn.flow.common.impl.PlanItemStandardEventNode;
 import org.jbpm.cmmn.flow.definition.StartTrigger;
 import org.jbpm.cmmn.flow.definition.TimerEventListener;
 import org.jbpm.cmmn.flow.definition.impl.PlanItemStartTriggerImpl;
-import org.jbpm.cmmn.flow.definition.impl.TimerEventListenerImpl;
 import org.jbpm.cmmn.flow.planitem.CaseFileItemOnPart;
 import org.jbpm.cmmn.flow.planitem.OnPart;
 import org.jbpm.cmmn.flow.planitem.PlanItemOnPart;
 import org.jbpm.cmmn.flow.planitem.Sentry;
-import org.jbpm.cmmn.flow.planitem.impl.CaseFileItemOnPartImpl;
 import org.jbpm.cmmn.flow.planitem.impl.PlanItemOnPartImpl;
-import org.jbpm.cmmn.flow.planitem.impl.SentryImpl;
 import org.w3c.dom.NodeList;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
+
+import java.util.HashSet;
 
 public class PlanItemOnPartHandler extends BaseAbstractHandler implements Handler {
 	public PlanItemOnPartHandler() {

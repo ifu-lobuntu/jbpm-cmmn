@@ -1,14 +1,14 @@
 package org.jbpm.cmmn.flow.xml;
 
-import java.util.Deque;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
-
 import org.drools.core.xml.ExtensibleXmlParser;
 import org.jbpm.cmmn.flow.definition.impl.AbstractPlanItemDefinition;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
+
+import java.util.Deque;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
 
 public class PlanItemDefinitionHandler extends AbstractCaseElementHandler {
     Deque<PlanItemDefinitionHandlerDelegate> stack = new LinkedList<PlanItemDefinitionHandlerDelegate>(); 

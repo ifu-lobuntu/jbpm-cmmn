@@ -10,14 +10,12 @@ import org.jbpm.cmmn.flow.definition.*;
 import org.jbpm.cmmn.flow.definition.impl.HumanTaskDefinitionImpl;
 import org.jbpm.cmmn.flow.definition.impl.StageImpl;
 import org.jbpm.cmmn.flow.planitem.PlanItem;
-import org.jbpm.cmmn.flow.planitem.PlanItemInfo;
 import org.jbpm.cmmn.flow.planitem.Sentry;
 import org.jbpm.cmmn.flow.planning.ApplicabilityRule;
 import org.jbpm.cmmn.flow.planning.DiscretionaryItem;
 import org.jbpm.cmmn.flow.planning.PlanningTable;
 import org.jbpm.cmmn.flow.planning.TableItem;
 import org.jbpm.cmmn.flow.planning.impl.PlanningTableImpl;
-import org.jbpm.cmmn.flow.planning.impl.TableItemImpl;
 import org.jbpm.process.core.context.variable.Variable;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -48,7 +46,6 @@ public class PlanningTableHandler extends AbstractTableItemHandler implements Ha
 		this.validPeers.add(CaseParameter.class);
 		this.validPeers.add(UserEventListener.class);
 		this.validPeers.add(TimerEventListener.class);
-		this.validPeers.add(PlanItemInfo.class);
 		this.validPeers.add(PlanItem.class);
 	}
 

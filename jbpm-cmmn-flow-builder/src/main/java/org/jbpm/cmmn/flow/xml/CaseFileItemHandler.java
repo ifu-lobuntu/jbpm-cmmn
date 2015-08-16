@@ -1,8 +1,5 @@
 package org.jbpm.cmmn.flow.xml;
 
-import java.util.HashSet;
-import java.util.List;
-
 import org.drools.core.xml.BaseAbstractHandler;
 import org.drools.core.xml.ExtensibleXmlParser;
 import org.drools.core.xml.Handler;
@@ -14,6 +11,9 @@ import org.jbpm.process.core.context.variable.VariableScope;
 import org.jbpm.workflow.core.Node;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
+
+import java.util.HashSet;
+import java.util.List;
 
 public class CaseFileItemHandler extends BaseAbstractHandler implements Handler {
 	public CaseFileItemHandler() {

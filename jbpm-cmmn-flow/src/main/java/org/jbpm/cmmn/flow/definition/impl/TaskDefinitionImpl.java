@@ -32,7 +32,6 @@ public class TaskDefinitionImpl extends AbstractPlanItemDefinition implements Ta
 
 	public void addInputParameter(CaseParameter cp) {
 		this.inputs.put(cp.getElementId()==null?cp.getName():cp.getElementId(), cp);
-
 	}
 
 	public void setBlocking(boolean b) {

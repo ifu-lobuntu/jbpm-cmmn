@@ -1,14 +1,14 @@
 package org.jbpm.cmmn.flow.xml;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.drools.core.xml.ExtensibleXmlParser;
 import org.jbpm.cmmn.flow.core.CMMNElement;
 import org.jbpm.cmmn.flow.core.impl.CaseImpl;
-import org.jbpm.cmmn.flow.planitem.impl.PlanItemInfoImpl;
+import org.jbpm.cmmn.flow.planitem.impl.PlanItemImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class IdGenerator {
 	private static Logger logger = LoggerFactory.getLogger(IdGenerator.class);
@@ -70,7 +70,7 @@ public class IdGenerator {
         return idSet;
     }
 
-	public static long getIdAsUniqueAsUuid(ExtensibleXmlParser parser, PlanItemInfoImpl<?> planItem) {
+	public static long getIdAsUniqueAsUuid(ExtensibleXmlParser parser, PlanItemImpl<?> planItem) {
 		return getIdAsUniqueAsId(parser, planItem.getElementId());
 	}
 

@@ -1,11 +1,11 @@
 package org.jbpm.cmmn.flow.xml;
 
-import java.util.HashSet;
-
 import org.drools.core.xml.BaseAbstractHandler;
 import org.drools.core.xml.Handler;
 import org.jbpm.cmmn.flow.planning.impl.TableItemImpl;
 import org.xml.sax.Attributes;
+
+import java.util.HashSet;
 
 public abstract class AbstractTableItemHandler extends BaseAbstractHandler implements Handler {
 

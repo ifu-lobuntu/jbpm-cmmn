@@ -1,10 +1,5 @@
 package org.jbpm.cmmn.flow.xml;
 
-import java.util.Deque;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
-
 import org.drools.core.xml.ExtensibleXmlParser;
 import org.drools.core.xml.Handler;
 import org.jbpm.cmmn.flow.planning.ApplicabilityRuleImpl;
@@ -12,6 +7,11 @@ import org.jbpm.cmmn.flow.planning.PlanningTable;
 import org.jbpm.cmmn.flow.planning.TableItem;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
+
+import java.util.Deque;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
 
 public class TableItemHandler extends AbstractTableItemHandler implements Handler {
     Deque<AbstractTableItemHandler> stack = new LinkedList<AbstractTableItemHandler>();

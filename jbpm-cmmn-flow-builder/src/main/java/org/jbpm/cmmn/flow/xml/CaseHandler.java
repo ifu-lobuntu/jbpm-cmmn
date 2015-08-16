@@ -110,7 +110,7 @@ public class CaseHandler extends PlanItemContainerHandler implements Handler {
 
     @Override
     public Object end(final String uri, final String localName, final ExtensibleXmlParser parser) throws SAXException {
-        Element el = (Element) parser.endElementBuilder();
+        Element el =  parser.endElementBuilder();
         CaseImpl process = (CaseImpl) parser.getCurrent();
         Element cpm = (Element) el.getElementsByTagName("casePlanModel").item(0);
         process.setAutoComplete("true".equals(cpm.getAttribute("autoComplete")));
@@ -148,10 +148,10 @@ public class CaseHandler extends PlanItemContainerHandler implements Handler {
                 doRoleAndDefinitionMapping(process.getPlanItemDefinitions(), process.getRoles(), ((StageImpl) pi).getPlanningTable());
             }
         }
-        linkPlanItems(process, parser);
+        linkPlanItems(process, parser, variableScope);
         for (PlanItemDefinition planItemDefinition : planItemDefinitions) {
             if (planItemDefinition instanceof StageImpl) {
-                super.linkPlanItems((StageImpl) planItemDefinition, parser);
+                super.linkPlanItems((StageImpl) planItemDefinition, parser, variableScope);
             }
         }
         linkDiscretionaryItemCriteria(process.getPlanningTable(), process);
@@ -219,7 +219,7 @@ public class CaseHandler extends PlanItemContainerHandler implements Handler {
     private void copyStagePlanItems(NodeContainer nc) {
         Node[] nodes = nc.getNodes();
         for (Node node : nodes) {
-            if (node instanceof PlanItem && ((PlanItem) node).getDefinition() instanceof Stage) {
+            if (node instanceof PlanItem) {
                 PlanItem spi = (PlanItem) node;
                 spi.copyFromDefinition();
                 copyStagePlanItems(spi);

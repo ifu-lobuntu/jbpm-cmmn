@@ -18,8 +18,7 @@ import org.jbpm.cmmn.flow.definition.impl.CaseFileItemStartTriggerImpl;
 import org.jbpm.cmmn.flow.definition.impl.PlanItemStartTriggerImpl;
 import org.jbpm.cmmn.flow.planitem.OnPart;
 import org.jbpm.cmmn.flow.planitem.PlanItem;
-import org.jbpm.cmmn.flow.planitem.PlanItemInfo;
-import org.jbpm.cmmn.flow.planitem.impl.PlanItemInfoImpl;
+import org.jbpm.cmmn.flow.planitem.impl.PlanItemImpl;
 import org.jbpm.cmmn.flow.planitem.impl.SentryImpl;
 import org.jbpm.cmmn.flow.planning.impl.DiscretionaryItemImpl;
 import org.jbpm.process.core.context.variable.Variable;
@@ -44,15 +43,13 @@ public abstract class PlanItemContainerHandler extends BaseAbstractHandler {
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	protected void linkPlanItems(PlanItemContainer container, ExtensibleXmlParser p) {
-		VariableScope variableScope = container.getCase().getVariableScope();
+	protected void linkPlanItems(PlanItemContainer container, ExtensibleXmlParser p, VariableScope variableScope) {
 		Split defaultSplit = container.getDefaultSplit();
 		EndNode defaultEnd = container.getDefaultEnd();
 		defaultEnd.setTerminate(container instanceof CaseImpl);
-		for (PlanItemInfo<?> pi : container.getPlanItemInfo()) {
-			PlanItemInfoImpl pii = (PlanItemInfoImpl) pi;
+		for (PlanItem<?> pi : container.getPlanItems()) {
+			PlanItemImpl pii = (PlanItemImpl) pi;
 			pii.setDefinition(container.getCase().getPlanItemDefinition(pii.getDefinitionRef()));
-			pii.buildPlanItem();
 		}
 		DefaultJoin defaultJoin = new DefaultJoin();
 		defaultJoin.setId(IdGenerator.next(p));
@@ -96,16 +93,16 @@ public abstract class PlanItemContainerHandler extends BaseAbstractHandler {
 		if (process.getDefaultJoin() != null) {
 			new ConnectionImpl(node, DEFAULT, process.getDefaultJoin(), DEFAULT);
 		}
-		for (String string : new ArrayList<String>(node.getPlanInfo().getEntryCriteria().keySet())) {
+		for (String string : new ArrayList<String>(node.getEntryCriteria().keySet())) {
 			SentryImpl entry = findSentry(process, string);
-			((PlanItemInfoImpl<?>) node.getPlanInfo()).putEntryCriterion(string, entry);
+			((PlanItemImpl<?>) node).putEntryCriterion(string, entry);
 		}
-		for (String string : new ArrayList<String>(node.getPlanInfo().getExitCriteria().keySet())) {
+		for (String string : new ArrayList<String>(node.getExitCriteria().keySet())) {
 			SentryImpl exit = findSentry(process, string);
-			((PlanItemInfoImpl<?>) node.getPlanInfo()).putExitCriterion(string, exit);
+			((PlanItemImpl<?>) node).putExitCriterion(string, exit);
 		}
-		((PlanItemInfoImpl<?>) node.getPlanInfo()).linkPlanItem();
-		if (node.getPlanInfo().getEntryCriteria().isEmpty()) {
+		((PlanItemImpl<?>) node).linkPlanItem();
+		if (node.getEntryCriteria().isEmpty()) {
 			if (node.getDefinition() instanceof RepeatablePlanItemDefinition) {
 				new ConnectionImpl(process.getDefaultSplit(), DEFAULT, node.getFactoryNode(), DEFAULT);
 			} else if (node.getDefinition() instanceof TimerEventListener) {
@@ -147,7 +144,6 @@ public abstract class PlanItemContainerHandler extends BaseAbstractHandler {
 			CollectionDataType cdt = new CollectionDataType(Stack.class.getName());
 			cdt.setElementClassName(onPart.getEventClassName());
 			var.setType(cdt);
-
 			variableScope.getVariables().add(var);
 		}
 	}

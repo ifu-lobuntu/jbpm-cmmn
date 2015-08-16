@@ -5,7 +5,6 @@ import org.jbpm.cmmn.flow.planning.ApplicabilityRule;
 import org.jbpm.cmmn.flow.planning.DiscretionaryItem;
 import org.jbpm.cmmn.flow.planning.PlanningTable;
 import org.jbpm.cmmn.flow.planning.impl.DiscretionaryItemImpl;
-import org.jbpm.cmmn.flow.planning.impl.PlanningTableImpl;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 

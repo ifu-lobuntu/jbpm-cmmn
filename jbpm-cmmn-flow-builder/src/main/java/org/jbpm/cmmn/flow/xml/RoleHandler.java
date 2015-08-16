@@ -2,8 +2,8 @@ package org.jbpm.cmmn.flow.xml;
 
 import org.drools.core.xml.ExtensibleXmlParser;
 import org.drools.core.xml.Handler;
-import org.jbpm.cmmn.flow.core.impl.CaseRoleImpl;
 import org.jbpm.cmmn.flow.core.impl.CaseImpl;
+import org.jbpm.cmmn.flow.core.impl.CaseRoleImpl;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 

@@ -3,15 +3,13 @@ package org.jbpm.cmmn.flow.xml;
 import org.drools.core.xml.ExtensibleXmlParser;
 import org.drools.core.xml.Handler;
 import org.jbpm.cmmn.flow.core.CaseParameter;
-import org.jbpm.cmmn.flow.core.impl.CaseParameterImpl;
-import org.jbpm.cmmn.flow.definition.*;
-import org.jbpm.cmmn.flow.definition.impl.*;
 import org.jbpm.cmmn.flow.core.impl.PlanItemControlImpl;
-import org.jbpm.cmmn.flow.planitem.PlanItemInfo;
-import org.jbpm.cmmn.flow.planitem.impl.PlanItemInfoImpl;
+import org.jbpm.cmmn.flow.definition.*;
+import org.jbpm.cmmn.flow.definition.impl.MilestoneImpl;
+import org.jbpm.cmmn.flow.planitem.PlanItem;
+import org.jbpm.cmmn.flow.planitem.impl.PlanItemImpl;
 import org.jbpm.cmmn.flow.planning.DiscretionaryItem;
 import org.jbpm.cmmn.flow.planning.impl.DiscretionaryItemImpl;
-import org.jbpm.cmmn.flow.definition.impl.HumanTaskDefinitionImpl;
 import org.jbpm.workflow.core.impl.ConstraintImpl;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -21,7 +19,7 @@ import org.xml.sax.SAXException;
 public class PlanItemControlHandler extends AbstractCaseElementHandler implements Handler {
 	public PlanItemControlHandler() {
 		super();
-		super.validParents.add(PlanItemInfo.class);
+		super.validParents.add(PlanItem.class);
 		super.validParents.add(HumanTaskDefinition.class);
 		super.validParents.add(CaseTaskDefinition.class);
 		super.validParents.add(ProcessTaskDefinition.class);
@@ -42,8 +40,8 @@ public class PlanItemControlHandler extends AbstractCaseElementHandler implement
 		PlanItemControlImpl planItemControl = new PlanItemControlImpl();
 		planItemControl.setElementId(attrs.getValue("id"));
 		Object parent = parser.getParent();
-		if (parent instanceof PlanItemInfoImpl) {
-			((PlanItemInfoImpl<?>) parent).setItemControl(planItemControl);
+		if (parent instanceof PlanItemImpl) {
+			((PlanItemImpl<?>) parent).setItemControl(planItemControl);
 		} else if (parent instanceof PlanItemDefinition) {
 			((PlanItemDefinition) parent).setDefaultControl(planItemControl);
 		} else if (parent instanceof DiscretionaryItemImpl) {

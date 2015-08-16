@@ -3,6 +3,7 @@ package org.jbpm.cmmn.flow.definition.impl;
 import org.jbpm.cmmn.flow.core.Case;
 import org.jbpm.cmmn.flow.definition.PlanItemControl;
 import org.jbpm.cmmn.flow.definition.PlanItemDefinition;
+import org.jbpm.process.core.context.variable.VariableScope;
 import org.jbpm.workflow.core.node.StateNode;
 
 public class AbstractPlanItemDefinition extends StateNode implements PlanItemDefinition {
@@ -15,6 +16,14 @@ public class AbstractPlanItemDefinition extends StateNode implements PlanItemDef
 
 	public AbstractPlanItemDefinition() {
 		super();
+		VariableScope variableScope = new VariableScope();
+		setDefaultContext(variableScope);
+		addContext(variableScope);
+	}
+
+	@Override
+	public final VariableScope getVariableScope() {
+		return (VariableScope) getDefaultContext(VariableScope.VARIABLE_SCOPE);
 	}
 
 	public final String getDescription() {

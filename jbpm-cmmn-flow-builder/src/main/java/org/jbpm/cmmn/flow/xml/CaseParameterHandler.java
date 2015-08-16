@@ -1,5 +1,6 @@
 package org.jbpm.cmmn.flow.xml;
 
+import org.drools.core.process.core.datatype.impl.type.ObjectDataType;
 import org.drools.core.xml.ExtensibleXmlParser;
 import org.drools.core.xml.Handler;
 import org.jbpm.cmmn.flow.core.CaseParameter;
@@ -7,6 +8,7 @@ import org.jbpm.cmmn.flow.core.impl.BindingRefinementImpl;
 import org.jbpm.cmmn.flow.core.impl.CaseImpl;
 import org.jbpm.cmmn.flow.core.impl.CaseParameterImpl;
 import org.jbpm.cmmn.flow.definition.*;
+import org.jbpm.process.core.context.variable.Variable;
 import org.w3c.dom.Element;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -37,10 +39,15 @@ public class CaseParameterHandler extends AbstractCaseElementHandler implements 
 			}
 		} else if (parser.getParent() instanceof TaskDefinition) {
 			TaskDefinition ht = (TaskDefinition) parser.getParent();
+			Variable var = new Variable();
+			var.setType(new ObjectDataType());//TODO link to CaseFileItem type
+			ht.getVariableScope().getVariables().add(var);
 			if (localName.equals("outputs")) {
 				ht.addOutputParameter(cp);
+				var.setName("Output" + cp.getName());
 			} else {
 				ht.addInputParameter(cp);
+				var.setName("Input"+cp.getName());
 			}
 		}
 		return cp;

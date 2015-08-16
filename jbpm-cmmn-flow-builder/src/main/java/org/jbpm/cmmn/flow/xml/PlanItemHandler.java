@@ -4,7 +4,9 @@ import org.drools.core.xml.ExtensibleXmlParser;
 import org.drools.core.xml.Handler;
 import org.jbpm.cmmn.flow.core.PlanItemContainer;
 import org.jbpm.cmmn.flow.definition.impl.StageImpl;
-import org.jbpm.cmmn.flow.planitem.impl.PlanItemInfoImpl;
+import org.jbpm.cmmn.flow.planitem.PlanItem;
+import org.jbpm.cmmn.flow.planitem.impl.PlanItemImpl;
+import org.jbpm.workflow.core.NodeContainer;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
@@ -18,8 +20,7 @@ public class PlanItemHandler extends AbstractCaseElementHandler implements Handl
 	public Object start(String uri, String localName, Attributes attrs, ExtensibleXmlParser parser) throws SAXException {
 		parser.startElementBuilder(localName, attrs);
 		@SuppressWarnings("rawtypes")
-		PlanItemInfoImpl planItem = new PlanItemInfoImpl();
-		planItem.setContainer(((PlanItemContainer) parser.getParent()));
+		PlanItemImpl planItem = new PlanItemImpl();
 		planItem.setName(attrs.getValue("name"));
 		planItem.setElementId(attrs.getValue("id"));
 		planItem.setId(IdGenerator.getIdAsUniqueAsUuid(parser, planItem));
@@ -37,18 +38,22 @@ public class PlanItemHandler extends AbstractCaseElementHandler implements Handl
 				planItem.putExitCriterion(string, null);
 			}
 		}
+		planItem.setPlanItemContainer(((PlanItemContainer) parser.getParent()));
 		return planItem;
 	}
 
 	@Override
 	public Object end(String uri, String localName, ExtensibleXmlParser parser) throws SAXException {
 		parser.endElementBuilder();
+		PlanItemImpl node= (PlanItemImpl) parser.getCurrent();
+		NodeContainer parent = (NodeContainer) parser.getParent();
+		parent.addNode(node);
 		return parser.getCurrent();
 	}
 
 	@Override
 	public Class<?> generateNodeFor() {
-		return PlanItemInfoImpl.class;
+		return PlanItemImpl.class;
 	}
 
 }

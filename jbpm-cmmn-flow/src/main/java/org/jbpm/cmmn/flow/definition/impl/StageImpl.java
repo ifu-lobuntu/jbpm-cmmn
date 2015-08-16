@@ -1,29 +1,28 @@
 package org.jbpm.cmmn.flow.definition.impl;
 
 import org.jbpm.cmmn.flow.definition.Stage;
-import org.jbpm.cmmn.flow.planitem.PlanItemInfo;
+import org.jbpm.cmmn.flow.planitem.PlanItem;
 import org.jbpm.cmmn.flow.planning.PlanningTable;
+import org.jbpm.process.core.context.variable.VariableScope;
 import org.jbpm.workflow.core.node.EndNode;
 import org.jbpm.workflow.core.node.Join;
 import org.jbpm.workflow.core.node.Split;
 import org.jbpm.workflow.core.node.StartNode;
 import org.kie.api.definition.process.Node;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 
 public class StageImpl extends AbstractPlanItemDefinition implements Stage {
 
 	private static final long serialVersionUID = 3123425777169912160L;
 	private boolean autoComplete;
-	private Collection<PlanItemInfo<?>> planItemInfo = new ArrayList<PlanItemInfo<?>>();
 	private StartNode defaultStart;
 	private Split defaultSplit;
 	private EndNode defaultEnd;
 	private Join defaultJoin;
 
 	private PlanningTable planningTable;
-
 
 	@Override
 	public Node superGetNode(long id) {
@@ -41,7 +40,7 @@ public class StageImpl extends AbstractPlanItemDefinition implements Stage {
 		if (node == null && getPlanningTable() != null) {
 			node = getPlanningTable().getNode(id);
 			if (node == null) {
-				for (PlanItemInfo<?> pii : getPlanItemInfo()) {
+				for (PlanItem<?> pii : getPlanItems()) {
 					if (pii.getDefinition() instanceof HumanTaskDefinitionImpl) {
 						HumanTaskDefinitionImpl ht = (HumanTaskDefinitionImpl) pii.getDefinition();
 						if (ht.getPlanningTable() != null) {
@@ -92,14 +91,15 @@ public class StageImpl extends AbstractPlanItemDefinition implements Stage {
 		this.defaultJoin = defaultJoin;
 	}
 
-	@Override
-	public void addPlanItemInfo(PlanItemInfo<?> d) {
-		planItemInfo.add(d);
-	}
-
-	@Override
-	public Collection<PlanItemInfo<?>> getPlanItemInfo() {
-		return planItemInfo;
+		@Override
+	public Collection<PlanItem<?>> getPlanItems() {
+			Collection<PlanItem<?>> result = new HashSet<PlanItem<?>>();
+			for (Node node : getNodes()) {
+				if(node instanceof PlanItem){
+					result.add((PlanItem)node);
+				}
+			}
+			return result;
 	}
 
 	public boolean isAutoComplete() {

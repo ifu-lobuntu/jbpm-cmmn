@@ -18,6 +18,7 @@ import org.jbpm.cmmn.instance.PlanItemInstance;
 import org.jbpm.cmmn.instance.SubscriptionContext;
 import org.jbpm.cmmn.instance.impl.AbstractCallingTaskInstance;
 import org.jbpm.cmmn.instance.impl.CaseTaskInstance;
+import org.jbpm.cmmn.instance.impl.StageInstance;
 import org.jbpm.process.core.context.variable.VariableScope;
 import org.jbpm.process.instance.context.variable.VariableScopeInstance;
 import org.jbpm.process.instance.impl.Action;
@@ -54,6 +55,12 @@ public class ExpressionUtil {
 		PlanItemControl itemControl = item.getEffectiveItemControl();
 		if (itemControl != null && itemControl.getManualActivationRule() instanceof ConstraintEvaluator) {
 			ConstraintEvaluator ev = (ConstraintEvaluator) itemControl.getManualActivationRule();
+			if(ni instanceof StageInstance){
+				Object var1 = ni.getVariable("housePlan");
+				Object var2 = ni.getProcessInstance().getVariable("housePlan");
+				System.out.println();
+			}
+			;
 			isActivatedManually = ev.evaluate((org.jbpm.workflow.instance.NodeInstance) ni, null, ev);
 		}
 		return isActivatedManually;
@@ -103,9 +110,8 @@ public class ExpressionUtil {
 				}
 			} else {
 				CaseFileItem variable = cp.getBoundVariable();
-				VariableScopeInstance varContext = (VariableScopeInstance) ((org.jbpm.workflow.instance.NodeInstance) contextNodeInstance)
-						.resolveContextInstance(VariableScope.VARIABLE_SCOPE, variable.getName());
-				parameters.put(cp.getName(), varContext.getVariable(variable.getName()));
+				Object var  = contextNodeInstance.getProcessInstance().getVariable(variable.getName());
+				parameters.put(cp.getName(), var);
 			}
 		}
 		return parameters;
