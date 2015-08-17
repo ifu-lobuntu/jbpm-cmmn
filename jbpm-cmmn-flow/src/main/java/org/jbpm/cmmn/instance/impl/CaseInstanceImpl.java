@@ -161,11 +161,6 @@ public class CaseInstanceImpl extends RuleFlowProcessInstance implements CaseIns
     }
 
     @Override
-    public PlanningTableContainerInstance findPlanningTableContainerInstance(long containerWorkItemId) {
-        return PlanItemInstanceContainerUtil.findPlanElementWithPlanningTable(this, containerWorkItemId);
-    }
-
-    @Override
     public Collection<? extends PlanItemInstance<?>> getChildren() {
         return PlanItemInstanceContainerUtil.getChildren(this);
     }

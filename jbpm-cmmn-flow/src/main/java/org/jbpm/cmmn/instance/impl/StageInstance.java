@@ -116,11 +116,6 @@ public class StageInstance extends ControllableItemInstanceImpl<Stage> implement
     }
 
     @Override
-    public PlanningTableContainerInstance findPlanningTableContainerInstance(long containerWorkItemId) {
-        return PlanItemInstanceContainerUtil.findPlanElementWithPlanningTable(this, containerWorkItemId);
-    }
-
-    @Override
     public void resumeAfterPlanning() {
         if (getPlanElementState() == PlanElementState.SUSPENDED) {
             reactivate();

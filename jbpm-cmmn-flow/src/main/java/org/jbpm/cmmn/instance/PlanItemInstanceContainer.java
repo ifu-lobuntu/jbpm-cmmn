@@ -23,7 +23,5 @@ public interface PlanItemInstanceContainer extends PlanningTableContainerInstanc
 	void addCaseFileItemOnPartsForParameters(Collection<org.jbpm.cmmn.flow.core.CaseParameter> items,
 			Map<OnPartInstance, OnPartInstanceSubscription> onCaseFileItemParts);
 
-	PlanningTableContainerInstance findPlanningTableContainerInstance(long containerWorkItemId);
-
 	void resumeAfterPlanning();
 }

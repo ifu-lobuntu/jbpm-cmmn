@@ -105,18 +105,6 @@ public class PlanItemInstanceContainerUtil {
         }
     }
 
-    public static PlanningTableContainerInstance findPlanElementWithPlanningTable(PlanItemInstanceContainer container, long containerWorkItemId) {
-        PlanningTableContainerInstance pewpt = null;
-        for (NodeInstance ni : container.getNodeInstances()) {
-            if (ni instanceof PlanItemInstanceContainer) {
-                pewpt = ((PlanItemInstanceContainer) ni).findPlanningTableContainerInstance(containerWorkItemId);
-                if (pewpt != null) {
-                    break;
-                }
-            }
-        }
-        return pewpt;
-    }
 
     public static Collection<? extends PlanItemInstance<?>> getChildren(PlanItemInstanceContainer container) {
         Set<PlanItemInstance<?>> result = new HashSet<PlanItemInstance<?>>();
