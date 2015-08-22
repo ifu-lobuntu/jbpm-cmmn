@@ -74,7 +74,9 @@ public abstract class ControllableItemInstanceImpl<T extends PlanItemDefinition>
 		return new HashMap<String, Object>();
 	}
 
-	public void internalTriggerWithoutInstantiation(NodeInstance from, String type, WorkItem wi) {
+	public void
+
+	internalTriggerWithoutInstantiation(NodeInstance from, String type, WorkItem wi) {
 		this.planElementState = PlanElementState.INITIAL;
 	}
 
