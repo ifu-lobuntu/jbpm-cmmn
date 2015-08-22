@@ -28,19 +28,19 @@ public class OverrideInputCommand extends AbstractPlanningCommand<Void> {
             } else {
                 planItemInstance.setVariable("Input" + entry.getKey(), entry.getValue());
             }
-            if (planItemInstance instanceof HumanTaskInstance) {
-                //TODO consider going straight to the TaskService
-                HumanTaskInstance hit = (HumanTaskInstance) planItemInstance;
-                WorkItemImpl wi = new WorkItemImpl();
-                wi.setProcessInstanceId(getCaseInstance().getId());
-                String deploymentId = (String) getCaseInstance().getKnowledgeRuntime().getEnvironment().get("deploymentId");
-                wi.setDeploymentId(deploymentId);
-                wi.setName(WorkItemParameters.UPDATE_TASK_STATUS);
-                wi.setParameter(WorkItemParameters.SET_INPUT, Boolean.TRUE);
-                wi.setParameter(WorkItemParameters.WORK_ITEM_ID, hit.getWorkItemId());
-                wi.getParameters().putAll(ExpressionUtil.buildInputParameters(hit.getWork(), hit, hit.getItem().getDefinition()));
-                hit.executeWorkItem(wi);
-            }
+        }
+        if (planItemInstance instanceof HumanTaskInstance) {
+            //TODO consider going straight to the TaskService
+            HumanTaskInstance hit = (HumanTaskInstance) planItemInstance;
+            WorkItemImpl wi = new WorkItemImpl();
+            wi.setProcessInstanceId(getCaseInstance().getId());
+            String deploymentId = (String) getCaseInstance().getKnowledgeRuntime().getEnvironment().get("deploymentId");
+            wi.setDeploymentId(deploymentId);
+            wi.setName(WorkItemParameters.UPDATE_TASK_STATUS);
+            wi.setParameter(WorkItemParameters.SET_INPUT, Boolean.TRUE);
+            wi.setParameter(WorkItemParameters.WORK_ITEM_ID, hit.getWorkItemId());
+            wi.getParameters().putAll(ExpressionUtil.buildInputParameters(hit.getWork(), hit, hit.getItem().getDefinition()));
+            hit.executeWorkItem(wi);
         }
         return null;
     }

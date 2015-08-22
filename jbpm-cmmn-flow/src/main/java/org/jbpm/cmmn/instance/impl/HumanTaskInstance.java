@@ -20,7 +20,6 @@ import org.jbpm.cmmn.instance.PlanItemInstanceContainer;
 import org.jbpm.cmmn.instance.PlanningTableContainerInstance;
 import org.jbpm.cmmn.instance.impl.util.ExpressionUtil;
 import org.jbpm.process.core.context.exception.ExceptionScope;
-import org.jbpm.process.instance.ProcessInstance;
 import org.jbpm.process.instance.context.exception.ExceptionScopeInstance;
 import org.jbpm.workflow.instance.WorkflowRuntimeException;
 import org.kie.api.runtime.process.NodeInstance;
@@ -32,7 +31,6 @@ public class HumanTaskInstance extends ControllableItemInstanceImpl<HumanTaskDef
     private static final long serialVersionUID = 8452936237272366757L;
     protected WorkItem workItem;
     private long workItemId = -1;
-    private Work work;
     private transient boolean signalFromTask = false;
 
     @Override
@@ -279,9 +277,9 @@ public class HumanTaskInstance extends ControllableItemInstanceImpl<HumanTaskDef
                     }
                 }
             }
-            signalFromTask=true;
+            signalFromTask = true;
             transition.invokeOn(this);
-            signalFromTask=false;
+            signalFromTask = false;
             String owner = (String) wi.getResult(WorkItemParameters.ACTUAL_OWNER);
             if (owner != null) {
                 getCaseInstance().addRoleAssignment(getItem().getDefinition().getPerformer().getName(), owner);
@@ -339,11 +337,11 @@ public class HumanTaskInstance extends ControllableItemInstanceImpl<HumanTaskDef
 
     public WorkItem executeWorkItem(WorkItem wi) {
         if (isInversionOfControl()) {
-            ((ProcessInstance) getProcessInstance()).getKnowledgeRuntime().update(
-                    ((ProcessInstance) getProcessInstance()).getKnowledgeRuntime().getFactHandle(this), this);
+            getProcessInstance().getKnowledgeRuntime().update(
+                    getProcessInstance().getKnowledgeRuntime().getFactHandle(this), this);
         } else {
             try {
-                ((WorkItemManager) ((ProcessInstance) getProcessInstance()).getKnowledgeRuntime().getWorkItemManager()).internalExecuteWorkItem(wi);
+                ((WorkItemManager) getProcessInstance().getKnowledgeRuntime().getWorkItemManager()).internalExecuteWorkItem(wi);
             } catch (WorkItemHandlerNotFoundException wihnfe) {
                 getProcessInstance().setState(org.kie.api.runtime.process.ProcessInstance.STATE_ABORTED);
                 throw wihnfe;
@@ -362,6 +360,6 @@ public class HumanTaskInstance extends ControllableItemInstanceImpl<HumanTaskDef
     }
 
     public Work getWork() {
-        return work;
+        return getItem().getDefinition().getWork();
     }
 }

@@ -7,12 +7,12 @@
 						</cmmn:condition>
 					</cmmn:requiredRule>
 				</cmmn:defaultControl>
-				<cmmn:inputs bindingRef="housePlanFileItemId" id="housePlanTaskParameter" name="housePlanTaskParameter">
+				<cmmn:inputs bindingRef="housePlanFileItemId" id="housePlanCaseTaskParameter" name="housePlanTaskParameter">
 				</cmmn:inputs>
-				<cmmn:inputs bindingRef="wallPlanFileItemId" id="wallPlanTaskParameter" name="wallPlanTaskParameter">
+				<cmmn:inputs bindingRef="wallPlanFileItemId" id="wallPlanCaseTaskParameter" name="wallPlanTaskParameter">
 				</cmmn:inputs>
-				<cmmn:parameterMapping sourceRef="housePlanTaskParameter" targetRef="housePlanSubCaseParameterId" />
-				<cmmn:parameterMapping sourceRef="wallPlanTaskParameter" targetRef="wallPlanSubCaseParameterId">
+				<cmmn:parameterMapping sourceRef="housePlanCaseTaskParameter" targetRef="housePlanSubCaseParameterId" />
+				<cmmn:parameterMapping sourceRef="wallPlanCaseTaskParameter" targetRef="wallPlanSubCaseParameterId">
 				</cmmn:parameterMapping>
 			</cmmn:planItemDefinition>
 			<cmmn:planItemDefinition xsi:type="cmmn:tStage" id="theStageId" name="TheStage" autoComplete="true">
@@ -43,6 +43,14 @@
 						</cmmn:condition>
 					</cmmn:requiredRule>
 				</cmmn:defaultControl>
+				<cmmn:inputs bindingRef="housePlanFileItemId" id="housePlanHumanTaskParameter" name="housePlanTaskParameter">
+
+				</cmmn:inputs>
+				<cmmn:inputs bindingRef="wallPlanFileItemId" id="wallPlanHumanTaskParameter" name="wallPlanTaskParameter">
+							<cmmn:bindingRefinement language="http://www.java.com/java">
+                				<cmmn:body>return housePlan.getWallPlans().iterator().next();</cmmn:body>
+                			</cmmn:bindingRefinement>
+				</cmmn:inputs>
 			</cmmn:planItemDefinition>
 			<cmmn:planItemDefinition xsi:type="cmmn:tMilestone" id="theMilestoneId" name="TheMilestone">
 				<cmmn:defaultControl>

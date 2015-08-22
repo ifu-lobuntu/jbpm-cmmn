@@ -16,6 +16,8 @@ import org.jbpm.cmmn.instance.PlanElementState;
 import org.jbpm.cmmn.instance.impl.util.ExpressionUtil;
 import org.jbpm.process.core.context.variable.VariableScope;
 import org.jbpm.process.instance.ContextInstance;
+import org.jbpm.process.instance.ProcessInstance;
+import org.jbpm.process.instance.context.variable.VariableScopeInstance;
 import org.jbpm.workflow.instance.node.CompositeContextNodeInstance;
 import org.kie.api.runtime.process.NodeInstance;
 
@@ -126,6 +128,14 @@ public abstract class ControllableItemInstanceImpl<T extends PlanItemDefinition>
 	}
 
 
+	public void setVariable(String variableName, Object value) {
+		VariableScopeInstance variableScope = (VariableScopeInstance)
+				super.resolveContextInstance(VariableScope.VARIABLE_SCOPE, variableName);
+		if (variableScope == null) {
+			variableScope = (VariableScopeInstance) getProcessInstance().getContextInstance(VariableScope.VARIABLE_SCOPE);
+		}
+		variableScope.setVariable(variableName, value);
+	}
 
 	@Override
 	public String[] getEventTypes() {
