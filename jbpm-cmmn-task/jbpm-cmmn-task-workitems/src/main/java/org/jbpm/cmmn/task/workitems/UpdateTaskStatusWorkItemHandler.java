@@ -49,7 +49,7 @@ public class UpdateTaskStatusWorkItemHandler implements WorkItemHandler {
             PersistenceContextManager pcm = (PersistenceContextManager) runtime.getKieSession().getEnvironment().get(EnvironmentName.PERSISTENCE_CONTEXT_MANAGER);
             if (pcm instanceof JpaPersistenceContextManager) {
                 JpaPersistenceContextManager jpcm = (JpaPersistenceContextManager) pcm;
-                jpcm.getCommandScopedEntityManager().flush();//To force process persistence
+//                jpcm.getCommandScopedEntityManager().flush();//To force process persistence
             }
 
             final Long workItemId = (Long) workItem.getParameter(WorkItemParameters.WORK_ITEM_ID);

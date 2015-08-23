@@ -1,5 +1,13 @@
 package org.jbpm.cmmn.casefile.jpa;
 
+import org.jbpm.cmmn.casefile.common.CaseFilePersistence;
+import org.jbpm.cmmn.casefile.common.Stopwatch;
+import org.jbpm.cmmn.instance.subscription.CaseSubscriptionKey;
+import org.jbpm.cmmn.instance.subscription.SubscriptionPersistenceContext;
+import org.jbpm.cmmn.instance.subscription.impl.AbstractDurableSubscriptionManager;
+import org.jbpm.cmmn.instance.subscription.impl.EventQueues;
+import org.kie.api.runtime.manager.RuntimeManager;
+
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.persistence.EntityManager;
@@ -8,16 +16,6 @@ import javax.persistence.FlushModeType;
 import javax.transaction.Status;
 import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
-
-import org.jbpm.cmmn.casefile.common.CaseFilePersistence;
-import org.jbpm.cmmn.casefile.common.Stopwatch;
-import org.jbpm.cmmn.instance.subscription.CaseSubscriptionKey;
-import org.jbpm.cmmn.instance.subscription.SubscriptionPersistenceContext;
-import org.jbpm.cmmn.instance.subscription.impl.AbstractDurableSubscriptionManager;
-import org.jbpm.cmmn.instance.subscription.impl.EventQueues;
-import org.kie.api.runtime.manager.RuntimeEngine;
-import org.kie.api.runtime.manager.RuntimeManager;
-import org.kie.internal.runtime.manager.context.EmptyContext;
 
 /**
  * 
@@ -35,10 +33,10 @@ public class JpaCaseFilePersistence implements SubscriptionPersistenceContext<Jp
     protected boolean startedTransaction = false;
     protected Stopwatch stopwatch = new Stopwatch(getClass());
     private UserTransaction transaction;
-    private RuntimeEngine runtimeEngine;
+    private RuntimeManager runtimeManager;
 
-    public JpaCaseFilePersistence(EntityManagerFactory emf, RuntimeEngine rm) {
-        this.runtimeEngine = rm;
+    public JpaCaseFilePersistence(EntityManagerFactory emf, RuntimeManager rm) {
+        this.runtimeManager = rm;
         this.emf = emf;
     }
 
@@ -159,14 +157,14 @@ public class JpaCaseFilePersistence implements SubscriptionPersistenceContext<Jp
             startOrJoinTransaction();
             getEntityManager().flush();
             doCaseFileItemEvents();
-            if (runtimeEngine != null) {
+            if (runtimeManager != null) {
                 if (startedTransaction) {
                     getTransaction().commit();
 //                    boolean workItemsProcessed = false;
 //                    do {
 //                        this.startedTransaction = false;
 //                        startOrJoinTransaction();
-//                        workItemsProcessed = EventQueues.dispatchWorkItemQueue(runtimeEngine);
+//                        workItemsProcessed = EventQueues.dispatchWorkItemQueue(runtimeManager);
 //                        if (workItemsProcessed) {
 //                            doCaseFileItemEvents();
 //                        }
@@ -182,8 +180,8 @@ public class JpaCaseFilePersistence implements SubscriptionPersistenceContext<Jp
     }
 
     private void doCaseFileItemEvents() {
-        if (runtimeEngine != null) {
-            while (EventQueues.dispatchCaseFileItemEventQueue(runtimeEngine)) {
+        if (runtimeManager != null) {
+            while (EventQueues.dispatchCaseFileItemEventQueue(runtimeManager)) {
                 AbstractDurableSubscriptionManager.commitSubscriptionsTo(this);
                 getEntityManager().flush();
             }

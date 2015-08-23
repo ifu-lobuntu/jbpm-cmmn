@@ -18,6 +18,7 @@ public abstract class AbstractDurableSubscriptionManager<T extends DurableCaseSu
 		implements SubscriptionManager<T, X> {
 	static Logger logger = LoggerFactory.getLogger(AbstractDurableSubscriptionManager.class);
 	private boolean cascadeSubscription = false;
+	//TODO make this threadSafe
 	private static Map<Object, Map<CaseSubscriptionKey, DurableCaseSubscriptionInfo<?>>> cachedSubscriptions = new HashMap<Object, Map<CaseSubscriptionKey, DurableCaseSubscriptionInfo<?>>>();
 
 	public AbstractDurableSubscriptionManager() {

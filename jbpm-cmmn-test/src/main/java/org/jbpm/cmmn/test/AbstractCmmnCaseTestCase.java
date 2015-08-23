@@ -368,7 +368,7 @@ public abstract class AbstractCmmnCaseTestCase extends JbpmJUnitBaseTestCase {
 	public CaseFilePersistence getPersistence() {
 		try {
 			if (persistence == null) {
-				persistence = new JpaCaseFilePersistence(emf, runtimeEngine);
+				persistence = new JpaCaseFilePersistence(emf, getRuntimeManager());
 			}
 			return persistence;
 		} catch (RuntimeException e) {

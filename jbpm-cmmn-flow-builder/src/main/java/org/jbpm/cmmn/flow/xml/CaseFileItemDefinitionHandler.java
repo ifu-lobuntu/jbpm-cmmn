@@ -48,12 +48,18 @@ public class CaseFileItemDefinitionHandler extends BaseAbstractHandler implement
         String structureRef = attrs.getValue("structureRef");
         if (structureRef == null || structureRef.trim().length() == 0) {
             structureRef = "java.lang.Object";
-        } else if (structureRef.contains(":")) {
+        } else {
             try {
-                Field nsf = ExtensibleXmlParser.class.getDeclaredField("namespaces");
-                nsf.setAccessible(true);
-                Map<String, String> nsMap = (Map<String, String>) nsf.get(parser);
-                String namespace = nsMap.get(structureRef.substring(0, structureRef.lastIndexOf(':')));
+                String namespace = null;
+                    Field nsf = ExtensibleXmlParser.class.getDeclaredField("namespaces");
+                    nsf.setAccessible(true);
+                    Map<String, String> nsMap = (Map<String, String>) nsf.get(parser);
+                if (structureRef.contains(":")) {
+                    namespace = nsMap.get(structureRef.substring(0, structureRef.lastIndexOf(':')));
+                } else {
+                    //Current namespace
+                    namespace = nsMap.get("");
+                }
                 String localPart = structureRef.substring(structureRef.lastIndexOf(':') + 1);
                 if (caseFileItemDefinition.getDefinitionType() == CaseFileItemDefinitionType.UML_CLASS) {
                     structureRef = NamespacePackageConverter.toPackage(new URL(namespace)) + "." + localPart;
