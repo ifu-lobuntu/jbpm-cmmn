@@ -440,110 +440,17 @@ public abstract class AbstractCmmnCaseTestCase extends JbpmJUnitBaseTestCase {
         			.newEmptyBuilder()
             .addConfiguration("drools.processSignalManagerFactory", DefaultSignalManagerFactory.class.getName())
             .addConfiguration("drools.processInstanceManagerFactory", DefaultProcessInstanceManagerFactory.class.getName())
-            .registerableItemsFactory(new SimpleRegisterableItemsFactory() {
-
-				@Override
-				public Map<String, WorkItemHandler> getWorkItemHandlers(RuntimeEngine runtime) {
-					Map<String, WorkItemHandler> handlers = new HashMap<String, WorkItemHandler>();
-					handlers.putAll(super.getWorkItemHandlers(runtime));
-					handlers.putAll(customHandlers);
-					return handlers;
-				}
-	
-				@Override
-				public List<ProcessEventListener> getProcessEventListeners(RuntimeEngine runtime) {
-					List<ProcessEventListener> listeners = super.getProcessEventListeners(runtime);
-					listeners.addAll(customProcessListeners);
-					return listeners;
-				}
-	
-				@Override
-				public List<AgendaEventListener> getAgendaEventListeners( RuntimeEngine runtime) {
-					List<AgendaEventListener> listeners = super.getAgendaEventListeners(runtime);
-					listeners.addAll(customAgendaListeners);
-					return listeners;
-				}
-	
-				@Override
-				public List<org.kie.api.task.TaskLifeCycleEventListener> getTaskListeners() {
-					List<org.kie.api.task.TaskLifeCycleEventListener> listeners = super.getTaskListeners();
-					listeners.addAll(customTaskListeners);
-					return listeners;
-				}
-	        	
-	        });
+            .registerableItemsFactory(new MyCaseRegisterableItemsFactory());
             
         } else if (sessionPersistence) {
             builder = RuntimeEnvironmentBuilder.Factory.get()
         			.newDefaultBuilder()
             .entityManagerFactory(emf)
-            .registerableItemsFactory(new CaseRegisterableItemsFactory() {
-
-				@Override
-				public Map<String, WorkItemHandler> getWorkItemHandlers(RuntimeEngine runtime) {
-					Map<String, WorkItemHandler> handlers = new HashMap<String, WorkItemHandler>();
-					handlers.putAll(super.getWorkItemHandlers(runtime));
-					handlers.putAll(customHandlers);
-					return handlers;
-				}
-	
-				@Override
-				public List<ProcessEventListener> getProcessEventListeners(RuntimeEngine runtime) {
-					List<ProcessEventListener> listeners = super.getProcessEventListeners(runtime);
-					listeners.addAll(customProcessListeners);
-					return listeners;
-				}
-	
-				@Override
-				public List<AgendaEventListener> getAgendaEventListeners( RuntimeEngine runtime) {
-					List<AgendaEventListener> listeners = super.getAgendaEventListeners(runtime);
-					listeners.addAll(customAgendaListeners);
-					return listeners;
-				}
-	
-				@Override
-				public List<org.kie.api.task.TaskLifeCycleEventListener> getTaskListeners() {
-					List<org.kie.api.task.TaskLifeCycleEventListener> listeners = super.getTaskListeners();
-					listeners.addAll(customTaskListeners);
-					return listeners;
-				}
-	        	
-	        });
+            .registerableItemsFactory(new MyCaseRegisterableItemsFactory() );
         } else {
             builder = RuntimeEnvironmentBuilder.Factory.get()
         			.newDefaultInMemoryBuilder()
-        			.registerableItemsFactory(new CaseRegisterableItemsFactory() {
-
-				@Override
-				public Map<String, WorkItemHandler> getWorkItemHandlers(RuntimeEngine runtime) {
-					Map<String, WorkItemHandler> handlers = new HashMap<String, WorkItemHandler>();
-					handlers.putAll(super.getWorkItemHandlers(runtime));
-					handlers.putAll(customHandlers);
-					return handlers;
-				}
-	
-				@Override
-				public List<ProcessEventListener> getProcessEventListeners(RuntimeEngine runtime) {
-					List<ProcessEventListener> listeners = super.getProcessEventListeners(runtime);
-					listeners.addAll(customProcessListeners);
-					return listeners;
-				}
-	
-				@Override
-				public List<AgendaEventListener> getAgendaEventListeners( RuntimeEngine runtime) {
-					List<AgendaEventListener> listeners = super.getAgendaEventListeners(runtime);
-					listeners.addAll(customAgendaListeners);
-					return listeners;
-				}
-	
-				@Override
-				public List<org.kie.api.task.TaskLifeCycleEventListener> getTaskListeners() {
-					List<org.kie.api.task.TaskLifeCycleEventListener> listeners = super.getTaskListeners();
-					listeners.addAll(customTaskListeners);
-					return listeners;
-				}
-	        	
-	        });       
+        			.registerableItemsFactory(new MyCaseRegisterableItemsFactory());
         }
 		builder.addConfiguration(ClockTypeOption.PROPERTY_NAME, ClockType.PSEUDO_CLOCK.getId());
         builder.userGroupCallback(new JBossUserGroupCallbackImpl("classpath:/usergroups.properties"));
@@ -558,49 +465,12 @@ public abstract class AbstractCmmnCaseTestCase extends JbpmJUnitBaseTestCase {
 	@Override
 	protected RuntimeManager createRuntimeManager(String... processFile) {
 		writeProcessFiles(processFile);
-		DefinitionsHandler.registerTypeMap(CaseFileItemDefinitionType.UML_CLASS, new DefaultTypeMap());
-		DefinitionsHandler.registerTypeMap(CaseFileItemDefinitionType.CMIS_DOCUMENT, new JcrTypeMap());
-		DefinitionsHandler.registerTypeMap(CaseFileItemDefinitionType.CMIS_FOLDER, new JcrTypeMap());
-		DefinitionsHandler.registerTypeMap(CaseFileItemDefinitionType.CMIS_RELATIONSHIP, new JcrTypeMap());
-		ProcessNodeBuilderRegistry.INSTANCE.register(PlanItemImpl.class, new PlanItemBuilder());
-		ProcessNodeBuilderRegistry.INSTANCE.register(SentryImpl.class, new SentryBuilder());
-		ProcessInstanceFactoryRegistry.INSTANCE.register(CaseImpl.class, new CaseInstanceFactory());
-		ProcessMarshallerRegistry.INSTANCE.register(Case.CASE_TYPE, new CaseInstanceMarshaller());
-		ProcessValidatorRegistry.getInstance().registerAdditonalValidator(new ProcessValidator() {
-			@Override
-			public ProcessValidationError[] validateProcess(org.kie.api.definition.process.Process process) {
-				return RuleFlowProcessValidator.getInstance().validateProcess(process);
-			}
-
-			@Override
-			public boolean accept(Process process, Resource resource) {
-				return process instanceof Case;
-			}
-
-			@Override
-			public boolean compilationSupported() {
-				return true;
-			}
-		});
 		RuntimeManager rm = super.createRuntimeManager(processFile);
 		this.runtimeManager = rm;
 		RuntimeEngine runtimeEngine = getRuntimeEngine();
 //		fixPersistenceStrategy(runtimeEngine);
 		Environment env = runtimeEngine.getKieSession().getEnvironment();
 		prepareEnvironment(env);
-		NodeInstanceFactoryRegistry nodeInstanceFactoryRegistry = NodeInstanceFactoryRegistry.getInstance(env);
-		nodeInstanceFactoryRegistry.register(DefaultJoin.class, new ReuseNodeFactory(DefaultJoinInstance.class));
-		nodeInstanceFactoryRegistry.register(SentryImpl.class, new ReuseNodeFactory(SentryInstance.class));
-		nodeInstanceFactoryRegistry
-				.register(PlanItemInstanceFactoryNodeImpl.class, new ReuseNodeFactory(PlanItemInstanceFactoryNodeInstance.class));
-		nodeInstanceFactoryRegistry.register(AbstractStandardEventNode.class, new ReuseNodeFactory(StandardEventNodeInstance.class));
-		nodeInstanceFactoryRegistry.register(CaseFileItemOnPartImpl.class, new ReuseNodeFactory(StandardEventNodeInstance.class));
-		nodeInstanceFactoryRegistry.register(CaseFileItemStartTriggerImpl.class, new ReuseNodeFactory(StandardEventNodeInstance.class));
-		nodeInstanceFactoryRegistry.register(PlanItemStartTriggerImpl.class, new ReuseNodeFactory(StandardEventNodeInstance.class));
-		nodeInstanceFactoryRegistry.register(PlanItemOnPartImpl.class, new ReuseNodeFactory(StandardEventNodeInstance.class));
-		nodeInstanceFactoryRegistry.register(PlanItemImpl.class, new DelegatingNodeInstanceFactory());
-		nodeInstanceFactoryRegistry.register(DefaultSplit.class, new CreateNewNodeFactory(DefaultSplitInstance.class));
-		nodeInstanceFactoryRegistry.register(DiscretionaryItemImpl.class, new DelegatingNodeInstanceFactory());
 		TaskService ts = runtimeEngine.getTaskService();
 		if (ts instanceof InternalTaskService) {
 			InternalTaskService its = (InternalTaskService) ts;
@@ -608,16 +478,6 @@ public abstract class AbstractCmmnCaseTestCase extends JbpmJUnitBaseTestCase {
 			its.addMarshallerContext(rm.getIdentifier(), new ContentMarshallerContext(env, getClass().getClassLoader()));
 			// its.setUserInfo(new PropertyUserInfoImpl(new Properties()));
 		}
-//		if (ts instanceof EventService<?>) {
-//			EventService<TaskLifeCycleEventListener> es = (EventService<TaskLifeCycleEventListener>) ts;
-//			for (TaskLifeCycleEventListener object : es.getTaskEventListeners()) {
-//				if (object instanceof ExternalTaskEventListener) {
-//					es.removeTaskEventListener(object);
-//					es.registerTaskEventListener(new CaseTaskLifecycleListener());
-//					break;
-//				}
-//			}
-//		}
 		this.cmmnService=new CMMNServiceImpl(runtimeEngine);
 		// for some reason the task service does not persist the users and
 		// groups ???
@@ -642,43 +502,6 @@ public abstract class AbstractCmmnCaseTestCase extends JbpmJUnitBaseTestCase {
 			throw new RuntimeException(e);
 		}
 	}
-
-	// temporary fix for bug in STandaloneJTa...STrategy
-	private void fixPersistenceStrategy(RuntimeEngine runtimeEngine) {
-		try {
-			JPAAuditLogService jas = (JPAAuditLogService) runtimeEngine.getAuditService();
-			Field field = JPAAuditLogService.class.getDeclaredField("persistenceStrategy");
-			field.setAccessible(true);
-			final PersistenceStrategy ps = (PersistenceStrategy) field.get(jas);
-			field.set(jas, new PersistenceStrategy() {
-
-				@Override
-				public void leaveTransaction(EntityManager em, Object transaction) {
-					if (transaction != null) {
-						ps.leaveTransaction(em, transaction);
-					}
-				}
-
-				@Override
-				public Object joinTransaction(EntityManager em) {
-					return ps.joinTransaction(em);
-				}
-
-				@Override
-				public EntityManager getEntityManager() {
-					return ps.getEntityManager();
-				}
-
-				@Override
-				public void dispose() {
-					ps.dispose();
-				}
-			});
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
 	protected void prepareEnvironment(Environment env) {
 		env.set(OBJECT_MARSHALLING_STRATEGIES, getPlaceholdStrategies(env));
 		AbstractDurableSubscriptionManager<?, ?> subscriptionManager = getSubscriptionManager();
@@ -758,4 +581,37 @@ public abstract class AbstractCmmnCaseTestCase extends JbpmJUnitBaseTestCase {
 
 	@SuppressWarnings("rawtypes")
 	protected abstract Class[] getClasses();
+
+	private class MyCaseRegisterableItemsFactory extends CaseRegisterableItemsFactory {
+
+		@Override
+        public Map<String, WorkItemHandler> getWorkItemHandlers(RuntimeEngine runtime) {
+            Map<String, WorkItemHandler> handlers = new HashMap<String, WorkItemHandler>();
+            handlers.putAll(super.getWorkItemHandlers(runtime));
+            handlers.putAll(customHandlers);
+            return handlers;
+        }
+
+		@Override
+        public List<ProcessEventListener> getProcessEventListeners(RuntimeEngine runtime) {
+            List<ProcessEventListener> listeners = super.getProcessEventListeners(runtime);
+            listeners.addAll(customProcessListeners);
+            return listeners;
+        }
+
+		@Override
+        public List<AgendaEventListener> getAgendaEventListeners( RuntimeEngine runtime) {
+            List<AgendaEventListener> listeners = super.getAgendaEventListeners(runtime);
+            listeners.addAll(customAgendaListeners);
+            return listeners;
+        }
+
+		@Override
+        public List<TaskLifeCycleEventListener> getTaskListeners() {
+            List<TaskLifeCycleEventListener> listeners = super.getTaskListeners();
+            listeners.addAll(customTaskListeners);
+            return listeners;
+        }
+
+	}
 }

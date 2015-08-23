@@ -23,10 +23,15 @@ import org.jbpm.cmmn.instance.impl.*;
 import org.jbpm.cmmn.marshalling.CaseInstanceMarshaller;
 import org.jbpm.marshalling.impl.ProcessMarshallerRegistry;
 import org.jbpm.process.builder.ProcessNodeBuilderRegistry;
+import org.jbpm.process.core.validation.ProcessValidationError;
+import org.jbpm.process.core.validation.ProcessValidator;
+import org.jbpm.process.core.validation.ProcessValidatorRegistry;
 import org.jbpm.process.instance.ProcessInstanceFactoryRegistry;
+import org.jbpm.ruleflow.core.validation.RuleFlowProcessValidator;
 import org.jbpm.workflow.instance.impl.NodeInstanceFactoryRegistry;
 import org.jbpm.workflow.instance.impl.factory.CreateNewNodeFactory;
 import org.jbpm.workflow.instance.impl.factory.ReuseNodeFactory;
+import org.kie.api.definition.process.*;
 import org.kie.api.io.Resource;
 import org.kie.api.io.ResourceConfiguration;
 import org.kie.api.io.ResourceType;
@@ -46,6 +51,23 @@ public class CMMNBuilder implements KieAssemblerService {
 		ProcessNodeBuilderRegistry.INSTANCE.register(PlanItemImpl.class, new PlanItemBuilder());
 		ProcessNodeBuilderRegistry.INSTANCE.register(SentryImpl.class, new SentryBuilder());
 		ProcessInstanceFactoryRegistry.INSTANCE.register(CaseImpl.class, new CaseInstanceFactory());
+		ProcessMarshallerRegistry.INSTANCE.register(Case.CASE_TYPE, new CaseInstanceMarshaller());
+		ProcessValidatorRegistry.getInstance().registerAdditonalValidator(new ProcessValidator() {
+			@Override
+			public ProcessValidationError[] validateProcess(org.kie.api.definition.process.Process process) {
+				return RuleFlowProcessValidator.getInstance().validateProcess(process);
+			}
+
+			@Override
+			public boolean accept(org.kie.api.definition.process.Process process, Resource resource) {
+				return process instanceof Case;
+			}
+
+			@Override
+			public boolean compilationSupported() {
+				return true;
+			}
+		});
 		CaseInstanceMarshaller m = new CaseInstanceMarshaller();
 		ProcessMarshallerRegistry.INSTANCE.register(Case.CASE_TYPE, m);
 		NodeInstanceFactoryRegistry nodeInstanceFactoryRegistry = NodeInstanceFactoryRegistry.getInstance(null);

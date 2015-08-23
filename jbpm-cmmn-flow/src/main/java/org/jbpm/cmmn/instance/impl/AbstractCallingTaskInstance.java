@@ -224,15 +224,6 @@ public abstract class AbstractCallingTaskInstance <T extends CallingTaskDefiniti
 			}
 			fault();
 		} else {
-			complete();
-		}
-	}
-
-	@Override
-	protected Map<String, Object> buildParametersFor(PlanItemTransition transition) {
-		if (transition == PlanItemTransition.FAULT) {
-			return Collections.emptyMap();
-		} else if (transition == PlanItemTransition.COMPLETE) {
 			List<ParameterMapping> parameterMappings = getItem().getDefinition().prepareOutputMappings(processInstance.getProcess());
 			Map<String, Object> parametersRead = new HashMap<String, Object>();
 			if (processInstance instanceof CaseInstance) {
@@ -249,9 +240,7 @@ public abstract class AbstractCallingTaskInstance <T extends CallingTaskDefiniti
 					writeToBinding(cp, val);
 				}
 			}
-			return result;
-		} else {
-			return Collections.emptyMap();
+			complete();
 		}
 	}
 

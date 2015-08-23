@@ -12,10 +12,7 @@ import org.kie.api.task.model.Content;
 import org.kie.api.task.model.Task;
 import org.kie.api.task.model.TaskSummary;
 
-import test.cmmn.ConstructionCase;
-import test.cmmn.House;
-import test.cmmn.HousePlan;
-import test.cmmn.WallPlan;
+import test.cmmn.*;
 
 public class ParameterTest extends AbstractConstructionTestCase {
 	{
@@ -47,6 +44,7 @@ public class ParameterTest extends AbstractConstructionTestCase {
 		Map<String, Object> contentData = (Map<String, Object>) ContentMarshallerHelper.unmarshall(input.getContent(), getRuntimeEngine().getKieSession()
 				.getEnvironment());
 		assertEquals(housePlan.getWallPlans().iterator().next().getId(), ((WallPlan) contentData.get("wallPlan")).getId());
+		assertEquals(housePlan.getRoofPlan().getId(), ((RoofPlan) contentData.get("roofPlan")).getId());
 		getPersistence().commit();
 	}
 
@@ -77,6 +75,7 @@ public class ParameterTest extends AbstractConstructionTestCase {
 		getPersistence().start();
 		housePlan = getPersistence().find(HousePlan.class, housePlan.getId());
 		new WallPlan(housePlan);
+		new RoofPlan(housePlan);
 		getPersistence().update(housePlan);
 		getPersistence().commit();
 	}

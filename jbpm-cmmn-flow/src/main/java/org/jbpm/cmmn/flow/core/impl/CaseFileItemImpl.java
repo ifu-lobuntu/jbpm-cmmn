@@ -22,6 +22,7 @@ public class CaseFileItemImpl extends Variable implements CaseFileItem {
 	private Map<String, CaseFileItem> targets = new HashMap<String, CaseFileItem>();
 	private boolean isUnique = true;
 	private boolean isOrdered = false;
+	private boolean isRoot=true;
 
 	@Override
 	public boolean isUnique() {
@@ -66,6 +67,7 @@ public class CaseFileItemImpl extends Variable implements CaseFileItem {
 	@Override
 	public void addChild(CaseFileItem c) {
 		children.add(c);
+		c.setRoot(false);
 	}
 
 	@Override
@@ -103,4 +105,12 @@ public class CaseFileItemImpl extends Variable implements CaseFileItem {
 		this.isCollection = isCollection;
 	}
 
+	@Override
+	public boolean isRoot() {
+		return isRoot;
+	}
+
+	public void setRoot(boolean isRoot) {
+		this.isRoot = isRoot;
+	}
 }

@@ -42,6 +42,7 @@ import java.util.Map.Entry;
 
 public class CaseHandler extends PlanItemContainerHandler implements Handler {
     public static final String CURRENT_EVENT = "currentEvent";
+    public static final String CURRENT_EVENTS = "currentEvents";
 
     public CaseHandler() {
         if ((this.validParents == null) && (this.validPeers == null)) {
@@ -81,6 +82,14 @@ public class CaseHandler extends PlanItemContainerHandler implements Handler {
         var.setName(CURRENT_EVENT);
         var.setType(new ObjectDataType(CaseEvent.class.getName()));
         variables.add(var);
+        Variable var2 = new Variable();
+        var2.setName(CURRENT_EVENTS);
+        CollectionDataType eventsDataType = new CollectionDataType();
+        process.setImports(new HashSet<String>());
+        process.getImports().add(CaseEvent.class.getName());
+        eventsDataType.setElementClassName(CaseEvent.class.getName());
+        var2.setType(eventsDataType);
+        variables.add(var2);
         Set<String> roleNames = new HashSet<String>();
         Collection<CaseRole> roles = process.getRoles();
         for (CaseRole role : roles) {

@@ -22,13 +22,6 @@ import java.util.Map;
 import java.util.Set;
 
 public class PlanningTableContainerInstanceUtil {
-    public static void makeDiscretionaryItemAvailable(PlanningTableContainerInstance ptc, String discretionaryItemId) {
-        DiscretionaryItem<?> di = ptc.getPlanningTable().getDiscretionaryItemById(discretionaryItemId);
-        PlanItemInstanceFactoryNodeInstance<?> ni = (PlanItemInstanceFactoryNodeInstance<?>) ptc.getPlanItemInstanceCreator().getFirstNodeInstance(
-                di.getFactoryNode().getId());
-        ni.setIncludedByDiscretion(true);
-    }
-
     public static PlanItemInstance createPlannedTask(PlanningTableContainerInstance ptc, String discretionaryItemId) {
         if (ptc != null && ptc.getPlanningTable() != null) {
             NodeInstance contextNodeInstance = ptc.getPlanningContextNodeInstance();

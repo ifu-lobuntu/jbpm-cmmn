@@ -24,7 +24,7 @@ public class HumanTaskDefinitionImpl extends TaskDefinitionImpl implements Human
 
 	public HumanTaskDefinitionImpl() {
 		work = new WorkImpl();
-		work.setName("Human Task");
+		work.setName("CMMN Human Task");
 		Set<ParameterDefinition> parameterDefinitions = new HashSet<ParameterDefinition>();
 		parameterDefinitions.add(new ParameterDefinitionImpl("TaskName", new StringDataType()));
 		parameterDefinitions.add(new ParameterDefinitionImpl("ActorId", new StringDataType()));

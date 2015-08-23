@@ -92,6 +92,10 @@ Recursive subscriptions, parameterizable
 Drive planning from ProcessEngine rather than TaskService
  - interpret UpdateTaskStatusHandler as one-way sync
  - ensure UpdateTAskSTatusHandler does not call back to the ProcessEngine ( remove the CMMNTaskLifeCycleHandler from listerenrList)
+ - store TaskInputs that have not been consumed yet in the NodeInstance's VariableContext
+
+OnCaseFileItem events - if it is an entryCriterion for a Task and there is a matching CaseParameter (same CaseFileItem) that does NOT have a bindingRefinement and is NOT a SingleInstance root CaseFileItem
+ - if repititionRule=false, or it is the only CaseFileItem entry criterion that matches a CaseParameter, then set it on the variables of the task
 
 
 # 2. To test more directly
@@ -108,22 +112,46 @@ Drive planning from ProcessEngine rather than TaskService
 
 # 4. To implement
 
-XPath processDialect on JCR
+OnPart.sentryRef!!!!!!
 
-OnCaseFileItem events - if it is an entryCriterion for a Task and there is a matching CaseParameter (same CaseFileItem)
- - if repititionRule=false, or it is the only CaseFileItem entry criterion, then set it on the variables of the task
- - if repititionRule=true and there are multiple CaseFileItem entry criteria, then
- -- if it is the primary input, set i on the variables of the task
- -- if it is the secondary input, find the appropriate task to set it on using a correlation expression that relates it to the primaryInput
- - But remember, the task and its node may not exist yet so we may need to build all of this up on the FactorynodeInstance
- - get rid of the eventStack in StandardEventNodeInstance
- - make
+ProcessTask
 
-Drive planning from ProcessEngine rather than TaskService
- - store TaskInputs that have not been consumed yet in the NodeInstance's VariableContext
+- basic call
+- entry criteria achieved
+- automaticActivationRule
+- exit criteria achieved
+- parameterMapping
+- parameter transformation
+- writing result to bindingRef/bindingRefinement
+- EXIT,DISABLE,ENABLE,MANUAL_START,START,COMPLETE,TERMINATE,FAULT,SUSPEND,RESUME,REENABLE,REACTIVATE,CREATE
+
+CaseEvent correllation
+ - When a repeating CaseTask,ProcessTask or HumanTask is triggered by a sentry with multiple onparts, it could be useful to define a
+   correlation expression for each OnPart to determine which set of occurrences should be considered together and offered to the
+   TaskInstance when it is created. This CorrellationExpression is therefore and extension of CMMN, it resides on the OnPart and
+   all OnParts whose CorrellationExpression evaluates to the same value TOGETHER result in a new TaskInstance. In addition, CaseFileItemEvents
+   that match CaseParameters can be passed to the TaskInstance as parameter. This would also require Dialect level support for access
+   to the state of source PlanItem instances, such as InputParameters and role assignments, perhaps dates. implementing this should
+   ideally store CaseEvents in a Map on the OnPart instance, as opposed to the current Stack.
+
+HTTP/REST/JSON CaseFile support.
+ - Create CaseFileItemInstance class with:
+  -- CMMN "Primitive" attributes (String,Date,Integer)
+  -- ChildLink attributes
+  -- TargetRefLink attributes
+  -- For each entity
+ - Extend Spring Data REST
+  -- Links should also have "names"
+ - Implement ObjectMarshallingStrategy
+  -- Read with GETs
+  -- Write with PUTs
+  -- Only Children can be deleted when they are removed from their parent.
+ - Implement Form ValueHolder
+ - Implement CaseFileItemLookup with REST url
+   -- Find way to extract parameters from Form context. (eg. GET http://host.com/api/rings?param1=${input1}
+
 
 Only store Outputs that write to root CaseFileItems
-
 
 Planning Service - HumanTask, Stage AND CasePlanModel
 - calculate task startDates during plan submission
@@ -145,19 +173,15 @@ DiscretionaryItem - need input from OMG
 - itemControl.repititionRule
 
 CFA
- Consolidate all tasks for a participant
- Include VDML PropositionExchange info
- The CMMN Planner Role needs to be mapped to a Role in VDML (or maybe not), the CFA exchange takes place between the Planner and the target participant
+ -Consolidate all tasks for a participant, may have a dependency on event correllation, alternatively the modeller
+ should simply model the correllated set of activities in a separate Collaboration??.
+ -Include VDML PropositionExchange info
+ -The CMMN Planner Role needs to be mapped to a Role in VDML (or maybe not), the CFA exchange takes place between the Planner and the target participant
 
 # 5. Current potential problems
  
 AbstractPersistentSubscriptionManager
 - Find a way to get to the commandScopedEntity manager - the reflection won't work in CDI 
-
-PlanningService (look at TaskServiceFactory interface)
-
-- find a way to get to the persistence context - the reflection won't work in CDI
-- find a way to get to the InternalTaskService
 
 # 6. Difficult
 
@@ -191,6 +215,7 @@ CaseModel:
 
 - REACTIVATE (from Failed,Terminated, Completed? need input from OMG)
 
+XPath processDialect on JCR
 
 JCR/OCM persistent subscriptions
 

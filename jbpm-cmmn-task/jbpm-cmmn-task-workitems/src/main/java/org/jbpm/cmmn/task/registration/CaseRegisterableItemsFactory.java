@@ -25,7 +25,17 @@ public class CaseRegisterableItemsFactory extends DefaultRegisterableItemsFactor
 	@SuppressWarnings({ "rawtypes" })
 	@Override
 	protected WorkItemHandler getHTWorkItemHandler(RuntimeEngine runtime) {
-		LocalHTWorkItemHandler humanTaskHandler = new CaseTaskWorkItemHandler();
+		return super.getHTWorkItemHandler(runtime);
+	}
+
+	@Override
+	public Map<String, WorkItemHandler> getWorkItemHandlers(RuntimeEngine runtime) {
+		Map<String, WorkItemHandler> defaultHandlers = new HashMap<String, WorkItemHandler>();
+		defaultHandlers.putAll(super.getWorkItemHandlers(runtime));
+		UpdateTaskStatusWorkItemHandler stwih = new UpdateTaskStatusWorkItemHandler(lifecycleListener);
+		stwih.setRuntimeManager(((RuntimeEngineImpl) runtime).getManager());
+		defaultHandlers.put(WorkItemParameters.UPDATE_TASK_STATUS, stwih);
+		CaseTaskWorkItemHandler humanTaskHandler = new CaseTaskWorkItemHandler();
 		humanTaskHandler.setRuntimeManager(((RuntimeEngineImpl) runtime).getManager());
 		if (runtime instanceof Disposable) {
 			((Disposable) runtime).addDisposeListener(new DisposeListener() {
@@ -38,16 +48,7 @@ public class CaseRegisterableItemsFactory extends DefaultRegisterableItemsFactor
 				}
 			});
 		}
-		return humanTaskHandler;
-	}
-
-	@Override
-	public Map<String, WorkItemHandler> getWorkItemHandlers(RuntimeEngine runtime) {
-		Map<String, WorkItemHandler> defaultHandlers = new HashMap<String, WorkItemHandler>();
-		defaultHandlers.putAll(super.getWorkItemHandlers(runtime));
-		UpdateTaskStatusWorkItemHandler stwih = new UpdateTaskStatusWorkItemHandler(lifecycleListener);
-		stwih.setRuntimeManager(((RuntimeEngineImpl) runtime).getManager());
-		defaultHandlers.put(WorkItemParameters.UPDATE_TASK_STATUS, stwih);
+		defaultHandlers.put("CMMN Human Task",humanTaskHandler);
 		return defaultHandlers;
 	}
 	@Override

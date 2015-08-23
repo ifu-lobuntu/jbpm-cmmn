@@ -195,7 +195,6 @@ public class HumanTaskInstance extends ControllableItemInstanceImpl<HumanTaskDef
             wi.setParameter(WorkItemParameters.USERS_IN_ROLE, getCaseInstance().getRoleInstance(getItem().getDefinition().getPerformer().getName()).getRoleAssignmentNames());
             wi.setParameter(WorkItemParameters.GROUP_ID, getItem().getDefinition().getPerformer().getName());
             wi.setParameter(WorkItemParameters.BUSINESSADMINISTRATOR_ID, getBusinessAdministrators());
-            wi.getParameters().putAll(buildParametersFor(transition));
             executeWorkItem(wi);
         }
     }

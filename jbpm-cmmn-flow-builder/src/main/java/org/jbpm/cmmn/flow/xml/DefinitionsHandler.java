@@ -85,7 +85,7 @@ public class DefinitionsHandler extends BaseAbstractHandler implements Handler {
         if (variableScope != null) {
             for (Variable variable : variableScope.getVariables()) {
                 if (variable instanceof CaseFileItem) {
-                    setVariableDataType((CaseFileItemImpl) variable, itemDefinitions);
+                    setVariableDataType(container,(CaseFileItemImpl) variable, itemDefinitions);
                 }
             }
         }
@@ -100,7 +100,7 @@ public class DefinitionsHandler extends BaseAbstractHandler implements Handler {
         }
     }
 
-    private void setVariableDataType(CaseFileItemImpl variable, Map<String, CaseFileItemDefinition> itemDefinitions) {
+    private void setVariableDataType(CaseImpl container, CaseFileItemImpl variable, Map<String, CaseFileItemDefinition> itemDefinitions) {
         // retrieve type from item impl
         String definitionRef = variable.getDefinitionRef();
         if (UndefinedDataType.getInstance().equals(variable.getType()) && itemDefinitions != null && definitionRef != null) {
@@ -121,6 +121,7 @@ public class DefinitionsHandler extends BaseAbstractHandler implements Handler {
                 } else if ("java.lang.Object".equals(type) || "Object".equals(type)) {
                     dataType = new ObjectDataType(type);
                 } else {
+                    container.getImports().add(type);
                     dataType = new ObjectDataType(type);
                 }
             }

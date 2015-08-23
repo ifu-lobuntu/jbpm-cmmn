@@ -52,7 +52,9 @@ public class InputOverrideTest extends AbstractPlanItemInstanceContainerTest {
 		getPersistence().commit();
 		getPersistence().start();
 		getCmmnService().overrideInputTo(caseInstance.getId(), nodeInstanceId, input);
+		getPersistence().commit();
 		// *****THEN
+		getPersistence().start();
 		Map<String, Object> foundInput = getCmmnService().getInputTo(caseInstance.getId(), nodeInstanceId);
 		WallPlan foundWallPlan = (WallPlan) foundInput.get("wallPlanTaskParameter");
 		assertEquals("The new wallplan", foundWallPlan.getShortDescription());

@@ -38,5 +38,9 @@ public interface CaseFileItem extends CMMNElement,TypeObject, ValueObject, Seria
 
     void setCollection(boolean isCollection);
 
+    boolean isRoot();
+
+    void setRoot(boolean r);
+
     String getName();
 }

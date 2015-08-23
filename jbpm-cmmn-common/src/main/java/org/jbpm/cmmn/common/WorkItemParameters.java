@@ -25,6 +25,5 @@ public interface WorkItemParameters {
 	String DISCRETIONARY_ITEM_ID = "DiscretionaryItemId";
 	String INITIATOR = "initiator";
 	String CASE_OWNER = "caseOwner";
-	String SET_OUTPUT = "SetOutput";
 	String SET_INPUT = "SetInput";
 }

@@ -22,13 +22,18 @@
 						<cmmn:body>return housePlan.getWallPlans().size()>0;</cmmn:body>
 					</cmmn:condition>
 				</cmmn:ifPart>
+				<cmmn:caseFileItemOnPart sourceRef="roofPlanFileItemId" id="onRoofPlanCreatedPartId">
+					<cmmn:standardEvent>create</cmmn:standardEvent>
+				</cmmn:caseFileItemOnPart>
 			</cmmn:sentry>
 			<cmmn:planItemDefinition xsi:type="cmmn:tHumanTask" id="theTask" name="The Task" performerRef="builderRoleId" isBlocking="true">
 				<cmmn:defaultControl />
 				<cmmn:inputs name="wallPlan" bindingRef="wallPlanFileItemId">
 					<cmmn:bindingRefinement language="http://www.java.com/java">
-						<cmmn:body>class MyClass{ public Object go(Object event){return event;}}; return new MyClass().go( currentEvent.getValue());</cmmn:body>
+						<cmmn:body>for(Object e:currentEvents){if(((CaseEvent)e).getValue() instanceof WallPlan){return ((CaseEvent)e).getValue();}}return null;</cmmn:body>
 					</cmmn:bindingRefinement>
+				</cmmn:inputs>
+				<cmmn:inputs name="roofPlan" bindingRef="roofPlanFileItemId">
 				</cmmn:inputs>
 				<cmmn:outputs name="wall" bindingRef="wallFileItemId"></cmmn:outputs>
 			</cmmn:planItemDefinition>

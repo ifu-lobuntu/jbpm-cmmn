@@ -7,7 +7,6 @@ import org.jbpm.cmmn.common.WorkItemParameters;
 import org.jbpm.cmmn.flow.common.PlanItemTransition;
 import org.jbpm.cmmn.instance.PlanElementState;
 import org.jbpm.cmmn.task.additional.commands.*;
-import org.jbpm.cmmn.task.additional.commands.CompleteTaskCommand;
 import org.jbpm.services.task.commands.*;
 import org.jbpm.services.task.impl.model.GroupImpl;
 import org.jbpm.services.task.wih.util.PeopleAssignmentHelper;
@@ -16,7 +15,6 @@ import org.kie.api.runtime.manager.RuntimeEngine;
 import org.kie.api.runtime.manager.RuntimeManager;
 import org.kie.api.runtime.process.WorkItem;
 import org.kie.api.runtime.process.WorkItemManager;
-import org.kie.api.task.TaskLifeCycleEventListener;
 import org.kie.api.task.model.OrganizationalEntity;
 import org.kie.api.task.model.Status;
 import org.kie.api.task.model.Task;
@@ -70,16 +68,13 @@ public class UpdateTaskStatusWorkItemHandler implements WorkItemHandler {
             gidString = gidString == null ? "" : gidString;
             String[] groupIds = gidString.split(System.getProperty("org.jbpm.ht.user.separator", ","));
             if (transition == null) {
-                if (Boolean.TRUE.equals(workItem.getParameter(WorkItemParameters.SET_OUTPUT))) {
-                    cmd = new SetTaskOutputCommand(task.getId(), workItem.getParameters());
-                }else if(Boolean.TRUE.equals(workItem.getParameter(WorkItemParameters.SET_INPUT))){
+                if (Boolean.TRUE.equals(workItem.getParameter(WorkItemParameters.SET_INPUT))) {
                     cmd = new SetTaskInputCommand(task.getId(), workItem.getParameters());
                 }
             } else {
                 switch (transition) {
                     case COMPLETE:
-                        cmd = new CompleteTaskCommand(taskId, currentUserId, workItem.getParameters());
-                        break;
+                        throw new IllegalStateException("COmplete Human Tasks from the Task Service to set the Output");
                     case DISABLE:
                         cmd = new SkipTaskCommand(taskId, currentUserId);
                         break;
