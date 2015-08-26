@@ -2,6 +2,7 @@ package org.jbpm.cmmn.task.additional.commands;
 
 import org.jbpm.services.task.commands.TaskCommand;
 import org.jbpm.services.task.commands.TaskContext;
+import org.jbpm.services.task.commands.UserGroupCallbackTaskCommand;
 import org.jbpm.services.task.events.TaskEventImpl;
 import org.jbpm.services.task.events.TaskEventSupport;
 import org.jbpm.services.task.utils.ContentMarshallerHelper;
@@ -19,7 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public abstract class AbstractTaskCommand<T> extends TaskCommand<T> {
+public abstract class AbstractTaskCommand<T> extends UserGroupCallbackTaskCommand<T> {
 
 	private static final long serialVersionUID = -6267126920414609188L;
 

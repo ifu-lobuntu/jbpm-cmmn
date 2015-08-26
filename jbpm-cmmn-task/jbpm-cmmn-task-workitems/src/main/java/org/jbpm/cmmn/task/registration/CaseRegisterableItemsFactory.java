@@ -63,5 +63,4 @@ public class CaseRegisterableItemsFactory extends DefaultRegisterableItemsFactor
 		result.add(lifecycleListener);
 		return result;
 	}
-
 }

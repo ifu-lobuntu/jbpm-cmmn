@@ -2,6 +2,7 @@ package org.jbpm.cmmn.task.additional.commands;
 
 import org.kie.api.task.model.Status;
 import org.kie.api.task.model.Task;
+import org.kie.internal.task.api.model.InternalPeopleAssignments;
 import org.kie.internal.task.api.model.InternalTaskData;
 
 import java.util.HashMap;
@@ -20,6 +21,7 @@ public class CreateTaskCommand extends AbstractTaskCommand<Long> {
 	}
 
 	public Long execute() {
+		super.doCallbackOperationForPeopleAssignments((InternalPeopleAssignments) task.getPeopleAssignments(),super.taskContext);
 		fireBeforeTaskAddedEvent(task);
 		((InternalTaskData) task.getTaskData()).setStatus(Status.Created);
 		((InternalTaskData) task.getTaskData()).setDocumentContentId(ensureContentIdPresent(task, -1, inputParameters, "Content"));

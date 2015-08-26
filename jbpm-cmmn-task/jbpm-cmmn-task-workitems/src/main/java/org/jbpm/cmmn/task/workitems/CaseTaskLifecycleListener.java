@@ -33,7 +33,7 @@ import java.util.Map;
 public class CaseTaskLifecycleListener extends CmmnTaskLifecycleEventListenerImpl {
 
     private static final Logger logger = LoggerFactory.getLogger(CaseTaskLifecycleListener.class);
-    private ThreadLocal<Boolean> enabled = new ThreadLocal<Boolean>();
+    private static ThreadLocal<Boolean> enabled = new ThreadLocal<Boolean>();
     private RuntimeManagerRegistry registry = RuntimeManagerRegistry.get();
 
     public CaseTaskLifecycleListener() {
@@ -171,12 +171,6 @@ public class CaseTaskLifecycleListener extends CmmnTaskLifecycleEventListenerImp
             }
         }
         return results;
-    }
-
-    private ProcessInstance getProcessInstance(Task task, long processInstanceId) {
-        KieSession session = getKieSession(task);
-        ProcessInstance pi = session.getProcessInstance(processInstanceId);
-        return pi;
     }
 
     public void disable() {
