@@ -7,7 +7,6 @@ import org.drools.core.audit.event.LogEvent;
 import org.drools.core.audit.event.RuleFlowNodeLogEvent;
 import org.drools.core.marshalling.impl.ClassObjectMarshallingStrategyAcceptor;
 import org.drools.core.marshalling.impl.SerializablePlaceholderResolverStrategy;
-import org.jbpm.cmmn.casefile.common.CaseFilePersistence;
 import org.jbpm.cmmn.casefile.jpa.HibernateSubscriptionManager;
 import org.jbpm.cmmn.casefile.jpa.JpaCaseFilePersistence;
 import org.jbpm.cmmn.casefile.jpa.JpaCollectionPlaceHolderResolverStrategy;
@@ -17,7 +16,8 @@ import org.jbpm.cmmn.flow.xml.CMMNBuilder;
 import org.jbpm.cmmn.instance.CaseInstance;
 import org.jbpm.cmmn.instance.PlanElementState;
 import org.jbpm.cmmn.instance.PlanItemInstance;
-import org.jbpm.cmmn.instance.impl.*;
+import org.jbpm.cmmn.instance.impl.PlanItemInstanceFactoryNodeInstance;
+import org.jbpm.cmmn.instance.impl.StageInstance;
 import org.jbpm.cmmn.instance.subscription.SubscriptionManager;
 import org.jbpm.cmmn.service.api.CMMNService;
 import org.jbpm.cmmn.service.api.impl.CMMNServiceImpl;
@@ -76,475 +76,475 @@ import java.util.*;
 import static org.kie.api.runtime.EnvironmentName.OBJECT_MARSHALLING_STRATEGIES;
 
 public abstract class AbstractCmmnCaseTestCase extends JbpmJUnitBaseTestCase {
-	static {
-		System.setProperty(InitialContext.INITIAL_CONTEXT_FACTORY, bitronix.tm.jndi.BitronixInitialContextFactory.class.getName());
-		System.setProperty(InitialContext.URL_PKG_PREFIXES, "bitronix.tm.jndi");
-	}
-	protected CaseFilePersistence persistence;
-	protected boolean isJpa = false;
-	private RuntimeEngine runtimeEngine;
-	private UserTransaction transaction;
-	private RuntimeManager runtimeManager;
-	private CMMNService cmmnService;
-	private static EntityManagerFactory emf;
-	private static PoolingDataSource ds;
-	private String persistenceUnitName;
-	protected Stopwatch stopwatch = new Stopwatch(getClass());
+    static {
+        System.setProperty(InitialContext.INITIAL_CONTEXT_FACTORY, bitronix.tm.jndi.BitronixInitialContextFactory.class.getName());
+        System.setProperty(InitialContext.URL_PKG_PREFIXES, "bitronix.tm.jndi");
+    }
 
-	protected EntityManagerFactory getEmf() {
-		return emf;
-	}
+    protected JpaCaseFilePersistence persistence;
+    protected boolean isJpa = false;
+    private RuntimeEngine runtimeEngine;
+    private UserTransaction transaction;
+    private RuntimeManager runtimeManager;
+    private CMMNService cmmnService;
+    private static EntityManagerFactory emf;
+    private static PoolingDataSource ds;
+    private String persistenceUnitName;
+    protected Stopwatch stopwatch = new Stopwatch(getClass());
 
-	public AbstractCmmnCaseTestCase() {
-		super();
-	}
+    protected EntityManagerFactory getEmf() {
+        return emf;
+    }
 
-	protected RuntimeManager getRuntimeManager() {
-		return runtimeManager;
-	}
+    public AbstractCmmnCaseTestCase() {
+        super();
+    }
 
-	public AbstractCmmnCaseTestCase(boolean setupDataSource, boolean sessionPersistence) {
-		super(setupDataSource, sessionPersistence);
-	}
+    protected RuntimeManager getRuntimeManager() {
+        return runtimeManager;
+    }
 
-	public CMMNService getCmmnService() {
-		return cmmnService;
-	}
+    public AbstractCmmnCaseTestCase(boolean setupDataSource, boolean sessionPersistence) {
+        super(setupDataSource, sessionPersistence);
+    }
 
-	@Before
-	public void setUp() throws Exception {
+    public CMMNService getCmmnService() {
+        return cmmnService;
+    }
 
-		stopwatch.start();
-		if (setupDataSource && (ds == null || emf == null)) {
-			ds = setupPoolingDataSource();
-			stopwatch.lap("setupPoolingDataSource");
-			emf = Persistence.createEntityManagerFactory(persistenceUnitName);
-			stopwatch.lap("createEntityManagerFactory");
-		}
-		cleanupSingletonSessionId();
-		stopwatch.lap("cleanupSingletonSessionId");
-	}
+    @Before
+    public void setUp() throws Exception {
 
-	public AbstractCmmnCaseTestCase(boolean setupDataSource, boolean sessionPersistence, String persistenceUnitName) {
-		super(setupDataSource, sessionPersistence, persistenceUnitName);
-		this.persistenceUnitName = persistenceUnitName;
-	}
+        stopwatch.start();
+        if (setupDataSource && (ds == null || emf == null)) {
+            ds = setupPoolingDataSource();
+            stopwatch.lap("setupPoolingDataSource");
+            emf = Persistence.createEntityManagerFactory(persistenceUnitName);
+            stopwatch.lap("createEntityManagerFactory");
+        }
+        cleanupSingletonSessionId();
+        stopwatch.lap("cleanupSingletonSessionId");
+    }
 
-	@Override
-	public void assertNodeActive(long processInstanceId, KieSession ksession, String... name) {
-		super.assertNodeActive(processInstanceId, ksession, name);
-	}
+    public AbstractCmmnCaseTestCase(boolean setupDataSource, boolean sessionPersistence, String persistenceUnitName) {
+        super(setupDataSource, sessionPersistence, persistenceUnitName);
+        this.persistenceUnitName = persistenceUnitName;
+    }
 
-	protected CaseInstance reloadCaseInstance(CaseInstance caseInstance2) {
-		return (CaseInstance) getRuntimeEngine().getKieSession().getProcessInstance(caseInstance2.getId());
-	}
+    @Override
+    public void assertNodeActive(long processInstanceId, KieSession ksession, String... name) {
+        super.assertNodeActive(processInstanceId, ksession, name);
+    }
 
-	protected void assertNodeNotTriggered(long processInstanceId, String... nodeNames) {
-		getPersistence().start();
-		List<String> names = removeNodesTriggered(processInstanceId, nodeNames);
-		if (names.isEmpty()) {
-			String s = names.get(0);
-			for (int i = 1; i < names.size(); i++) {
-				s += ", " + names.get(i);
-			}
-			fail("Node(s) executed: " + s);
-		}
-		getPersistence().commit();
-	}
+    protected CaseInstance reloadCaseInstance(CaseInstance caseInstance2) {
+        return (CaseInstance) getRuntimeEngine().getKieSession().getProcessInstance(caseInstance2.getId());
+    }
 
-	protected InternalTaskService getTaskService() {
-		return (InternalTaskService) getRuntimeEngine().getTaskService();
-	}
+    protected void assertNodeNotTriggered(long processInstanceId, String... nodeNames) {
+        getPersistence().start();
+        List<String> names = removeNodesTriggered(processInstanceId, nodeNames);
+        if (names.isEmpty()) {
+            String s = names.get(0);
+            for (int i = 1; i < names.size(); i++) {
+                s += ", " + names.get(i);
+            }
+            fail("Node(s) executed: " + s);
+        }
+        getPersistence().commit();
+    }
 
-	@Override
-	public void assertNodeTriggered(long processInstanceId, String... nodeNames) {
-		getPersistence().start();
-		List<String> names = removeNodesTriggered(processInstanceId, nodeNames);
-		if (!names.isEmpty()) {
-			String s = names.get(0);
-			for (int i = 1; i < names.size(); i++) {
-				s += ", " + names.get(i);
-			}
-			fail("Node(s) not executed: " + s);
-		}
-		getPersistence().commit();
-	}
+    protected InternalTaskService getTaskService() {
+        return (InternalTaskService) getRuntimeEngine().getTaskService();
+    }
 
-	private List<String> removeNodesTriggered(long processInstanceId, String... nodeNames) {
-		List<String> names = new ArrayList<String>();
-		for (String nodeName : nodeNames) {
-			names.add(nodeName);
-		}
-		if (sessionPersistence) {
-			List<? extends NodeInstanceLog> logs = getLogService().findNodeInstances(processInstanceId);
-			if (logs != null) {
-				for (NodeInstanceLog l : logs) {
-					String nodeName = l.getNodeName();
-					if ((l.getType() == NodeInstanceLog.TYPE_ENTER || l.getType() == NodeInstanceLog.TYPE_EXIT) && names.contains(nodeName)) {
-						names.remove(nodeName);
-					}
-				}
-			}
-		} else {
-			for (LogEvent event : getInMemoryLogger().getLogEvents()) {
-				if (event instanceof RuleFlowNodeLogEvent) {
-					String nodeName = ((RuleFlowNodeLogEvent) event).getNodeName();
-					if (names.contains(nodeName)) {
-						names.remove(nodeName);
-					}
-				}
-			}
-		}
-		return names;
-	}
+    @Override
+    public void assertNodeTriggered(long processInstanceId, String... nodeNames) {
+        getPersistence().start();
+        List<String> names = removeNodesTriggered(processInstanceId, nodeNames);
+        if (!names.isEmpty()) {
+            String s = names.get(0);
+            for (int i = 1; i < names.size(); i++) {
+                s += ", " + names.get(i);
+            }
+            fail("Node(s) not executed: " + s);
+        }
+        getPersistence().commit();
+    }
 
-	class StateResult {
-		int count = 0;
-		String foundState = "";
-	}
+    private List<String> removeNodesTriggered(long processInstanceId, String... nodeNames) {
+        List<String> names = new ArrayList<String>();
+        for (String nodeName : nodeNames) {
+            names.add(nodeName);
+        }
+        if (sessionPersistence) {
+            List<? extends NodeInstanceLog> logs = getLogService().findNodeInstances(processInstanceId);
+            if (logs != null) {
+                for (NodeInstanceLog l : logs) {
+                    String nodeName = l.getNodeName();
+                    if ((l.getType() == NodeInstanceLog.TYPE_ENTER || l.getType() == NodeInstanceLog.TYPE_EXIT) && names.contains(nodeName)) {
+                        names.remove(nodeName);
+                    }
+                }
+            }
+        } else {
+            for (LogEvent event : getInMemoryLogger().getLogEvents()) {
+                if (event instanceof RuleFlowNodeLogEvent) {
+                    String nodeName = ((RuleFlowNodeLogEvent) event).getNodeName();
+                    if (names.contains(nodeName)) {
+                        names.remove(nodeName);
+                    }
+                }
+            }
+        }
+        return names;
+    }
 
-	public void assertPlanItemInState(long processInstanceId, String planItemName, PlanElementState s, int... numberOfTimes) {
-		getPersistence().start();
-		NodeInstanceContainer ci = (NodeInstanceContainer) getRuntimeEngine().getKieSession().getProcessInstance(processInstanceId);
+    class StateResult {
+        int count = 0;
+        String foundState = "";
+    }
 
-		StateResult sr = new StateResult();
-		countItemInState(planItemName, s, ci, sr);
-		getPersistence().commit();
-		if (numberOfTimes.length == 0) {
-			if (sr.count == 0) {
-				assertTrue(planItemName + " should be in state " + s.name() + " but was in " + sr.foundState, sr.count > 0);
-			}
-		} else {
-			assertEquals(planItemName + " should be in state " + s.name() + "  " + numberOfTimes[0] + " times, but was foudn in state "
-					+ sr.count + " times", numberOfTimes[0], sr.count);
-		}
-	}
+    public void assertPlanItemInState(long processInstanceId, String planItemName, PlanElementState s, int... numberOfTimes) {
+        getPersistence().start();
+        NodeInstanceContainer ci = (NodeInstanceContainer) getRuntimeEngine().getKieSession().getProcessInstance(processInstanceId);
 
-	public void countItemInState(String planItemName, PlanElementState s, NodeInstanceContainer ci, StateResult sr) {
-		for (NodeInstance ni : ci.getNodeInstances()) {
-			if (ni instanceof PlanItemInstanceFactoryNodeInstance) {
-				PlanItemInstanceFactoryNodeImpl node = (PlanItemInstanceFactoryNodeImpl) ni.getNode();
-				if (node.getItemToInstantiate().getName().equals(planItemName)) {
-					PlanItemInstanceFactoryNodeInstance<?> piil = (PlanItemInstanceFactoryNodeInstance<?>) ni;
-					if (piil.isPlanItemInstanceStillRequired() && s == PlanElementState.AVAILABLE) {
-						sr.count++;
-					} else if (piil.getPlanElementState() == s) {
-						sr.count++;
-					} else {
-						sr.foundState = piil.getPlanElementState().name();
-					}
-				}
-			} else if (ni instanceof StageInstance) {
-				countItemInState(planItemName, s, (StageInstance) ni, sr);
-			}
-		}
-		if (sr.count == 0) {
-			for (NodeInstance ni : ci.getNodeInstances()) {
-				if (ni instanceof PlanItemInstance && ni.getNodeName().equals(planItemName)) {
-					if (((PlanItemInstance<?>) ni).getPlanElementState() == s) {
-						sr.count++;
-					} else {
-						sr.foundState = ((PlanItemInstance<?>) ni).getPlanElementState().name();
-					}
-				} else if (ni instanceof StageInstance) {
-					countItemInState(planItemName, s, (StageInstance) ni, sr);
-				}
+        StateResult sr = new StateResult();
+        countItemInState(planItemName, s, ci, sr);
+        getPersistence().commit();
+        if (numberOfTimes.length == 0) {
+            if (sr.count == 0) {
+                assertTrue(planItemName + " should be in state " + s.name() + " but was in " + sr.foundState, sr.count > 0);
+            }
+        } else {
+            assertEquals(planItemName + " should be in state " + s.name() + "  " + numberOfTimes[0] + " times, but was foudn in state "
+                    + sr.count + " times", numberOfTimes[0], sr.count);
+        }
+    }
 
-			}
-		}
-	}
+    public void countItemInState(String planItemName, PlanElementState s, NodeInstanceContainer ci, StateResult sr) {
+        for (NodeInstance ni : ci.getNodeInstances()) {
+            if (ni instanceof PlanItemInstanceFactoryNodeInstance) {
+                PlanItemInstanceFactoryNodeImpl node = (PlanItemInstanceFactoryNodeImpl) ni.getNode();
+                if (node.getItemToInstantiate().getName().equals(planItemName)) {
+                    PlanItemInstanceFactoryNodeInstance<?> piil = (PlanItemInstanceFactoryNodeInstance<?>) ni;
+                    if (piil.isPlanItemInstanceStillRequired() && s == PlanElementState.AVAILABLE) {
+                        sr.count++;
+                    } else if (piil.getPlanElementState() == s) {
+                        sr.count++;
+                    } else {
+                        sr.foundState = piil.getPlanElementState().name();
+                    }
+                }
+            } else if (ni instanceof StageInstance) {
+                countItemInState(planItemName, s, (StageInstance) ni, sr);
+            }
+        }
+        if (sr.count == 0) {
+            for (NodeInstance ni : ci.getNodeInstances()) {
+                if (ni instanceof PlanItemInstance && ni.getNodeName().equals(planItemName)) {
+                    if (((PlanItemInstance<?>) ni).getPlanElementState() == s) {
+                        sr.count++;
+                    } else {
+                        sr.foundState = ((PlanItemInstance<?>) ni).getPlanElementState().name();
+                    }
+                } else if (ni instanceof StageInstance) {
+                    countItemInState(planItemName, s, (StageInstance) ni, sr);
+                }
 
-	public UserTransaction getTransaction() throws NamingException {
-		if (transaction == null) {
-			transaction = (UserTransaction) new BitronixContext().lookup("java:comp/UserTransaction");
-		}
-		return transaction;
-	}
+            }
+        }
+    }
 
-	@AfterClass
-	public static void tearDownClass() throws Exception {
-		if (emf != null) {
-			emf.close();
-			emf = null;
-		}
-		if (ds != null) {
-			ds.close();
-			ds = null;
-		}
-	}
+    public UserTransaction getTransaction() throws NamingException {
+        if (transaction == null) {
+            transaction = (UserTransaction) new BitronixContext().lookup("java:comp/UserTransaction");
+        }
+        return transaction;
+    }
 
-	@After
-	public void tearDown() throws Exception {
-		stopwatch.start();
-		try {
-			getTransaction().rollback();
-		} catch (Exception e) {
-		}
-		Connection c = ds.getConnection();
-		try {
-			c.createStatement().execute("SET REFERENTIAL_INTEGRITY FALSE");
-			ResultSet rst = c.createStatement().executeQuery("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = SCHEMA()");
-			while (rst.next()) {
-				c.createStatement().execute("TRUNCATE TABLE " + rst.getString(1));
-			}
-			c.createStatement().execute("SET REFERENTIAL_INTEGRITY TRUE");
-		} catch (Exception e) {
+    @AfterClass
+    public static void tearDownClass() throws Exception {
+        if (emf != null) {
+            emf.close();
+            emf = null;
+        }
+        if (ds != null) {
+            ds.close();
+            ds = null;
+        }
+    }
 
-		} finally {
-			c.close();
-		}
-		transaction = null;
-		if (isJpa) {
-			getPersistence().close();
-		}
-		clearHistory();
-		disposeRuntimeManager();
-		runtimeEngine = null;
+    @After
+    public void tearDown() throws Exception {
+        stopwatch.start();
+        try {
+            getTransaction().rollback();
+        } catch (Exception e) {
+        }
+        Connection c = ds.getConnection();
+        try {
+            c.createStatement().execute("SET REFERENTIAL_INTEGRITY FALSE");
+            ResultSet rst = c.createStatement().executeQuery("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = SCHEMA()");
+            while (rst.next()) {
+                c.createStatement().execute("TRUNCATE TABLE " + rst.getString(1));
+            }
+            c.createStatement().execute("SET REFERENTIAL_INTEGRITY TRUE");
+        } catch (Exception e) {
 
-		persistence = null;
+        } finally {
+            c.close();
+        }
+        transaction = null;
+        if (isJpa && persistence!=null) {
+            persistence.close();
+        }
+        clearHistory();
+        disposeRuntimeManager();
+        runtimeEngine = null;
 
-		stopwatch.lap("tearDown");
-	}
+        persistence = null;
 
-	@Override
-	protected RuntimeEngine getRuntimeEngine(Context<?> context) {
-		return super.getRuntimeEngine(context);
-	}
+        stopwatch.lap("tearDown");
+    }
 
-	protected void assertTaskTypeCreated(List<TaskSummary> list, String expected, int... numberOfTimes) {
-		int count = 0;
-		for (TaskSummary taskSummary : list) {
-			if (taskSummary.getName().equals(expected)) {
-				count++;
-			}
-		}
-		if (numberOfTimes.length == 1) {
-			assertEquals("Task not created the correct number of times", numberOfTimes[0], count);
-		} else if (count == 0) {
-			fail("Task not created: " + expected);
-		}
-	}
+    @Override
+    protected RuntimeEngine getRuntimeEngine(Context<?> context) {
+        return super.getRuntimeEngine(context);
+    }
 
-	public CaseFilePersistence getPersistence() {
-		try {
-			if (persistence == null) {
-				persistence = new JpaCaseFilePersistence(emf, getRuntimeManager());
-			}
-			return persistence;
-		} catch (RuntimeException e) {
-			throw e;
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
+    protected void assertTaskTypeCreated(List<TaskSummary> list, String expected, int... numberOfTimes) {
+        int count = 0;
+        for (TaskSummary taskSummary : list) {
+            if (taskSummary.getName().equals(expected)) {
+                count++;
+            }
+        }
+        if (numberOfTimes.length == 1) {
+            assertEquals("Task not created the correct number of times", numberOfTimes[0], count);
+        } else if (count == 0) {
+            fail("Task not created: " + expected);
+        }
+    }
 
-	@Override
-	protected PoolingDataSource setupPoolingDataSource() {
-		PoolingDataSource pds = new PoolingDataSource();
-		if (isJpa) {
-			// fake XA
-			pds.setUniqueName("jdbc/jbpm-ds");
-			pds.setClassName("bitronix.tm.resource.jdbc.lrc.LrcXADataSource");
-			pds.setMaxPoolSize(5);
-			pds.setAllowLocalTransactions(true);
-			pds.setIgnoreRecoveryFailures(true);
-			pds.getDriverProperties().put("user", "sa");
-			pds.getDriverProperties().put("password", "");
-			pds.getDriverProperties().put("url", "jdbc:h2:mem:jbpm-db;MVCC=true");
-			pds.getDriverProperties().put("driverClassName", "org.h2.Driver");
-		} else {
-			pds.setClassName("org.h2.jdbcx.JdbcDataSource");
-			pds.setUniqueName("jdbc/jbpm-ds");
-			pds.setMaxPoolSize(5);
-			pds.setAllowLocalTransactions(true);
-			pds.getDriverProperties().put("user", "sa");
-			pds.setApplyTransactionTimeout(false);
-			pds.setIgnoreRecoveryFailures(true);
-			pds.getDriverProperties().put("password", "");
-			pds.getDriverProperties().put("URL", "jdbc:h2:mem:jbpm-db;MVCC=true");
-		}
-		pds.init();
-		return pds;
-	}
+    public JpaCaseFilePersistence getPersistence() {
+        try {
+            if (persistence == null) {
+                persistence = new JpaCaseFilePersistence(emf, getRuntimeManager().getIdentifier());
+            }
+            return persistence;
+        } catch (RuntimeException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-	@Override
-	protected RuntimeEngine getRuntimeEngine() {
-		if (this.runtimeEngine == null) {
-			this.runtimeEngine = super.getRuntimeEngine();
-		}
-		return this.runtimeEngine;
-	}
+    @Override
+    protected PoolingDataSource setupPoolingDataSource() {
+        PoolingDataSource pds = new PoolingDataSource();
+        if (isJpa) {
+            // fake XA
+            pds.setUniqueName("jdbc/jbpm-ds");
+            pds.setClassName("bitronix.tm.resource.jdbc.lrc.LrcXADataSource");
+            pds.setMaxPoolSize(5);
+            pds.setAllowLocalTransactions(true);
+            pds.setIgnoreRecoveryFailures(true);
+            pds.getDriverProperties().put("user", "sa");
+            pds.getDriverProperties().put("password", "");
+            pds.getDriverProperties().put("url", "jdbc:h2:mem:jbpm-db;MVCC=true");
+            pds.getDriverProperties().put("driverClassName", "org.h2.Driver");
+        } else {
+            pds.setClassName("org.h2.jdbcx.JdbcDataSource");
+            pds.setUniqueName("jdbc/jbpm-ds");
+            pds.setMaxPoolSize(5);
+            pds.setAllowLocalTransactions(true);
+            pds.getDriverProperties().put("user", "sa");
+            pds.setApplyTransactionTimeout(false);
+            pds.setIgnoreRecoveryFailures(true);
+            pds.getDriverProperties().put("password", "");
+            pds.getDriverProperties().put("URL", "jdbc:h2:mem:jbpm-db;MVCC=true");
+        }
+        pds.init();
+        return pds;
+    }
 
-	@Override
-	protected RuntimeManager createRuntimeManager(Strategy strategy, String identifier, String... process) {
-		Map<String, ResourceType> resources = new HashMap<String, ResourceType>();
-		for (String p : process) {
-			if (p.endsWith(".cmmn")) {
-				resources.put(p, CMMNBuilder.CMMN_RESOURCE_TYPE);
-			} else if (p.endsWith(".bpmn")) {
-				resources.put(p, ResourceType.BPMN2);
-			}
-		}
-		return createRuntimeManager(strategy, resources, identifier);
-	}
+    @Override
+    protected RuntimeEngine getRuntimeEngine() {
+        if (this.runtimeEngine == null) {
+            this.runtimeEngine = super.getRuntimeEngine();
+        }
+        return this.runtimeEngine;
+    }
+
+    @Override
+    protected RuntimeManager createRuntimeManager(Strategy strategy, String identifier, String... process) {
+        Map<String, ResourceType> resources = new HashMap<String, ResourceType>();
+        for (String p : process) {
+            if (p.endsWith(".cmmn")) {
+                resources.put(p, CMMNBuilder.CMMN_RESOURCE_TYPE);
+            } else if (p.endsWith(".bpmn")) {
+                resources.put(p, ResourceType.BPMN2);
+            }
+        }
+        return createRuntimeManager(strategy, resources, identifier);
+    }
 
 
     protected RuntimeManager createRuntimeManager(Strategy strategy, Map<String, ResourceType> resources, String identifier) {
         if (manager != null) {
             throw new IllegalStateException("There is already one RuntimeManager active");
         }
-        
+
         RuntimeEnvironmentBuilder builder = null;
-        if (!setupDataSource){
+        if (!setupDataSource) {
             builder = RuntimeEnvironmentBuilder.Factory.get()
-        			.newEmptyBuilder()
-            .addConfiguration("drools.processSignalManagerFactory", DefaultSignalManagerFactory.class.getName())
-            .addConfiguration("drools.processInstanceManagerFactory", DefaultProcessInstanceManagerFactory.class.getName())
-            .registerableItemsFactory(new MyCaseRegisterableItemsFactory());
-            
+                    .newEmptyBuilder()
+                    .addConfiguration("drools.processSignalManagerFactory", DefaultSignalManagerFactory.class.getName())
+                    .addConfiguration("drools.processInstanceManagerFactory", DefaultProcessInstanceManagerFactory.class.getName())
+                    .registerableItemsFactory(new MyCaseRegisterableItemsFactory());
+
         } else if (sessionPersistence) {
             builder = RuntimeEnvironmentBuilder.Factory.get()
-        			.newDefaultBuilder()
-            .entityManagerFactory(emf)
-            .registerableItemsFactory(new MyCaseRegisterableItemsFactory() );
+                    .newDefaultBuilder()
+                    .entityManagerFactory(emf)
+                    .registerableItemsFactory(new MyCaseRegisterableItemsFactory());
         } else {
             builder = RuntimeEnvironmentBuilder.Factory.get()
-        			.newDefaultInMemoryBuilder()
-        			.registerableItemsFactory(new MyCaseRegisterableItemsFactory());
+                    .newDefaultInMemoryBuilder()
+                    .registerableItemsFactory(new MyCaseRegisterableItemsFactory());
         }
-		builder.addConfiguration(ClockTypeOption.PROPERTY_NAME, ClockType.PSEUDO_CLOCK.getId());
+        builder.addConfiguration(ClockTypeOption.PROPERTY_NAME, ClockType.PSEUDO_CLOCK.getId());
         builder.userGroupCallback(new JBossUserGroupCallbackImpl("classpath:/usergroups.properties"));
-        
-        for (Map.Entry<String, ResourceType> entry : resources.entrySet()) {            
+
+        for (Map.Entry<String, ResourceType> entry : resources.entrySet()) {
             builder.addAsset(ResourceFactory.newClassPathResource(entry.getKey()), entry.getValue());
         }
-        
+
         return createRuntimeManager(strategy, resources, builder.get(), identifier);
     }
 
-	@Override
-	protected RuntimeManager createRuntimeManager(String... processFile) {
-		writeProcessFiles(processFile);
-		RuntimeManager rm = super.createRuntimeManager(processFile);
-		this.runtimeManager = rm;
-		RuntimeEngine runtimeEngine = getRuntimeEngine();
+    @Override
+    protected RuntimeManager createRuntimeManager(String... processFile) {
+        writeProcessFiles(processFile);
+        RuntimeManager rm = super.createRuntimeManager(processFile);
+        this.runtimeManager = rm;
+        RuntimeEngine runtimeEngine = getRuntimeEngine();
 //		fixPersistenceStrategy(runtimeEngine);
-		Environment env = runtimeEngine.getKieSession().getEnvironment();
-		prepareEnvironment(env);
-		TaskService ts = runtimeEngine.getTaskService();
-		if (ts instanceof InternalTaskService) {
-			InternalTaskService its = (InternalTaskService) ts;
+        Environment env = runtimeEngine.getKieSession().getEnvironment();
+        prepareEnvironment(env);
+        TaskService ts = runtimeEngine.getTaskService();
+        if (ts instanceof InternalTaskService) {
+            InternalTaskService its = (InternalTaskService) ts;
 
-			its.addMarshallerContext(rm.getIdentifier(), new ContentMarshallerContext(env, getClass().getClassLoader()));
-			// its.setUserInfo(new PropertyUserInfoImpl(new Properties()));
-		}
-		this.cmmnService=new CMMNServiceImpl(runtimeEngine);
-		// for some reason the task service does not persist the users and
-		// groups ???
-		populateUsers();
-		return rm;
-	}
+            its.addMarshallerContext(rm.getIdentifier(), new ContentMarshallerContext(env, getClass().getClassLoader()));
+            // its.setUserInfo(new PropertyUserInfoImpl(new Properties()));
+        }
+        this.cmmnService = new CMMNServiceImpl(runtimeEngine);
+        // for some reason the task service does not persist the users and
+        // groups ???
+        populateUsers();
+        return rm;
+    }
 
-	private void writeProcessFiles(String... processFile) throws TransformerFactoryConfigurationError {
-		try {
-			for (String string : processFile) {
-				TransformerFactory transformerFactory = TransformerFactory.newInstance();
-				Transformer transformer = transformerFactory.newTransformer();
-				DOMSource source = new DOMSource(DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new File("./src/test/resources/" + string)));
-				File outputFile = new File("./target/test-classes/" + string);
-				outputFile.getParentFile().mkdirs();
-				StreamResult result = new StreamResult(outputFile);
-				transformer.transform(source, result);
-			}
-		} catch (RuntimeException e) {
-			throw e;
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-	protected void prepareEnvironment(Environment env) {
-		env.set(OBJECT_MARSHALLING_STRATEGIES, getPlaceholdStrategies(env));
-		SubscriptionManager<?> subscriptionManager = getSubscriptionManager();
-		if (subscriptionManager != null) {
-			env.set(SubscriptionManager.ENV_NAME, subscriptionManager);
-		}
-		if (isJpa) {
-			env.set(JpaCaseFilePersistence.ENV_NAME, getPersistence());
-		}
-		env.set("org.kie.internal.runtime.manager.TaskServiceFactory", LocalTaskServiceFactory.class.getName());
-	}
+    private void writeProcessFiles(String... processFile) throws TransformerFactoryConfigurationError {
+        try {
+            for (String string : processFile) {
+                TransformerFactory transformerFactory = TransformerFactory.newInstance();
+                Transformer transformer = transformerFactory.newTransformer();
+                DOMSource source = new DOMSource(DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new File("./src/test/resources/" + string)));
+                File outputFile = new File("./target/test-classes/" + string);
+                outputFile.getParentFile().mkdirs();
+                StreamResult result = new StreamResult(outputFile);
+                transformer.transform(source, result);
+            }
+        } catch (RuntimeException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-	protected void populateUsers() {
-		JBossUserGroupCallbackImpl users = new JBossUserGroupCallbackImpl("classpath:/usergroups.properties");
-		Properties props = buildUserGroupProperties();
-		for (Object userId : props.keySet()) {
-			getPersistence().start();
-			EntityManager em = emf.createEntityManager();
-			GroupImpl group = em.find(GroupImpl.class, userId);
-			if (group == null) {
-				UserImpl builder = em.find(UserImpl.class, userId);
-				if (builder == null) {
-					em.persist(new UserImpl((String) userId));
-					em.flush();
-				}
-				for (String g : users.getGroupsForUser((String) userId, null, null)) {
-					group = em.find(GroupImpl.class, g);
-					if (group == null) {
-						em.persist(new GroupImpl(g));
-						em.flush();
-					}
-				}
-			}
-			getPersistence().commit();
-		}
-	}
+    protected void prepareEnvironment(Environment env) {
+        env.set(OBJECT_MARSHALLING_STRATEGIES, getPlaceholdStrategies(env));
+        SubscriptionManager<?> subscriptionManager = getSubscriptionManager();
+        if (subscriptionManager != null) {
+            env.set(SubscriptionManager.ENV_NAME, subscriptionManager);
+        }
+        if (isJpa) {
+            env.set(JpaCaseFilePersistence.ENV_NAME, getPersistence());
+        }
+        env.set("org.kie.internal.runtime.manager.TaskServiceFactory", LocalTaskServiceFactory.class.getName());
+    }
 
-	private Properties buildUserGroupProperties() {
-		Properties props = new Properties();
-		try {
-			props.load(getClass().getClassLoader().getResourceAsStream("usergroups.properties"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return props;
-	}
+    protected void populateUsers() {
+        JBossUserGroupCallbackImpl users = new JBossUserGroupCallbackImpl("classpath:/usergroups.properties");
+        Properties props = buildUserGroupProperties();
+        for (Object userId : props.keySet()) {
+            getPersistence().start();
+            EntityManager em = emf.createEntityManager();
+            GroupImpl group = em.find(GroupImpl.class, userId);
+            if (group == null) {
+                UserImpl builder = em.find(UserImpl.class, userId);
+                if (builder == null) {
+                    em.persist(new UserImpl((String) userId));
+                    em.flush();
+                }
+                for (String g : users.getGroupsForUser((String) userId, null, null)) {
+                    group = em.find(GroupImpl.class, g);
+                    if (group == null) {
+                        em.persist(new GroupImpl(g));
+                        em.flush();
+                    }
+                }
+            }
+            getPersistence().commit();
+        }
+    }
 
-	protected ObjectMarshallingStrategy[] getPlaceholdStrategies(Environment env) {
-		if (isJpa) {
-			return new ObjectMarshallingStrategy[] { new ProcessInstanceResolverStrategy(), new JpaPlaceHolderResolverStrategy(env),
-					new JpaCollectionPlaceHolderResolverStrategy(env),
-					new SerializablePlaceholderResolverStrategy(ClassObjectMarshallingStrategyAcceptor.DEFAULT) };
-		} else {
-			return new ObjectMarshallingStrategy[] { new ProcessInstanceResolverStrategy(),
-					new JpaPlaceHolderResolverStrategy(env),
-					new JpaCollectionPlaceHolderResolverStrategy(env),
-					new SerializablePlaceholderResolverStrategy(ClassObjectMarshallingStrategyAcceptor.DEFAULT) };
+    private Properties buildUserGroupProperties() {
+        Properties props = new Properties();
+        try {
+            props.load(getClass().getClassLoader().getResourceAsStream("usergroups.properties"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return props;
+    }
 
-		}
-	}
+    protected ObjectMarshallingStrategy[] getPlaceholdStrategies(Environment env) {
+        if (isJpa) {
+            return new ObjectMarshallingStrategy[]{new ProcessInstanceResolverStrategy(), new JpaPlaceHolderResolverStrategy(env),
+                    new JpaCollectionPlaceHolderResolverStrategy(env),
+                    new SerializablePlaceholderResolverStrategy(ClassObjectMarshallingStrategyAcceptor.DEFAULT)};
+        } else {
+            return new ObjectMarshallingStrategy[]{new ProcessInstanceResolverStrategy(),
+                    new JpaPlaceHolderResolverStrategy(env),
+                    new JpaCollectionPlaceHolderResolverStrategy(env),
+                    new SerializablePlaceholderResolverStrategy(ClassObjectMarshallingStrategyAcceptor.DEFAULT)};
 
-	protected SubscriptionManager<?> getSubscriptionManager() {
-		if (isJpa) {
-			return new HibernateSubscriptionManager((JpaCaseFilePersistence) getPersistence());
-		}
-		return null;
-	}
+        }
+    }
+
+    protected SubscriptionManager<?> getSubscriptionManager() {
+        if (isJpa) {
+            return new HibernateSubscriptionManager((JpaCaseFilePersistence) getPersistence());
+        }
+        return null;
+    }
 
 
+    protected void clearHistory() {
+        if (sessionPersistence && getRuntimeManager() != null && getRuntimeEngine() != null && getRuntimeEngine().getAuditService() != null) {
+            getRuntimeEngine().getAuditService().clear();
+        }
+    }
 
+    @SuppressWarnings("rawtypes")
+    protected abstract Class[] getClasses();
 
-	protected void clearHistory() {
-		if (sessionPersistence && getRuntimeManager() != null && getRuntimeEngine() != null && getRuntimeEngine().getAuditService() != null) {
-			getRuntimeEngine().getAuditService().clear();
-		}
-	}
+    private class MyCaseRegisterableItemsFactory extends CaseRegisterableItemsFactory {
 
-	@SuppressWarnings("rawtypes")
-	protected abstract Class[] getClasses();
-
-	private class MyCaseRegisterableItemsFactory extends CaseRegisterableItemsFactory {
-
-		@Override
+        @Override
         public Map<String, WorkItemHandler> getWorkItemHandlers(RuntimeEngine runtime) {
             Map<String, WorkItemHandler> handlers = new HashMap<String, WorkItemHandler>();
             handlers.putAll(super.getWorkItemHandlers(runtime));
@@ -552,26 +552,26 @@ public abstract class AbstractCmmnCaseTestCase extends JbpmJUnitBaseTestCase {
             return handlers;
         }
 
-		@Override
+        @Override
         public List<ProcessEventListener> getProcessEventListeners(RuntimeEngine runtime) {
             List<ProcessEventListener> listeners = super.getProcessEventListeners(runtime);
             listeners.addAll(customProcessListeners);
             return listeners;
         }
 
-		@Override
-        public List<AgendaEventListener> getAgendaEventListeners( RuntimeEngine runtime) {
+        @Override
+        public List<AgendaEventListener> getAgendaEventListeners(RuntimeEngine runtime) {
             List<AgendaEventListener> listeners = super.getAgendaEventListeners(runtime);
             listeners.addAll(customAgendaListeners);
             return listeners;
         }
 
-		@Override
+        @Override
         public List<TaskLifeCycleEventListener> getTaskListeners() {
             List<TaskLifeCycleEventListener> listeners = super.getTaskListeners();
             listeners.addAll(customTaskListeners);
             return listeners;
         }
 
-	}
+    }
 }

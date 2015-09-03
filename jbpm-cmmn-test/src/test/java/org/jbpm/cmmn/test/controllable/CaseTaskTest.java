@@ -42,7 +42,9 @@ public class CaseTaskTest extends AbstractControllableLifecycleTest {
 		triggerStartOfTask(); // Creates a second wallPlan
 		Plan plan = getCmmnService().getPlan(caseInstance.getId());
 		PlannedItem theEventGeneratingTaskPlanItem = plan.getPlannableItemsFor("TheEventGeneratingTaskPlanItem").get(0);
+		getPersistence().start();
 		getCmmnService().transitionPlanItem(caseInstance.getId(), theEventGeneratingTaskPlanItem.getNodeInstanceId(), PlanItemTransition.MANUAL_START);
+		getPersistence().commit();
 		// *******THEN
 		getPersistence().start();
 		long id = getSubProcessInstanceId(theEventGeneratingTaskPlanItem.getNodeInstanceId());

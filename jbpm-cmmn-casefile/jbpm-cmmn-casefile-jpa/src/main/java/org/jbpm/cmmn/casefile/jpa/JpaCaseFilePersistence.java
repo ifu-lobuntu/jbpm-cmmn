@@ -1,8 +1,7 @@
 package org.jbpm.cmmn.casefile.jpa;
 
-import org.jbpm.cmmn.casefile.common.CaseFilePersistence;
 import org.jbpm.cmmn.casefile.common.Stopwatch;
-import org.jbpm.cmmn.instance.subscription.SubscriptionPersistenceContext;
+import org.jbpm.cmmn.instance.CaseFilePersistence;
 import org.kie.api.runtime.manager.RuntimeManager;
 
 import javax.naming.InitialContext;
@@ -15,34 +14,30 @@ import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 
 /**
- * 
  * Needed to coordinate the dispatching of Events with storing the updated
  * subscriptions and flushing of the EntityManager. The plan is to do the
  * dispatching asynchronously eventually. There are still some serious issues to
  * resolve, specifically w.r.t. clearing some static variables and avoiding
  * memory leaks
- * 
+ * TODO more or less refactor it away.
  */
-public class JpaCaseFilePersistence implements SubscriptionPersistenceContext<JpaCaseFileItemSubscription>, CaseFilePersistence {
-    public static final String ENV_NAME = JpaCaseFilePersistence.class.getName() + "VAR";
+public class JpaCaseFilePersistence implements CaseFilePersistence {
     static ThreadLocal<EntityManager> em = new ThreadLocal<EntityManager>();
+    private final String deploymentId;
     protected EntityManagerFactory emf;
     protected boolean startedTransaction = false;
     protected Stopwatch stopwatch = new Stopwatch(getClass());
     private UserTransaction transaction;
-    private RuntimeManager runtimeManager;
 
-    public JpaCaseFilePersistence(EntityManagerFactory emf, RuntimeManager rm) {
-        this.runtimeManager = rm;
+    public JpaCaseFilePersistence(EntityManagerFactory emf, String deploymentId) {
         this.emf = emf;
+        this.deploymentId=deploymentId;
     }
 
-    @Override
     public Object getDelegate() {
         return getEntityManager().getDelegate();
     }
 
-    @Override
     public void start() {
         try {
             if (em.get() != null && em.get().isOpen()) {
@@ -67,12 +62,12 @@ public class JpaCaseFilePersistence implements SubscriptionPersistenceContext<Jp
         }
     }
 
-    protected boolean isTransactionActive() throws SystemException, NamingException {
+    private boolean isTransactionActive() throws SystemException, NamingException {
         int status = getTransaction().getStatus();
         return status == Status.STATUS_ACTIVE;
     }
 
-    protected RuntimeException convertException(Exception e) {
+    private RuntimeException convertException(Exception e) {
         if (e instanceof RuntimeException) {
             return (RuntimeException) e;
         } else {
@@ -80,7 +75,6 @@ public class JpaCaseFilePersistence implements SubscriptionPersistenceContext<Jp
         }
     }
 
-    @Override
     public void persist(Object o) {
         startOrJoinTransaction();
         getEntityManager().persist(o);
@@ -93,11 +87,6 @@ public class JpaCaseFilePersistence implements SubscriptionPersistenceContext<Jp
         return transaction;
     }
 
-    void setTransaction(UserTransaction transaction) {
-        this.transaction = transaction;
-    }
-
-    @Override
     public <T> T find(Class<T> class1, Object id) {
         return getEntityManager().find(class1, id);
     }
@@ -111,12 +100,10 @@ public class JpaCaseFilePersistence implements SubscriptionPersistenceContext<Jp
         return em.get();
     }
 
-    @Override
     public void remove(Object s) {
         getEntityManager().remove(s);
     }
 
-    @Override
     public void close() {
         if (em.get() != null && em.get().isOpen()) {
             em.get().close();
@@ -124,21 +111,17 @@ public class JpaCaseFilePersistence implements SubscriptionPersistenceContext<Jp
         this.startedTransaction = false;
     }
 
-    @Override
     public void update(Object o) {
     }
 
 
-    @Override
     public void commit() {
         try {
             startOrJoinTransaction();
             getEntityManager().flush();
             doCaseFileItemEvents();
-            if (runtimeManager != null) {
-                if (startedTransaction) {
-                    getTransaction().commit();
-                }
+            if (startedTransaction) {
+                getTransaction().commit();
             }
             close();
         } catch (Exception e) {
@@ -147,10 +130,8 @@ public class JpaCaseFilePersistence implements SubscriptionPersistenceContext<Jp
     }
 
     private void doCaseFileItemEvents() {
-        if (runtimeManager != null) {
-            while (EventQueues.dispatchCaseFileItemEventQueue(runtimeManager)) {
-                getEntityManager().flush();
-            }
+        while (EventQueues.dispatchCaseFileItemEventQueue(deploymentId)) {
+            getEntityManager().flush();
         }
     }
 

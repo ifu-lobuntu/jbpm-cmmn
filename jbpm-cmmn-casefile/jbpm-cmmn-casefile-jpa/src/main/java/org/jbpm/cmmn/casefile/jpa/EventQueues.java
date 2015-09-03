@@ -6,6 +6,7 @@ import org.jbpm.cmmn.instance.impl.util.SubscriptionUtil;
 import org.jbpm.cmmn.instance.subscription.impl.CaseFileItemEventWrapper;
 import org.kie.api.runtime.manager.RuntimeEngine;
 import org.kie.api.runtime.manager.RuntimeManager;
+import org.kie.internal.runtime.manager.RuntimeManagerRegistry;
 import org.kie.internal.runtime.manager.context.ProcessInstanceIdContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,8 +27,9 @@ public class EventQueues {
     }
 
 
-    public static boolean dispatchCaseFileItemEventQueue(RuntimeManager runtimeManager) {
+    public static boolean dispatchCaseFileItemEventQueue(String deploymentId) {
         Set<CaseFileItemEventWrapper> eq = getEventQueue();
+        RuntimeManager runtimeManager= RuntimeManagerRegistry.get().getManager(deploymentId);
         eventQueue.set(new HashSet<CaseFileItemEventWrapper>());
         if (eq.size() > 0) {
             Set<RuntimeEngine> engines = new HashSet<RuntimeEngine>();

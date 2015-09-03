@@ -5,7 +5,6 @@ import org.jbpm.cmmn.flow.common.CaseFileItemTransition;
 import org.jbpm.cmmn.instance.CaseInstance;
 import org.jbpm.cmmn.instance.subscription.DurableCaseFileItemSubscription;
 import org.jbpm.cmmn.instance.subscription.SubscriptionManager;
-import org.jbpm.cmmn.instance.subscription.SubscriptionPersistenceContext;
 import org.jbpm.cmmn.test.AbstractConstructionTestCase;
 import org.junit.Test;
 import org.kie.api.task.model.TaskSummary;
@@ -30,7 +29,6 @@ public abstract class SubscriptionScopeTest extends AbstractConstructionTestCase
 		// *****WHEN
 		SubscriptionManager subManager = (SubscriptionManager) getRuntimeEngine().getKieSession().getEnvironment().get(SubscriptionManager.ENV_NAME);
 		getPersistence().start();
-		SubscriptionPersistenceContext spc=(SubscriptionPersistenceContext) getPersistence();
 		assertEquals(0, subManager.getCaseSubscriptionInfoFor(housePlan).size());
 		getPersistence().commit();
 

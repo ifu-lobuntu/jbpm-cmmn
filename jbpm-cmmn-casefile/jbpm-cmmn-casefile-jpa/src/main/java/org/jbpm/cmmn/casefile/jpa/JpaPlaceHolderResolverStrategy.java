@@ -1,15 +1,13 @@
 package org.jbpm.cmmn.casefile.jpa;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.lang.reflect.Member;
 
 import org.drools.core.common.DroolsObjectInputStream;
 import org.kie.api.marshalling.ObjectMarshallingStrategy;
 import org.kie.api.runtime.Environment;
+
+import javax.persistence.EntityManager;
 
 public class JpaPlaceHolderResolverStrategy implements ObjectMarshallingStrategy {
 	private Environment env;
@@ -33,8 +31,17 @@ public class JpaPlaceHolderResolverStrategy implements ObjectMarshallingStrategy
 	}
 
 	private Object getIdValue(Object object) {
+		JpaCaseFilePersistence jop = (JpaCaseFilePersistence) env.get(JpaCaseFilePersistence.ENV_NAME);
 		Member idMember = JpaIdUtil.INSTANCE.findIdMember(object.getClass());
-		return JpaIdUtil.INSTANCE.getId(idMember, object);
+		Serializable id = JpaIdUtil.INSTANCE.getId(idMember, object);
+		EntityManager em = jop.getEntityManager();
+		if(id == null) {
+			em.persist(object);
+			id = JpaIdUtil.INSTANCE.getId(idMember, object);
+		} else {
+			em.merge(object);
+		}
+		return id;
 	}
 
 	public Object read(ObjectInputStream is) throws IOException, ClassNotFoundException {
