@@ -2,10 +2,7 @@ package org.jbpm.cmmn.casefile.jpa;
 
 import org.jbpm.cmmn.casefile.common.CaseFilePersistence;
 import org.jbpm.cmmn.casefile.common.Stopwatch;
-import org.jbpm.cmmn.instance.subscription.CaseSubscriptionKey;
 import org.jbpm.cmmn.instance.subscription.SubscriptionPersistenceContext;
-import org.jbpm.cmmn.instance.subscription.impl.AbstractDurableSubscriptionManager;
-import org.jbpm.cmmn.instance.subscription.impl.EventQueues;
 import org.kie.api.runtime.manager.RuntimeManager;
 
 import javax.naming.InitialContext;
@@ -26,7 +23,7 @@ import javax.transaction.UserTransaction;
  * memory leaks
  * 
  */
-public class JpaCaseFilePersistence implements SubscriptionPersistenceContext<JpaCaseSubscriptionInfo, JpaCaseFileItemSubscriptionInfo>, CaseFilePersistence {
+public class JpaCaseFilePersistence implements SubscriptionPersistenceContext<JpaCaseFileItemSubscription>, CaseFilePersistence {
     public static final String ENV_NAME = JpaCaseFilePersistence.class.getName() + "VAR";
     static ThreadLocal<EntityManager> em = new ThreadLocal<EntityManager>();
     protected EntityManagerFactory emf;
@@ -131,25 +128,6 @@ public class JpaCaseFilePersistence implements SubscriptionPersistenceContext<Jp
     public void update(Object o) {
     }
 
-    @Override
-    public JpaCaseSubscriptionInfo findCaseSubscriptionInfo(CaseSubscriptionKey key) {
-        return getEntityManager().find(JpaCaseSubscriptionInfo.class, key);
-    }
-
-    @Override
-    public void updateCaseSupbscriptionInfo(JpaCaseSubscriptionInfo t) {
-    }
-
-    @Override
-    public void persistCaseSubscriptionInfo(JpaCaseSubscriptionInfo t) {
-        startOrJoinTransaction();
-        getEntityManager().persist(t);
-    }
-
-    @Override
-    public void removeCaseFileItemSubscriptionInfo(JpaCaseFileItemSubscriptionInfo x) {
-        getEntityManager().remove(x);
-    }
 
     @Override
     public void commit() {
@@ -160,17 +138,6 @@ public class JpaCaseFilePersistence implements SubscriptionPersistenceContext<Jp
             if (runtimeManager != null) {
                 if (startedTransaction) {
                     getTransaction().commit();
-//                    boolean workItemsProcessed = false;
-//                    do {
-//                        this.startedTransaction = false;
-//                        startOrJoinTransaction();
-//                        workItemsProcessed = EventQueues.dispatchWorkItemQueue(runtimeManager);
-//                        if (workItemsProcessed) {
-//                            doCaseFileItemEvents();
-//                        }
-//                        getTransaction().commit();
-//                    } while (workItemsProcessed);
-//                    this.startedTransaction = false;
                 }
             }
             close();
@@ -182,10 +149,6 @@ public class JpaCaseFilePersistence implements SubscriptionPersistenceContext<Jp
     private void doCaseFileItemEvents() {
         if (runtimeManager != null) {
             while (EventQueues.dispatchCaseFileItemEventQueue(runtimeManager)) {
-                AbstractDurableSubscriptionManager.commitSubscriptionsTo(this);
-                getEntityManager().flush();
-            }
-            if (AbstractDurableSubscriptionManager.commitSubscriptionsTo(this)) {
                 getEntityManager().flush();
             }
         }

@@ -12,68 +12,30 @@ import org.jbpm.cmmn.casefile.jpa.HibernateSubscriptionManager;
 import org.jbpm.cmmn.casefile.jpa.JpaCaseFilePersistence;
 import org.jbpm.cmmn.casefile.jpa.JpaCollectionPlaceHolderResolverStrategy;
 import org.jbpm.cmmn.casefile.jpa.JpaPlaceHolderResolverStrategy;
-import org.jbpm.cmmn.flow.builder.PlanItemBuilder;
-import org.jbpm.cmmn.flow.builder.SentryBuilder;
 import org.jbpm.cmmn.flow.common.impl.PlanItemInstanceFactoryNodeImpl;
-import org.jbpm.cmmn.flow.core.Case;
-import org.jbpm.cmmn.flow.core.CaseFileItemDefinitionType;
-import org.jbpm.cmmn.flow.definition.impl.CaseFileItemStartTriggerImpl;
-import org.jbpm.cmmn.flow.definition.impl.PlanItemStartTriggerImpl;
-import org.jbpm.cmmn.flow.core.impl.*;
-import org.jbpm.cmmn.flow.common.impl.AbstractStandardEventNode;
-import org.jbpm.cmmn.flow.planitem.impl.CaseFileItemOnPartImpl;
-import org.jbpm.cmmn.flow.planitem.impl.PlanItemImpl;
-import org.jbpm.cmmn.flow.planitem.impl.PlanItemOnPartImpl;
-import org.jbpm.cmmn.flow.planitem.impl.SentryImpl;
-import org.jbpm.cmmn.flow.planning.impl.DiscretionaryItemImpl;
 import org.jbpm.cmmn.flow.xml.CMMNBuilder;
-import org.jbpm.cmmn.flow.xml.DefaultTypeMap;
-import org.jbpm.cmmn.flow.xml.DefinitionsHandler;
-import org.jbpm.cmmn.flow.xml.JcrTypeMap;
 import org.jbpm.cmmn.instance.CaseInstance;
 import org.jbpm.cmmn.instance.PlanElementState;
 import org.jbpm.cmmn.instance.PlanItemInstance;
-import org.jbpm.cmmn.instance.factory.DelegatingNodeInstanceFactory;
 import org.jbpm.cmmn.instance.impl.*;
 import org.jbpm.cmmn.instance.subscription.SubscriptionManager;
-import org.jbpm.cmmn.instance.subscription.impl.AbstractDurableSubscriptionManager;
-import org.jbpm.cmmn.marshalling.CaseInstanceMarshaller;
 import org.jbpm.cmmn.service.api.CMMNService;
 import org.jbpm.cmmn.service.api.impl.CMMNServiceImpl;
-import org.jbpm.cmmn.task.workitems.CaseTaskLifecycleListener;
 import org.jbpm.cmmn.task.registration.CaseRegisterableItemsFactory;
 import org.jbpm.marshalling.impl.ProcessInstanceResolverStrategy;
-import org.jbpm.marshalling.impl.ProcessMarshallerRegistry;
-import org.jbpm.process.audit.JPAAuditLogService;
-import org.jbpm.process.audit.strategy.PersistenceStrategy;
-import org.jbpm.process.builder.ProcessNodeBuilderRegistry;
-import org.jbpm.process.core.validation.ProcessValidationError;
-import org.jbpm.process.core.validation.ProcessValidator;
-import org.jbpm.process.core.validation.ProcessValidatorRegistry;
-import org.jbpm.process.instance.ProcessInstanceFactoryRegistry;
 import org.jbpm.process.instance.event.DefaultSignalManagerFactory;
 import org.jbpm.process.instance.impl.DefaultProcessInstanceManagerFactory;
-import org.jbpm.ruleflow.core.RuleFlowProcess;
-import org.jbpm.ruleflow.core.validation.RuleFlowProcessValidator;
-import org.jbpm.runtime.manager.impl.SimpleRegisterableItemsFactory;
 import org.jbpm.runtime.manager.impl.factory.LocalTaskServiceFactory;
 import org.jbpm.services.task.identity.JBossUserGroupCallbackImpl;
 import org.jbpm.services.task.impl.model.GroupImpl;
 import org.jbpm.services.task.impl.model.UserImpl;
-import org.jbpm.services.task.wih.ExternalTaskEventListener;
 import org.jbpm.test.JbpmJUnitBaseTestCase;
 import org.jbpm.workflow.instance.NodeInstanceContainer;
-import org.jbpm.workflow.instance.impl.NodeInstanceFactoryRegistry;
-import org.jbpm.workflow.instance.impl.factory.CreateNewNodeFactory;
-import org.jbpm.workflow.instance.impl.factory.ReuseNodeFactory;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
-import org.kie.api.definition.process.*;
-import org.kie.api.definition.process.Process;
 import org.kie.api.event.process.ProcessEventListener;
 import org.kie.api.event.rule.AgendaEventListener;
-import org.kie.api.io.Resource;
 import org.kie.api.io.ResourceType;
 import org.kie.api.marshalling.ObjectMarshallingStrategy;
 import org.kie.api.runtime.Environment;
@@ -91,7 +53,6 @@ import org.kie.api.task.TaskService;
 import org.kie.api.task.model.TaskSummary;
 import org.kie.internal.io.ResourceFactory;
 import org.kie.internal.task.api.ContentMarshallerContext;
-import org.kie.internal.task.api.EventService;
 import org.kie.internal.task.api.InternalTaskService;
 
 import javax.naming.InitialContext;
@@ -108,7 +69,6 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.*;
@@ -504,7 +464,7 @@ public abstract class AbstractCmmnCaseTestCase extends JbpmJUnitBaseTestCase {
 	}
 	protected void prepareEnvironment(Environment env) {
 		env.set(OBJECT_MARSHALLING_STRATEGIES, getPlaceholdStrategies(env));
-		AbstractDurableSubscriptionManager<?, ?> subscriptionManager = getSubscriptionManager();
+		SubscriptionManager<?> subscriptionManager = getSubscriptionManager();
 		if (subscriptionManager != null) {
 			env.set(SubscriptionManager.ENV_NAME, subscriptionManager);
 		}
@@ -563,9 +523,9 @@ public abstract class AbstractCmmnCaseTestCase extends JbpmJUnitBaseTestCase {
 		}
 	}
 
-	protected AbstractDurableSubscriptionManager<?, ?> getSubscriptionManager() {
+	protected SubscriptionManager<?> getSubscriptionManager() {
 		if (isJpa) {
-			return new HibernateSubscriptionManager();
+			return new HibernateSubscriptionManager((JpaCaseFilePersistence) getPersistence());
 		}
 		return null;
 	}

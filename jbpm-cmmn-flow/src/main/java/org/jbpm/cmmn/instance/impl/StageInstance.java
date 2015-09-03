@@ -4,12 +4,8 @@ import org.jbpm.cmmn.flow.core.PlanItemContainer;
 import org.jbpm.cmmn.flow.definition.Stage;
 import org.jbpm.cmmn.flow.planning.PlanningTable;
 import org.jbpm.cmmn.instance.*;
-import org.jbpm.cmmn.instance.impl.util.PlanItemInstanceContainerUtil;
-import org.jbpm.cmmn.instance.impl.util.PlanningTableContainerInstanceUtil;
-import org.jbpm.cmmn.instance.subscription.OnPartInstanceSubscription;
 import org.jbpm.process.instance.ContextInstanceContainer;
 import org.jbpm.workflow.core.node.StartNode;
-import org.jbpm.workflow.instance.NodeInstanceContainer;
 import org.jbpm.workflow.instance.WorkflowProcessInstance;
 import org.jbpm.workflow.instance.impl.WorkflowProcessInstanceImpl;
 import org.jbpm.workflow.instance.node.EventBasedNodeInstanceInterface;
@@ -18,7 +14,6 @@ import org.kie.api.runtime.process.NodeInstance;
 
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -98,21 +93,6 @@ public class StageInstance extends ControllableItemInstanceImpl<Stage> implement
     @Override
     public PlanItemContainer getPlanItemContainer() {
         return getItem().getDefinition();
-    }
-
-    @Override
-    public void populateSubscriptionsActivatedByParameters(SubscriptionContext sc) {
-        PlanItemInstanceContainerUtil.populateSubscriptionsActivatedByParametersOfContainedTasks(this, sc);
-    }
-
-    @Override
-    public void addSubscribingCaseParameters(Set<org.jbpm.cmmn.flow.core.CaseParameter> params) {
-        PlanItemInstanceContainerUtil.addSubscribingCaseParameters(params, this);
-    }
-
-    @Override
-    public void addCaseFileItemOnPartsForParameters(Collection<org.jbpm.cmmn.flow.core.CaseParameter> items, Map<OnPartInstance, OnPartInstanceSubscription> onCaseFileItemParts) {
-        PlanItemInstanceContainerUtil.addCaseFileItemOnPartsForParameters(items, this, onCaseFileItemParts);
     }
 
     @Override

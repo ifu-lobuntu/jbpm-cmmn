@@ -5,14 +5,21 @@ import org.jbpm.cmmn.instance.CaseInstance;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.Set;
 
-public interface SubscriptionManager<T extends DurableCaseSubscriptionInfo<X>,X extends DurableCaseFileItemSubscriptionInfo> {
-	String ENV_NAME = SubscriptionManager.class.getName();
+/**
+ * An
+ */
+public interface SubscriptionManager<X extends DurableCaseFileItemSubscription> {
+    String ENV_NAME = SubscriptionManager.class.getName();
 
-	void updateSubscriptions(CaseInstance process, Collection<Object> targets, Map<CaseFileItem, Collection<Object>> parentSubscriptions, SubscriptionPersistenceContext<T,X> p);
+    X createSubscription(Object object);
 
-	SubscriptionPersistenceContext<T,X> getObjectPersistence(CaseInstance p);
+    void setSubscriptions(CaseInstance caseInstance, Set<X> subscriptions);
 
-	DurableCaseSubscriptionInfo<?> getCaseSubscriptionInfoFor(Object object, SubscriptionPersistenceContext<T,X> p);
+    //For testing purposes really
+    Collection<? extends DurableCaseFileItemSubscription> getCaseSubscriptionInfoFor(Object object);
+
+    Collection<? extends DurableCaseFileItemSubscription> getCaseSubscriptionInfoFor(CaseInstance caseInstance);
 
 }

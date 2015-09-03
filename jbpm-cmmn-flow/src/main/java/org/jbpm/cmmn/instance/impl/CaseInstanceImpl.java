@@ -1,22 +1,17 @@
 package org.jbpm.cmmn.instance.impl;
 
-import org.drools.core.process.instance.WorkItem;
 import org.jbpm.casemgmt.role.RoleInstance;
 import org.jbpm.casemgmt.role.impl.RoleInstanceImpl;
 import org.jbpm.cmmn.common.WorkItemParameters;
-import org.jbpm.cmmn.flow.common.PlanItemTransition;
-import org.jbpm.cmmn.flow.core.CaseFileItem;
-import org.jbpm.cmmn.flow.core.CaseParameter;
-import org.jbpm.cmmn.flow.core.CaseRole;
-import org.jbpm.cmmn.flow.core.PlanItemContainer;
+import org.jbpm.cmmn.flow.core.*;
 import org.jbpm.cmmn.flow.core.impl.CaseImpl;
-import org.jbpm.cmmn.flow.core.impl.CaseRoleImpl;
 import org.jbpm.cmmn.flow.planning.PlanningTable;
 import org.jbpm.cmmn.instance.*;
 import org.jbpm.cmmn.instance.impl.util.ExpressionUtil;
 import org.jbpm.cmmn.instance.impl.util.PlanItemInstanceContainerUtil;
-import org.jbpm.cmmn.instance.impl.util.PlanningTableContainerInstanceUtil;
-import org.jbpm.cmmn.instance.subscription.OnPartInstanceSubscription;
+import org.jbpm.cmmn.instance.impl.util.SubscriptionUtil;
+import org.jbpm.cmmn.instance.subscription.DurableCaseFileItemSubscription;
+import org.jbpm.cmmn.instance.subscription.ScopedCaseFileItemSubscription;
 import org.jbpm.cmmn.instance.subscription.SubscriptionManager;
 import org.jbpm.cmmn.instance.subscription.SubscriptionPersistenceContext;
 import org.jbpm.ruleflow.instance.RuleFlowProcessInstance;
@@ -76,7 +71,8 @@ public class CaseInstanceImpl extends RuleFlowProcessInstance implements CaseIns
         super.signalEvent(type, event);
         signalCount--;
         if (shouldUpdateSubscriptions && signalCount == 0) {
-            //only update subscriptions when initial signalEvent call has completed
+            //only update subscriptions when initial, outermost signalEvent call has completed
+            //sometimes a signalEvent can result in this method being called from internal nodes
             updateSubscriptions();
         }
     }
@@ -111,24 +107,10 @@ public class CaseInstanceImpl extends RuleFlowProcessInstance implements CaseIns
         SubscriptionManager subscriptionManager = (SubscriptionManager) getKnowledgeRuntime().getEnvironment()
                 .get(SubscriptionManager.ENV_NAME);
         if (subscriptionManager != null) {
-            CaseInstanceImpl caseInstance = this;
-            SubscriptionPersistenceContext persistence = subscriptionManager.getObjectPersistence(caseInstance);
-            SubscriptionContext sc = new SubscriptionContext(this, new HashSet<Object>(), new HashMap<CaseFileItem, Collection<Object>>());
-            ExpressionUtil.populateSubscriptionsActivatedByParameters(sc, getCase().getInputParameters());
-            populateSubscriptionsActivatedByParameters(sc);
-            subscriptionManager.updateSubscriptions(caseInstance, sc.getSubscriptions(), sc.getParentSubscriptions(), persistence);
+            Set<DurableCaseFileItemSubscription> durable = SubscriptionUtil.buildCurrentDurableSubscriptionSet(this,subscriptionManager);
+            subscriptionManager.setSubscriptions(this, durable);
         }
         shouldUpdateSubscriptions = false;
-
-    }
-
-    public Set<OnPartInstanceSubscription> findOnPartInstanceSubscriptions() {
-        Set<org.jbpm.cmmn.flow.core.CaseParameter> params = new HashSet<org.jbpm.cmmn.flow.core.CaseParameter>();
-        params.addAll(getCase().getInputParameters());
-        addSubscribingCaseParameters(params);
-        Map<OnPartInstance, OnPartInstanceSubscription> onCaseFileItemParts = new HashMap<OnPartInstance, OnPartInstanceSubscription>();
-        addCaseFileItemOnPartsForParameters(params, onCaseFileItemParts);
-        return new HashSet<OnPartInstanceSubscription>(onCaseFileItemParts.values());
 
     }
 
@@ -141,23 +123,6 @@ public class CaseInstanceImpl extends RuleFlowProcessInstance implements CaseIns
                 && (getPlanElementState().isSemiTerminalState(this) || getPlanElementState() == PlanElementState.SUSPENDED)) {
             reactivate();
         }
-    }
-
-       // ****PlanItemInstanceContainerLifecycle implementation*****//
-    @Override
-    public void addCaseFileItemOnPartsForParameters(Collection<org.jbpm.cmmn.flow.core.CaseParameter> items,
-                                                    Map<OnPartInstance, OnPartInstanceSubscription> onCaseFileItemParts) {
-        PlanItemInstanceContainerUtil.addCaseFileItemOnPartsForParameters(items, this, onCaseFileItemParts);
-    }
-
-    @Override
-    public void addSubscribingCaseParameters(Set<org.jbpm.cmmn.flow.core.CaseParameter> params) {
-        PlanItemInstanceContainerUtil.addSubscribingCaseParameters(params, this);
-    }
-
-    @Override
-    public void populateSubscriptionsActivatedByParameters(SubscriptionContext sc) {
-        PlanItemInstanceContainerUtil.populateSubscriptionsActivatedByParametersOfContainedTasks(this, sc);
     }
 
     @Override

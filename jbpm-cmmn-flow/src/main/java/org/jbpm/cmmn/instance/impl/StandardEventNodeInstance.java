@@ -4,6 +4,7 @@ import org.jbpm.cmmn.flow.common.impl.AbstractStandardEventNode;
 import org.jbpm.cmmn.flow.common.impl.CaseFileItemStandardEventNodeImpl;
 import org.jbpm.cmmn.flow.common.impl.PlanItemStandardEventNode;
 import org.jbpm.cmmn.instance.*;
+import org.jbpm.cmmn.instance.impl.util.SubscriptionUtil;
 import org.jbpm.process.core.context.variable.VariableScope;
 import org.jbpm.process.instance.context.variable.VariableScopeInstance;
 import org.jbpm.workflow.instance.node.EventNodeInstance;

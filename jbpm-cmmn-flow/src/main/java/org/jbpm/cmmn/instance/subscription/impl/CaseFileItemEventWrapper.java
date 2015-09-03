@@ -4,13 +4,13 @@ import org.jbpm.cmmn.instance.CaseFileItemEvent;
 
 public class CaseFileItemEventWrapper {
 	CaseFileItemEvent event;
-	String caseKey;
+	String deploymentId;
 	long processId;
 
-	public CaseFileItemEventWrapper(CaseFileItemEvent event, String caseKey, long processId) {
+	public CaseFileItemEventWrapper(CaseFileItemEvent event, String deploymentId, long processId) {
 		super();
 		this.event = event;
-		this.caseKey = caseKey;
+		this.deploymentId = deploymentId;
 		this.processId = processId;
 	}
 
@@ -18,8 +18,8 @@ public class CaseFileItemEventWrapper {
 		return event;
 	}
 
-	public String getCaseKey() {
-		return caseKey;
+	public String getDeploymentId() {
+		return deploymentId;
 	}
 
 	public long getProcessInstanceId() {

@@ -8,7 +8,7 @@ import java.lang.reflect.Method;
 
 public abstract class AbstractIdUtil<T> {
 
-	public AbstractIdUtil() {
+	protected AbstractIdUtil() {
 		super();
 	}
 
@@ -34,20 +34,6 @@ public abstract class AbstractIdUtil<T> {
 			throw new IllegalStateException(e);
 		}
 		return (T) id;
-	}
-
-	public boolean isEntityObject(Object o) {
-		if (o == null) {
-			return false;
-		}
-		if (isEntity(o.getClass())) {
-			return true;
-		} else if (Object.class == o.getClass().getSuperclass()) {
-			return false;
-		} else {
-			return isEntityObject(o.getClass().getSuperclass());
-		}
-
 	}
 
 	public Member findIdMember(Class<?> commonSuperclass) {

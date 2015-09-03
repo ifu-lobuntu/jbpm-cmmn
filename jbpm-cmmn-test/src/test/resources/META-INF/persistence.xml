@@ -57,8 +57,7 @@
     <class>org.jbpm.services.task.audit.impl.model.AuditTaskImpl</class>
 
         <!-- CMMN Event managment -->
-        <class>org.jbpm.cmmn.casefile.jpa.JpaCaseFileItemSubscriptionInfo</class>
-        <class>org.jbpm.cmmn.casefile.jpa.JpaCaseSubscriptionInfo</class>
+        <class>org.jbpm.cmmn.casefile.jpa.JpaCaseFileItemSubscription</class>
         <!-- Customer entities -->
         <class>test.cmmn.HousePlan</class>
         <class>test.cmmn.RoomPlan</class>
@@ -80,10 +79,10 @@
             <!-- BZ 841786: AS7/EAP 6/Hib 4 uses new (sequence) generators which seem to cause problems -->      
             <property name="hibernate.id.new_generator_mappings" value="false" />            
             <property name="hibernate.transaction.jta.platform" value="org.hibernate.service.jta.platform.internal.BitronixJtaPlatform" />
-            <property name="hibernate.ejb.event.post-insert" value="org.jbpm.cmmn.casefile.jpa.HibernateSubscriptionManager" />
-            <property name="hibernate.ejb.event.flush-entity" value="org.jbpm.cmmn.casefile.jpa.HibernateSubscriptionManager" />
-            <property name="hibernate.ejb.event.flush" value="org.jbpm.cmmn.casefile.jpa.HibernateSubscriptionManager" />
-            <property name="hibernate.ejb.event.post-delete" value="org.jbpm.cmmn.casefile.jpa.HibernateSubscriptionManager"/>
+            <property name="hibernate.ejb.event.post-insert" value="org.jbpm.cmmn.casefile.jpa.HibernateCaseFileItemEventGenerator" />
+            <property name="hibernate.ejb.event.flush-entity" value="org.jbpm.cmmn.casefile.jpa.HibernateCaseFileItemEventGenerator" />
+            <property name="hibernate.ejb.event.flush" value="org.jbpm.cmmn.casefile.jpa.HibernateCaseFileItemEventGenerator" />
+            <property name="hibernate.ejb.event.post-delete" value="org.jbpm.cmmn.casefile.jpa.HibernateCaseFileItemEventGenerator"/>
         </properties>        
     </persistence-unit>
 </persistence>    

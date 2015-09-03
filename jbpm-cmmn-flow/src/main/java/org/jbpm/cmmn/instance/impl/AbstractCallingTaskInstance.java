@@ -11,6 +11,7 @@ import org.jbpm.cmmn.instance.CaseInstance;
 import org.jbpm.cmmn.instance.PlanElementState;
 import org.jbpm.cmmn.instance.PlanItemInstanceContainer;
 import org.jbpm.cmmn.instance.impl.util.ExpressionUtil;
+import org.jbpm.cmmn.instance.subscription.TaskInstance;
 import org.jbpm.process.core.context.exception.ExceptionScope;
 import org.jbpm.process.instance.ContextInstanceContainer;
 import org.jbpm.process.instance.ProcessInstance;
@@ -31,7 +32,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
-public abstract class AbstractCallingTaskInstance <T extends CallingTaskDefinition> extends ControllableItemInstanceImpl<T> implements EventListener, ContextInstanceContainer {
+public abstract class AbstractCallingTaskInstance <T extends CallingTaskDefinition> extends ControllableItemInstanceImpl<T> implements EventListener, ContextInstanceContainer,TaskInstance<T> {
 	static final Logger logger = LoggerFactory.getLogger(CaseTaskInstance.class);
 	private static final long serialVersionUID = -2144001908752174712L;
 	private long processInstanceId = -1;
@@ -41,6 +42,12 @@ public abstract class AbstractCallingTaskInstance <T extends CallingTaskDefiniti
 		super.internalTrigger(from, type);
 		noteInstantiation();
 	}
+	@Override
+	public Object getInput(String s) {
+		return ExpressionUtil.getInputParameter(this,getItem().getDefinition().getInputParameter(s));
+	}
+
+
 	public abstract String getCalledProcessId();
 	@Override
 	public void start() {

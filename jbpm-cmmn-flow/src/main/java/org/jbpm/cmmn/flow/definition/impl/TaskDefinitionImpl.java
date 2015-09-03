@@ -1,6 +1,7 @@
 package org.jbpm.cmmn.flow.definition.impl;
 
 import org.jbpm.cmmn.flow.core.Case;
+import org.jbpm.cmmn.flow.core.CaseFileItem;
 import org.jbpm.cmmn.flow.core.CaseParameter;
 import org.jbpm.cmmn.flow.core.impl.CaseParameterImpl;
 import org.jbpm.cmmn.flow.definition.ParameterMapping;
@@ -28,6 +29,18 @@ public class TaskDefinitionImpl extends AbstractPlanItemDefinition implements Ta
 
 	public void addOutputParameter(CaseParameter cp) {
 		this.outputs.put(cp.getElementId()==null?cp.getName():cp.getElementId(), cp);
+	}
+	public CaseParameter getInputParameter(String name){
+		return getCaseParameter(name, this.inputs);
+	}
+
+	private CaseParameter getCaseParameter(String name, Map<String, CaseParameter> inputs) {
+		for (CaseParameter c : inputs.values()) {
+			if(c.getName().equals(name)){
+				return c;
+			}
+		}
+		return null;
 	}
 
 	public void addInputParameter(CaseParameter cp) {

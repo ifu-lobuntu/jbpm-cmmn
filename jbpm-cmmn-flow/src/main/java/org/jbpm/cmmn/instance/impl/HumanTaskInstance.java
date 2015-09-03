@@ -19,6 +19,7 @@ import org.jbpm.cmmn.instance.PlanElementState;
 import org.jbpm.cmmn.instance.PlanItemInstanceContainer;
 import org.jbpm.cmmn.instance.PlanningTableContainerInstance;
 import org.jbpm.cmmn.instance.impl.util.ExpressionUtil;
+import org.jbpm.cmmn.instance.subscription.TaskInstance;
 import org.jbpm.process.core.context.exception.ExceptionScope;
 import org.jbpm.process.instance.context.exception.ExceptionScopeInstance;
 import org.jbpm.workflow.instance.WorkflowRuntimeException;
@@ -26,12 +27,17 @@ import org.kie.api.runtime.process.NodeInstance;
 
 import java.util.HashMap;
 
-public class HumanTaskInstance extends ControllableItemInstanceImpl<HumanTaskDefinition> implements PlanningTableContainerInstance, HumanTaskLifecycle {
+public class HumanTaskInstance extends ControllableItemInstanceImpl<HumanTaskDefinition> implements PlanningTableContainerInstance, HumanTaskLifecycle, TaskInstance<HumanTaskDefinition> {
 
     private static final long serialVersionUID = 8452936237272366757L;
     protected WorkItem workItem;
     private long workItemId = -1;
     private transient boolean signalFromTask = false;
+
+    @Override
+    public Object getInput(String s) {
+        return ExpressionUtil.getInputParameter(this,getItem().getDefinition().getInputParameter(s));
+    }
 
     @Override
     public void internalTrigger(NodeInstance from, String type) {

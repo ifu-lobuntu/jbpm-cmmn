@@ -10,7 +10,7 @@ public interface TaskDefinition extends RepeatablePlanItemDefinition {
 	Collection<CaseParameter> getInputs();
 
 	Collection<CaseParameter> getOutputs();
-
+	CaseParameter getInputParameter(String name);
 	void addOutputParameter(CaseParameter cp);
 
 	void addInputParameter(CaseParameter cp);

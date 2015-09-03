@@ -2,28 +2,31 @@ package org.jbpm.cmmn.instance.subscription.impl;
 
 import org.jbpm.cmmn.flow.common.CaseFileItemTransition;
 import org.jbpm.cmmn.instance.impl.CaseInstanceImpl;
-import org.jbpm.cmmn.instance.subscription.OnPartInstanceSubscription;
+import org.jbpm.cmmn.instance.impl.util.SubscriptionUtil;
+import org.jbpm.cmmn.instance.subscription.ScopedCaseFileItemSubscription;
 
 import java.util.*;
 import java.util.Map.Entry;
 
 public class DemarcatedSubscriptionContext {
-	private static ThreadLocal<Map<Long, Set<OnPartInstanceSubscription>>> demarcatedSubscriptions = new ThreadLocal<Map<Long, Set<OnPartInstanceSubscription>>>();
+	private static ThreadLocal<Map<Long, Set<ScopedCaseFileItemSubscription>>> demarcatedSubscriptions = new ThreadLocal<Map<Long, Set<ScopedCaseFileItemSubscription>>>();
 
 	public static void activateSubscriptionsFrom(CaseInstanceImpl theCase) {
-		Map<Long, Set<OnPartInstanceSubscription>> map = demarcatedSubscriptions.get();
+		Map<Long, Set<ScopedCaseFileItemSubscription>> map = demarcatedSubscriptions.get();
 		if (map == null) {
-			demarcatedSubscriptions.set(map = new HashMap<Long, Set<OnPartInstanceSubscription>>());
+			demarcatedSubscriptions.set(map = new HashMap<Long, Set<ScopedCaseFileItemSubscription>>());
 		}
-		map.put(theCase.getId(), theCase.findOnPartInstanceSubscriptions());
+		CaseInstanceImpl caseInstance = theCase;
+
+		map.put(theCase.getId(), SubscriptionUtil.findScopedCaseFileItemSubscriptions(caseInstance));
 	}
 
-	public static Set<OnPartInstanceSubscription> getSubscriptionsInScopeForFor(Object source, CaseFileItemTransition... transitions) {
+	public static Set<ScopedCaseFileItemSubscription> getSubscriptionsInScopeForFor(Object source, CaseFileItemTransition... transitions) {
 		if (demarcatedSubscriptions.get() != null) {
-			Set<OnPartInstanceSubscription> result = new HashSet<OnPartInstanceSubscription>();
-			for (Entry<Long, Set<OnPartInstanceSubscription>> entry : demarcatedSubscriptions.get().entrySet()) {
+			Set<ScopedCaseFileItemSubscription> result = new HashSet<ScopedCaseFileItemSubscription>();
+			for (Entry<Long, Set<ScopedCaseFileItemSubscription>> entry : demarcatedSubscriptions.get().entrySet()) {
 				for (CaseFileItemTransition t : transitions) {
-					for (OnPartInstanceSubscription opis : entry.getValue()) {
+					for (ScopedCaseFileItemSubscription opis : entry.getValue()) {
 						if (opis.isListeningTo(source, t)) {
 							result.add(opis);
 						}
