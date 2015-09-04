@@ -22,13 +22,13 @@ public class PlanningTest extends AbstractPlanItemInstanceContainerTest {
 		getPersistence().start();
 		Plan pti = getCmmnService().startPlanning(caseInstance.getId(), "ConstructionProjectManager", false);
 		assertEquals(0, pti.getApplicableDiscretionaryItems().size());
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 		getPersistence().start();
 		reloadCaseInstance(caseInstance).getRoleInstance("ConstructionProjectManagers").addRoleAssignment("ConstructionProjectManager");
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 		getPersistence().start();
 		pti = getCmmnService().startPlanning(caseInstance.getId(),"ConstructionProjectManager", false);
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 		assertPlanItemDefinitionPresent(pti.getApplicableDiscretionaryItems(), "TheCaseTask");
 		assertPlanItemDefinitionPresent(pti.getApplicableDiscretionaryItems(), "TheHumanTask");
 		assertPlanItemDefinitionPresent(pti.getApplicableDiscretionaryItems(), "TheStage");
@@ -58,7 +58,7 @@ public class PlanningTest extends AbstractPlanItemInstanceContainerTest {
 		assertEquals(PlanElementState.ENABLED, plannedCaseTask.getState());
 		assertEquals(PlanElementState.ENABLED, plannedHumanTask.getState());
 		assertEquals(PlanElementState.ACTIVE, plannedStage.getState());
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 	}
 
 	@Test
@@ -67,35 +67,35 @@ public class PlanningTest extends AbstractPlanItemInstanceContainerTest {
 //		triggerInitialActivity();
 //		getPersistence().start();
 //		Long parentTaskId = getTaskService().getTaskByWorkItemId(caseInstance.getWorkItemId()).getId();
-//		getPersistence().commit();
+//		getPersistence().commitAndSendCaseFileItemEvents();
 //		getPersistence().start();
 //		PlannedItem plannedCaseTask = getCmmnService().preparePlannedItem(parentTaskId, "theCaseTaskDiscretionaryItemId");
-//		getPersistence().commit();
+//		getPersistence().commitAndSendCaseFileItemEvents();
 //		getPersistence().start();
 //		PlannedItem plannedHumanTask = getCmmnService().preparePlannedItem(parentTaskId, "theHumanTaskDiscretionaryItemId");
-//		getPersistence().commit();
+//		getPersistence().commitAndSendCaseFileItemEvents();
 //		getPersistence().start();
 //		PlannedItem plannedStage = getCmmnService().preparePlannedItem(parentTaskId, "theStageDiscretionaryItemId");
-//		getPersistence().commit();
+//		getPersistence().commitAndSendCaseFileItemEvents();
 //		for (TaskSummary s : getTaskService().getSubTasksByParent(parentTaskId)) {
 //			if(s.getName().equals("TheHumanTaskPlanItem")){
 //				getPersistence().start();
 //				//Get it in the right state
 //				getTaskService().claim(s.getId(), "Builder");
-//				getPersistence().commit();
+//				getPersistence().commitAndSendCaseFileItemEvents();
 //			}
 //		}
 //		getPersistence().start();
 //		PlanningTableInstance pti = getCmmnService().startPlanning(
 //				getTaskService().getTaskByWorkItemId(caseInstance.getWorkItemId()).getId(), "ConstructionProjectManager", false);
-//		getPersistence().commit();
+//		getPersistence().commitAndSendCaseFileItemEvents();
 //		for (PlannedItem plannableTask : pti.getPlannedItems()) {
 //			((InternalTaskData) plannableTask.getTaskData()).setActualOwner(new UserImpl("salaboy"));
 //			plannableTask.getPeopleAssignments().getPotentialOwners().add(new UserImpl("salaboy"));
 //		}
 //		getPersistence().start();
 //		getCmmnService().submitPlan(parentTaskId, pti.getPlannedItems(), false);
-//		getPersistence().commit();
+//		getPersistence().commitAndSendCaseFileItemEvents();
 //		getPersistence().start();
 //		caseInstance = reloadCaseInstance(caseInstance);
 //		assertFalse(caseInstance.canComplete());
@@ -109,7 +109,7 @@ public class PlanningTest extends AbstractPlanItemInstanceContainerTest {
 //		// Automatic activation:
 //		assertEquals(PlanElementState.ACTIVE, caseInstance.findNodeForWorkItem(plannedStage.getTaskData().getWorkItemId())
 //				.getPlanElementState());
-//		getPersistence().commit();
+//		getPersistence().commitAndSendCaseFileItemEvents();
 //		getPersistence().start();
 //		List<TaskSummary> tasks = getTaskService().getTasksOwned("salaboy", "en-UK");
 //		assertEquals(6, tasks.size());// TheHumanTaskPlanItem is in Ready state
@@ -119,19 +119,19 @@ public class PlanningTest extends AbstractPlanItemInstanceContainerTest {
 //		assertTaskInState(tasks, plannedHumanTask.getPlanItemName(), Status.Reserved);
 //		assertTaskInState(tasks, plannedStage.getPlanItemName(), Status.InProgress);
 //		super.completeTasks(tasks);
-//		getPersistence().commit();
+//		getPersistence().commitAndSendCaseFileItemEvents();
 //		getPersistence().start();
 //		caseInstance = reloadCaseInstance(caseInstance);
 //		assertFalse(caseInstance.canComplete());
-//		getPersistence().commit();
+//		getPersistence().commitAndSendCaseFileItemEvents();
 //		getPersistence().start();
 //		getTaskService().start(plannedHumanTask.getId(), "salaboy");
 //		getTaskService().complete(plannedHumanTask.getId(), "salaboy", new HashMap<String, Object>());
-//		getPersistence().commit();
+//		getPersistence().commitAndSendCaseFileItemEvents();
 //		getPersistence().start();
 //		caseInstance = reloadCaseInstance(caseInstance);
 //		assertTrue(caseInstance.canComplete());
-//		getPersistence().commit();
+//		getPersistence().commitAndSendCaseFileItemEvents();
 	}
 
 	@Test
@@ -150,7 +150,7 @@ public class PlanningTest extends AbstractPlanItemInstanceContainerTest {
 //		}
 //		getPersistence().start();
 //		getCmmnService().submitPlan(parentTaskId, pti.getPlannedItems(), false);
-//		getPersistence().commit();
+//		getPersistence().commitAndSendCaseFileItemEvents();
 //		List<TaskSummary> tasks = getTaskService().getTasksOwned("salaboy",
 //				Arrays.asList(Status.Created, Status.Ready, Status.Reserved, Status.Suspended), null);
 //		assertEquals(6, tasks.size());
@@ -174,10 +174,10 @@ public class PlanningTest extends AbstractPlanItemInstanceContainerTest {
 //				.getPlanElementState());
 //		assertEquals(PlanElementState.INITIAL, caseInstance.findNodeForWorkItem(plannedStage.getTaskData().getWorkItemId())
 //				.getPlanElementState());
-//		getPersistence().commit();
+//		getPersistence().commitAndSendCaseFileItemEvents();
 //		getPersistence().start();
 //		getTaskService().resume(parentTaskId, "ConstructionProjectManager");
-//		getPersistence().commit();
+//		getPersistence().commitAndSendCaseFileItemEvents();
 //		getPersistence().start();
 //		caseInstance = reloadCaseInstance(caseInstance);
 //		assertEquals(PlanElementState.ENABLED, caseInstance.findNodeForWorkItem(plannedCaseTask.getTaskData().getWorkItemId())
@@ -187,7 +187,7 @@ public class PlanningTest extends AbstractPlanItemInstanceContainerTest {
 //		// Automatic activation:
 //		assertEquals(PlanElementState.ACTIVE, caseInstance.findNodeForWorkItem(plannedStage.getTaskData().getWorkItemId())
 //				.getPlanElementState());
-//		getPersistence().commit();
+//		getPersistence().commitAndSendCaseFileItemEvents();
 	}
 
 	private void assertPlanItemDefinitionPresent(Collection<ApplicableDiscretionaryItem> pts, String itemName) {

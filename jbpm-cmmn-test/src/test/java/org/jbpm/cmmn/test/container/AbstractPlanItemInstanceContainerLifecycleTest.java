@@ -23,7 +23,7 @@ public abstract class AbstractPlanItemInstanceContainerLifecycleTest extends Abs
 		getPersistence().start();
 		// Cannot complete it
 			assertFalse(PlanItemInstanceContainerUtil.canComplete(getPlanItemInstanceContainer()));
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 		try {
 			completePlanItemInstanceContainer();
 			fail();
@@ -51,12 +51,12 @@ public abstract class AbstractPlanItemInstanceContainerLifecycleTest extends Abs
         assertTrue(PlanItemInstanceContainerUtil.canComplete( piic));
         assertEquals(PlanElementState.ACTIVE, piic.getPlanElementState());
         printState(" ", piic);
-        getPersistence().commit();
+        getPersistence().commitAndSendCaseFileItemEvents();
         completePlanItemInstanceContainer();
         getPersistence().start();
 		assertEquals(PlanElementState.COMPLETED, getPlanItemInstanceContainer().getPlanElementState());
 		printState(" ", getPlanItemInstanceContainer());
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 		// After completion, the planItem's state remain the same
 		assertPlanItemInState(caseInstance.getId(), "TheMilestonePlanItem", PlanElementState.COMPLETED);
 		assertPlanItemInState(caseInstance.getId(), "TheTimerEventPlanItem", PlanElementState.AVAILABLE);
@@ -93,7 +93,7 @@ public abstract class AbstractPlanItemInstanceContainerLifecycleTest extends Abs
 		PlanItemInstanceContainer piic = getPlanItemInstanceContainer();
 		assertEquals(PlanElementState.SUSPENDED, piic.getPlanElementState());
 		printState(" ", piic);
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 		assertPlanItemInState(caseInstance.getId(), "TheMilestonePlanItem", PlanElementState.COMPLETED);
 		assertPlanItemInState(caseInstance.getId(), "TheTimerEventPlanItem", PlanElementState.SUSPENDED);
 		assertPlanItemInState(caseInstance.getId(), "TheUserEventPlanItem", PlanElementState.SUSPENDED);
@@ -119,13 +119,13 @@ public abstract class AbstractPlanItemInstanceContainerLifecycleTest extends Abs
     protected void continuePlanItemInstanceContainer() {
         getPersistence().start();
         getCmmnService().transitionCase(caseInstance.getId(), PlanItemTransition.REACTIVATE);
-        getPersistence().commit();
+        getPersistence().commitAndSendCaseFileItemEvents();
     }
 
     protected void suspedPlanItemInstanceContainer() {
         getPersistence().start();
         getCmmnService().transitionCase(caseInstance.getId(), PlanItemTransition.SUSPEND);
-        getPersistence().commit();
+        getPersistence().commitAndSendCaseFileItemEvents();
     }
 
 	@Test
@@ -169,7 +169,7 @@ public abstract class AbstractPlanItemInstanceContainerLifecycleTest extends Abs
     protected void failPlanItemInstanceContainer() {
         getPersistence().start();
         getCmmnService().transitionCase(caseInstance.getId(), PlanItemTransition.FAULT);
-        getPersistence().commit();
+        getPersistence().commitAndSendCaseFileItemEvents();
     }
 
     @Test
@@ -187,7 +187,7 @@ public abstract class AbstractPlanItemInstanceContainerLifecycleTest extends Abs
 		PlanItemInstanceContainer piic = getPlanItemInstanceContainer();
 		assertEquals(PlanElementState.TERMINATED, piic.getPlanElementState());
 		printState(" ", piic);
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 		assertPlanItemInState(caseInstance.getId(), "TheMilestonePlanItem", PlanElementState.COMPLETED);
 		assertPlanItemInState(caseInstance.getId(), "TheTimerEventPlanItem", PlanElementState.TERMINATED);
 		assertPlanItemInState(caseInstance.getId(), "TheUserEventPlanItem", PlanElementState.TERMINATED);
@@ -213,7 +213,7 @@ public abstract class AbstractPlanItemInstanceContainerLifecycleTest extends Abs
     protected void terminatePlanItemInstanceContainer() {
         getPersistence().start();
         getCmmnService().transitionCase(caseInstance.getId(), PlanItemTransition.TERMINATE);
-        getPersistence().commit();
+        getPersistence().commitAndSendCaseFileItemEvents();
     }
 
 }

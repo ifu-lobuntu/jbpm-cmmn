@@ -39,7 +39,7 @@ public class HumanTaskDrivenFromTaskTest extends AbstractControllableLifecycleWi
 		newWallPlans.add(new WallPlan(otherHousePlan));
 		RoofPlan newRoofPlan = new RoofPlan(otherHousePlan);
 		getPersistence().persist(otherCase);
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 		// Now complete the Case
 		HashMap<String, Object> resultFromTask = new HashMap<String, Object>();
 		resultFromTask.put("wallPlanOutput", newWallPlans);
@@ -47,13 +47,13 @@ public class HumanTaskDrivenFromTaskTest extends AbstractControllableLifecycleWi
 		getPersistence().start();
 		getRuntimeEngine().getTaskService().complete(taskId, getEventGeneratingTaskUser(), resultFromTask);
 		// now look at the result - those new WallPlans must be added to the original housePlan due to the refinement
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 		getPersistence().start();
 		this.housePlan = getPersistence().find(HousePlan.class, housePlan.getId());
 		assertTrue(this.housePlan.getWallPlans().containsAll(newWallPlans));
 		assertEquals(5, this.housePlan.getWallPlans().size());
 		assertEquals(newRoofPlan, this.housePlan.getRoofPlan());
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 		// Check the task's result
 		Task task = getTaskService().getTaskById(taskId);
 		Content outputContent = getTaskService().getContentById(task.getTaskData().getOutputContentId());
@@ -63,7 +63,7 @@ public class HumanTaskDrivenFromTaskTest extends AbstractControllableLifecycleWi
 		Collection<WallPlan> wallPlanTaskOutput = (Collection<WallPlan>) outputAsMap.get("wallPlanOutput");
 		assertEquals(3, wallPlanTaskOutput.size());
 		assertEquals(newRoofPlan, outputAsMap.get("roofPlanOutput"));
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 	}
 
 	@Override
@@ -87,7 +87,7 @@ public class HumanTaskDrivenFromTaskTest extends AbstractControllableLifecycleWi
 	protected void reactivateTask(String taskName) {
         getPersistence().start();
         getTaskService().execute(new ReactivateTaskCommand(findTaskId(taskName), getEventGeneratingTaskUser()));
-        getPersistence().commit();
+        getPersistence().commitAndSendCaseFileItemEvents();
     }
 
 	protected void terminateTask(String taskName){
@@ -96,36 +96,36 @@ public class HumanTaskDrivenFromTaskTest extends AbstractControllableLifecycleWi
 	protected void reenableTask(String taskName) {
 		getPersistence().start();
 		getTaskService().execute(new ReenableTaskCommand(findTaskId(taskName), getEventGeneratingTaskUser()));
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 	}
 
 	protected void resumeTask(String taskName) {
         getPersistence().start();
         getTaskService().resume(findTaskId(taskName), getEventGeneratingTaskUser());
-        getPersistence().commit();
+        getPersistence().commitAndSendCaseFileItemEvents();
     }
 
 	protected void suspendTask(String taskName) {
         getPersistence().start();
         getTaskService().suspend(findTaskId(taskName), getEventGeneratingTaskUser());
-        getPersistence().commit();
+        getPersistence().commitAndSendCaseFileItemEvents();
     }
 
 	protected void startTaskManually(String taskName) {
         getPersistence().start();
         getTaskService().start(findTaskId(taskName), getEventGeneratingTaskUser());
-        getPersistence().commit();
+        getPersistence().commitAndSendCaseFileItemEvents();
     }
 
 	protected void failTask(String taskName) {
         getPersistence().start();
         getTaskService().fail(findTaskId(taskName), getEventGeneratingTaskUser(), new HashMap<String, Object>());
-        getPersistence().commit();
+        getPersistence().commitAndSendCaseFileItemEvents();
     }
 
 	protected void disableTask(String taskName) {
 		getPersistence().start();
 		getTaskService().skip(findTaskId(taskName), getEventGeneratingTaskUser());
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 	}
 }

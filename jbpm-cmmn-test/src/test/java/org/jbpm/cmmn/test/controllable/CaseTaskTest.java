@@ -44,7 +44,7 @@ public class CaseTaskTest extends AbstractControllableLifecycleTest {
 		PlannedItem theEventGeneratingTaskPlanItem = plan.getPlannableItemsFor("TheEventGeneratingTaskPlanItem").get(0);
 		getPersistence().start();
 		getCmmnService().transitionPlanItem(caseInstance.getId(), theEventGeneratingTaskPlanItem.getNodeInstanceId(), PlanItemTransition.MANUAL_START);
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 		// *******THEN
 		getPersistence().start();
 		long id = getSubProcessInstanceId(theEventGeneratingTaskPlanItem.getNodeInstanceId());
@@ -57,7 +57,7 @@ public class CaseTaskTest extends AbstractControllableLifecycleTest {
 		for (WallPlan wallPlan : wallPlans) {
 			assertEquals("I Am Transformed", wallPlan.getShortDescription());
 		}
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 		// *****THEN
 	}
 

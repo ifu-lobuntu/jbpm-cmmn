@@ -7,11 +7,7 @@ import org.jbpm.cmmn.instance.CaseInstance;
 import org.jbpm.cmmn.instance.PlanElementState;
 import org.jbpm.cmmn.instance.PlanItemInstanceContainer;
 import org.jbpm.cmmn.instance.impl.CaseInstanceImpl;
-import org.jbpm.services.task.utils.ContentMarshallerHelper;
 import org.junit.Test;
-import org.kie.api.task.model.Content;
-import org.kie.api.task.model.Task;
-import org.kie.internal.task.api.ContentMarshallerContext;
 
 import test.cmmn.WallPlan;
 
@@ -36,7 +32,7 @@ public class CaseInstanceTest extends AbstractPlanItemInstanceContainerLifecycle
 		PlanItemInstanceContainer piic = getPlanItemInstanceContainer();
 		assertEquals(PlanElementState.TERMINATED, piic.getPlanElementState());
 		printState(" ", piic);
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 		assertPlanItemInState(caseInstance.getId(), "TheMilestonePlanItem", PlanElementState.COMPLETED);
 		assertPlanItemInState(caseInstance.getId(), "TheTimerEventPlanItem", PlanElementState.TERMINATED);
 		assertPlanItemInState(caseInstance.getId(), "TheUserEventPlanItem", PlanElementState.TERMINATED);
@@ -71,7 +67,7 @@ public class CaseInstanceTest extends AbstractPlanItemInstanceContainerLifecycle
 			assertNull(getRuntimeEngine().getKieSession().getProcessInstance(caseInstance.getId()));
 			Map<String, Object> result = ci.getResult();
 			assertTrue(result.get("theResultingWallPlan") instanceof WallPlan);
-			getPersistence().commit();
+			getPersistence().commitAndSendCaseFileItemEvents();
 		}
 		// *****THEN
 	}

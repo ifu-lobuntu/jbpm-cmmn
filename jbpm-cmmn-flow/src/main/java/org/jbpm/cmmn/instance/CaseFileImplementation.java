@@ -10,9 +10,9 @@ public interface CaseFileImplementation {
     String CASE_FILE_IMPLEMENTATION_CLASS =  CaseFileImplementation.class.getName()+"Class";
     String DEMARCATED_SUBSCRIPTION =  CaseFileImplementation.class.getName()+"DemarcatedSubscriptions";
 
-    ObjectMarshallingStrategy[] getObjectMarshallingStrategies(Environment environmentTemplate);
+    ObjectMarshallingStrategy[] getObjectMarshallingStrategies(Environment environmentTemplate, ClassLoader cl);
 
-    SubscriptionManager<?> getSubscriptionManager(Environment environmentTemplate);
+    SubscriptionManager<?> getSubscriptionManager(Environment environmentTemplate, ClassLoader cl);
 
-    CaseFilePersistence getCaseFilePersistence(Environment env);
+    CaseFilePersistence getCaseFilePersistence(Environment env, ClassLoader cl);
 }

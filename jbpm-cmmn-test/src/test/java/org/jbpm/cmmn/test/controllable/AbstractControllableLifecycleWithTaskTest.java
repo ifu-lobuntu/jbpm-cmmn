@@ -153,7 +153,7 @@ public abstract class AbstractControllableLifecycleWithTaskTest extends Abstract
         assertPlanItemInState(caseInstance.getId(), "TheEventGeneratingTaskPlanItem", PlanElementState.ACTIVE);
         getPersistence().start();
         getRuntimeEngine().getKieSession().signalEvent("TheUserEvent", new Object(), caseInstance.getId());
-        getPersistence().commit();
+        getPersistence().commitAndSendCaseFileItemEvents();
         assertPlanItemInState(caseInstance.getId(), "TheEventGeneratingTaskPlanItem", PlanElementState.TERMINATED);
         stopwatch.finish("testTaskLifecycleExit");
     }
@@ -294,7 +294,7 @@ public abstract class AbstractControllableLifecycleWithTaskTest extends Abstract
         getTaskService().start(list.get(0).getId(), getEventGeneratingTaskUser());
         getPersistence().start();
         getRuntimeEngine().getKieSession().signalEvent("TheUserEvent", new Object(), caseInstance.getId());
-        getPersistence().commit();
+        getPersistence().commitAndSendCaseFileItemEvents();
         assertPlanItemInState(caseInstance.getId(), "TheEventGeneratingTaskPlanItem", PlanElementState.TERMINATED);
     }
 
@@ -327,7 +327,7 @@ public abstract class AbstractControllableLifecycleWithTaskTest extends Abstract
         // ******WHEN
         getPersistence().start();
         getRuntimeEngine().getKieSession().signalEvent("UserEventToStartManuallyActivatedTask", new Object(), caseInstance.getId());
-        getPersistence().commit();
+        getPersistence().commitAndSendCaseFileItemEvents();
         assertNodeTriggered(caseInstance.getId(), "TheManuallyActivatedTaskPlanItem");
         // *****THEN
         List<TaskSummary> list = getTaskService().getTasksAssignedAsPotentialOwner("Builder", "en-UK");
@@ -345,7 +345,7 @@ public abstract class AbstractControllableLifecycleWithTaskTest extends Abstract
         givenThatTheTestCaseIsStarted();
         getPersistence().start();
         getRuntimeEngine().getKieSession().signalEvent("UserEventToStartManuallyActivatedTask", new Object(), caseInstance.getId());
-        getPersistence().commit();
+        getPersistence().commitAndSendCaseFileItemEvents();
         List<TaskSummary> list = getTaskService().getTasksAssignedAsPotentialOwner(getEventGeneratingTaskUser(), "en-UK");
         assertTrue(list.size() > 0); // there could be 2
         assertNodeTriggered(caseInstance.getId(), "TheManuallyActivatedTaskPlanItem");
@@ -373,7 +373,7 @@ public abstract class AbstractControllableLifecycleWithTaskTest extends Abstract
         // ******WHEN
         getPersistence().start();
         getRuntimeEngine().getKieSession().signalEvent("UserEventToStartAutoActivatedTask", new Object(), caseInstance.getId());
-        getPersistence().commit();
+        getPersistence().commitAndSendCaseFileItemEvents();
         // *****THEN
         List<TaskSummary> list = getTaskService().getTasksAssignedAsPotentialOwner(getEventGeneratingTaskUser(), "en-UK");
         assertNodeTriggered(caseInstance.getId(), "TheAutoActivatedTaskPlanItem");
@@ -458,26 +458,26 @@ public abstract class AbstractControllableLifecycleWithTaskTest extends Abstract
         new WallPlan(housePlan);
         house = new House(cc);
         getPersistence().persist(cc);
-        getPersistence().commit();
+        getPersistence().commitAndSendCaseFileItemEvents();
         params.put("housePlan", housePlan);
         params.put("house", house);
         params.put(WorkItemParameters.CASE_OWNER, getCaseOwner());
         getPersistence().start();
         caseInstance = (CaseInstance) getRuntimeEngine().getKieSession().startProcess(getNameOfProcessToStart(), params);
-        getPersistence().commit();
+        getPersistence().commitAndSendCaseFileItemEvents();
         assertProcessInstanceActive(caseInstance.getId(), getRuntimeEngine().getKieSession());
         assertNodeTriggered(caseInstance.getId(), "defaultSplit");
         getPersistence().start();
         assertNodeActive(caseInstance.getId(), getRuntimeEngine().getKieSession(), "onWallPlanCreatedPartId");
         assertNodeActive(caseInstance.getId(), getRuntimeEngine().getKieSession(), "WaitingForWallPlanCreatedSentry");
-        getPersistence().commit();
+        getPersistence().commitAndSendCaseFileItemEvents();
     }
 
     protected void triggerTaskCreation() throws Exception {
         getPersistence().start();
         housePlan = getPersistence().find(HousePlan.class, housePlan.getId());
         new WallPlan(housePlan);
-        getPersistence().commit();
+        getPersistence().commitAndSendCaseFileItemEvents();
         List<TaskSummary> list = getTaskService().getTasksAssignedAsPotentialOwner(getEventGeneratingTaskUser(), "en-UK");
         getPersistence().start();
         TaskSummary ts = findTaskSummary(list, "TheEventGeneratingTaskPlanItem");
@@ -486,7 +486,7 @@ public abstract class AbstractControllableLifecycleWithTaskTest extends Abstract
             getTaskService().forward(ts.getId(), ts.getActualOwner().getId(), getEventGeneratingTaskUser());
         }
         getTaskService().claim(ts.getId(), getEventGeneratingTaskUser());
-        getPersistence().commit();
+        getPersistence().commitAndSendCaseFileItemEvents();
     }
     protected long findTaskId(String taskName) {
         long eventGeneratingTaskId = -1;

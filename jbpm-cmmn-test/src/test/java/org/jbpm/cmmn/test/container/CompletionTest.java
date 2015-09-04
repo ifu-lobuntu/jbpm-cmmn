@@ -82,7 +82,7 @@ public class CompletionTest extends AbstractConstructionTestCase {
 		}
 		System.out.println(pi.getVariable("InnerVar"));
 		printNodeInstances(padding, nodeInstances);
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 	}
 	private void printNodeInstances(String padding, Collection<NodeInstance> nodeInstances) {
 		for (NodeInstance nodeInstance : nodeInstances) {
@@ -107,7 +107,7 @@ public class CompletionTest extends AbstractConstructionTestCase {
 		getPersistence().start();
 		caseInstance = (CaseInstance) getRuntimeEngine().getKieSession().getProcessInstance(caseInstance.getId());
 		assertFalse(PlanItemInstanceContainerUtil.canComplete( caseInstance));
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 	}
 
 	@Test
@@ -124,7 +124,7 @@ public class CompletionTest extends AbstractConstructionTestCase {
 		getPersistence().start();
 		caseInstance = (CaseInstance) getRuntimeEngine().getKieSession().getProcessInstance(caseInstance.getId());
 		assertTrue(PlanItemInstanceContainerUtil.canComplete(caseInstance));
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 	}
 
 	@Test
@@ -136,7 +136,7 @@ public class CompletionTest extends AbstractConstructionTestCase {
 		getPersistence().start();
 		caseInstance = (CaseInstance) getRuntimeEngine().getKieSession().getProcessInstance(caseInstance.getId());
 		assertFalse(PlanItemInstanceContainerUtil.canComplete( caseInstance));
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 		// *****THEN
 
 	}
@@ -150,26 +150,26 @@ public class CompletionTest extends AbstractConstructionTestCase {
 		housePlan = new HousePlan(cc);
 		house = new House(cc);
 		getPersistence().persist(cc);
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 		params.put("housePlan", housePlan);
 		params.put("house", house);
 		params.put(WorkItemParameters.INITIATOR, "Spielman");
 		getPersistence().start();
 		caseInstance = (CaseInstance) getRuntimeEngine().getKieSession().startProcess("CompletionTests", params);
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 		assertProcessInstanceActive(caseInstance.getId(), getRuntimeEngine().getKieSession());
 		assertNodeTriggered(caseInstance.getId(), "defaultSplit");
 		getPersistence().start();
 		assertNodeActive(caseInstance.getId(), getRuntimeEngine().getKieSession(), "onTheUserEventOccurPartId");
 		assertNodeActive(caseInstance.getId(), getRuntimeEngine().getKieSession(), "onTheMilestoneOccurPartId");
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 	}
 
 	private void triggerStartOfMilestone() throws Exception {
 		getPersistence().start();
 		caseInstance = (CaseInstance) getRuntimeEngine().getKieSession().getProcessInstance(caseInstance.getId());
 		caseInstance.signalEvent("TheUserEvent", new Object());
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 	}
 
 }

@@ -35,7 +35,7 @@ public class HumanTaskDrivenFromProcessTest extends AbstractControllableLifecycl
 		newWallPlans.add(new WallPlan(otherHousePlan));
 		RoofPlan newRoofPlan = new RoofPlan(otherHousePlan);
 		getPersistence().persist(otherCase);
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 		// Now complete the Case
 		HashMap<String, Object> resultFromTask = new HashMap<String, Object>();
 		resultFromTask.put("wallPlanOutput", newWallPlans);
@@ -43,13 +43,13 @@ public class HumanTaskDrivenFromProcessTest extends AbstractControllableLifecycl
 		getPersistence().start();
 		getRuntimeEngine().getTaskService().complete(taskId, getEventGeneratingTaskUser(), resultFromTask);
 		// now look at the result - those new WallPlans must be added to the original housePlan due to the refinement
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 		getPersistence().start();
 		this.housePlan = getPersistence().find(HousePlan.class, housePlan.getId());
 		assertTrue(this.housePlan.getWallPlans().containsAll(newWallPlans));
 		assertEquals(5, this.housePlan.getWallPlans().size());
 		assertEquals(newRoofPlan, this.housePlan.getRoofPlan());
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 		// Check the task's result
 		Task task = getTaskService().getTaskById(taskId);
 		Content outputContent = getTaskService().getContentById(task.getTaskData().getOutputContentId());
@@ -59,7 +59,7 @@ public class HumanTaskDrivenFromProcessTest extends AbstractControllableLifecycl
 		Collection<WallPlan> wallPlanTaskOutput = (Collection<WallPlan>) outputAsMap.get("wallPlanOutput");
 		assertEquals(3, wallPlanTaskOutput.size());
 		assertEquals(newRoofPlan, outputAsMap.get("roofPlanOutput"));
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 	}
 	protected void reenableTask(String taskName) {
 		PlannedItem item = getCmmnService().getPlan(caseInstance.getId()).getPlannableItemsFor(taskName).get(0);
@@ -112,7 +112,7 @@ public class HumanTaskDrivenFromProcessTest extends AbstractControllableLifecycl
 		getPersistence().start();
 		housePlan = getPersistence().find(HousePlan.class, housePlan.getId());
 		new WallPlan(housePlan);
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 		List<TaskSummary> list = getTaskService().getTasksAssignedAsPotentialOwner(getEventGeneratingTaskUser(), "en-UK");
 		getPersistence().start();
 		TaskSummary ts = findTaskSummary(list, "TheEventGeneratingTaskPlanItem");
@@ -121,7 +121,7 @@ public class HumanTaskDrivenFromProcessTest extends AbstractControllableLifecycl
 			getTaskService().forward(ts.getId(), ts.getActualOwner().getId(), getEventGeneratingTaskUser());
 		}
 		getTaskService().claim(ts.getId(), getEventGeneratingTaskUser());
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 	}
 
 

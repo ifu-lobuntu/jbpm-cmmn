@@ -32,7 +32,7 @@ public class TimerEventTest extends AbstractOccurrableTestCase {
 		for (TimerInstance timerInstance : timers) {
 			getTimerManager().cancelTimer(timerInstance.getId());
 		}
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 	}
 
 	@Test
@@ -42,12 +42,12 @@ public class TimerEventTest extends AbstractOccurrableTestCase {
 		getPersistence().start();
 		assertNodeActive(caseInstance.getId(), getRuntimeEngine().getKieSession(), "theUserEventTrigger");
 		reloadCaseInstance(caseInstance).signalEvent("TheUserEvent", new Object());
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 		getPersistence().start();
 		assertNodeActive(caseInstance.getId(), getRuntimeEngine().getKieSession(), "TimerEventWithPlanItemTriggerPlanItem");
 		Collection<TimerInstance> timers = getTimerManager().getTimers();
 		assertEquals(2, timers.size());
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 	}
 
 	@Test
@@ -59,12 +59,12 @@ public class TimerEventTest extends AbstractOccurrableTestCase {
 		housePlan = getPersistence().find(HousePlan.class, housePlan.getId());
 		new WallPlan(housePlan);
 		getPersistence().update(housePlan);
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 		getPersistence().start();
 		assertNodeActive(caseInstance.getId(), getRuntimeEngine().getKieSession(), "TimerEventWithCaseFileItemTriggerPlanItem");
 		Collection<TimerInstance> timers = getTimerManager().getTimers();
 		assertEquals(2, timers.size());
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 	}
 
 	@Override
@@ -73,7 +73,7 @@ public class TimerEventTest extends AbstractOccurrableTestCase {
 		getPersistence().start();
 		Collection<TimerInstance> timers = getTimerManager().getTimers();
 		assertEquals(1, timers.size());
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 	}
 
 	private TimerManager getTimerManager() {
@@ -88,7 +88,7 @@ public class TimerEventTest extends AbstractOccurrableTestCase {
 		for (TimerInstance timerInstance : timers) {
 			caseInstance.signalEvent("timerTriggered", timerInstance);
 		}
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 	}
 
 }

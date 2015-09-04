@@ -48,7 +48,7 @@ public abstract class AbstractPlanItemInstanceContainerTest extends AbstractCons
 	protected CaseInstance triggerInitialActivity() {
 		getPersistence().start();
 		super.getRuntimeEngine().getKieSession().signalEvent("StartUserEvent", new Object(), caseInstance.getId());
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 		Plan plan = getPlan();
 
 		assertPlanItemInState(caseInstance.getId(), "TheMilestonePlanItem", PlanElementState.COMPLETED);
@@ -75,7 +75,7 @@ public abstract class AbstractPlanItemInstanceContainerTest extends AbstractCons
 	protected Plan getPlan() {
 		getPersistence().start();
 		Plan result = getCmmnService().getPlan(caseInstance.getId());
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 		return result;
 	}
 
@@ -98,17 +98,17 @@ public abstract class AbstractPlanItemInstanceContainerTest extends AbstractCons
 				CaseTaskInstance ctpi = (CaseTaskInstance) caseInstance.getNodeInstance(item.getNodeInstanceId(), true);
 				getRuntimeEngine().getKieSession().getProcessInstance(ctpi.getProcessInstanceId()).signalEvent("TheUserEvent", new Object());
 				printState(" ", caseInstance);
-				getPersistence().commit();
+				getPersistence().commitAndSendCaseFileItemEvents();
 				assertEquals(PlanElementState.COMPLETED,
 						((CaseInstance) getRuntimeEngine().getKieSession().getProcessInstance(ctpi.getProcessInstanceId())).getPlanElementState());
 				getPersistence().start();
 				getRuntimeEngine().getKieSession().getProcessInstance(ctpi.getProcessInstanceId()).signalEvent(DefaultJoin.CLOSE, new Object());
-				getPersistence().commit();
+				getPersistence().commitAndSendCaseFileItemEvents();
 				assertNull(getRuntimeEngine().getKieSession().getProcessInstance(ctpi.getProcessInstanceId()));
 			} else if (item.getName().equals("TheStagePlanItem")) {
 				getPersistence().start();
 				getRuntimeEngine().getKieSession().signalEvent("StageCompletingEvent", new Object(), caseInstance.getId());
-				getPersistence().commit();
+				getPersistence().commitAndSendCaseFileItemEvents();
 				assertPlanItemInState(caseInstance.getId(), "TheMilestonePlanItemInTheStage", PlanElementState.COMPLETED);
 			}
 		}
@@ -147,13 +147,13 @@ public abstract class AbstractPlanItemInstanceContainerTest extends AbstractCons
 		house = new House(cc);
 		new WallPlan(housePlan);
 		getPersistence().persist(cc);
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 		params.put("housePlan", housePlan);
 		params.put("house", house);
 		params.put(WorkItemParameters.CASE_OWNER, "Spielman");
 		getPersistence().start();
 		caseInstance = (CaseInstance) getRuntimeEngine().getKieSession().startProcess(getCaseName(), params);
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 		assertProcessInstanceActive(caseInstance.getId(), getRuntimeEngine().getKieSession());
 		assertNodeTriggered(caseInstance.getId(), "defaultSplit");
 		assertPlanItemInState(caseInstance.getId(), "TheMilestonePlanItem", PlanElementState.AVAILABLE);

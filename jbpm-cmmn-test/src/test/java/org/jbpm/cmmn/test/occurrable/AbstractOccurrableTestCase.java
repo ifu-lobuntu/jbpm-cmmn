@@ -42,7 +42,7 @@ public abstract class AbstractOccurrableTestCase extends AbstractConstructionTes
 			}
 		}
 		piil.suspend();
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 		assertPlanItemInState(caseInstance.getId(), "TheOccurrablePlanItem", PlanElementState.SUSPENDED);
 		// *****THEN
 		List<TaskSummary> tasks = getTaskService().getTasksAssignedAsPotentialOwner("Builder", "en-UK");
@@ -66,7 +66,7 @@ public abstract class AbstractOccurrableTestCase extends AbstractConstructionTes
 			}
 		}
 		piil.terminate();
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 		assertPlanItemInState(caseInstance.getId(), "TheOccurrablePlanItem", PlanElementState.TERMINATED);
 		// *****THEN
 		List<TaskSummary> tasks = getTaskService().getTasksAssignedAsPotentialOwner("Builder", "en-UK");
@@ -90,7 +90,7 @@ public abstract class AbstractOccurrableTestCase extends AbstractConstructionTes
 			}
 		}
 		piil.parentTerminate();
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 		assertPlanItemInState(caseInstance.getId(), "TheOccurrablePlanItem", PlanElementState.TERMINATED);
 		// *****THEN
 		List<TaskSummary> tasks = getTaskService().getTasksAssignedAsPotentialOwner("Builder", "en-UK");
@@ -116,7 +116,7 @@ public abstract class AbstractOccurrableTestCase extends AbstractConstructionTes
 
 		// *****WHEN
 		piil.resume();
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 
 		assertPlanItemInState(caseInstance.getId(), "TheOccurrablePlanItem", PlanElementState.AVAILABLE);
 		// *****THEN
@@ -166,18 +166,18 @@ public abstract class AbstractOccurrableTestCase extends AbstractConstructionTes
 		housePlan = new HousePlan(cc);
 		house = new House(cc);
 		getPersistence().persist(cc);
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 		params.put("housePlan", housePlan);
 		params.put("house", house);
 		params.put(WorkItemParameters.INITIATOR, "Spielman");
 		getPersistence().start();
 		caseInstance = (CaseInstance) getRuntimeEngine().getKieSession().startProcess(getCaseName(), params);
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 		assertProcessInstanceActive(caseInstance.getId(), getRuntimeEngine().getKieSession());
 		assertNodeTriggered(caseInstance.getId(), "defaultSplit");
 		getPersistence().start();
 		assertNodeActive(caseInstance.getId(), getRuntimeEngine().getKieSession(), "onTheOccurrablePlanItemOccurPartId");
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 	}
 
 	public abstract String getProcessFile();

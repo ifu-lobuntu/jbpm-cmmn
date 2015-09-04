@@ -269,7 +269,7 @@ public abstract class AbstractCaseFileItemEventTest extends AbstractConstruction
 		params.put(WorkItemParameters.INITIATOR, "Spielman");
 		getPersistence().start();
 		caseInstance = (CaseInstance) getRuntimeEngine().getKieSession().startProcess("CaseFileItemEventTests", params);
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 		assertProcessInstanceActive(caseInstance.getId(), getRuntimeEngine().getKieSession());
 		assertNodeTriggered(caseInstance.getId(), "defaultSplit");
 		getPersistence().start();
@@ -279,7 +279,7 @@ public abstract class AbstractCaseFileItemEventTest extends AbstractConstruction
 		assertNodeActive(caseInstance.getId(), getRuntimeEngine().getKieSession(), "OnRoofPlanAddedAsChildPart");
 		assertNodeActive(caseInstance.getId(), getRuntimeEngine().getKieSession(), "OnWallPlanAddedAsReferencePart");
 		assertNodeActive(caseInstance.getId(), getRuntimeEngine().getKieSession(), "OnRoofPlanAddedAsReferencePart");
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 	}
 
 }

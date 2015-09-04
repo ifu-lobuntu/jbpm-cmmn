@@ -1,17 +1,9 @@
 package org.jbpm.cmmn.test.occurrable;
 
-import java.io.File;
 import java.util.List;
-
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 
 import org.jbpm.cmmn.instance.CaseInstance;
 import org.jbpm.cmmn.instance.PlanElementState;
-import org.junit.Before;
 import org.junit.Test;
 import org.kie.api.task.model.TaskSummary;
 
@@ -47,7 +39,7 @@ public class MilestoneTest extends AbstractOccurrableTestCase {
 		assertNodeActive(caseInstance.getId(), getRuntimeEngine().getKieSession(), "onTheUserEventOccurPartId");
 		caseInstance = (CaseInstance) getRuntimeEngine().getKieSession().getProcessInstance(caseInstance.getId());
 		caseInstance.signalEvent("TheUserEvent", new Object());
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 	}
 
 	@Override

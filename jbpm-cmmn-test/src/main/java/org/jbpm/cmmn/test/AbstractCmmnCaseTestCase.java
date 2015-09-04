@@ -5,7 +5,6 @@ import bitronix.tm.resource.jdbc.PoolingDataSource;
 import org.drools.core.ClockType;
 import org.drools.core.audit.event.LogEvent;
 import org.drools.core.audit.event.RuleFlowNodeLogEvent;
-import org.hibernate.ejb.internal.EntityManagerFactoryRegistry;
 import org.jbpm.cmmn.casefile.jpa.JpaCaseFilePersistence;
 import org.jbpm.cmmn.flow.common.impl.PlanItemInstanceFactoryNodeImpl;
 import org.jbpm.cmmn.flow.xml.CMMNBuilder;
@@ -49,7 +48,6 @@ import org.kie.internal.task.api.InternalTaskService;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.transaction.UserTransaction;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Transformer;
@@ -98,10 +96,14 @@ public abstract class AbstractCmmnCaseTestCase extends JbpmJUnitBaseTestCase {
     public void setUp() throws Exception {
 
         stopwatch.start();
-        if (setupDataSource && (ds == null || emf == null)) {
-            ds = setupPoolingDataSource();
-            stopwatch.lap("setupPoolingDataSource");
-            emf = EntityManagerFactoryManager.get().getOrCreate(persistenceUnitName);
+        if (setupDataSource) {
+            if(ds==null) {
+                ds = setupPoolingDataSource();
+                stopwatch.lap("setupPoolingDataSource");
+            }
+            if(emf==null) {
+                emf = EntityManagerFactoryManager.get().getOrCreate(persistenceUnitName);
+            }
             stopwatch.lap("createEntityManagerFactory");
         }
         cleanupSingletonSessionId();
@@ -132,7 +134,7 @@ public abstract class AbstractCmmnCaseTestCase extends JbpmJUnitBaseTestCase {
             }
             fail("Node(s) executed: " + s);
         }
-        getPersistence().commit();
+        getPersistence().commitAndSendCaseFileItemEvents();
     }
 
     protected InternalTaskService getTaskService() {
@@ -150,7 +152,7 @@ public abstract class AbstractCmmnCaseTestCase extends JbpmJUnitBaseTestCase {
             }
             fail("Node(s) not executed: " + s);
         }
-        getPersistence().commit();
+        getPersistence().commitAndSendCaseFileItemEvents();
     }
 
     private List<String> removeNodesTriggered(long processInstanceId, String... nodeNames) {
@@ -192,7 +194,7 @@ public abstract class AbstractCmmnCaseTestCase extends JbpmJUnitBaseTestCase {
 
         StateResult sr = new StateResult();
         countItemInState(planItemName, s, ci, sr);
-        getPersistence().commit();
+        getPersistence().commitAndSendCaseFileItemEvents();
         if (numberOfTimes.length == 0) {
             if (sr.count == 0) {
                 assertTrue(planItemName + " should be in state " + s.name() + " but was in " + sr.foundState, sr.count > 0);
@@ -276,9 +278,9 @@ public abstract class AbstractCmmnCaseTestCase extends JbpmJUnitBaseTestCase {
     public static void teardownClass(){
         close(emf);
         emf=null;
+        EntityManagerFactoryManager.get().clear();
         close(ds);
         ds=null;
-        EntityManagerFactoryManager.get().clear();
 
     }
     private static void close(Object o){

@@ -26,7 +26,7 @@ public abstract class CaseFileItemEventTest extends AbstractCaseFileItemEventTes
 		}
 		housePlan.getWallPlans().clear();
 		getPersistence().update(housePlan);
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 	}
 
 	@Override
@@ -35,7 +35,7 @@ public abstract class CaseFileItemEventTest extends AbstractCaseFileItemEventTes
 		house = getPersistence().find(House.class, house.getId());
 		house.setDescription("newDescription");
 		getPersistence().update(house);
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 	}
 
 	@Override
@@ -44,7 +44,7 @@ public abstract class CaseFileItemEventTest extends AbstractCaseFileItemEventTes
 		house = getPersistence().find(House.class, house.getId());
 		house.setRoofPlan(null);
 		getPersistence().update(house);
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 	}
 
 	@Override
@@ -55,7 +55,7 @@ public abstract class CaseFileItemEventTest extends AbstractCaseFileItemEventTes
 		housePlan.zz_internalSetRoofPlan(null);
 		getPersistence().remove(roofPlan);
 		getPersistence().update(housePlan);
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 	}
 
 	@Override
@@ -65,7 +65,7 @@ public abstract class CaseFileItemEventTest extends AbstractCaseFileItemEventTes
 		this.housePlan = getPersistence().find(HousePlan.class, housePlan.getId());
 		house.getWallPlans().addAll(housePlan.getWallPlans());
 		getPersistence().update(house);
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 
 	}
 
@@ -75,7 +75,7 @@ public abstract class CaseFileItemEventTest extends AbstractCaseFileItemEventTes
 		this.house = getPersistence().find(House.class, house.getId());
 		house.setRoofPlan(this.housePlan.getRoofPlan());
 		getPersistence().update(house);
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 	}
 
 	@Override
@@ -84,7 +84,7 @@ public abstract class CaseFileItemEventTest extends AbstractCaseFileItemEventTes
 		housePlan = getPersistence().find(HousePlan.class, housePlan.getId());
 		new RoofPlan(housePlan);
 		getPersistence().update(housePlan);
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 
 	}
 
@@ -101,7 +101,7 @@ public abstract class CaseFileItemEventTest extends AbstractCaseFileItemEventTes
 		housePlan = new HousePlan(cc);
 		house = new House(cc);
 		getPersistence().persist(cc);
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 		params.put("housePlan", housePlan);
 		params.put("house", house);
 		return params;
@@ -113,7 +113,7 @@ public abstract class CaseFileItemEventTest extends AbstractCaseFileItemEventTes
 		house = getPersistence().find(House.class, house.getId());
 		house.getWallPlans().clear();
 		getPersistence().update(house);
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 	}
 
 	@Override
@@ -122,7 +122,7 @@ public abstract class CaseFileItemEventTest extends AbstractCaseFileItemEventTes
 		housePlan = getPersistence().find(HousePlan.class, housePlan.getId());
 		new WallPlan(housePlan);
 		getPersistence().update(housePlan);
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 	}
 
 }

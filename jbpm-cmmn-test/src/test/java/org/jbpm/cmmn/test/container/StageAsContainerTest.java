@@ -41,18 +41,18 @@ public class StageAsContainerTest extends AbstractPlanItemInstanceContainerLifec
 	protected void continuePlanItemInstanceContainer() {
 		getPersistence().start();
 		getCmmnService().transitionPlanItem(caseInstance.getId(), getStagePlanItemInstance().getId(), PlanItemTransition.RESUME);
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 	}
 
 	protected void suspedPlanItemInstanceContainer() {
 		getPersistence().start();
 		getCmmnService().transitionPlanItem(caseInstance.getId(), getStagePlanItemInstance().getId(), PlanItemTransition.SUSPEND);
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 	}
 	protected void terminatePlanItemInstanceContainer() {
 		getPersistence().start();
 		getCmmnService().transitionPlanItem(caseInstance.getId(), getStagePlanItemInstance().getId(), PlanItemTransition.TERMINATE);
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 	}
 	public StageInstance getStagePlanItemInstance() {
 		StageInstance spii = null;
@@ -66,7 +66,7 @@ public class StageAsContainerTest extends AbstractPlanItemInstanceContainerLifec
 	protected void failPlanItemInstanceContainer() {
 		getPersistence().start();
 		getCmmnService().transitionPlanItem(caseInstance.getId(), getStagePlanItemInstance().getId(), PlanItemTransition.FAULT);
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 	}
 
 	@Override

@@ -30,17 +30,17 @@ public abstract class SubscriptionScopeTest extends AbstractConstructionTestCase
 		SubscriptionManager subManager = (SubscriptionManager) getRuntimeEngine().getKieSession().getEnvironment().get(SubscriptionManager.ENV_NAME);
 		getPersistence().start();
 		assertEquals(0, subManager.getCaseSubscriptionInfoFor(housePlan).size());
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 
 		triggerStartOfTask();
 		getPersistence().start();
 		assertEquals(0, subManager.getCaseSubscriptionInfoFor(housePlan).size());
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 		List<TaskSummary> list = getRuntimeEngine().getTaskService().getTasksAssignedAsPotentialOwner("Builder", "en-UK");
 		assertEquals(1, list.size());
 		getPersistence().start();
 		getRuntimeEngine().getTaskService().start(list.get(0).getId(), "Builder");
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 		getPersistence().start();
 		Collection<? extends DurableCaseFileItemSubscription> housePlanSubscriptions = subManager.getCaseSubscriptionInfoFor(housePlan);
 		assertEquals(2, housePlanSubscriptions.size());
@@ -54,14 +54,14 @@ public abstract class SubscriptionScopeTest extends AbstractConstructionTestCase
 			}
 
 		}
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 		getPersistence().start();
 		getRuntimeEngine().getTaskService().complete(list.get(0).getId(), "Builder", new HashMap<String, Object>());
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 		getPersistence().start();
 		Collection<?> caseFileItemSubscriptions = subManager.getCaseSubscriptionInfoFor(housePlan);
 		assertEquals(0, caseFileItemSubscriptions.size());
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 		// *****THEN
 		// @SuppressWarnings("unchecked")
 		// Map<String, Object> contentData = (Map<String, Object>)
@@ -79,26 +79,26 @@ public abstract class SubscriptionScopeTest extends AbstractConstructionTestCase
 		housePlan = new HousePlan(cc);
 		house = new House(cc);
 		getPersistence().persist(cc);
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 		params.put("housePlan", housePlan);
 		params.put("house", house);
 		params.put(WorkItemParameters.INITIATOR, "Spielman");
 		getPersistence().start();
 		caseInstance = (CaseInstance) getRuntimeEngine().getKieSession().startProcess("SubscriptionScopeTests", params);
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 		assertProcessInstanceActive(caseInstance.getId(), getRuntimeEngine().getKieSession());
 		assertNodeTriggered(caseInstance.getId(), "defaultSplit");
 		getPersistence().start();
 		assertNodeActive(caseInstance.getId(), getRuntimeEngine().getKieSession(), "onTheUserEventOccurPartId");
 		assertNodeActive(caseInstance.getId(), getRuntimeEngine().getKieSession(), "TheUserEventPlanItem");
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 	}
 
 	private void triggerStartOfTask() throws Exception {
 		getPersistence().start();
 		caseInstance = (CaseInstance) getRuntimeEngine().getKieSession().getProcessInstance(caseInstance.getId());
 		caseInstance.signalEvent("TheUserEvent", new Object());
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 		assertNodeTriggered(caseInstance.getId(), "TheTask");
 	}
 

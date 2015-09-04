@@ -1,8 +1,6 @@
 package org.jbpm.cmmn.test.planning;
 
 import org.jbpm.cmmn.common.ApplicableDiscretionaryItem;
-import org.jbpm.cmmn.instance.CaseInstance;
-import org.jbpm.cmmn.instance.PlanElementState;
 import org.jbpm.cmmn.instance.impl.HumanTaskInstance;
 import org.jbpm.cmmn.service.model.Plan;
 import org.jbpm.cmmn.service.model.PlannedItem;
@@ -27,13 +25,13 @@ public class InputOverrideTest extends AbstractPlanItemInstanceContainerTest {
 		getPersistence().start();
 		Plan pti = getCmmnService().startPlanning(caseInstance.getId(), "ConstructionProjectManager", false);
 		assertEquals(0, pti.getApplicableDiscretionaryItems().size());
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 		getPersistence().start();
 		reloadCaseInstance(caseInstance).getRoleInstance("ConstructionProjectManagers").addRoleAssignment("ConstructionProjectManager");
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 		getPersistence().start();
 		pti = getCmmnService().startPlanning(caseInstance.getId(),"ConstructionProjectManager", false);
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 		assertPlanItemDefinitionPresent(pti.getApplicableDiscretionaryItems(), "TheCaseTask");
 		assertPlanItemDefinitionPresent(pti.getApplicableDiscretionaryItems(), "TheHumanTask");
 		assertPlannableItemPresent(pti.getPlannedItems(), "TheCaseTaskPlanItem");
@@ -49,10 +47,10 @@ public class InputOverrideTest extends AbstractPlanItemInstanceContainerTest {
 		getPersistence().persist(addedWallPlan);
 		addedWallPlan.setShortDescription("The new wallplan");
 		input.put("wallPlanTaskParameter", addedWallPlan);
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 		getPersistence().start();
 		getCmmnService().overrideInputTo(caseInstance.getId(), nodeInstanceId, input);
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 		// *****THEN
 		getPersistence().start();
 		Map<String, Object> foundInput = getCmmnService().getInputTo(caseInstance.getId(), nodeInstanceId);
@@ -63,7 +61,7 @@ public class InputOverrideTest extends AbstractPlanItemInstanceContainerTest {
 		Map<String, Object> taskParameters = getTaskService().getTaskContent(taskByWorkItemId.getId());
 		foundWallPlan = (WallPlan) taskParameters.get("wallPlanTaskParameter");
 		assertEquals("The new wallplan", foundWallPlan.getShortDescription());
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 		System.out.println();
 
 	}

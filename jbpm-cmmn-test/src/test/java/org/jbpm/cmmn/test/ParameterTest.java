@@ -45,7 +45,7 @@ public class ParameterTest extends AbstractConstructionTestCase {
 				.getEnvironment());
 		assertEquals(housePlan.getWallPlans().iterator().next().getId(), ((WallPlan) contentData.get("wallPlan")).getId());
 		assertEquals(housePlan.getRoofPlan().getId(), ((RoofPlan) contentData.get("roofPlan")).getId());
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 	}
 
 	protected void givenThatTheTestCaseIsStarted() {
@@ -57,18 +57,18 @@ public class ParameterTest extends AbstractConstructionTestCase {
 		housePlan = new HousePlan(cc);
 		house = new House(cc);
 		getPersistence().persist(cc);
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 		params.put("housePlan", housePlan);
 		params.put("house", house);
 		params.put(WorkItemParameters.INITIATOR, "Spielman");
 		getPersistence().start();
 		caseInstance = (CaseInstance) getRuntimeEngine().getKieSession().startProcess("ParameterTests", params);
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 		assertProcessInstanceActive(caseInstance.getId(), getRuntimeEngine().getKieSession());
 		assertNodeTriggered(caseInstance.getId(), "defaultSplit");
 		getPersistence().start();
 		assertNodeActive(caseInstance.getId(), getRuntimeEngine().getKieSession(), "onWallPlanCreatedPartId");
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 	}
 
 	private void triggerStartOfTask() throws Exception {
@@ -77,7 +77,7 @@ public class ParameterTest extends AbstractConstructionTestCase {
 		new WallPlan(housePlan);
 		new RoofPlan(housePlan);
 		getPersistence().update(housePlan);
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 	}
 
 }

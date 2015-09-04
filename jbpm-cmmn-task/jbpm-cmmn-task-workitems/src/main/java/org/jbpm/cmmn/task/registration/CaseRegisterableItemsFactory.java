@@ -10,6 +10,7 @@ import org.jbpm.cmmn.task.workitems.UpdateTaskStatusWorkItemHandler;
 import org.jbpm.runtime.manager.impl.DefaultRegisterableItemsFactory;
 import org.jbpm.runtime.manager.impl.RuntimeEngineImpl;
 import org.jbpm.runtime.manager.impl.SimpleRuntimeEnvironment;
+import org.jbpm.runtime.manager.impl.jpa.EntityManagerFactoryManager;
 import org.jbpm.services.task.wih.ExternalTaskEventListener;
 import org.kie.api.marshalling.ObjectMarshallingStrategy;
 import org.kie.api.runtime.Environment;
@@ -24,6 +25,8 @@ import org.kie.internal.runtime.manager.InternalRuntimeManager;
 import org.kie.internal.runtime.manager.RuntimeEnvironment;
 import org.kie.internal.task.api.EventService;
 
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -52,13 +55,17 @@ public class CaseRegisterableItemsFactory extends DefaultRegisterableItemsFactor
         }
         env.set("deploymentId",runtimeManager.getIdentifier());
         ObjectMarshallingStrategy[] omss = (ObjectMarshallingStrategy[]) env.get(EnvironmentName.OBJECT_MARSHALLING_STRATEGIES);
-        CaseFileImplementation cfi = buildCaseFileImplementation(runtimeManager, env);
-        env.set(CaseFilePersistence.ENV_NAME, cfi.getCaseFilePersistence(env));
+        ClassLoader cl = environment.getClassLoader();
+        if(cl==null){
+            cl=Thread.currentThread().getContextClassLoader();
+        }
+        CaseFileImplementation cfi = buildCaseFileImplementation(env, cl);
+        env.set(CaseFilePersistence.ENV_NAME, cfi.getCaseFilePersistence(env, cl));
         Object demarcated= env.get(CaseFileImplementation.DEMARCATED_SUBSCRIPTION);
         if(!(Boolean.TRUE.equals(demarcated) || "true".equals(demarcated))) {
-            env.set(SubscriptionManager.ENV_NAME, cfi.getSubscriptionManager(env));
+            env.set(SubscriptionManager.ENV_NAME, cfi.getSubscriptionManager(env, cl));
         }
-        ObjectMarshallingStrategy[] additionalOmss = cfi.getObjectMarshallingStrategies(env);
+        ObjectMarshallingStrategy[] additionalOmss = cfi.getObjectMarshallingStrategies(env, cl);
         ObjectMarshallingStrategy[] newOmss = new ObjectMarshallingStrategy[omss.length + additionalOmss.length];
         int i=0;
         for (ObjectMarshallingStrategy oms : additionalOmss) {
@@ -75,13 +82,13 @@ public class CaseRegisterableItemsFactory extends DefaultRegisterableItemsFactor
         }
     }
 
-    private CaseFileImplementation buildCaseFileImplementation(InternalRuntimeManager runtimeManager, Environment env){
+    private CaseFileImplementation buildCaseFileImplementation(Environment env, ClassLoader cl){
         String caseFileImplementation = "org.jbpm.cmmn.casefile.jpa.JpaCaseFileImplementation";
         if(env.get(CaseFileImplementation.CASE_FILE_IMPLEMENTATION_CLASS)!=null) {
             caseFileImplementation = (String) env.get(CaseFileImplementation.CASE_FILE_IMPLEMENTATION_CLASS);
         }
         try {
-            return (CaseFileImplementation) Class.forName(caseFileImplementation, true,runtimeManager.getEnvironment().getClassLoader()).newInstance();
+            return (CaseFileImplementation) Class.forName(caseFileImplementation, true,cl).newInstance();
         } catch (ClassNotFoundException e) {
             try {
                 return (CaseFileImplementation) Class.forName(caseFileImplementation).newInstance();

@@ -4,16 +4,18 @@ import java.io.*;
 import java.lang.reflect.Member;
 
 import org.drools.core.common.DroolsObjectInputStream;
+import org.drools.persistence.TransactionAware;
+import org.drools.persistence.TransactionManager;
 import org.kie.api.marshalling.ObjectMarshallingStrategy;
 import org.kie.api.runtime.Environment;
 
 import javax.persistence.EntityManager;
 
-public class JpaPlaceHolderResolverStrategy implements ObjectMarshallingStrategy {
-	private Environment env;
+public class JpaPlaceHolderResolverStrategy implements ObjectMarshallingStrategy,TransactionAware {
+	private JpaCaseFilePersistence persistence;
 
-	public JpaPlaceHolderResolverStrategy(Environment env) {
-		this.env = env;
+	public JpaPlaceHolderResolverStrategy(JpaCaseFilePersistence persistence) {
+		this.persistence = persistence;
 	}
 
 	public boolean accept(Object object) {
@@ -28,18 +30,17 @@ public class JpaPlaceHolderResolverStrategy implements ObjectMarshallingStrategy
 	public void write(ObjectOutputStream os, Object object) throws IOException {
 		os.writeUTF(object.getClass().getCanonicalName());
 		os.writeObject(getIdValue(object));
+		persistence.flush();
 	}
 
 	private Object getIdValue(Object object) {
-		JpaCaseFilePersistence jop = (JpaCaseFilePersistence) env.get(JpaCaseFilePersistence.ENV_NAME);
 		Member idMember = JpaIdUtil.INSTANCE.findIdMember(object.getClass());
 		Serializable id = JpaIdUtil.INSTANCE.getId(idMember, object);
-		EntityManager em = jop.getEntityManager();
 		if(id == null) {
-			em.persist(object);
+			persistence.getEntityManager().persist(object);
 			id = JpaIdUtil.INSTANCE.getId(idMember, object);
 		} else {
-			em.merge(object);
+			persistence.getEntityManager().merge(object);
 		}
 		return id;
 	}
@@ -47,8 +48,8 @@ public class JpaPlaceHolderResolverStrategy implements ObjectMarshallingStrategy
 	public Object read(ObjectInputStream is) throws IOException, ClassNotFoundException {
 		String canonicalName = is.readUTF();
 		Object id = is.readObject();
-		JpaCaseFilePersistence jop = (JpaCaseFilePersistence) env.get(JpaCaseFilePersistence.ENV_NAME);
-		return jop.find(Class.forName(canonicalName), id);
+
+		return persistence.find(canonicalName, id);
 	}
 
 	public byte[] marshal(Context context, ObjectOutputStream os, Object object) throws IOException {
@@ -70,4 +71,13 @@ public class JpaPlaceHolderResolverStrategy implements ObjectMarshallingStrategy
 		return null;
 	}
 
+	@Override
+	public void onStart(TransactionManager transactionManager) {
+
+	}
+
+	@Override
+	public void onEnd(TransactionManager transactionManager) {
+		persistence.close();
+	}
 }

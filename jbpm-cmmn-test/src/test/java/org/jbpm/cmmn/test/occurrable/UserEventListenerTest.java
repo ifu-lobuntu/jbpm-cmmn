@@ -20,7 +20,7 @@ public class UserEventListenerTest extends AbstractOccurrableTestCase {
 		getPersistence().start();
 		caseInstance = (CaseInstance) getRuntimeEngine().getKieSession().getProcessInstance(caseInstance.getId());
 		caseInstance.signalEvent("TheUserEvent", new Object());
-		getPersistence().commit();
+		getPersistence().commitAndSendCaseFileItemEvents();
 	}
 
 }
