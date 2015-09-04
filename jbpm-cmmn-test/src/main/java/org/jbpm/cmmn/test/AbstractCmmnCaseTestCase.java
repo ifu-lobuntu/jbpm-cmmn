@@ -5,12 +5,8 @@ import bitronix.tm.resource.jdbc.PoolingDataSource;
 import org.drools.core.ClockType;
 import org.drools.core.audit.event.LogEvent;
 import org.drools.core.audit.event.RuleFlowNodeLogEvent;
-import org.drools.core.marshalling.impl.ClassObjectMarshallingStrategyAcceptor;
-import org.drools.core.marshalling.impl.SerializablePlaceholderResolverStrategy;
-import org.jbpm.cmmn.casefile.jpa.HibernateSubscriptionManager;
+import org.hibernate.ejb.internal.EntityManagerFactoryRegistry;
 import org.jbpm.cmmn.casefile.jpa.JpaCaseFilePersistence;
-import org.jbpm.cmmn.casefile.jpa.JpaCollectionPlaceHolderResolverStrategy;
-import org.jbpm.cmmn.casefile.jpa.JpaPlaceHolderResolverStrategy;
 import org.jbpm.cmmn.flow.common.impl.PlanItemInstanceFactoryNodeImpl;
 import org.jbpm.cmmn.flow.xml.CMMNBuilder;
 import org.jbpm.cmmn.instance.CaseInstance;
@@ -18,17 +14,13 @@ import org.jbpm.cmmn.instance.PlanElementState;
 import org.jbpm.cmmn.instance.PlanItemInstance;
 import org.jbpm.cmmn.instance.impl.PlanItemInstanceFactoryNodeInstance;
 import org.jbpm.cmmn.instance.impl.StageInstance;
-import org.jbpm.cmmn.instance.subscription.SubscriptionManager;
 import org.jbpm.cmmn.service.api.CMMNService;
 import org.jbpm.cmmn.service.api.impl.CMMNServiceImpl;
 import org.jbpm.cmmn.task.registration.CaseRegisterableItemsFactory;
-import org.jbpm.marshalling.impl.ProcessInstanceResolverStrategy;
 import org.jbpm.process.instance.event.DefaultSignalManagerFactory;
 import org.jbpm.process.instance.impl.DefaultProcessInstanceManagerFactory;
-import org.jbpm.runtime.manager.impl.factory.LocalTaskServiceFactory;
+import org.jbpm.runtime.manager.impl.jpa.EntityManagerFactoryManager;
 import org.jbpm.services.task.identity.JBossUserGroupCallbackImpl;
-import org.jbpm.services.task.impl.model.GroupImpl;
-import org.jbpm.services.task.impl.model.UserImpl;
 import org.jbpm.test.JbpmJUnitBaseTestCase;
 import org.jbpm.workflow.instance.NodeInstanceContainer;
 import org.junit.After;
@@ -37,7 +29,6 @@ import org.junit.Before;
 import org.kie.api.event.process.ProcessEventListener;
 import org.kie.api.event.rule.AgendaEventListener;
 import org.kie.api.io.ResourceType;
-import org.kie.api.marshalling.ObjectMarshallingStrategy;
 import org.kie.api.runtime.Environment;
 import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.conf.ClockTypeOption;
@@ -57,7 +48,6 @@ import org.kie.internal.task.api.InternalTaskService;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.transaction.UserTransaction;
@@ -68,12 +58,12 @@ import javax.xml.transform.TransformerFactoryConfigurationError;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.util.*;
-
-import static org.kie.api.runtime.EnvironmentName.OBJECT_MARSHALLING_STRATEGIES;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public abstract class AbstractCmmnCaseTestCase extends JbpmJUnitBaseTestCase {
     static {
@@ -96,16 +86,8 @@ public abstract class AbstractCmmnCaseTestCase extends JbpmJUnitBaseTestCase {
         return emf;
     }
 
-    public AbstractCmmnCaseTestCase() {
-        super();
-    }
-
     protected RuntimeManager getRuntimeManager() {
         return runtimeManager;
-    }
-
-    public AbstractCmmnCaseTestCase(boolean setupDataSource, boolean sessionPersistence) {
-        super(setupDataSource, sessionPersistence);
     }
 
     public CMMNService getCmmnService() {
@@ -119,15 +101,15 @@ public abstract class AbstractCmmnCaseTestCase extends JbpmJUnitBaseTestCase {
         if (setupDataSource && (ds == null || emf == null)) {
             ds = setupPoolingDataSource();
             stopwatch.lap("setupPoolingDataSource");
-            emf = Persistence.createEntityManagerFactory(persistenceUnitName);
+            emf = EntityManagerFactoryManager.get().getOrCreate(persistenceUnitName);
             stopwatch.lap("createEntityManagerFactory");
         }
         cleanupSingletonSessionId();
         stopwatch.lap("cleanupSingletonSessionId");
     }
 
-    public AbstractCmmnCaseTestCase(boolean setupDataSource, boolean sessionPersistence, String persistenceUnitName) {
-        super(setupDataSource, sessionPersistence, persistenceUnitName);
+    public AbstractCmmnCaseTestCase(String persistenceUnitName) {
+        super(true, true, persistenceUnitName);
         this.persistenceUnitName = persistenceUnitName;
     }
 
@@ -262,18 +244,6 @@ public abstract class AbstractCmmnCaseTestCase extends JbpmJUnitBaseTestCase {
         return transaction;
     }
 
-    @AfterClass
-    public static void tearDownClass() throws Exception {
-        if (emf != null) {
-            emf.close();
-            emf = null;
-        }
-        if (ds != null) {
-            ds.close();
-            ds = null;
-        }
-    }
-
     @After
     public void tearDown() throws Exception {
         stopwatch.start();
@@ -292,19 +262,29 @@ public abstract class AbstractCmmnCaseTestCase extends JbpmJUnitBaseTestCase {
         } catch (Exception e) {
 
         } finally {
-            c.close();
+            close(c);
         }
         transaction = null;
-        if (isJpa && persistence!=null) {
-            persistence.close();
-        }
+        close(persistence);
+        persistence=null;
         clearHistory();
         disposeRuntimeManager();
         runtimeEngine = null;
-
-        persistence = null;
-
         stopwatch.lap("tearDown");
+    }
+    @AfterClass
+    public static void teardownClass(){
+        close(emf);
+        emf=null;
+        close(ds);
+        ds=null;
+        EntityManagerFactoryManager.get().clear();
+
+    }
+    private static void close(Object o){
+        try{
+            o.getClass().getMethod("close").invoke(o);
+        }catch(Exception e){}
     }
 
     @Override
@@ -327,16 +307,7 @@ public abstract class AbstractCmmnCaseTestCase extends JbpmJUnitBaseTestCase {
     }
 
     public JpaCaseFilePersistence getPersistence() {
-        try {
-            if (persistence == null) {
-                persistence = new JpaCaseFilePersistence(emf, getRuntimeManager().getIdentifier());
-            }
-            return persistence;
-        } catch (RuntimeException e) {
-            throw e;
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        return (JpaCaseFilePersistence) getRuntimeEngine().getKieSession().getEnvironment().get(JpaCaseFilePersistence.ENV_NAME);
     }
 
     @Override
@@ -429,20 +400,13 @@ public abstract class AbstractCmmnCaseTestCase extends JbpmJUnitBaseTestCase {
         RuntimeManager rm = super.createRuntimeManager(processFile);
         this.runtimeManager = rm;
         RuntimeEngine runtimeEngine = getRuntimeEngine();
-//		fixPersistenceStrategy(runtimeEngine);
         Environment env = runtimeEngine.getKieSession().getEnvironment();
-        prepareEnvironment(env);
         TaskService ts = runtimeEngine.getTaskService();
         if (ts instanceof InternalTaskService) {
             InternalTaskService its = (InternalTaskService) ts;
-
             its.addMarshallerContext(rm.getIdentifier(), new ContentMarshallerContext(env, getClass().getClassLoader()));
-            // its.setUserInfo(new PropertyUserInfoImpl(new Properties()));
         }
         this.cmmnService = new CMMNServiceImpl(runtimeEngine);
-        // for some reason the task service does not persist the users and
-        // groups ???
-        populateUsers();
         return rm;
     }
 
@@ -464,83 +428,11 @@ public abstract class AbstractCmmnCaseTestCase extends JbpmJUnitBaseTestCase {
         }
     }
 
-    protected void prepareEnvironment(Environment env) {
-        env.set(OBJECT_MARSHALLING_STRATEGIES, getPlaceholdStrategies(env));
-        SubscriptionManager<?> subscriptionManager = getSubscriptionManager();
-        if (subscriptionManager != null) {
-            env.set(SubscriptionManager.ENV_NAME, subscriptionManager);
-        }
-        if (isJpa) {
-            env.set(JpaCaseFilePersistence.ENV_NAME, getPersistence());
-        }
-        env.set("org.kie.internal.runtime.manager.TaskServiceFactory", LocalTaskServiceFactory.class.getName());
-    }
-
-    protected void populateUsers() {
-        JBossUserGroupCallbackImpl users = new JBossUserGroupCallbackImpl("classpath:/usergroups.properties");
-        Properties props = buildUserGroupProperties();
-        for (Object userId : props.keySet()) {
-            getPersistence().start();
-            EntityManager em = emf.createEntityManager();
-            GroupImpl group = em.find(GroupImpl.class, userId);
-            if (group == null) {
-                UserImpl builder = em.find(UserImpl.class, userId);
-                if (builder == null) {
-                    em.persist(new UserImpl((String) userId));
-                    em.flush();
-                }
-                for (String g : users.getGroupsForUser((String) userId, null, null)) {
-                    group = em.find(GroupImpl.class, g);
-                    if (group == null) {
-                        em.persist(new GroupImpl(g));
-                        em.flush();
-                    }
-                }
-            }
-            getPersistence().commit();
-        }
-    }
-
-    private Properties buildUserGroupProperties() {
-        Properties props = new Properties();
-        try {
-            props.load(getClass().getClassLoader().getResourceAsStream("usergroups.properties"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return props;
-    }
-
-    protected ObjectMarshallingStrategy[] getPlaceholdStrategies(Environment env) {
-        if (isJpa) {
-            return new ObjectMarshallingStrategy[]{new ProcessInstanceResolverStrategy(), new JpaPlaceHolderResolverStrategy(env),
-                    new JpaCollectionPlaceHolderResolverStrategy(env),
-                    new SerializablePlaceholderResolverStrategy(ClassObjectMarshallingStrategyAcceptor.DEFAULT)};
-        } else {
-            return new ObjectMarshallingStrategy[]{new ProcessInstanceResolverStrategy(),
-                    new JpaPlaceHolderResolverStrategy(env),
-                    new JpaCollectionPlaceHolderResolverStrategy(env),
-                    new SerializablePlaceholderResolverStrategy(ClassObjectMarshallingStrategyAcceptor.DEFAULT)};
-
-        }
-    }
-
-    protected SubscriptionManager<?> getSubscriptionManager() {
-        if (isJpa) {
-            return new HibernateSubscriptionManager((JpaCaseFilePersistence) getPersistence());
-        }
-        return null;
-    }
-
-
     protected void clearHistory() {
         if (sessionPersistence && getRuntimeManager() != null && getRuntimeEngine() != null && getRuntimeEngine().getAuditService() != null) {
             getRuntimeEngine().getAuditService().clear();
         }
     }
-
-    @SuppressWarnings("rawtypes")
-    protected abstract Class[] getClasses();
 
     private class MyCaseRegisterableItemsFactory extends CaseRegisterableItemsFactory {
 

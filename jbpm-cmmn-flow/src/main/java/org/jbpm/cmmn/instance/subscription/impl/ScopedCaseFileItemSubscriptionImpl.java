@@ -61,6 +61,7 @@ public class ScopedCaseFileItemSubscriptionImpl implements ScopedCaseFileItemSub
 	}
 
 	private static boolean isInstance(Object source, String stringType) {
+		//TODO make it work more intelligently for dynamic objects such as Documents, JCR, CMIS etc.
 		try {
 			return Class.forName(stringType).isInstance(source);
 		} catch (ClassNotFoundException e) {

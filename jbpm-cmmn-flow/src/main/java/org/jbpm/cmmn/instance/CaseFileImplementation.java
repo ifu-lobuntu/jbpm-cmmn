@@ -7,6 +7,9 @@ import org.kie.api.runtime.Environment;
 
 public interface CaseFileImplementation {
 
+    String CASE_FILE_IMPLEMENTATION_CLASS =  CaseFileImplementation.class.getName()+"Class";
+    String DEMARCATED_SUBSCRIPTION =  CaseFileImplementation.class.getName()+"DemarcatedSubscriptions";
+
     ObjectMarshallingStrategy[] getObjectMarshallingStrategies(Environment environmentTemplate);
 
     SubscriptionManager<?> getSubscriptionManager(Environment environmentTemplate);

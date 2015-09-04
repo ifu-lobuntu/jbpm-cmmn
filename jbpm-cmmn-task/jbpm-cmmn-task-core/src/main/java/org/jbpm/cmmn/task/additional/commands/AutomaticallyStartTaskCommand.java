@@ -27,6 +27,7 @@ public class AutomaticallyStartTaskCommand extends AbstractTaskCommand<Void> {
 	}
 
 	public Void execute() {
+		super.doCallbackUserOperation(userId,taskContext);
 		Task task = getTaskById(taskId);
 		InternalTaskData td = (InternalTaskData) task.getTaskData();
 		if (task.getTaskData().getStatus() != Status.Created && task.getTaskData().getStatus() != Status.Ready

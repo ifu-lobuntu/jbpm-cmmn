@@ -15,14 +15,9 @@ import org.junit.Test;
 public class SubmitPlannTest extends AbstractCmmnCaseTestCase {
 
     public SubmitPlannTest() {
-        super(true, true, "org.jbpm.persistence.jpa");
+        super("org.jbpm.persistence.jpa");
     }
 
-    @SuppressWarnings("rawtypes")
-    @Override
-    protected Class[] getClasses() {
-        return new Class[0];
-    }
 
     @Test
     public void testIt() throws Exception {

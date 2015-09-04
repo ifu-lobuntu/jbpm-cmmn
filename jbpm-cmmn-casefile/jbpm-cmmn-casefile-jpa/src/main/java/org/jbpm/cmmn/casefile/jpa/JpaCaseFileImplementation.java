@@ -32,7 +32,7 @@ public class JpaCaseFileImplementation implements CaseFileImplementation {
         JpaCaseFilePersistence result = (JpaCaseFilePersistence) env.get(CaseFilePersistence.ENV_NAME);
         if(result==null){
             //create it once only
-            result= new JpaCaseFilePersistence(EntityManagerFactoryManager.get().getOrCreate(pu), (String) env.get("deploymentId"));
+            result= new JpaCaseFilePersistence(pu, (String) env.get("deploymentId"));
             env.set(CaseFilePersistence.ENV_NAME, result);
         }
         return result;

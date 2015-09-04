@@ -2,6 +2,7 @@ package org.jbpm.cmmn.casefile.jpa;
 
 import org.jbpm.cmmn.casefile.common.Stopwatch;
 import org.jbpm.cmmn.instance.CaseFilePersistence;
+import org.jbpm.runtime.manager.impl.jpa.EntityManagerFactoryManager;
 import org.kie.api.runtime.manager.RuntimeManager;
 
 import javax.naming.InitialContext;
@@ -24,13 +25,13 @@ import javax.transaction.UserTransaction;
 public class JpaCaseFilePersistence implements CaseFilePersistence {
     static ThreadLocal<EntityManager> em = new ThreadLocal<EntityManager>();
     private final String deploymentId;
-    protected EntityManagerFactory emf;
+    private final String pu;
     protected boolean startedTransaction = false;
     protected Stopwatch stopwatch = new Stopwatch(getClass());
     private UserTransaction transaction;
 
-    public JpaCaseFilePersistence(EntityManagerFactory emf, String deploymentId) {
-        this.emf = emf;
+    public JpaCaseFilePersistence(String pu, String deploymentId) {
+        this.pu = pu;
         this.deploymentId=deploymentId;
     }
 
@@ -93,6 +94,7 @@ public class JpaCaseFilePersistence implements CaseFilePersistence {
 
     public EntityManager getEntityManager() {
         if (em.get() == null || !em.get().isOpen()) {
+            EntityManagerFactory emf = EntityManagerFactoryManager.get().getOrCreate(pu);
             em.set(emf.createEntityManager());
             em.get().joinTransaction();
             em.get().setFlushMode(FlushModeType.COMMIT);
@@ -122,6 +124,7 @@ public class JpaCaseFilePersistence implements CaseFilePersistence {
             doCaseFileItemEvents();
             if (startedTransaction) {
                 getTransaction().commit();
+                transaction=null;
             }
             close();
         } catch (Exception e) {
