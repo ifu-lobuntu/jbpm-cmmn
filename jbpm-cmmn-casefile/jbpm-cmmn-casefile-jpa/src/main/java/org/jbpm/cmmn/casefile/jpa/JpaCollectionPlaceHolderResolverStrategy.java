@@ -17,10 +17,11 @@ import javax.persistence.Query;
 
 import org.drools.core.common.DroolsObjectInputStream;
 import org.drools.persistence.TransactionAware;
+import org.drools.persistence.TransactionManager;
 import org.kie.api.marshalling.ObjectMarshallingStrategy;
 import org.kie.api.runtime.Environment;
 
-public class JpaCollectionPlaceHolderResolverStrategy implements ObjectMarshallingStrategy {
+public class JpaCollectionPlaceHolderResolverStrategy implements ObjectMarshallingStrategy,TransactionAware {
     private JpaCaseFilePersistence persistence;
 
     public JpaCollectionPlaceHolderResolverStrategy(JpaCaseFilePersistence persistence) {
@@ -168,4 +169,13 @@ public class JpaCollectionPlaceHolderResolverStrategy implements ObjectMarshalli
         return null;
     }
 
+    @Override
+    public void onStart(TransactionManager txm) {
+        persistence.start();
+    }
+
+    @Override
+    public void onEnd(TransactionManager txm) {
+        persistence.close();
+    }
 }

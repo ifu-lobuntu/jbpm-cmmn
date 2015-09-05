@@ -42,6 +42,27 @@ public class JpaCaseFileImplementation implements CaseFileImplementation {
             result= new JpaCaseFilePersistence(pu, (String) env.get("deploymentId"), cl);
             env.set(CaseFilePersistence.ENV_NAME, result);
         }
+        //TODO find a better way to do this
+        startEventDispatcherThread(result);
         return result;
+    }
+
+    private void startEventDispatcherThread(final JpaCaseFilePersistence p) {
+        //TODO find a better way to do this. Will only work in a non CMT environment
+        new Thread() {
+            @Override
+            public void run() {
+                while (true) {
+                    try {
+                        Thread.sleep(10000);
+                        p.start();
+                        p.commitAndSendCaseFileItemEvents();
+                    } catch (Exception e) {
+                        p.rollback();
+
+                    }
+                }
+            }
+        }.start();
     }
 }

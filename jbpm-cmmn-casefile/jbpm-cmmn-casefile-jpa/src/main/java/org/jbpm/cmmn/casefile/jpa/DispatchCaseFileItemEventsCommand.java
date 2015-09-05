@@ -14,7 +14,7 @@ public class DispatchCaseFileItemEventsCommand implements Command {
         String deploymentId = (String) commandContext.getData("deploymentId");
         RuntimeEngine re = RuntimeManagerRegistry.get().getManager(deploymentId).getRuntimeEngine(EmptyContext.get());
         JpaCaseFilePersistence p= (JpaCaseFilePersistence) re.getKieSession().getEnvironment().get(JpaCaseFilePersistence.ENV_NAME);
-        EventQueues.dispatchCaseFileItemEventQueue(deploymentId,p.getEntityManager());
+        p.dispatchCaseFileItemEventQueue();
         return null;
     }
 }

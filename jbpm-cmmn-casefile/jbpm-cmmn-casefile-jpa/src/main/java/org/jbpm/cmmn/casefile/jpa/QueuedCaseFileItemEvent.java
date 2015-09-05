@@ -81,31 +81,28 @@ public class QueuedCaseFileItemEvent {
         return valueClassName;
     }
 
-    public void setValueClassName(String valueClassName) {
-        this.valueClassName = valueClassName;
+    public Serializable getValue() {
+        try {
+            return SerializableUtil.deserialize(parentObjectId);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
-    public byte[] getValue() {
-        return value;
-    }
-
-    public void setValue(byte[] value) {
-        this.value = value;
-    }
 
     public String getParentObjectClassName() {
         return parentObjectClassName;
     }
-
-    public void setParentObjectClassName(String parentObjectClassName) {
-        this.parentObjectClassName = parentObjectClassName;
+    public Serializable getParentObjectId() {
+        try {
+            return SerializableUtil.deserialize(parentObjectId);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
-    public byte[] getParentObjectId() {
-        return parentObjectId;
-    }
-
-    public void setParentObjectId(byte[] parentObjectId) {
-        this.parentObjectId = parentObjectId;
+    @Override
+    public String toString() {
+        return caseFileItemName+"." + transition.name().toLowerCase();
     }
 }

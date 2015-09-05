@@ -72,12 +72,13 @@ public class JpaPlaceHolderResolverStrategy implements ObjectMarshallingStrategy
 	}
 
 	@Override
-	public void onStart(TransactionManager transactionManager) {
-
+	public void onStart(TransactionManager txm) {
+		persistence.start();
 	}
 
 	@Override
-	public void onEnd(TransactionManager transactionManager) {
+	public void onEnd(TransactionManager txm) {
 		persistence.close();
 	}
+
 }

@@ -4,6 +4,7 @@ package org.jbpm.cmmn.casefile.jpa;
 import org.hibernate.Criteria;
 import org.hibernate.FlushMode;
 import org.hibernate.HibernateException;
+import org.hibernate.Session;
 import org.hibernate.collection.spi.PersistentCollection;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.event.spi.*;
@@ -16,16 +17,63 @@ import org.jbpm.cmmn.instance.subscription.DurableCaseFileItemSubscription;
 import org.jbpm.cmmn.instance.subscription.ScopedCaseFileItemSubscription;
 import org.jbpm.cmmn.instance.subscription.impl.DemarcatedSubscriptionContext;
 
+import java.io.IOException;
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static org.jbpm.cmmn.flow.common.CaseFileItemTransition.*;
 
 public class HibernateCaseFileItemEventGenerator implements
         PostInsertEventListener, PostDeleteEventListener, FlushEntityEventListener, FlushEventListener {
+    private static Map<Session, Set<QueuedCaseFileItemEvent>> eventQueue = new ConcurrentHashMap<Session, Set<QueuedCaseFileItemEvent>>();
+
+    static {
+        //Unfortunately there is no CloseEventListener
+        new Thread() {
+            @Override
+            public void run() {
+                while (true) {
+                    for (Session session : new HashSet<Session>(eventQueue.keySet())) {
+                        if (!session.isOpen()) {
+                            eventQueue.remove(session);
+                        }
+                    }
+                    try {
+                        Thread.sleep(10000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }.start();
+    }
+
+    private static Set<QueuedCaseFileItemEvent> getEventQueue(Session session) {
+        Set<QueuedCaseFileItemEvent> set = eventQueue.get(session);
+        if (set == null) {
+            eventQueue.put(session, set = new HashSet<QueuedCaseFileItemEvent>());
+        }
+        return set;
+    }
+
+
+    private static void queueEvent(Session session, String deploymentId, long processInstanceId, CaseFileItemEvent caseFileItemEvent) {
+        Set<QueuedCaseFileItemEvent> set = getEventQueue(session);
+        QueuedCaseFileItemEvent q = new QueuedCaseFileItemEvent();
+        q.setDeploymentId(deploymentId);
+        q.setTransition(caseFileItemEvent.getTransition());
+        q.setCaseFileItemName(caseFileItemEvent.getCaseFileItemName());
+        q.setProcessInstanceId(processInstanceId);
+        try {
+            q.setParentObject(caseFileItemEvent.getParentObject());
+            q.setValue(caseFileItemEvent.getValue());
+        } catch (IOException e) {
+            //??bleh
+            e.printStackTrace();
+        }
+        set.add(q);
+    }
 
     @Override
     public void onFlushEntity(FlushEntityEvent event) throws HibernateException {
@@ -56,7 +104,7 @@ public class HibernateCaseFileItemEventGenerator implements
         Criteria criteria = s.createCriteria(JpaCaseFileItemSubscription.class);
         Class<?> entityClass = JpaIdUtil.INSTANCE.findEntityClass(object.getClass());
         criteria.add(Restrictions.eq("objectType", entityClass.getName()));
-        String stringifiedObjectId = JpaIdUtil.INSTANCE.getId( JpaIdUtil.INSTANCE.findIdMember(entityClass), object).toString();
+        String stringifiedObjectId = JpaIdUtil.INSTANCE.getId(JpaIdUtil.INSTANCE.findIdMember(entityClass), object).toString();
         criteria.add(Restrictions.eq("stringifiedObjectId", stringifiedObjectId));
         criteria.setFlushMode(FlushMode.MANUAL);
         return criteria.list();
@@ -115,8 +163,8 @@ public class HibernateCaseFileItemEventGenerator implements
     }
 
     protected boolean isMatchingCreateOrDelete(CaseFileItemSubscription is, String propertyName) {
-		/*
-		 * In the case of CREATE and DELETE the itemName is actually the name of
+        /*
+         * In the case of CREATE and DELETE the itemName is actually the name of
 		 * the property on the parent to the child
 		 */
         return propertyName.equals(is.getItemName())
@@ -132,13 +180,13 @@ public class HibernateCaseFileItemEventGenerator implements
             if (oldValue != null) {
                 if (is.getTransition() == CaseFileItemTransition.DELETE || is.getTransition() == CaseFileItemTransition.REMOVE_CHILD
                         || is.getTransition() == CaseFileItemTransition.REMOVE_REFERENCE) {
-                    queueEvent(is, owner, oldValue);
+                    queueEvent(event.getSession(), is, owner, oldValue);
                 }
             }
             if (newValue != null) {
                 if (is.getTransition() == CaseFileItemTransition.CREATE || is.getTransition() == CaseFileItemTransition.ADD_CHILD
                         || is.getTransition() == CaseFileItemTransition.ADD_REFERENCE) {
-                    queueEvent(is, owner, newValue);
+                    queueEvent(event.getSession(), is, owner, newValue);
                 }
             }
             if (event.getEntityEntry().getPersister().getPropertyTypes()[i] instanceof OneToOneType) {
@@ -179,7 +227,7 @@ public class HibernateCaseFileItemEventGenerator implements
             if (!newState.contains(oldObject)) {
                 if (is.getTransition() == CaseFileItemTransition.DELETE || is.getTransition() == CaseFileItemTransition.REMOVE_CHILD
                         || is.getTransition() == CaseFileItemTransition.REMOVE_REFERENCE) {
-                    queueEvent(is, owner, oldObject);
+                    queueEvent(event.getSession(), is, owner, oldObject);
                 }
             }
         }
@@ -187,7 +235,7 @@ public class HibernateCaseFileItemEventGenerator implements
             if (!oldState.contains(newObject)) {
                 if (is.getTransition() == CaseFileItemTransition.CREATE || is.getTransition() == CaseFileItemTransition.ADD_CHILD
                         || is.getTransition() == CaseFileItemTransition.ADD_REFERENCE) {
-                    queueEvent(is, owner, newObject);
+                    queueEvent(event.getSession(), is, owner, newObject);
                 }
             }
         }
@@ -199,20 +247,27 @@ public class HibernateCaseFileItemEventGenerator implements
                     && !event.getEntityEntry().getPersister().getPropertyTypes()[i].isCollectionType()
                     && event.getEntityEntry().getPersister().getPropertyTypes()[i].isDirty(event.getEntityEntry().getLoadedState()[i],
                     event.getPropertyValues()[i], event.getSession())) {
-                queueEvent(is, event.getEntity(), event.getEntity());
+                queueEvent(event.getSession(), is, event.getEntity(), event.getEntity());
                 break;
             }
         }
     }
 
     @Override
-    public void onFlush(FlushEvent event) throws HibernateException {
+    public void onFlush(FlushEvent flushEvent) throws HibernateException {
+        Set<QueuedCaseFileItemEvent> q = eventQueue.remove(flushEvent.getSession());
+        if (q != null) {
+            for (QueuedCaseFileItemEvent event : q) {
+                flushEvent.getSession().persist(event);
+            }
+            flushEvent.getSession().flush();
+        }
     }
 
     @Override
     public void onPostDelete(PostDeleteEvent event) {
         for (CaseFileItemSubscription s : DemarcatedSubscriptionContext.getSubscriptionsInScopeForFor(event.getEntity(), DELETE)) {
-            queueEvent(s, null, event.getEntity());
+            queueEvent(event.getSession(), s, null, event.getEntity());
         }
 
     }
@@ -220,23 +275,23 @@ public class HibernateCaseFileItemEventGenerator implements
     @Override
     public void onPostInsert(PostInsertEvent event) {
         for (CaseFileItemSubscription s : DemarcatedSubscriptionContext.getSubscriptionsInScopeForFor(event.getEntity(), CREATE)) {
-            queueEvent(s, null, event.getEntity());
+            queueEvent(event.getSession(), s, null, event.getEntity());
         }
     }
 
-    protected void queueEvent(CaseFileItemSubscription is, Object parentObject, Object value) {
+    protected void queueEvent(Session session, CaseFileItemSubscription is, Object parentObject, Object value) {
         CaseFileItemEvent event = new CaseFileItemEvent(is.getItemName(), is.getTransition(), parentObject, value);
         if (is instanceof ScopedCaseFileItemSubscription) {
             ScopedCaseFileItemSubscription opis = (ScopedCaseFileItemSubscription) is;
             CaseInstance ci = (CaseInstance) opis.getKnowledgeRuntime().getProcessInstance(opis.getProcessInstanceId());
             if (opis.meetsBindingRefinementCriteria(value, ci)) {
                 String deploymentId = (String) opis.getKnowledgeRuntime().getEnvironment().get("deploymentId");
-                EventQueues.queueEvent(deploymentId, ci.getId(), event);
+                queueEvent(session, deploymentId, ci.getId(), event);
             }
         } else if (is instanceof DurableCaseFileItemSubscription) {
             DurableCaseFileItemSubscription pcfis = (DurableCaseFileItemSubscription) is;
             //TODO figure out a way to check if it meets the bindingRefinementCriteria
-            EventQueues.queueEvent(pcfis.getDeploymentId(), pcfis.getProcessInstanceId(), event);
+            queueEvent(session, pcfis.getDeploymentId(), pcfis.getProcessInstanceId(), event);
         }
     }
 
@@ -249,6 +304,5 @@ public class HibernateCaseFileItemEventGenerator implements
             this.newValue = newValue;
             this.i = i;
         }
-
     }
 }
