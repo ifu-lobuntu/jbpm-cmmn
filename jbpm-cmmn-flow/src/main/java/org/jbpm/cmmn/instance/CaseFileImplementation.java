@@ -14,5 +14,5 @@ public interface CaseFileImplementation {
 
     SubscriptionManager<?> getSubscriptionManager(Environment environmentTemplate, ClassLoader cl);
 
-    CaseFilePersistence getCaseFilePersistence(Environment env, ClassLoader cl);
+    CaseFilePersistence deployCaseFilePersistence(Environment env, ClassLoader cl);
 }

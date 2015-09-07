@@ -1,6 +1,7 @@
 package org.jbpm.cmmn.casefile.jpa;
 
-import org.jbpm.cmmn.casefile.common.Stopwatch;
+import org.drools.persistence.TransactionManager;
+import org.drools.persistence.jta.JtaTransactionManager;
 import org.jbpm.cmmn.flow.common.impl.AbstractStandardEventNode;
 import org.jbpm.cmmn.instance.CaseFileItemEvent;
 import org.jbpm.cmmn.instance.CaseFilePersistence;
@@ -15,8 +16,6 @@ import org.kie.internal.runtime.manager.context.ProcessInstanceIdContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -24,10 +23,12 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.transaction.Status;
 import javax.transaction.SystemException;
-import javax.transaction.UserTransaction;
+import javax.transaction.TransactionSynchronizationRegistry;
 import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -45,7 +46,7 @@ public class JpaCaseFilePersistence implements CaseFilePersistence {
     private final String pu;
     private final ClassLoader classLoader;
     protected ThreadLocal<Boolean> startedTransaction = new ThreadLocal<Boolean>();
-    private UserTransaction transaction;
+    private org.drools.persistence.TransactionManager transaction;
 
     public JpaCaseFilePersistence(String pu, String deploymentId, ClassLoader cl) {
         this.pu = pu;
@@ -80,8 +81,7 @@ public class JpaCaseFilePersistence implements CaseFilePersistence {
             // EntityManager first - do not want to create EMF in transaction
             EntityManager entityManager = getEntityManager();
             if (!isTransactionActive()) {
-                this.startedTransaction.set(true);
-                getTransaction().begin();
+                this.startedTransaction.set(getTransaction().begin());
             }
             entityManager.joinTransaction();
         } catch (Exception e) {
@@ -89,9 +89,8 @@ public class JpaCaseFilePersistence implements CaseFilePersistence {
         }
     }
 
-    private boolean isTransactionActive() throws SystemException, NamingException {
-        UserTransaction tx = getTransaction();
-        return tx!=null && tx.getStatus() == Status.STATUS_ACTIVE;
+    private boolean isTransactionActive() {
+        return getTransaction().getStatus() == TransactionManager.STATUS_ACTIVE;
     }
 
     private RuntimeException convertException(Exception e) {
@@ -107,9 +106,37 @@ public class JpaCaseFilePersistence implements CaseFilePersistence {
         getEntityManager().persist(o);
     }
 
-    public UserTransaction getTransaction() throws NamingException {
+    public TransactionManager getTransaction() {
         if (transaction == null) {
-            transaction = (UserTransaction) new InitialContext().lookup("java:comp/UserTransaction");
+            transaction = new JtaTransactionManager(null, null, null) {
+                public int getStatus() {
+                    int s;
+                    try {
+                        Field tsr = JtaTransactionManager.class.getDeclaredField("tsr");
+                        tsr.setAccessible(true);
+                        if (tsr.get(this) != null) {
+                            s = ((TransactionSynchronizationRegistry) tsr.get(this)).getTransactionStatus();
+                        } else {
+                            s = super.getUt().getStatus();
+                        }
+                    } catch (Exception var3) {
+                        throw new RuntimeException("Unable to get status for transaction", var3);
+                    }
+
+                    switch (s) {
+                        case Status.STATUS_ACTIVE:
+                            return TransactionManager.STATUS_ACTIVE;
+                        case Status.STATUS_COMMITTED:
+                            return TransactionManager.STATUS_COMMITTED;
+                        case Status.STATUS_NO_TRANSACTION:
+                            return TransactionManager.STATUS_NO_TRANSACTION;
+                        case Status.STATUS_ROLLEDBACK:
+                            return TransactionManager.STATUS_ROLLEDBACK;
+                        default:
+                            return TransactionManager.STATUS_UNKNOWN;
+                    }
+                }
+            };
         }
         return transaction;
     }
@@ -119,8 +146,12 @@ public class JpaCaseFilePersistence implements CaseFilePersistence {
     }
 
     public <T> T find(String className, Object id) {
+        return (T) getEntityManager().find(loadClass(className), id);
+    }
+
+    private Class<?> loadClass(String className) {
         try {
-            return (T) getEntityManager().find(Class.forName(className, true, classLoader), id);
+            return Class.forName(className, true, classLoader);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -133,7 +164,7 @@ public class JpaCaseFilePersistence implements CaseFilePersistence {
                 Thread.currentThread().setContextClassLoader(classLoader);
                 EntityManagerFactory emf = EntityManagerFactoryManager.get().getOrCreate(pu);
                 em.set(emf.createEntityManager());
-                if(isTransactionActive()) {
+                if (isTransactionActive()) {
                     em.get().joinTransaction();
                 }
                 em.get().setFlushMode(FlushModeType.COMMIT);
@@ -162,19 +193,19 @@ public class JpaCaseFilePersistence implements CaseFilePersistence {
 
     public void update(Object o) {
     }
-    public void rollback(){
+
+    public void rollback() {
         try {
-            if (Boolean.TRUE.equals(startedTransaction.get())) {
-                getTransaction().rollback();
+            if (ownsTransaction()) {
+                getTransaction().rollback(ownsTransaction());
             }
-        } catch (SystemException e) {
+        } catch (Exception e) {
             logger.error("Could not rollback", e);
-        } catch (NamingException e) {
-            logger.error("Could not rollback", e);
-        }finally{
+        } finally {
             close();
         }
     }
+
     /**
      * Used for synchronous delivery of events, specifically for tests
      */
@@ -183,13 +214,11 @@ public class JpaCaseFilePersistence implements CaseFilePersistence {
         try {
             startOrJoinTransaction();
             getEntityManager().flush();
-            while (dispatchCaseFileItemEventQueue()){
+            while (dispatchCaseFileItemEventQueue()) {
                 getEntityManager().flush();
             }
-            if (Boolean.TRUE.equals(startedTransaction.get())) {
-                getTransaction().commit();
-                this.startedTransaction.set(false);
-                transaction = null;
+            if (ownsTransaction()) {
+                getTransaction().commit(ownsTransaction());
             }
             close();
         } catch (Exception e) {
@@ -197,8 +226,13 @@ public class JpaCaseFilePersistence implements CaseFilePersistence {
         }
     }
 
+    private boolean ownsTransaction() {
+        return Boolean.TRUE.equals(startedTransaction.get());
+    }
+
     /**
      * TODO move to HIbernateCaseFileITemEVentGEnerator
+     *
      * @return
      */
 
@@ -241,7 +275,7 @@ public class JpaCaseFilePersistence implements CaseFilePersistence {
             }
             Thread.currentThread().setContextClassLoader(tccl);
         }
-        return eq.size()>0;
+        return eq.size() > 0;
     }
 
     private void dispatchEvent(QueuedCaseFileItemEvent q, RuntimeEngine re) {
@@ -259,7 +293,7 @@ public class JpaCaseFilePersistence implements CaseFilePersistence {
             String eventType = AbstractStandardEventNode.getType(event.getCaseFileItemName(), event.getTransition());
             re.getKieSession().signalEvent(eventType, event, q.getProcessInstanceId());
             getEntityManager().remove(q);
-        }catch(Exception e){
+        } catch (Exception e) {
             logger.error("Could not dispatch CaseFileItemEvent " + q.toString(), e);
         }
     }
@@ -273,5 +307,26 @@ public class JpaCaseFilePersistence implements CaseFilePersistence {
         q.distinct(true);
         TypedQuery<QueuedCaseFileItemEvent> typedQuery = getEntityManager().createQuery(q);
         return typedQuery.getResultList();
+    }
+
+    @Override
+    public Collection<?> readAll(String objectType) {
+        return getEntityManager().createQuery("from " + objectType).getResultList();
+    }
+
+    @Override
+    public Collection<?> executeNamedQuery(String name, Map<String, Object> parameters) {
+        Query q = getEntityManager().createNamedQuery(name);
+        for (Parameter<?> parameter : q.getParameters()) {
+            q.setParameter(parameter.getName(), parameters.get(parameter.getName()));
+        }
+        return q.getResultList();
+    }
+
+    public void disposeEntityManagerFactory() {
+        EntityManagerFactory emf = EntityManagerFactoryManager.get().remove(pu);
+        if (emf != null) {
+            emf.close();
+        }
     }
 }

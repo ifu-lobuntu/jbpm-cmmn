@@ -5,6 +5,7 @@ import bitronix.tm.resource.jdbc.PoolingDataSource;
 import org.drools.core.ClockType;
 import org.drools.core.audit.event.LogEvent;
 import org.drools.core.audit.event.RuleFlowNodeLogEvent;
+import org.jbpm.cmmn.casefile.jpa.JpaCaseFileImplementation;
 import org.jbpm.cmmn.casefile.jpa.JpaCaseFilePersistence;
 import org.jbpm.cmmn.flow.common.impl.PlanItemInstanceFactoryNodeImpl;
 import org.jbpm.cmmn.flow.xml.CMMNBuilder;
@@ -94,7 +95,7 @@ public abstract class AbstractCmmnCaseTestCase extends JbpmJUnitBaseTestCase {
 
     @Before
     public void setUp() throws Exception {
-
+        super.addEnvironmentEntry(JpaCaseFileImplementation.CASE_FILE_PERSISTENCE_UNIT_NAME, "org.jbpm.persistence.jpa.casefile");
         stopwatch.start();
         if (setupDataSource) {
             if(ds==null) {
@@ -388,6 +389,9 @@ public abstract class AbstractCmmnCaseTestCase extends JbpmJUnitBaseTestCase {
         }
         builder.addConfiguration(ClockTypeOption.PROPERTY_NAME, ClockType.PSEUDO_CLOCK.getId());
         builder.userGroupCallback(new JBossUserGroupCallbackImpl("classpath:/usergroups.properties"));
+        for (Map.Entry<String, Object> envEntry : customEnvironmentEntries.entrySet()) {
+            builder.addEnvironmentEntry(envEntry.getKey(), envEntry.getValue());
+        }
 
         for (Map.Entry<String, ResourceType> entry : resources.entrySet()) {
             builder.addAsset(ResourceFactory.newClassPathResource(entry.getKey()), entry.getValue());

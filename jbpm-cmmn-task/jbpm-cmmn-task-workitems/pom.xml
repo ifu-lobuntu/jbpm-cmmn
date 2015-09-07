@@ -53,10 +53,6 @@
 		</dependency>
 		<dependency>
 			<groupId>org.jbpm</groupId>
-			<artifactId>jbpm-cmmn-task-jpa</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.jbpm</groupId>
 			<artifactId>jbpm-human-task-workitems</artifactId>
 		</dependency>
 	</dependencies>

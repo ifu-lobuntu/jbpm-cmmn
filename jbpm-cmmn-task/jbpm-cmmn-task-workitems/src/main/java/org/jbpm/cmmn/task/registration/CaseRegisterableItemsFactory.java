@@ -10,12 +10,10 @@ import org.jbpm.cmmn.task.workitems.UpdateTaskStatusWorkItemHandler;
 import org.jbpm.runtime.manager.impl.DefaultRegisterableItemsFactory;
 import org.jbpm.runtime.manager.impl.RuntimeEngineImpl;
 import org.jbpm.runtime.manager.impl.SimpleRuntimeEnvironment;
-import org.jbpm.runtime.manager.impl.jpa.EntityManagerFactoryManager;
 import org.jbpm.services.task.wih.ExternalTaskEventListener;
 import org.kie.api.marshalling.ObjectMarshallingStrategy;
 import org.kie.api.runtime.Environment;
 import org.kie.api.runtime.EnvironmentName;
-import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.manager.RuntimeEngine;
 import org.kie.api.runtime.process.WorkItemHandler;
 import org.kie.api.task.TaskLifeCycleEventListener;
@@ -25,8 +23,6 @@ import org.kie.internal.runtime.manager.InternalRuntimeManager;
 import org.kie.internal.runtime.manager.RuntimeEnvironment;
 import org.kie.internal.task.api.EventService;
 
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -43,7 +39,7 @@ public class CaseRegisterableItemsFactory extends DefaultRegisterableItemsFactor
 
     @Override
     public void setRuntimeManager(InternalRuntimeManager runtimeManager) {
-        //NB!!! Carefule here, runtimeManager has not been fully initialized.
+        //NB!!! Careful here, runtimeManager has not been fully initialized.
         super.setRuntimeManager(runtimeManager);
         RuntimeEnvironment environment = runtimeManager.getEnvironment();
         Environment env;
@@ -60,7 +56,7 @@ public class CaseRegisterableItemsFactory extends DefaultRegisterableItemsFactor
             cl=Thread.currentThread().getContextClassLoader();
         }
         CaseFileImplementation cfi = buildCaseFileImplementation(env, cl);
-        env.set(CaseFilePersistence.ENV_NAME, cfi.getCaseFilePersistence(env, cl));
+        env.set(CaseFilePersistence.ENV_NAME, cfi.deployCaseFilePersistence(env, cl));
         Object demarcated= env.get(CaseFileImplementation.DEMARCATED_SUBSCRIPTION);
         if(!(Boolean.TRUE.equals(demarcated) || "true".equals(demarcated))) {
             env.set(SubscriptionManager.ENV_NAME, cfi.getSubscriptionManager(env, cl));
@@ -104,9 +100,6 @@ public class CaseRegisterableItemsFactory extends DefaultRegisterableItemsFactor
         }
     }
 
-    protected void setKieSessionScopedInfrastracture(KieSession kieSession) {
-    }
-
     @Override
     public Map<String, WorkItemHandler> getWorkItemHandlers(RuntimeEngine runtime) {
         Map<String, WorkItemHandler> defaultHandlers = new HashMap<String, WorkItemHandler>();
@@ -128,7 +121,6 @@ public class CaseRegisterableItemsFactory extends DefaultRegisterableItemsFactor
             });
         }
         defaultHandlers.put("CMMN Human Task", humanTaskHandler);
-        setKieSessionScopedInfrastracture(runtime.getKieSession());
         return defaultHandlers;
     }
 

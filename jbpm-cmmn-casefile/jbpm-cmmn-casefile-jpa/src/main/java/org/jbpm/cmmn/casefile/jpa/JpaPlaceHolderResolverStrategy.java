@@ -57,6 +57,7 @@ public class JpaPlaceHolderResolverStrategy implements ObjectMarshallingStrategy
 		ObjectOutputStream oos = new ObjectOutputStream(buff);
 		oos.writeUTF(object.getClass().getCanonicalName());
 		oos.writeObject(getIdValue(object));
+		persistence.flush();
 		oos.close();
 		return buff.toByteArray();
 	}
