@@ -9,6 +9,7 @@ import org.jbpm.cmmn.instance.impl.PlanItemInstanceFactoryNodeInstance;
  * but the {@link PlanItemInstanceFactoryNodeInstance} is also required to store the history state
  */
 public interface PlanItemInstanceLifecycleWithHistory<T extends PlanItemDefinition> extends PlanItemInstance<T> {
+
 	/**
 	 * Exit happens from within the process, when the parent stage resumes. If there is a task associated with this
 	 * element, this task needs to be resumed too, triggering the resume

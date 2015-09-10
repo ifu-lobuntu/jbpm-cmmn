@@ -1,6 +1,7 @@
 package org.jbpm.cmmn.casefile.jpa;
 
 import org.drools.persistence.TransactionManager;
+import org.drools.persistence.TransactionSynchronization;
 import org.drools.persistence.jta.JtaTransactionManager;
 import org.jbpm.cmmn.flow.common.impl.AbstractStandardEventNode;
 import org.jbpm.cmmn.instance.CaseFileItemEvent;
@@ -22,7 +23,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.transaction.Status;
-import javax.transaction.SystemException;
 import javax.transaction.TransactionSynchronizationRegistry;
 import java.io.Serializable;
 import java.lang.reflect.Field;
@@ -81,7 +81,7 @@ public class JpaCaseFilePersistence implements CaseFilePersistence {
             // EntityManager first - do not want to create EMF in transaction
             EntityManager entityManager = getEntityManager();
             if (!isTransactionActive()) {
-                this.startedTransaction.set(getTransaction().begin());
+                this.startedTransaction.set(getTransactionManager().begin());
             }
             entityManager.joinTransaction();
         } catch (Exception e) {
@@ -90,7 +90,7 @@ public class JpaCaseFilePersistence implements CaseFilePersistence {
     }
 
     private boolean isTransactionActive() {
-        return getTransaction().getStatus() == TransactionManager.STATUS_ACTIVE;
+        return getTransactionManager().getStatus() == TransactionManager.STATUS_ACTIVE;
     }
 
     private RuntimeException convertException(Exception e) {
@@ -106,7 +106,7 @@ public class JpaCaseFilePersistence implements CaseFilePersistence {
         getEntityManager().persist(o);
     }
 
-    public TransactionManager getTransaction() {
+    public TransactionManager getTransactionManager() {
         if (transaction == null) {
             transaction = new JtaTransactionManager(null, null, null) {
                 public int getStatus() {
@@ -137,6 +137,17 @@ public class JpaCaseFilePersistence implements CaseFilePersistence {
                     }
                 }
             };
+            transaction.registerTransactionSynchronization(new TransactionSynchronization() {
+                @Override
+                public void beforeCompletion() {
+
+                }
+
+                @Override
+                public void afterCompletion(int status) {
+                    JpaCaseFilePersistence.this.close();
+                }
+            });
         }
         return transaction;
     }
@@ -197,7 +208,7 @@ public class JpaCaseFilePersistence implements CaseFilePersistence {
     public void rollback() {
         try {
             if (ownsTransaction()) {
-                getTransaction().rollback(ownsTransaction());
+                getTransactionManager().rollback(ownsTransaction());
             }
         } catch (Exception e) {
             logger.error("Could not rollback", e);
@@ -218,7 +229,7 @@ public class JpaCaseFilePersistence implements CaseFilePersistence {
                 getEntityManager().flush();
             }
             if (ownsTransaction()) {
-                getTransaction().commit(ownsTransaction());
+                getTransactionManager().commit(ownsTransaction());
             }
             close();
         } catch (Exception e) {

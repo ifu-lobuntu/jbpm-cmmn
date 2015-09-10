@@ -74,24 +74,25 @@ More significant though is the fact that all of these transitions generate event
 and it allows Case elements to react to each other as status changes occur. The following table presents  the mapping of WS Human Task transitions to CMMN Task/Stage transitions. If there is a demand for it, we 
 may implement thin wrapper around the standard jBPM task service to better reflect the terminology used in CMMN
 
-|WS Human Task transition|CMMN Task/Stage transition      |
-|------------------------|--------------------------------|
-|Activate				 |Enable                          |
-|Suspend				 |Suspend                         |
-|Resume					 |Resume                          |
-|Skip					 |Disable                         |
-|Start					 |Manual Start                    |
-|Exit					 |Terminate                       |
-|Fault					 |Fault                           |
-|Complete				 |Complete                        |
-|N/A					 |Exit (Exit criteria become true)|
-|N/A					 |ParentSuspend                   |
-|N/A					 |ParentResume                    |
-|N/A					 |Start (automatically)           |
-|N/A					 |Reenable                        |
-|Forward				 |N/A                             |
-|Delegate				 |N/A                             |
-|Claim					 |N/A                             |
+|WS Human Task transition|CMMN Task/Stage transition        |
+|------------------------|----------------------------------|
+|Activate				 |Enable                            |
+|Suspend				 |Suspend                           |
+|Resume					 |Resume                            |
+|Skip					 |Disable                           |
+|Start					 |Manual Start                      |
+|Exit					 |Terminate                         |
+|Fault					 |Fault                             |
+|Complete				 |Complete                          |
+|N/A					 |Exit (Exit criteria become true)  |
+|N/A					 |ParentSuspend                     |
+|N/A					 |ParentResume                      |
+|N/A					 |Start (automatically)             |
+|N/A					 |Reenable                          |
+|Forward				 |Stop(Human Tasks only,not in spec)|
+|Delegate				 |Stop(Human Tasks only,not in spec)|
+|Claim					 |N/A                               |
+|Release                 |Stop(Human Tasks only,not in spec)|
 
 ## 5.1. Roles in a Case.
 Case Roles are assumed to be represented as Groups in the jBPM TaskIdentityService. Roles come into play in various places in the CMMN specification such as Roles:
@@ -101,7 +102,7 @@ Case Roles are assumed to be represented as Groups in the jBPM TaskIdentityServi
 
 This implementation provides two built-in Roles in a Case, namely the Initiator and the CaseOwner. These can be passed to a new Case instance as parameters. At least one of these two needs to be provided, as it
 is used to do assignment of jBPM Tasks representing non HumanTasks (CaseTasks, Stages, ProcessTask and the CaseInstance itself). They are also used to determine businessAdministrators for HumanTasks. This 
-principle enforces the paradigm of seeing work as having someone whose needs are fulfillfed by a task, and someone who has an obligation to perform the task.
+principle enforces the paradigm of seeing work as having someone whose needs are fulfilled by a task, and someone who has an obligation to perform the task.
 
 The mapping of Case Roles to groups is not entirely correct. A Case Role is more about the Role a user plays within the context of a specific case. However, the CMMN specification is deliberately very open-ended
 about how Roles map to humans. We plan to provide some interesting extensions to determine the best user to fulfill a specific Role in the Case.

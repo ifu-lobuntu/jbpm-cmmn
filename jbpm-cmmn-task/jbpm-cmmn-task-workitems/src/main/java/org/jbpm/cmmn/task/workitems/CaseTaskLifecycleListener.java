@@ -78,6 +78,21 @@ public class CaseTaskLifecycleListener extends CmmnTaskLifecycleEventListenerImp
         signalEvent(task.getTask(), PlanItemTransition.PARENT_RESUME);
     }
 
+    @Override
+    public void afterTaskReleasedEvent(TaskEvent taskEvent) {
+        signalEvent(taskEvent.getTask(), PlanItemTransition.STOP);
+    }
+
+    @Override
+    public void afterTaskDelegatedEvent(TaskEvent taskEvent) {
+        signalEvent(taskEvent.getTask(), PlanItemTransition.STOP);
+    }
+
+    @Override
+    public void afterTaskForwardedEvent(TaskEvent taskEvent) {
+        signalEvent(taskEvent.getTask(), PlanItemTransition.STOP);
+    }
+
     public void afterTaskExitCriteriaEvent(TaskEvent task) {
         signalEvent(task.getTask(), PlanItemTransition.EXIT);
     }

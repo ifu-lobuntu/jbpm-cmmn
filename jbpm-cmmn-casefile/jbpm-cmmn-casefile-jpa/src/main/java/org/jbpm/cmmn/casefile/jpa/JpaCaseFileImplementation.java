@@ -1,5 +1,6 @@
 package org.jbpm.cmmn.casefile.jpa;
 
+import org.drools.persistence.TransactionSynchronization;
 import org.jbpm.cmmn.instance.CaseFileImplementation;
 import org.jbpm.cmmn.instance.CaseFilePersistence;
 import org.jbpm.cmmn.instance.subscription.SubscriptionManager;
@@ -45,9 +46,9 @@ public class JpaCaseFileImplementation implements CaseFileImplementation {
             pu = (String) env.get(CASE_FILE_PERSISTENCE_UNIT_NAME);
         }
         //create it once only
-        JpaCaseFilePersistence result = new JpaCaseFilePersistence(pu, deploymentId, cl);
+        final JpaCaseFilePersistence result = new JpaCaseFilePersistence(pu, deploymentId, cl);
         result.getEntityManager();//Load EMF
-        env.set(CaseFilePersistence.ENV_NAME, result);
+          env.set(CaseFilePersistence.ENV_NAME, result);
         EntityManagerFactory oldEmf = EntityManagerFactoryManager.get().remove(pu);
         if (oldEmf != null) {
             oldEmf.close();

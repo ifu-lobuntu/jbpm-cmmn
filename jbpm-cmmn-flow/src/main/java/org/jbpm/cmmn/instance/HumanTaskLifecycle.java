@@ -7,6 +7,8 @@ public interface HumanTaskLifecycle extends PlanElementLifecycle {
 	WorkItem getWorkItem();
 	Object getTask();
 
+	void stop();
+
 	long getWorkItemId();
 
 }

@@ -103,6 +103,11 @@ public class HumanTaskInstance extends ControllableItemInstanceImpl<HumanTaskDef
         super.enable();
         triggerTransitionOnTask(PlanItemTransition.ENABLE);
     }
+    @Override
+    public void stop() {
+        planElementState.stop(this);
+        triggerTransitionOnTask(PlanItemTransition.STOP);
+    }
 
     @Override
     public void start() {

@@ -2,6 +2,8 @@ package org.jbpm.cmmn.instance;
 
 import org.jbpm.cmmn.flow.common.impl.AbstractStandardEventNode;
 import org.jbpm.cmmn.flow.common.PlanItemTransition;
+import org.jbpm.cmmn.flow.definition.PlanItemDefinition;
+import org.jbpm.cmmn.instance.impl.ControllableItemInstanceImpl;
 import org.jbpm.cmmn.instance.impl.HumanTaskInstance;
 
 import java.util.Collection;
@@ -72,7 +74,7 @@ public enum PlanElementState {
             if (pii instanceof CaseInstance) {
                 return new PlanItemTransition[]{COMPLETE, TERMINATE, FAULT, SUSPEND};
             } else if (isComplexLifecycle(pii)) {
-                return new PlanItemTransition[]{SUSPEND, PARENT_SUSPEND, EXIT, TERMINATE, COMPLETE, FAULT};
+                return new PlanItemTransition[]{SUSPEND, PARENT_SUSPEND, EXIT, TERMINATE, COMPLETE, FAULT,STOP};
             } else {
                 return new PlanItemTransition[]{};
             }
@@ -372,4 +374,9 @@ public enum PlanElementState {
         return false;
     }
 
+    public void stop(HumanTaskInstance pi) {
+        validateTransition(pi, STOP);
+        signalEvent(pi, PlanItemTransition.STOP);
+        pi.setPlanElementState(ENABLED);
+    }
 }
