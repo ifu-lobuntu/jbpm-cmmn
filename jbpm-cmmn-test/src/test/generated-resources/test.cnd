@@ -35,7 +35,7 @@
 
 [test:constructionCase] >  mix:lifecycle, mix:referenceable
   - test:active ( BOOLEAN ) 
-  - test:startDate ( DATE ) 
+  - test:notBefore ( DATE )
   - test:picture ( BINARY ) 
   - test:pricePerSquareMetre ( DOUBLE ) 
   - test:name ( STRING )  mandatory
