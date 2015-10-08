@@ -32,7 +32,14 @@ public class CmmnTaskLifecycleEventListenerImpl implements CmmnTaskLifecycleEven
     public void beforeTaskCompletedEvent(TaskEvent task) {
 
     }
-
+    public void afterTaskNotificationEvent(TaskEvent t){
+    }
+    public void beforeTaskNotificationEvent(TaskEvent t){
+    }
+    public void afterTaskReassignedEvent(TaskEvent t){
+    }
+    public void beforeTaskReassignedEvent(TaskEvent t){
+    }
     @Override
     public void beforeTaskFailedEvent(TaskEvent taskEvent) {
 
