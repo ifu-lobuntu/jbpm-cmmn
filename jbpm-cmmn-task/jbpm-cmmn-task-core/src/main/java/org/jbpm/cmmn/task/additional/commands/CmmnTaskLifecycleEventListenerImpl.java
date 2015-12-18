@@ -2,6 +2,8 @@ package org.jbpm.cmmn.task.additional.commands;
 
 import org.kie.api.task.TaskEvent;
 
+import java.util.Map;
+
 public class CmmnTaskLifecycleEventListenerImpl implements CmmnTaskLifecycleEventListener{
     @Override
     public void beforeTaskActivatedEvent(TaskEvent taskEvent) {
@@ -34,6 +36,17 @@ public class CmmnTaskLifecycleEventListenerImpl implements CmmnTaskLifecycleEven
     }
     public void afterTaskNotificationEvent(TaskEvent t){
     }
+
+    @Override
+    public void afterTaskInputVariableChangedEvent(TaskEvent event, Map<String, Object> variables) {
+
+    }
+
+    @Override
+    public void afterTaskOutputVariableChangedEvent(TaskEvent event, Map<String, Object> variables) {
+
+    }
+
     public void beforeTaskNotificationEvent(TaskEvent t){
     }
     public void afterTaskReassignedEvent(TaskEvent t){

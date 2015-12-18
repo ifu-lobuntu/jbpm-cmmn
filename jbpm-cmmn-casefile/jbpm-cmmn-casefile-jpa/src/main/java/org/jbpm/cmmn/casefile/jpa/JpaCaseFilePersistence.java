@@ -108,7 +108,8 @@ public class JpaCaseFilePersistence implements CaseFilePersistence {
 
     public TransactionManager getTransactionManager() {
         if (transaction == null) {
-            transaction = new JtaTransactionManager(null, null, null) {
+            //TODO clean this up - figure out whether this bug is still there.
+            TransactionManager tmp = new JtaTransactionManager(null, null, null) {
                 public int getStatus() {
                     int s;
                     try {
@@ -137,17 +138,22 @@ public class JpaCaseFilePersistence implements CaseFilePersistence {
                     }
                 }
             };
-            transaction.registerTransactionSynchronization(new TransactionSynchronization() {
-                @Override
-                public void beforeCompletion() {
+            if (tmp.getStatus() == TransactionManager.STATUS_ACTIVE) {
+                tmp.registerTransactionSynchronization(new TransactionSynchronization() {
+                    @Override
+                    public void beforeCompletion() {
 
-                }
+                    }
 
-                @Override
-                public void afterCompletion(int status) {
-                    JpaCaseFilePersistence.this.close();
-                }
-            });
+                    @Override
+                    public void afterCompletion(int status) {
+                        JpaCaseFilePersistence.this.close();
+                    }
+                });
+                this.transaction=tmp;
+            } else {
+                return tmp;
+            }
         }
         return transaction;
     }
