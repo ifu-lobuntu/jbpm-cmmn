@@ -157,7 +157,7 @@ confirmation from the performer of a Task whether the changed state of the task 
 but which the participant still has to commit to. The Pavanecce platform will use these extensions to facilitate business collaborations that extend beyond organizational boundaries.
 
 # 8. Future directions.
-Firstly, we are hoping to get more collaborators on board for this CMMN implementation. If you are interested, please contact Ampie at ampieb@gmail.com. This is open source software, we do not have any 
+Firstly, we are hoping to get more collaborators on board for this CMMN implementation. If you are interested, please contact Ampie at ampie.private@gmail.com. This is open source software, we do not have any 
 branding or ownership concerns. We are open to any form of collaboration, even if it entails absorbing this implementation, or a part of it in another open source project. We feel strongly about the 
 future of CMMN, and would contribute to it as long as is possible for us.
 
