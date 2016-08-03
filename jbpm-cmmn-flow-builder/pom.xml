@@ -2,13 +2,13 @@
   <parent>
     <groupId>org.jbpm</groupId>
     <artifactId>jbpm-cmmn</artifactId>
-    <version>6.4.0-SNAPSHOT</version>
+    <version>7.0.0-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>jbpm-cmmn-flow-builder</artifactId>
   <name>jBPM CMMN Flow Builder</name>
   <packaging>bundle</packaging>
-  <dependencies>
+   <dependencies>
     <dependency>
       <groupId>${project.parent.groupId}</groupId>
       <artifactId>jbpm-flow</artifactId>
@@ -18,7 +18,7 @@
       <artifactId>jbpm-cmmn-flow</artifactId>
     </dependency>
     <dependency>
-      <groupId>${project.parent.groupId}</groupId>
+      <groupId>org.jbpm</groupId>
       <artifactId>jbpm-flow-builder</artifactId>
     </dependency>
     <dependency>
@@ -49,8 +49,16 @@
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.jbpm</groupId>
+      <artifactId>jbpm-flow-builder</artifactId>
+    </dependency>
+       <dependency>
+           <groupId>org.jbpm</groupId>
+           <artifactId>jbpm-kie-services</artifactId>
+       </dependency>
 
-  </dependencies>
+   </dependencies>
   <build>
     <resources>
       <resource>
