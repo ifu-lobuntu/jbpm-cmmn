@@ -52,10 +52,16 @@
     <dependency>
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-flow-builder</artifactId>
+        <exclusions>
+            <exclusion>
+                <groupId>org.jbpm</groupId>
+                <artifactId>jbpm-kie-services</artifactId>
+            </exclusion>
+        </exclusions>
     </dependency>
        <dependency>
            <groupId>org.jbpm</groupId>
-           <artifactId>jbpm-kie-services</artifactId>
+           <artifactId>jbpm-services-api</artifactId>
        </dependency>
 
    </dependencies>

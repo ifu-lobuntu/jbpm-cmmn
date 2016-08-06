@@ -12,7 +12,7 @@ import org.jbpm.cmmn.flow.definition.Stage;
 import org.jbpm.cmmn.flow.planitem.PlanItem;
 import org.jbpm.cmmn.flow.xml.DefinitionsHandler;
 import org.jbpm.compiler.xml.ProcessBuildData;
-import org.jbpm.kie.services.impl.bpmn2.UserTaskDefinitionImpl;
+import org.jbpm.services.api.model.UserTaskDefinition;
 import org.kie.api.definition.process.Node;
 import org.kie.api.definition.process.Process;
 import org.xml.sax.SAXException;
